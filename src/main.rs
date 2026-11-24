@@ -28,6 +28,9 @@ struct Args {
     /// Include raw model answers and validation messages in the JSON output.
     #[arg(long, global = true)]
     trace: bool,
+    /// Skip the second model reading that checks whether a quoted answer addresses its question.
+    #[arg(long, global = true)]
+    fast_answer: bool,
     /// Print just the text for a successful ask or rewrite.
     #[arg(long, global = true)]
     text: bool,
@@ -50,6 +53,13 @@ struct Args {
 enum Action {
     /// Check the installed system model.
     Doctor,
+    /// Route a free-form instruction to ask, answer, summarize or rewrite.
+    Auto { instruction: String },
+    /// Optimize a bounded integer problem. --from-text returns the model's interpretation for review.
+    Solve {
+        #[arg(long)]
+        from_text: bool,
+    },
     /// Free-form instructions, optionally accompanied by source text or an image.
     Ask { instruction: String },
     /// Rewrite or translate source text under optional numeric and length constraints.
@@ -57,6 +67,8 @@ enum Action {
         instruction: String,
         #[arg(long)]
         keep_numbers: bool,
+        #[arg(long)]
+        require_change: bool,
         #[arg(long)]
         max_chars: Option<usize>,
     },
@@ -133,6 +145,25 @@ fn unpack(mut data: Value) -> Result<(Option<String>, Job), String> {
 }
 fn one(command: Action, s: String) -> Result<(Option<String>, Job), String> {
     let job = match command {
+        Action::Solve { from_text } => {
+            if from_text {
+                Job::Solve {
+                    source: Some(s),
+                    problem: None,
+                }
+            } else {
+                Job::Solve {
+                    source: None,
+                    problem: Some(
+                        serde_json::from_value(json::parse(&s)?).map_err(|e| e.to_string())?,
+                    ),
+                }
+            }
+        }
+        Action::Auto { instruction } => Job::Auto {
+            instruction,
+            source: s,
+        },
         Action::Ask { instruction } => Job::Ask {
             instruction,
             source: s,
@@ -140,11 +171,13 @@ fn one(command: Action, s: String) -> Result<(Option<String>, Job), String> {
         Action::Rewrite {
             instruction,
             keep_numbers,
+            require_change,
             max_chars,
         } => Job::Rewrite {
             instruction,
             source: s,
             keep_numbers,
+            require_change,
             max_chars,
         },
         Action::Answer { question } => Job::Answer {
@@ -213,7 +246,7 @@ fn emit(out: &mut impl Write, value: &Value) -> Result<(), String> {
 fn output(out: &mut impl Write, rec: Record, id: Option<String>, text: bool) -> Result<u8, String> {
     let code = match rec.status.as_str() {
         "error" => 2,
-        "held" => 3,
+        "held" | "refused" => 3,
         _ => 0,
     };
     if text {
@@ -295,10 +328,10 @@ fn run() -> Result<u8, String> {
     if args.text && !matches!(args.command, Action::Ask { .. } | Action::Rewrite { .. }) {
         return Err("--text is available for ask and rewrite".into());
     }
-    if let Some(p) = &args.image {
-        if !p.is_file() {
-            return Err("image must be a readable local file".into());
-        }
+    if let Some(p) = &args.image
+        && !p.is_file()
+    {
+        return Err("image must be a readable local file".into());
     }
     let policy = Policy {
         input_budget: args.input_budget as usize,
@@ -307,6 +340,7 @@ fn run() -> Result<u8, String> {
         direct: args.direct,
         trace: args.trace,
         has_image: args.image.is_some(),
+        check_support: !args.fast_answer,
     };
     let mut model = Apple::new(args.timeout, args.image);
     if matches!(args.command, Action::Doctor) {

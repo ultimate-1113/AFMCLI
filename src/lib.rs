@@ -6,3 +6,4 @@ pub mod fm;
 mod ground;
 pub mod job;
 pub mod json;
+pub mod solve;

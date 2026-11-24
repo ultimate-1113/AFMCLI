@@ -1,4 +1,4 @@
-//! Thin adapter for the public, on-device macOS CLI. Source text travels over stdin.
+//! Adapter for the public on-device macOS CLI. Mixed image/text requests require --text.
 use crate::json;
 use regex::Regex;
 use serde_json::Value;
@@ -14,7 +14,7 @@ pub const ADVANCED: &str = "AFM 3 Core Advanced";
 const FM: &str = "/usr/bin/fm";
 static ANSI: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"\x1b\[[0-9;]*[A-Za-z]").unwrap());
 
-#[derive(Default, Debug)]
+#[derive(Default, Debug, Clone, PartialEq)]
 pub struct Request {
     pub instructions: String,
     pub prompt: String,
@@ -40,7 +40,10 @@ impl Apple {
         }
     }
     fn call(&self, args: &[&str], input: &str) -> Result<Vec<u8>, String> {
-        let mut child = Command::new(FM)
+        self.call_at(Path::new(FM), args, input)
+    }
+    fn call_at(&self, executable: &Path, args: &[&str], input: &str) -> Result<Vec<u8>, String> {
+        let mut child = Command::new(executable)
             .args(args)
             .stdin(Stdio::piped())
             .stdout(Stdio::piped())
@@ -152,14 +155,17 @@ impl Model for Apple {
     fn count(&mut self, r: &Request) -> Result<usize, String> {
         self.ready()?;
         let mut a = vec!["count-tokens", "--quiet", "--instructions", &r.instructions];
-        if let Some(img) = self.image_arg()? {
-            a.extend(["--image", img]);
-        }
         let text = match &r.schema {
             Some(s) => format!("{}\n{}", r.prompt, s),
             None => r.prompt.clone(),
         };
-        let output = self.call(&a, &text)?;
+        let input = if let Some(img) = self.image_arg()? {
+            a.extend(["--image", img, "--text", &text]);
+            ""
+        } else {
+            &text
+        };
+        let output = self.call(&a, input)?;
         String::from_utf8_lossy(&output)
             .trim()
             .parse()
@@ -185,15 +191,35 @@ impl Model for Apple {
             std::fs::write(&schema_path, s.to_string()).map_err(|e| e.to_string())?;
             a.extend(["--schema", as_path(&schema_path)?]);
         }
-        if let Some(img) = self.image_arg()? {
-            a.extend(["--image", img]);
-        }
-        self.call(&a, &r.prompt)?;
+        let input = if let Some(img) = self.image_arg()? {
+            a.extend(["--image", img, "--text", &r.prompt]);
+            ""
+        } else {
+            &r.prompt
+        };
+        self.call(&a, input)?;
         let t = json::parse(
             &std::fs::read_to_string(transcript).map_err(|_| "fm did not record a transcript")?,
         )?;
+        confirm_input(&t, &r.prompt, self.image.is_some())?;
         decode(&t)
     }
+}
+fn confirm_input(t: &Value, prompt: &str, image: bool) -> Result<(), String> {
+    let user = t
+        .pointer("/transcript/transcript/entries")
+        .and_then(Value::as_array)
+        .and_then(|a| a.iter().rev().find(|e| e["role"] == "user"))
+        .and_then(|e| e["contents"].as_array())
+        .ok_or("missing user input in transcript")?;
+    if !user
+        .iter()
+        .any(|part| part["type"] == "text" && part["text"].as_str() == Some(prompt))
+        || (image && !user.iter().any(|part| part["type"] == "attachment"))
+    {
+        return Err("fm transcript does not contain the expected text and attachments".into());
+    }
+    Ok(())
 }
 fn as_path(p: &Path) -> Result<&str, String> {
     p.to_str()
@@ -245,4 +271,32 @@ pub fn decode(t: &Value) -> Result<String, String> {
         return Err("fm returned an empty response".into());
     }
     Ok(text)
+}
+
+#[cfg(all(test, unix))]
+mod process_tests {
+    use super::*;
+    #[test]
+    fn terminates_and_reaps_a_timed_out_process() {
+        let backend = Apple {
+            timeout: Duration::from_millis(40),
+            image: None,
+            ready: false,
+        };
+        let result = backend.call_at(Path::new("/bin/sleep"), &["3"], "");
+        assert_eq!(result.unwrap_err(), "fm timed out");
+    }
+    #[test]
+    fn preserves_input_as_data_and_captures_nonzero_exit() {
+        let backend = Apple::new(2, None);
+        let bytes = backend
+            .call_at(Path::new("/bin/cat"), &[], "\u{2603}\n--help")
+            .unwrap();
+        assert_eq!(bytes, "\u{2603}\n--help".as_bytes());
+        assert!(
+            backend
+                .call_at(Path::new("/usr/bin/false"), &[], "")
+                .is_err()
+        );
+    }
 }

@@ -23,6 +23,7 @@ pub struct Policy {
     pub direct: bool,
     pub trace: bool,
     pub has_image: bool,
+    pub check_support: bool,
 }
 impl Default for Policy {
     fn default() -> Self {
@@ -33,6 +34,7 @@ impl Default for Policy {
             direct: false,
             trace: false,
             has_image: false,
+            check_support: true,
         }
     }
 }
@@ -42,6 +44,7 @@ pub enum Fail {
     Invalid(String),
     Backend(String),
     Held(String),
+    Refused(String),
 }
 pub type Run<T> = Result<T, Fail>;
 #[derive(Default, Serialize)]
@@ -81,6 +84,7 @@ pub struct Engine<'a> {
     pub policy: Policy,
     pub metrics: Metrics,
     trace: Vec<Value>,
+    last_count: Option<(Request, usize)>,
 }
 pub fn request(instruction: &str, payload: Value, schema: Option<Value>) -> Request {
     Request {
@@ -119,6 +123,7 @@ impl<'a> Engine<'a> {
             policy,
             metrics: Metrics::default(),
             trace: vec![],
+            last_count: None,
         }
     }
     pub fn execute(mut self, job: &Job) -> Record {
@@ -132,6 +137,7 @@ impl<'a> Engine<'a> {
             Err(e) => {
                 let (status, reason) = match e {
                     Fail::Held(s) => ("held", s),
+                    Fail::Refused(s) => ("refused", s),
                     Fail::Invalid(s) | Fail::Backend(s) => ("error", s),
                 };
                 Output {
@@ -141,10 +147,11 @@ impl<'a> Engine<'a> {
                 }
             }
         };
-        if o.status == "held" && matches!(job, Job::Edit { .. }) && !self.policy.direct {
-            if let Job::Edit { document, .. } = job {
-                o.value = json!({"document":document,"changed":false});
-            }
+        if o.status == "held"
+            && !self.policy.direct
+            && let Job::Edit { document, .. } = job
+        {
+            o.value = json!({"document":document,"changed":false});
         }
         self.metrics.elapsed_ms = start.elapsed().as_millis();
         Record {
@@ -157,8 +164,15 @@ impl<'a> Engine<'a> {
         }
     }
     pub fn count(&mut self, r: &Request) -> Run<usize> {
+        if let Some((last, n)) = &self.last_count
+            && last == r
+        {
+            return Ok(*n);
+        }
         self.metrics.token_checks += 1;
-        self.model.count(r).map_err(Fail::Backend)
+        let n = self.model.count(r).map_err(Fail::Backend)?;
+        self.last_count = Some((r.clone(), n));
+        Ok(n)
     }
     fn generate(&mut self, r: &Request) -> Run<String> {
         if self.metrics.calls >= self.policy.max_calls {
@@ -175,7 +189,13 @@ impl<'a> Engine<'a> {
         }
         self.metrics.calls += 1;
         self.metrics.peak_sent_tokens = self.metrics.peak_sent_tokens.max(n);
-        let raw = self.model.generate(r).map_err(Fail::Backend)?;
+        let raw = self.model.generate(r).map_err(|reason| {
+            if reason.starts_with("fm refused the request") {
+                Fail::Refused(reason)
+            } else {
+                Fail::Backend(reason)
+            }
+        })?;
         if self.policy.trace {
             self.trace.push(json!({"response":raw,"input_tokens":n}));
         }
@@ -192,10 +212,10 @@ impl<'a> Engine<'a> {
             match verify(&raw) {
                 Ok(v) => return Ok(v),
                 Err(reason) => {
-                    if self.policy.trace {
-                        if let Some(last) = self.trace.last_mut() {
-                            last["validation_error"] = json!(reason);
-                        }
+                    if self.policy.trace
+                        && let Some(last) = self.trace.last_mut()
+                    {
+                        last["validation_error"] = json!(reason);
                     }
                     if attempt == self.policy.repairs || self.metrics.calls >= self.policy.max_calls
                     {
@@ -236,6 +256,57 @@ impl<'a> Engine<'a> {
     }
     fn task(&mut self, job: &Job) -> Run<Output> {
         match job {
+            Job::Auto {
+                instruction,
+                source,
+            } => {
+                let ask = Job::Ask {
+                    instruction: instruction.clone(),
+                    source: source.clone(),
+                };
+                if self.policy.direct {
+                    return self.task(&ask);
+                }
+                let route = if source.trim().is_empty() || self.policy.has_image {
+                    "ask".to_owned()
+                } else {
+                    let guide = contract::object([(
+                        "route".into(),
+                        json!({"type":"string","enum":["answer","summarize","rewrite","ask"]}),
+                    )]);
+                    let r = request(
+                        "Select the requested operation from its instruction alone: answer = find a short literal answer in the source; summarize = select the important source sentences; rewrite = transform, translate or rephrase; ask = general reasoning or other work.",
+                        json!({"instruction":instruction}),
+                        Some(guide),
+                    );
+                    self.structured(r, |v| Ok(v["route"].as_str().unwrap().to_owned()))?
+                };
+                let next = match route.as_str() {
+                    "answer" => Job::Answer {
+                        question: instruction.clone(),
+                        source: source.clone(),
+                    },
+                    "summarize" => Job::Summarize {
+                        focus: instruction.clone(),
+                        source: source.clone(),
+                        sentences: 3,
+                    },
+                    "rewrite" => Job::Rewrite {
+                        instruction: instruction.clone(),
+                        source: source.clone(),
+                        keep_numbers: false,
+                        max_chars: None,
+                        require_change: false,
+                    },
+                    _ => ask,
+                };
+                let mut out = self.task(&next)?;
+                out.value = json!({"route":route,"output":out.value});
+                Ok(out)
+            }
+            Job::Solve { problem, source } => {
+                crate::solve::run(self, problem.as_ref(), source.as_deref())
+            }
             Job::Answer { .. } | Job::Extract { .. } | Job::Summarize { .. } => {
                 ground::execute(self, job)
             }
@@ -259,16 +330,27 @@ impl<'a> Engine<'a> {
                 source,
                 keep_numbers,
                 max_chars,
+                require_change,
             } => {
                 let r = request(
                     "Rewrite the source. Return just the finished text. When keep_numbers is true, retain every numeric token exactly, including repetitions and signs. max_chars counts Unicode scalar values.",
-                    json!({"task":instruction,"source":source,"keep_numbers":keep_numbers,"max_chars":max_chars}),
+                    json!({"task":instruction,"source":source,"keep_numbers":keep_numbers,"max_chars":max_chars,"require_change":require_change}),
                     None,
                 );
                 if self.policy.direct {
                     return self.raw(r);
                 }
-                let text = self.checked(r, |s| text_check(source, s, *keep_numbers, *max_chars))?;
+                let mut r = r;
+                r.instructions = format!(
+                    "{DIRECTIVE}\nUser's rewriting instruction: {instruction}\nReturn only the finished text. Numeric tokens must be preserved exactly if keep_numbers=true. If require_change=true rephrase the source."
+                );
+                r.prompt=serde_json::json!({"source":source,"keep_numbers":keep_numbers,"max_chars":max_chars,"require_change":require_change}).to_string();
+                let text = self.checked(r, |s| {
+                    if *require_change && s.trim() == source.trim() {
+                        return Err("the requested rewrite leaves the source identical".into());
+                    }
+                    text_check(source, s, *keep_numbers, *max_chars)
+                })?;
                 Ok(Output::new("ok", text.into()))
             }
             Job::Classify { source, labels } => {
@@ -286,11 +368,31 @@ impl<'a> Engine<'a> {
                 if self.policy.direct {
                     return self.raw(r);
                 }
-                let label = self.structured(r, |v| Ok(v["label"].as_str().unwrap().to_owned()))?;
-                if label.is_empty() {
-                    Ok(Output::new("abstained", json!({"label":null})))
-                } else {
-                    Ok(Output::new("ok", json!({"label":label})))
+                let mask = contract::object(
+                    labels
+                        .iter()
+                        .map(|l| (l.name.clone(), json!({"type":"boolean"}))),
+                );
+                let candidate = request(
+                    "For each category, decide whether its description matches the actual situation described in the source. Set true for the best match, false for all others. If the source is unrelated to all categories, set all false. Categories describe the meaning of the source, including paraphrases.",
+                    json!({"categories":labels,"source":source}),
+                    Some(mask),
+                );
+                let matches = self.structured(candidate, |v| {
+                    Ok(labels
+                        .iter()
+                        .filter(|l| v[&l.name] == true)
+                        .map(|l| l.name.clone())
+                        .collect::<Vec<_>>())
+                })?;
+                match matches.as_slice() {
+                    [] => Ok(Output::new("abstained", json!({"label":null}))),
+                    [label] => Ok(Output::new("ok", json!({"label":label}))),
+                    _ => Ok(Output {
+                        status: "abstained",
+                        value: json!({"label":null}),
+                        notes: vec!["multiple categories matched".into()],
+                    }),
                 }
             }
             Job::Structure {

@@ -59,7 +59,17 @@ fn field_request(fields: &[Field], source: &str) -> Request {
         Some(s),
     )
 }
-fn answer_request(question: &str, source: &str) -> Request {
+fn answer_request(question: &str, source: &str, direct: bool) -> Request {
+    if !direct {
+        return request(
+            "Decide whether the passage explicitly supplies the requested fact. If missing, answerable=false and answer is the empty string. Otherwise return the shortest exact answer span: for who, where, when or how many, copy just the name, place, time or quantity. Example: passage 'The fabric was linen.' / question 'Which material?' gives linen. If the passage gives a different attribute, abstain. For example, a package weight does not answer a question about its height. 資料に質問の答えが書いていない場合は空文字を返す。Preserve the source language.",
+            json!({"question":question,"passage":source}),
+            Some(contract::object([
+                ("answerable".into(), json!({"type":"boolean"})),
+                ("answer".into(), json!({"type":"string"})),
+            ])),
+        );
+    }
     request(
         "Answer the question using the shortest exact quote from the source that answers it. Consider corrections and negation. If the source does not establish an answer, return an empty string.",
         json!({"question":question,"source":source}),
@@ -81,6 +91,11 @@ fn gather(
     for f in fields {
         let proposed: Vec<&str> = if is_answer {
             let answer = v["answer"].as_str().ok_or("answer must be a string")?;
+            if v["answerable"].as_bool() != Some(!answer.is_empty()) {
+                return Err(
+                    "answerable must agree with the presence of a verbatim answer span".into(),
+                );
+            }
             if answer.is_empty() {
                 vec![]
             } else {
@@ -113,8 +128,9 @@ fn extract(
     fields: &[Field],
     question: Option<&str>,
 ) -> Run<Output> {
+    let direct = engine.policy.direct;
     let make = |part: &str| match question {
-        Some(q) => answer_request(q, part),
+        Some(q) => answer_request(q, part, direct),
         None => field_request(fields, part),
     };
     if engine.policy.direct {
@@ -143,7 +159,7 @@ fn extract(
     let mut populated = 0;
     for f in fields {
         let values = merged.remove(&f.name).unwrap_or_default();
-        let entries = if !f.many && values.len() > 1 {
+        let mut entries = if !f.many && values.len() > 1 {
             notes.push(format!(
                 "{}: source windows produced conflicting values",
                 f.name
@@ -157,6 +173,37 @@ fn extract(
             entries.sort_by_key(|e| e.spans.first().map(|s| s.start_byte));
             entries
         };
+        if engine.policy.check_support
+            && let (Some(q), Some(item)) = (question, entries.first())
+        {
+            let mut passages = Vec::new();
+            for span in item.spans.iter().take(3) {
+                let first = lines.partition_point(|l| l.end() <= span.start_byte);
+                let end = lines.partition_point(|l| l.start < span.end_byte);
+                if first < end {
+                    let piece = excerpt(
+                        source,
+                        &lines[first.saturating_sub(1)..(end + 1).min(lines.len())],
+                    );
+                    if !passages.contains(&piece) {
+                        passages.push(piece);
+                    }
+                }
+            }
+            let r = request(
+                "Does this exact candidate actually supply the specific fact the question asks for, according to the excerpts? A different attribute, a superseded fact, or an announcement that the fact is unknown is insufficient. Return true only when the excerpts support the answer.",
+                json!({"question":q,"candidate":item.value,"excerpts":passages}),
+                Some(contract::object([(
+                    "supported".into(),
+                    json!({"type":"boolean"}),
+                )])),
+            );
+            let supported = engine.structured(r, |v| Ok(v["supported"].as_bool().unwrap()))?;
+            if !supported {
+                entries.clear();
+                notes.push("a separate model reading did not confirm the proposed answer".into());
+            }
+        }
         if !entries.is_empty() {
             populated += 1;
         }

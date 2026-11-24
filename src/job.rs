@@ -23,6 +23,11 @@ pub struct Label {
 #[derive(Debug, Deserialize)]
 #[serde(tag = "task", rename_all = "snake_case", deny_unknown_fields)]
 pub enum Job {
+    Auto {
+        instruction: String,
+        #[serde(default)]
+        source: String,
+    },
     Ask {
         instruction: String,
         #[serde(default)]
@@ -33,6 +38,8 @@ pub enum Job {
         source: String,
         #[serde(default)]
         keep_numbers: bool,
+        #[serde(default)]
+        require_change: bool,
         #[serde(default)]
         max_chars: Option<usize>,
     },
@@ -64,6 +71,10 @@ pub enum Job {
         document: Value,
         changes: Vec<Change>,
     },
+    Solve {
+        problem: Option<crate::solve::Problem>,
+        source: Option<String>,
+    },
 }
 fn default_n() -> usize {
     3
@@ -71,6 +82,7 @@ fn default_n() -> usize {
 impl Job {
     pub fn name(&self) -> &'static str {
         match self {
+            Self::Auto { .. } => "auto",
             Self::Ask { .. } => "ask",
             Self::Rewrite { .. } => "rewrite",
             Self::Answer { .. } => "answer",
@@ -79,13 +91,17 @@ impl Job {
             Self::Summarize { .. } => "summarize",
             Self::Structure { .. } => "structure",
             Self::Edit { .. } => "edit",
+            Self::Solve { .. } => "solve",
         }
     }
     pub fn validate(&self, has_image: bool) -> Result<(), String> {
         if has_image
             && !matches!(
                 self,
-                Self::Ask { .. } | Self::Structure { .. } | Self::Classify { .. }
+                Self::Auto { .. }
+                    | Self::Ask { .. }
+                    | Self::Structure { .. }
+                    | Self::Classify { .. }
             )
         {
             return Err("images are accepted by ask, classify and structure".into());
@@ -93,7 +109,15 @@ impl Job {
         let mut source = None;
         let mut instruction = None;
         match self {
-            Self::Ask { instruction: i, .. } => instruction = Some(i),
+            Self::Solve { source: s, problem } => {
+                if s.is_some() == problem.is_some() {
+                    return Err("provide one of source or problem".into());
+                }
+                source = s.as_ref();
+            }
+            Self::Auto { instruction: i, .. } | Self::Ask { instruction: i, .. } => {
+                instruction = Some(i)
+            }
             Self::Rewrite {
                 source: s,
                 instruction: i,
