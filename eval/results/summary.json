@@ -1,0 +1,546 @@
+{
+  "behavior_groups": {
+    "direct": {
+      "allocation": false,
+      "devices": true,
+      "light": false,
+      "recording": false,
+      "stock": false,
+      "storage": true
+    },
+    "verified": {
+      "allocation": false,
+      "devices": true,
+      "light": false,
+      "recording": false,
+      "stock": true,
+      "storage": true
+    }
+  },
+  "binary_sha256": "7f68677f38640ad1ac9c5bca6c50d3e93be3b867b70961553587fb07855835b2",
+  "development": {
+    "v1": [
+      13,
+      17
+    ],
+    "v2": [
+      14,
+      17
+    ],
+    "v3": [
+      16,
+      20
+    ],
+    "v4": [
+      20,
+      20
+    ]
+  },
+  "external": {
+    "jnli": {
+      "direct": {
+        "calls": 15,
+        "gained": 0,
+        "lost": 0,
+        "median_ms": 304,
+        "n": 15,
+        "passed": 5,
+        "span_failures": 0,
+        "span_records": 0,
+        "statuses": {
+          "unverified": 15
+        }
+      },
+      "verified": {
+        "calls": 15,
+        "gained": 3,
+        "lost": 1,
+        "median_ms": 384,
+        "n": 15,
+        "passed": 7,
+        "span_failures": 0,
+        "span_records": 0,
+        "statuses": {
+          "abstained": 3,
+          "ok": 12
+        }
+      }
+    },
+    "jsquad": {
+      "direct": {
+        "calls": 16,
+        "gained": 0,
+        "lost": 0,
+        "median_ms": 376.5,
+        "n": 16,
+        "passed": 2,
+        "span_failures": 0,
+        "span_records": 0,
+        "statuses": {
+          "refused": 1,
+          "unverified": 15
+        }
+      },
+      "fast": {
+        "calls": 18,
+        "gained": 7,
+        "lost": 0,
+        "median_ms": 394.0,
+        "n": 16,
+        "passed": 9,
+        "span_failures": 0,
+        "span_records": 13,
+        "statuses": {
+          "abstained": 1,
+          "ok": 13,
+          "refused": 2
+        }
+      },
+      "verified": {
+        "calls": 31,
+        "gained": 7,
+        "lost": 0,
+        "median_ms": 680.0,
+        "n": 16,
+        "passed": 9,
+        "span_failures": 0,
+        "span_records": 12,
+        "statuses": {
+          "abstained": 2,
+          "ok": 12,
+          "refused": 2
+        }
+      }
+    },
+    "squad": {
+      "direct": {
+        "calls": 16,
+        "gained": 0,
+        "lost": 0,
+        "median_ms": 431.0,
+        "n": 16,
+        "passed": 3,
+        "span_failures": 0,
+        "span_records": 0,
+        "statuses": {
+          "unverified": 16
+        }
+      },
+      "fast": {
+        "calls": 18,
+        "gained": 2,
+        "lost": 2,
+        "median_ms": 391.0,
+        "n": 16,
+        "passed": 3,
+        "span_failures": 0,
+        "span_records": 7,
+        "statuses": {
+          "held": 2,
+          "ok": 7,
+          "refused": 7
+        }
+      },
+      "verified": {
+        "calls": 25,
+        "gained": 2,
+        "lost": 2,
+        "median_ms": 608.5,
+        "n": 16,
+        "passed": 3,
+        "span_failures": 0,
+        "span_records": 4,
+        "statuses": {
+          "abstained": 1,
+          "held": 2,
+          "ok": 4,
+          "refused": 9
+        }
+      }
+    },
+    "total": {
+      "direct": {
+        "calls": 47,
+        "gained": 0,
+        "lost": 0,
+        "median_ms": 366,
+        "n": 47,
+        "passed": 10,
+        "span_failures": 0,
+        "span_records": 0,
+        "statuses": {
+          "refused": 1,
+          "unverified": 46
+        }
+      },
+      "fast": {
+        "calls": 36,
+        "gained": 9,
+        "lost": 2,
+        "median_ms": 394.0,
+        "n": 32,
+        "passed": 12,
+        "span_failures": 0,
+        "span_records": 20,
+        "statuses": {
+          "abstained": 1,
+          "held": 2,
+          "ok": 20,
+          "refused": 9
+        }
+      },
+      "verified": {
+        "calls": 71,
+        "gained": 12,
+        "lost": 3,
+        "median_ms": 437,
+        "n": 47,
+        "passed": 19,
+        "span_failures": 0,
+        "span_records": 16,
+        "statuses": {
+          "abstained": 6,
+          "held": 2,
+          "ok": 28,
+          "refused": 11
+        }
+      }
+    }
+  },
+  "probe_checks": {
+    "image-and-text": true,
+    "long-call-limit": true,
+    "long-direct": true,
+    "long-verified": true,
+    "open": true,
+    "qa-en": true,
+    "qa-ja": true,
+    "reason": true,
+    "rewrite-en": true,
+    "rewrite-ja": true,
+    "summary-en": true,
+    "summary-ja": true
+  },
+  "protocol_sha256": "1f40e1b2f06aa2fc3a4fc9bd2452de8ce6b3a625c2e2428477f736b5cea12ede",
+  "synthetic": {
+    "answer": {
+      "direct": {
+        "calls": 6,
+        "gained": 0,
+        "lost": 0,
+        "median_ms": 314.5,
+        "n": 6,
+        "passed": 1,
+        "span_failures": 0,
+        "span_records": 0,
+        "statuses": {
+          "unverified": 6
+        }
+      },
+      "fast": {
+        "calls": 6,
+        "gained": 1,
+        "lost": 0,
+        "median_ms": 368.5,
+        "n": 6,
+        "passed": 2,
+        "span_failures": 0,
+        "span_records": 5,
+        "statuses": {
+          "abstained": 1,
+          "ok": 5
+        }
+      },
+      "verified": {
+        "calls": 11,
+        "gained": 1,
+        "lost": 0,
+        "median_ms": 622.0,
+        "n": 6,
+        "passed": 2,
+        "span_failures": 0,
+        "span_records": 5,
+        "statuses": {
+          "abstained": 1,
+          "ok": 5
+        }
+      }
+    },
+    "ask": {
+      "direct": {
+        "calls": 6,
+        "gained": 0,
+        "lost": 0,
+        "median_ms": 263.0,
+        "n": 6,
+        "passed": 5,
+        "span_failures": 0,
+        "span_records": 0,
+        "statuses": {
+          "unverified": 6
+        }
+      },
+      "verified": {
+        "calls": 6,
+        "gained": 0,
+        "lost": 0,
+        "median_ms": 255.0,
+        "n": 6,
+        "passed": 5,
+        "span_failures": 0,
+        "span_records": 0,
+        "statuses": {
+          "ok": 6
+        }
+      }
+    },
+    "classify": {
+      "direct": {
+        "calls": 6,
+        "gained": 0,
+        "lost": 0,
+        "median_ms": 296.5,
+        "n": 6,
+        "passed": 3,
+        "span_failures": 0,
+        "span_records": 0,
+        "statuses": {
+          "unverified": 6
+        }
+      },
+      "verified": {
+        "calls": 6,
+        "gained": 2,
+        "lost": 0,
+        "median_ms": 363.5,
+        "n": 6,
+        "passed": 5,
+        "span_failures": 0,
+        "span_records": 0,
+        "statuses": {
+          "abstained": 3,
+          "ok": 3
+        }
+      }
+    },
+    "edit": {
+      "direct": {
+        "calls": 6,
+        "gained": 0,
+        "lost": 0,
+        "median_ms": 399.5,
+        "n": 6,
+        "passed": 0,
+        "span_failures": 0,
+        "span_records": 0,
+        "statuses": {
+          "unverified": 6
+        }
+      },
+      "verified": {
+        "calls": 0,
+        "gained": 6,
+        "lost": 0,
+        "median_ms": 3.0,
+        "n": 6,
+        "passed": 6,
+        "span_failures": 0,
+        "span_records": 0,
+        "statuses": {
+          "held": 3,
+          "ok": 3
+        }
+      }
+    },
+    "extract": {
+      "direct": {
+        "calls": 6,
+        "gained": 0,
+        "lost": 0,
+        "median_ms": 392.5,
+        "n": 6,
+        "passed": 3,
+        "span_failures": 0,
+        "span_records": 0,
+        "statuses": {
+          "unverified": 6
+        }
+      },
+      "verified": {
+        "calls": 7,
+        "gained": 2,
+        "lost": 0,
+        "median_ms": 381.5,
+        "n": 6,
+        "passed": 5,
+        "span_failures": 0,
+        "span_records": 4,
+        "statuses": {
+          "abstained": 1,
+          "held": 1,
+          "partial": 4
+        }
+      }
+    },
+    "rewrite": {
+      "direct": {
+        "calls": 6,
+        "gained": 0,
+        "lost": 0,
+        "median_ms": 318.5,
+        "n": 6,
+        "passed": 5,
+        "span_failures": 0,
+        "span_records": 0,
+        "statuses": {
+          "unverified": 6
+        }
+      },
+      "verified": {
+        "calls": 6,
+        "gained": 0,
+        "lost": 0,
+        "median_ms": 316.0,
+        "n": 6,
+        "passed": 5,
+        "span_failures": 0,
+        "span_records": 0,
+        "statuses": {
+          "ok": 6
+        }
+      }
+    },
+    "solve": {
+      "direct": {
+        "calls": 6,
+        "gained": 0,
+        "lost": 0,
+        "median_ms": 535.5,
+        "n": 6,
+        "passed": 0,
+        "span_failures": 0,
+        "span_records": 0,
+        "statuses": {
+          "unverified": 6
+        }
+      },
+      "verified": {
+        "calls": 4,
+        "gained": 4,
+        "lost": 0,
+        "median_ms": 458.5,
+        "n": 6,
+        "passed": 4,
+        "span_failures": 0,
+        "span_records": 0,
+        "statuses": {
+          "ok": 3,
+          "review": 3
+        }
+      }
+    },
+    "structure": {
+      "direct": {
+        "calls": 6,
+        "gained": 0,
+        "lost": 0,
+        "median_ms": 315.0,
+        "n": 6,
+        "passed": 6,
+        "span_failures": 0,
+        "span_records": 0,
+        "statuses": {
+          "unverified": 6
+        }
+      },
+      "verified": {
+        "calls": 6,
+        "gained": 0,
+        "lost": 0,
+        "median_ms": 309.0,
+        "n": 6,
+        "passed": 6,
+        "span_failures": 0,
+        "span_records": 0,
+        "statuses": {
+          "ok": 6
+        }
+      }
+    },
+    "summarize": {
+      "direct": {
+        "calls": 6,
+        "gained": 0,
+        "lost": 0,
+        "median_ms": 304.5,
+        "n": 6,
+        "passed": 5,
+        "span_failures": 0,
+        "span_records": 0,
+        "statuses": {
+          "unverified": 6
+        }
+      },
+      "verified": {
+        "calls": 6,
+        "gained": 0,
+        "lost": 0,
+        "median_ms": 305.5,
+        "n": 6,
+        "passed": 5,
+        "span_failures": 0,
+        "span_records": 5,
+        "statuses": {
+          "abstained": 1,
+          "ok": 5
+        }
+      }
+    },
+    "total": {
+      "direct": {
+        "calls": 54,
+        "gained": 0,
+        "lost": 0,
+        "median_ms": 330.5,
+        "n": 54,
+        "passed": 28,
+        "span_failures": 0,
+        "span_records": 0,
+        "statuses": {
+          "unverified": 54
+        }
+      },
+      "fast": {
+        "calls": 6,
+        "gained": 1,
+        "lost": 0,
+        "median_ms": 368.5,
+        "n": 6,
+        "passed": 2,
+        "span_failures": 0,
+        "span_records": 5,
+        "statuses": {
+          "abstained": 1,
+          "ok": 5
+        }
+      },
+      "verified": {
+        "calls": 52,
+        "gained": 15,
+        "lost": 0,
+        "median_ms": 328.0,
+        "n": 54,
+        "passed": 43,
+        "span_failures": 0,
+        "span_records": 14,
+        "statuses": {
+          "abstained": 6,
+          "held": 4,
+          "ok": 37,
+          "partial": 4,
+          "review": 3
+        }
+      }
+    }
+  }
+}

@@ -79,9 +79,12 @@ class MetadataTests(unittest.TestCase):
             result=subprocess.run([sys.executable,str(Path(__file__).with_name('png_audit.py')),str(path)],capture_output=True,text=True)
             self.assertEqual(result.returncode,1);self.assertNotIn(LOCAL,result.stdout)
 
-    def test_repository_fixtures(self):
-        paths=list((Path(__file__).resolve().parents[1]/'data/images').glob('*.png'))
-        self.assertEqual(len(paths),6)
-        for path in paths:self.assertTrue(audit_bytes(path.read_bytes())['passed'])
+    def test_image_used_by_the_rust_cli_probe(self):
+        sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "eval"))
+        from probes import write_card
+        with tempfile.TemporaryDirectory() as folder:
+            path = Path(folder) / "card.png"
+            write_card(path)
+            self.assertTrue(audit_bytes(path.read_bytes())["passed"])
 
 if __name__=='__main__':unittest.main()

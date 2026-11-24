@@ -1,0 +1,319 @@
+[
+  {
+    "id": "qa-ja",
+    "expected_route": "answer",
+    "route": "answer",
+    "passed": true,
+    "response": {
+      "metrics": {
+        "calls": 3,
+        "elapsed_ms": 877,
+        "peak_sent_tokens": 272,
+        "repairs": 0,
+        "token_checks": 3
+      },
+      "notes": [],
+      "result": {
+        "output": {
+          "answer": {
+            "spans": [
+              {
+                "end_byte": 33,
+                "start_byte": 24
+              }
+            ],
+            "value": "群青色"
+          }
+        },
+        "route": "answer"
+      },
+      "status": "ok",
+      "task": "auto"
+    }
+  },
+  {
+    "id": "qa-en",
+    "expected_route": "answer",
+    "route": "answer",
+    "passed": true,
+    "response": {
+      "metrics": {
+        "calls": 3,
+        "elapsed_ms": 895,
+        "peak_sent_tokens": 271,
+        "repairs": 0,
+        "token_checks": 3
+      },
+      "notes": [],
+      "result": {
+        "output": {
+          "answer": {
+            "spans": [
+              {
+                "end_byte": 26,
+                "start_byte": 20
+              }
+            ],
+            "value": "bronze"
+          }
+        },
+        "route": "answer"
+      },
+      "status": "ok",
+      "task": "auto"
+    }
+  },
+  {
+    "id": "summary-ja",
+    "expected_route": "summarize",
+    "route": "summarize",
+    "passed": true,
+    "response": {
+      "metrics": {
+        "calls": 2,
+        "elapsed_ms": 608,
+        "peak_sent_tokens": 240,
+        "repairs": 0,
+        "token_checks": 2
+      },
+      "notes": [],
+      "result": {
+        "output": {
+          "segments": [
+            {
+              "end_byte": 21,
+              "id": 1,
+              "start_byte": 0,
+              "text": "白鳥が戻った。"
+            },
+            {
+              "end_byte": 78,
+              "id": 3,
+              "start_byte": 51,
+              "text": "観測会を再開する。"
+            }
+          ]
+        },
+        "route": "summarize"
+      },
+      "status": "ok",
+      "task": "auto"
+    }
+  },
+  {
+    "id": "summary-en",
+    "expected_route": "summarize",
+    "route": "summarize",
+    "passed": true,
+    "response": {
+      "metrics": {
+        "calls": 2,
+        "elapsed_ms": 607,
+        "peak_sent_tokens": 236,
+        "repairs": 0,
+        "token_checks": 2
+      },
+      "notes": [],
+      "result": {
+        "output": {
+          "segments": [
+            {
+              "end_byte": 46,
+              "id": 2,
+              "start_byte": 15,
+              "text": "The board reopened the archive."
+            },
+            {
+              "end_byte": 63,
+              "id": 3,
+              "start_byte": 47,
+              "text": "Lending resumed."
+            }
+          ]
+        },
+        "route": "summarize"
+      },
+      "status": "ok",
+      "task": "auto"
+    }
+  },
+  {
+    "id": "rewrite-ja",
+    "expected_route": "rewrite",
+    "route": "rewrite",
+    "passed": true,
+    "response": {
+      "metrics": {
+        "calls": 2,
+        "elapsed_ms": 585,
+        "peak_sent_tokens": 188,
+        "repairs": 0,
+        "token_checks": 2
+      },
+      "notes": [],
+      "result": {
+        "output": "その設備の働きを、一時的に止めます。",
+        "route": "rewrite"
+      },
+      "status": "ok",
+      "task": "auto"
+    }
+  },
+  {
+    "id": "rewrite-en",
+    "expected_route": "rewrite",
+    "route": "rewrite",
+    "passed": true,
+    "response": {
+      "metrics": {
+        "calls": 2,
+        "elapsed_ms": 561,
+        "peak_sent_tokens": 183,
+        "repairs": 0,
+        "token_checks": 2
+      },
+      "notes": [],
+      "result": {
+        "output": "The museum is closed on Mondays.",
+        "route": "rewrite"
+      },
+      "status": "ok",
+      "task": "auto"
+    }
+  },
+  {
+    "id": "reason",
+    "expected_route": "ask",
+    "route": "ask",
+    "passed": true,
+    "response": {
+      "metrics": {
+        "calls": 2,
+        "elapsed_ms": 1358,
+        "peak_sent_tokens": 187,
+        "repairs": 0,
+        "token_checks": 2
+      },
+      "notes": [],
+      "result": {
+        "output": "The count rose following a change in staffing. Two explanations for the pattern are:\n\n1. Increased availability of personnel may have led to more activities or operations being recorded.\n2. Shifts in roles or responsibilities could have altered how data is collected or reported.\n\nUncertainty arises because the exact impact of the staffing change on the count may vary depending on the specific context—such as the type of activities involved—and there may be hidden factors influencing the results.",
+        "route": "ask"
+      },
+      "status": "ok",
+      "task": "auto"
+    }
+  },
+  {
+    "id": "open",
+    "expected_route": "ask",
+    "route": "ask",
+    "passed": true,
+    "response": {
+      "metrics": {
+        "calls": 1,
+        "elapsed_ms": 428,
+        "peak_sent_tokens": 113,
+        "repairs": 0,
+        "token_checks": 1
+      },
+      "notes": [],
+      "result": {
+        "output": "The lighthouse stood tall, its beam cutting through the stormy night, guiding ships safely to shore.",
+        "route": "ask"
+      },
+      "status": "ok",
+      "task": "auto"
+    }
+  },
+  {
+    "id": "image-and-text",
+    "passed": true,
+    "response": {
+      "metrics": {
+        "calls": 1,
+        "elapsed_ms": 672,
+        "peak_sent_tokens": 190,
+        "repairs": 0,
+        "token_checks": 1
+      },
+      "notes": [],
+      "result": {
+        "color": "red",
+        "marker": "QL-639"
+      },
+      "status": "ok",
+      "task": "structure"
+    }
+  },
+  {
+    "id": "long-direct",
+    "passed": true,
+    "source_sha256": "5342624dac52d06b9119f043639234bea23e630ba69deca0500ea7e1ebc0ecda",
+    "source_chars": 21249,
+    "response": {
+      "metrics": {
+        "calls": 0,
+        "elapsed_ms": 55,
+        "peak_sent_tokens": 0,
+        "repairs": 0,
+        "token_checks": 1
+      },
+      "notes": [
+        "input needs 13393 tokens; budget is 6200"
+      ],
+      "result": null,
+      "status": "held",
+      "task": "answer"
+    }
+  },
+  {
+    "id": "long-verified",
+    "passed": true,
+    "source_sha256": "5342624dac52d06b9119f043639234bea23e630ba69deca0500ea7e1ebc0ecda",
+    "source_chars": 21249,
+    "response": {
+      "metrics": {
+        "calls": 4,
+        "elapsed_ms": 9300,
+        "peak_sent_tokens": 6199,
+        "repairs": 0,
+        "token_checks": 22
+      },
+      "notes": [],
+      "result": {
+        "answer": {
+          "spans": [
+            {
+              "end_byte": 62638,
+              "start_byte": 62630
+            }
+          ],
+          "value": "QMX-4921"
+        }
+      },
+      "status": "ok",
+      "task": "answer"
+    }
+  },
+  {
+    "id": "long-call-limit",
+    "passed": true,
+    "source_sha256": "5342624dac52d06b9119f043639234bea23e630ba69deca0500ea7e1ebc0ecda",
+    "source_chars": 21249,
+    "response": {
+      "metrics": {
+        "calls": 1,
+        "elapsed_ms": 4344,
+        "peak_sent_tokens": 6195,
+        "repairs": 0,
+        "token_checks": 20
+      },
+      "notes": [
+        "generation budget exhausted before the whole task could be checked"
+      ],
+      "result": null,
+      "status": "held",
+      "task": "answer"
+    }
+  }
+]

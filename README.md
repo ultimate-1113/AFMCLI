@@ -1,0 +1,94 @@
+# AFMCLI
+
+Rustで実装した、Mac上の **AFM 3 Core Advanced** 用タスクハーネス。標準入力の文書を、根拠位置付きの値、分類ラベル、要約、書き換え、指定したJSONに変換する。ファイルの更新案と小規模な数理最適化は通常コードでも検証できる。モデルを使うときはOS付属の `/usr/bin/fm` で `system` のモデル名を確認する。
+
+初見の合成54件では直接回答の28件に対してAFMCLIが43件正解。別の著者が作った日本語・英語の公開データ47件では10件から19件になった。日本語の根拠付きQAは2/16から9/16、英語QAは双方3/16だった。最適化の数式を自然言語から正しく読み取ることや、抜き出した語句が質問に答えているかには誤りが残る。[実測結果と失敗例](eval/README.md)
+
+## インストール
+
+モデル実行には、Apple Intelligenceが有効で、`fm models` に `✓ system (AFM 3 Core Advanced)` と表示されるMacが必要。今回の実機はMac mini M6、32 GB、モデル配置先は内蔵SSD 256 GB、macOS 27.2.1（26B131）。配布バイナリはApple Silicon向けで、アドホック署名。開発環境からはRust 1.89以上でソースをビルドできる。[macOS向け配布ファイルとSHA-256](https://github.com/ultimate-1113/AFMCLI/releases/tag/v0.1.0)・[AppleのCLI解説](https://developer.apple.com/videos/play/wwdc2026/334/)
+
+```sh
+cargo install --locked --git https://github.com/ultimate-1113/AFMCLI --tag v0.1.0 afmcli
+afmcli doctor
+```
+
+ダウンロード版はアーカイブと同名の `.sha256` を同じフォルダに置き、空のディレクトリで確認して展開する。
+
+```sh
+shasum -a 256 -c afmcli-v0.1.0-aarch64-apple-darwin.tar.gz.sha256
+tar -xzf afmcli-v0.1.0-aarch64-apple-darwin.tar.gz
+./afmcli doctor
+```
+
+## 文書を渡す
+
+次の例は、新しい会場を原文から抜き出し、その位置を返す。返却値 `result.answer.spans` の `start_byte` は先頭を含み、`end_byte` は末尾を含まない。UTF-8の元のバイト列に対する位置で、同じ語句が複数回あると検出した位置が複数入る。
+
+```sh
+printf '%s\n' '旧会場は中庭。新会場は青葉館に決定。' |
+  afmcli answer '新会場の名前は？'
+```
+
+| コマンド | 用途と出力 |
+|---|---|
+| `ask '指示'` | 自由な質問、生成、説明。ソースを標準入力で追加できる |
+| `auto '指示'` | 指示に応じてask・answer・summarize・rewriteを選ぶ。JSONに選んだrouteを含む。明示的な上限や出力契約がある場合は個別コマンドで指定する |
+| `answer '質問'` | 資料から最短の回答箇所を提案させ、原文位置を検査する。標準では候補が質問に答えているかをモデルに再確認する。`--fast-answer` でその1回を省ける |
+| `extract --field '項目=説明' --many '項目=説明'` | 任意の名前・説明で、単値または複数値を抽出。値ごとに原文位置を返す。情報がない項目には空配列が入る |
+| `classify --label '名前=意味' --label '名前=意味'` | 利用者の分類基準で該当ラベルを1つ返す。該当なし・複数該当は保留し、labelをnullにする |
+| `summarize -n 3 --focus '決定事項'` | 原文の重要な文を最大3件、原文順と位置付きで返す。焦点の指定は任意 |
+| `rewrite '指示' --keep-numbers --max-chars 80` | 書き換え・翻訳。数値表記と出現数、Unicodeスカラー値による文字数上限を検査する。`--require-change` を付けると原文の丸写しを検出する |
+| `structure schema.json '指示'` | 任意の項目を持つJSONオブジェクトを生成する。ネイティブの構造化生成とローカルの型検査を使用 |
+| `edit` | 指定されたJSON Pointerの現在値を照合し、一括で更新をプレビューする |
+| `solve` / `solve --from-text` | 有界整数の線形制約・複数の目的関数を扱う。`--from-text` はモデルが解釈した式も返し、人による確認を求める |
+| `run` / `batch` | JSONのタスク1件、またはJSON Linesを1件ずつ処理する |
+
+文書は `-i FILE` でも指定できる。`ask`、`classify`、`structure` は `--image PATH` に対応する。文章だけの要求は原則標準入力でfmに渡す。画像と本文を併用する場合はfmの `--image` と `--text` を組み合わせるため、本文がそのプロセスの引数に入る。実行時の一時ディレクトリは所有者専用で、応答を読んだ後に削除する。ルート、入力文、指定した画像の添付を実行記録と照合する。
+
+```sh
+printf '%s\n' '配送済みは黒箱と白箱。費用は未記入。' |
+  afmcli extract --many 'delivered=配送済みの箱を個別に' --field 'cost=明記された費用'
+printf '%s\n' '試験は9時と14時です。' |
+  afmcli --text rewrite '簡潔な掲示文にする' --keep-numbers --max-chars 30
+printf '%s\n' '{"id":"s1","task":"summarize","source":"見学は終了。明日は休館。","sentences":1,"focus":"明日の案内"}' |
+  afmcli batch
+```
+
+## JSON更新と数理最適化
+
+次の更新では、`open` が12のときだけ3を加える。複数の操作のうち1つでも旧値が合わないと、元の文書全体を返す。CLIは更新案を標準出力へ出す。共有ストアに反映するアプリではストア側で版の照合と書き込みを一つのトランザクションにする。
+
+```sh
+printf '%s\n' '{"document":{"desk":{"open":12}},"changes":[{"path":"/desk/open","expect":12,"op":"add","value":3}]}' |
+  afmcli edit
+```
+
+`set` はスカラー値を置換し、`add` は符号付き64ビット整数を加算する。複数操作は元の文書に対して検証する。重複したパス、存在しないパス、オーバーフローは保留する。
+
+```sh
+printf '%s\n' '{"variables":[{"name":"X","min":0,"max":5}],"constraints":[{"weights":[2],"relation":"ge","rhs":7}],"objectives":[{"weights":[1],"sense":"min"}]}' |
+  afmcli solve
+```
+
+この例の最適解は `X=4`。重みの並びは宣言した変数順、目的関数は優先度順。すべて同率なら変数順で辞書式に最小の解を返し、同率数も出す。比較は `lt/le/eq/ge/gt`、目的は `min/max`。最大12変数・25万組で、積和演算の見積もりにも上限がある。自然言語からの解釈では、変数名と係数・境界値の出典を検査したうえで `review` として式と計算結果を返す。数値の役割や不等号の読み取りにも確認が必要になる。
+
+## 結果と処理量
+
+返すJSONには `status`、`result`、`notes`、`metrics` がある。`ok` はそのタスクで実装している検査を通ったことを示す。部分抽出は `partial`、回答を根拠付けられない場合は `abstained`、人の確認が必要な数式は `review`。検査や予算による中断は `held`、モデル側の拒否は `refused`、入力・環境の失敗は `error`。終了コードは通常0、エラー2、保留・拒否3。バッチは各行の結果を順次出力し、終了コードではエラーを優先する。単発コマンドの引数・JSON解釈エラーは標準エラーに出る。
+
+`--direct` は同じタスクをモデルに1回依頼する比較用モードで、結果は `unverified`。`--trace` はモデルが返した文字列を出力に含める。標準の `--repairs 1` は形式や出典など、コードで特定した失敗に対する再試行回数。`--max-calls 24` は1ジョブの生成回数上限。
+
+生成前に `fm count-tokens` で指示・本文を数え、スキーマも計数する。標準入力予算は6,200トークンで、モデルの8,192トークンの文脈に応答用の余裕を持たせた。抽出・引用回答は長文を連続した範囲に分け、全範囲を処理する。単値で異なる候補が残れば保留する。要約は文を選び、複数範囲にまたがるときは候補を再選択する。予算内に全体を処理できない場合は `held` を返す。書き換え・自由回答には全文を渡す。
+
+`structure` が扱うスキーマは、ルートがobject、各階層でproperties・required・additionalProperties=falseを明示したもの。値にはobject、arrayとitems、stringと任意のenum、integer、number、booleanを使える。未対応キーワード、重複したJSONキー、生成結果の型違反にはエラーまたは保留を返す。事実性は原文や業務上の条件と照合して確かめる。
+
+## 再現とライセンス
+
+```sh
+cargo test --locked --all-targets
+python3 -B tools/verify_results.py
+python3 -B tools/privacy_audit.py --tracked
+```
+
+実装・テスト・自作資料はMIT。Appleのソフトウェア、モデル出力、公開評価データにはそれぞれの利用条件が適用される。[MIT](LICENSE)・[出典と第三者の権利](NOTICES.md)・[再現手順と機種条件](eval/README.md)
