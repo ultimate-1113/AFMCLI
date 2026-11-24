@@ -411,7 +411,24 @@ impl<'a> Engine<'a> {
                 let value = self.structured(r, |v| Ok(v.clone()))?;
                 Ok(Output::new("ok", value))
             }
-            Job::Edit { document, changes } => {
+            Job::Edit {
+                document,
+                changes,
+                row,
+            } => {
+                if let Some(target) = row {
+                    if self.policy.direct {
+                        return self.raw(request(
+                            "Find the unique row with the given ID in the collection. Require its observed revision and all old field values to match. set replaces a scalar; add performs checked signed-64 integer addition. Apply all changes together and advance the revision once only if data changed. Reject missing, ambiguous or reserved fields and return the original if anything fails. Return JSON with keys document and changed.",
+                            json!({"document":document,"changes":changes,"row":target}), None));
+                    }
+                    let updated =
+                        edit::apply_to_row(document, target, changes).map_err(Fail::Held)?;
+                    return Ok(Output::new(
+                        "ok",
+                        json!({"changed":updated != *document,"document":updated}),
+                    ));
+                }
                 if self.policy.direct {
                     return self.raw(request("Apply the listed operations together, only at the exact JSON Pointers and only if every expect value matches. add means checked signed-64 integer addition, set replaces a scalar. Reject missing or duplicate paths. On failure return the original document. Return JSON with keys document and changed.",json!({"document":document,"changes":changes}),None));
                 }

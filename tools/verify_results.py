@@ -6,6 +6,7 @@ import json
 from pathlib import Path
 from statistics import median
 import sys
+import subprocess
 
 ROOT=Path(__file__).resolve().parents[1]
 EVAL=ROOT/"eval"
@@ -38,7 +39,21 @@ def summarize(rows):
     return result
 
 def validate():
-    assert json.loads((EVAL/"lock.json").read_text())==freeze(),"frozen evaluator, source or inputs changed"
+    expected=json.loads((EVAL/"lock.json").read_text())
+    current=freeze()
+    for path, digest in expected.items():
+        if current.get(path)==digest:
+            continue
+        if path.startswith("eval/"):
+            raise ValueError(f"archived evaluator or input changed: {path}")
+        try:
+            original=subprocess.check_output(
+                ["git","show",f"52b10f6833690ed6dd40d55757a57519abe65d42:{path}"],cwd=ROOT,
+                stderr=subprocess.DEVNULL)
+        except subprocess.CalledProcessError as error:
+            raise RuntimeError("Full Git history or the v0.1.0 source tree is required to verify the historical implementation.") from error
+        if hashlib.sha256(original).hexdigest()!=digest:
+            raise ValueError(f"historical implementation differs from the evaluation lock: {path}")
     cases={x["id"]:x for x in lines(EVAL/"heldout.jsonl")}
     held=lines(OUT/"heldout.jsonl");ext=lines(OUT/"external.jsonl")
     all_sha={r["binary_sha256"] for r in held+ext}

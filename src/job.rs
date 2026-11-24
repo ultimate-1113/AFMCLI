@@ -70,6 +70,8 @@ pub enum Job {
     Edit {
         document: Value,
         changes: Vec<Change>,
+        #[serde(default, deserialize_with = "crate::edit::deserialize_row")]
+        row: Option<crate::edit::RowSelector>,
     },
     Solve {
         problem: Option<crate::solve::Problem>,

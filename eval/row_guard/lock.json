@@ -1,0 +1,19 @@
+{
+  "Cargo.lock": "93da787424e56397ccad6ed041578e716bc0653fb49301e6ebae281b0239cc0e",
+  "Cargo.toml": "4a75e8503b9f694796c985e3d2fc0708460448b8c8997fd045e035749c9e98ba",
+  "eval/row_guard/cases.jsonl": "b6d0315afbce7775ec85d341bb4d746c68c3755ca795cb01fdda48c1d8673183",
+  "eval/row_guard/make_cases.py": "18e85f55147b68aabc27da84ebd1a294bdf3bedfc1993b003a122d269d763b7f",
+  "eval/row_guard/protocol.md": "93b52441e7b858fe210c6a690aa6f05e747c16885b30f9e0718d0ed35e2649b0",
+  "eval/row_guard/run.py": "db326c6075bb4cd13f200d88d6f08136d2c14e1517c521bb18ce3c9ff7dfd80b",
+  "src/contract.rs": "9f6c078e0e613e95171b28d5f64dd8a98374261a897db62114b3f07bea050d84",
+  "src/document.rs": "36fe4b79fb3ae66d32bca3c260576017085062dc181202d0cc7cbc95146be8d5",
+  "src/edit.rs": "2546f961e5a791193e18ac3fcdabbccdfaec627b7543d0ea18392729c7485ada",
+  "src/engine.rs": "41794dcd41e2492665b413e89c047f57d2c6ebf6d6b89fb55bc337223cba13ad",
+  "src/fm.rs": "21bcfd9965b51adc75cd0c569aa38d433efc68489a36cef4d2dc3390284130f0",
+  "src/ground.rs": "e035bd1680bdc28a519f4a15d8765795baa7482adb2084071f79c541a66b2f69",
+  "src/job.rs": "0bf72971e317aead97abfa35e8215dfc9e2341d05fb5d2a9061c2c7932616915",
+  "src/json.rs": "a2d9ba6b43c151ae1291c4bebe07fa4524da65c8994163bfd6977dd69321ec97",
+  "src/lib.rs": "2d1d648cdcb265e02dc9acccf92763109c0bf0afaaf58af566426eda437ea5b2",
+  "src/main.rs": "6ae036d3eef5a8619c15cd30d4d80890036659d28d5f39f0a66b0ac45f9e544d",
+  "src/solve.rs": "871fdf095be8ce304876d0926a8284ee0ce4cb93de97e924eb143a2794a3b4a4"
+}
