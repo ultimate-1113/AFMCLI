@@ -18,6 +18,8 @@ def main():
     p.add_argument("archive",type=Path)
     a=p.parse_args()
     files={"afmcli":a.binary.read_bytes(),"LICENSE":(ROOT/"LICENSE").read_bytes(),"NOTICES.md":(ROOT/"NOTICES.md").read_bytes()}
+    for name in ("README.md", "examples/guarded-row.json"):
+        files[name]=(ROOT/name).read_bytes()
     files["START.txt"]=b"Run ./afmcli doctor, then ./afmcli --help. Source and installation instructions: https://github.com/ultimate-1113/AFMCLI\n"
     for crate in json.loads(a.metadata.read_text())["packages"]:
         if not crate["source"]:continue

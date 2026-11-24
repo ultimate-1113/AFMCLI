@@ -108,4 +108,11 @@ if __name__=="__main__":
     report=validate();dest=OUT/"summary.json"
     if args.write:dest.write_text(json.dumps(report,ensure_ascii=False,indent=2,sort_keys=True)+"\n")
     else:assert json.loads(dest.read_text())==report
-    print("Verified frozen sources, 114 synthetic trial records, 126 external measurement records and 12 integration probes.")
+    before={(s,r["id"],r["mode"]):r["score"]["pass"] for s in ("heldout","external")
+            for r in lines(OUT/(s+".jsonl")) if r["mode"] in ("direct","verified")}
+    replay=lines(EVAL/"row_guard"/"compatibility.jsonl")
+    assert len(replay)==len(before)==202
+    assert {(r["split"],r["id"],r["mode"]):r["score"]["pass"] for r in replay}==before
+    assert all(r["binary_sha256"]=="b6f98b9b0446ce1cbb9394ec00ac51c3843397124b9c697efb117cf4e1eff82e"
+               and "response" not in r for r in replay)
+    print("Verified frozen sources, 114 synthetic trials, 126 external trials, 12 probes and 202 v0.1.1 compatibility records.")

@@ -32,5 +32,7 @@ jobs:
       - name: Replay synthetic results and check the publication
         run: |
           python3 -B tools/verify_results.py
+          cargo build --locked --bin afmcli
+          python3 -B eval/row_guard/run.py replay --binary target/debug/afmcli
           python3 -B tools/test_png_audit.py
           python3 -B tools/privacy_audit.py --tracked

@@ -2,22 +2,24 @@
 
 Rustで実装した、Mac上の **AFM 3 Core Advanced** 用タスクハーネス。標準入力の文書を、根拠位置付きの値、分類ラベル、要約、書き換え、指定したJSONに変換する。ファイルの更新案と小規模な数理最適化は通常コードでも検証できる。モデルを使うときはOS付属の `/usr/bin/fm` で `system` のモデル名を確認する。
 
+表を編集するときは、行の並びが変わっても対象を見失わないよう、品番などの一意なIDと読み取り時の版を指定できる。36件の試験では、行番号と旧値だけの方式で18件あった誤った変更案が0件になり、正当な15件はすべて完了した。[表編集の比較](eval/row_guard/README.md)
+
 初見の合成54件では直接回答の28件に対してAFMCLIが43件正解。別の著者が作った日本語・英語の公開データ47件では10件から19件になった。日本語の根拠付きQAは2/16から9/16、英語QAは双方3/16だった。最適化の数式を自然言語から正しく読み取ることや、抜き出した語句が質問に答えているかには誤りが残る。[実測結果と失敗例](eval/README.md)
 
 ## インストール
 
-モデル実行には、Apple Intelligenceが有効で、`fm models` に `✓ system (AFM 3 Core Advanced)` と表示されるMacが必要。今回の実機はMac mini M6、32 GB、モデル配置先は内蔵SSD 256 GB、macOS 27.2.1（26B131）。配布バイナリはApple Silicon向けで、アドホック署名。開発環境からはRust 1.89以上でソースをビルドできる。[macOS向け配布ファイルとSHA-256](https://github.com/ultimate-1113/AFMCLI/releases/tag/v0.1.0)・[AppleのCLI解説](https://developer.apple.com/videos/play/wwdc2026/334/)
+モデル実行には、Apple Intelligenceが有効で、`fm models` に `✓ system (AFM 3 Core Advanced)` と表示されるMacが必要。今回の実機はMac mini M6、32 GB、モデル配置先は内蔵SSD 256 GB、macOS 27.2.1（26B131）。配布バイナリはApple Silicon向けで、アドホック署名。開発環境からはRust 1.89以上でソースをビルドできる。[macOS向け配布ファイルとSHA-256](https://github.com/ultimate-1113/AFMCLI/releases/tag/v0.1.1)・[AppleのCLI解説](https://developer.apple.com/videos/play/wwdc2026/334/)
 
 ```sh
-cargo install --locked --git https://github.com/ultimate-1113/AFMCLI --tag v0.1.0 afmcli
+cargo install --locked --git https://github.com/ultimate-1113/AFMCLI --tag v0.1.1 afmcli
 afmcli doctor
 ```
 
 ダウンロード版はアーカイブと同名の `.sha256` を同じフォルダに置き、空のディレクトリで確認して展開する。
 
 ```sh
-shasum -a 256 -c afmcli-v0.1.0-aarch64-apple-darwin.tar.gz.sha256
-tar -xzf afmcli-v0.1.0-aarch64-apple-darwin.tar.gz
+shasum -a 256 -c afmcli-v0.1.1-aarch64-apple-darwin.tar.gz.sha256
+tar -xzf afmcli-v0.1.1-aarch64-apple-darwin.tar.gz
 ./afmcli doctor
 ```
 
@@ -40,7 +42,7 @@ printf '%s\n' '旧会場は中庭。新会場は青葉館に決定。' |
 | `summarize -n 3 --focus '決定事項'` | 原文の重要な文を最大3件、原文順と位置付きで返す。焦点の指定は任意 |
 | `rewrite '指示' --keep-numbers --max-chars 80` | 書き換え・翻訳。数値表記と出現数、Unicodeスカラー値による文字数上限を検査する。`--require-change` を付けると原文の丸写しを検出する |
 | `structure schema.json '指示'` | 任意の項目を持つJSONオブジェクトを生成する。ネイティブの構造化生成とローカルの型検査を使用 |
-| `edit` | 指定されたJSON Pointerの現在値を照合し、一括で更新をプレビューする |
+| `edit` | 旧値を照合し、一括で更新をプレビューする。表には対象IDと観測時の版も指定できる |
 | `solve` / `solve --from-text` | 有界整数の線形制約・複数の目的関数を扱う。`--from-text` はモデルが解釈した式も返し、人による確認を求める |
 | `run` / `batch` | JSONのタスク1件、またはJSON Linesを1件ずつ処理する |
 
@@ -62,6 +64,12 @@ printf '%s\n' '{"id":"s1","task":"summarize","source":"見学は終了。明日�
 ```sh
 printf '%s\n' '{"document":{"desk":{"open":12}},"changes":[{"path":"/desk/open","expect":12,"op":"add","value":3}]}' |
   afmcli edit
+```
+
+表の行順が変わる場合は、`row` に配列のJSON Pointer、一意なIDの列と値、行ごとの更新版の列と観測値を渡す。各変更の `path` は行直下のデータ列を指定する。対象が一つあり、版・旧値がすべて一致すると更新案を返し、実際に値が変わる場合だけ行の版を1進める。対象の欠落、ID重複、版の不一致があると文書全体を保留する。IDは文字列または整数、版は非負の64ビット整数。次の例では2行とも数量は4だが、品番K-9だけを6にする。[入力JSON](examples/guarded-row.json)・[36件の誤適用試験](eval/row_guard/README.md)
+
+```sh
+afmcli edit -i examples/guarded-row.json
 ```
 
 `set` はスカラー値を置換し、`add` は符号付き64ビット整数を加算する。複数操作は元の文書に対して検証する。重複したパス、存在しないパス、オーバーフローは保留する。

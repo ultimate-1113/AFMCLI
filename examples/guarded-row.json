@@ -1,0 +1,18 @@
+{
+  "document": {
+    "items": [
+      {"sku": "G-4", "rev": 9, "quantity": 4},
+      {"sku": "K-9", "rev": 3, "quantity": 4}
+    ]
+  },
+  "row": {
+    "collection": "/items",
+    "id_field": "sku",
+    "id": "K-9",
+    "revision_field": "rev",
+    "revision": 3
+  },
+  "changes": [
+    {"path": "/quantity", "expect": 4, "op": "add", "value": 2}
+  ]
+}
