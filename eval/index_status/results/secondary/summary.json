@@ -1,0 +1,99 @@
+{
+  "records": {
+    "n": 12,
+    "settled_n": 6,
+    "correct": 2,
+    "settled": 2,
+    "null": 0,
+    "false_nonnull": 4,
+    "outcomes": {
+      "correct_settled": 2,
+      "error": 4,
+      "false_nonnull": 4,
+      "wrong_settled": 2
+    },
+    "both_in_pair_correct": 0,
+    "calls": 44,
+    "tokens": 190589,
+    "peak": 6134,
+    "median_ms": 24699.7725,
+    "p95_ms": 38901.502,
+    "extra_nonauthoritative_citations": 8,
+    "final_context_methods": {
+      "evidence_windows": 12
+    },
+    "with_retrieval_rounds": 0,
+    "fallback_reasons": {}
+  },
+  "indexed": {
+    "n": 12,
+    "settled_n": 6,
+    "correct": 4,
+    "settled": 4,
+    "null": 0,
+    "false_nonnull": 3,
+    "outcomes": {
+      "correct_settled": 4,
+      "error": 3,
+      "false_nonnull": 3,
+      "refused": 1,
+      "wrong_settled": 1
+    },
+    "both_in_pair_correct": 0,
+    "calls": 57,
+    "tokens": 132655,
+    "peak": 6132,
+    "median_ms": 2444.8475,
+    "p95_ms": 41198.845,
+    "extra_nonauthoritative_citations": 6,
+    "final_context_methods": {
+      "evidence_windows": 6,
+      "indexed_excerpts": 6
+    },
+    "with_retrieval_rounds": 12,
+    "fallback_reasons": {
+      "insufficient_evidence": 4,
+      "additional_source_mentions": 1
+    }
+  },
+  "guard": {
+    "n": 12,
+    "settled_n": 6,
+    "correct": 4,
+    "settled": 4,
+    "null": 0,
+    "false_nonnull": 3,
+    "outcomes": {
+      "correct_settled": 4,
+      "error": 3,
+      "false_nonnull": 3,
+      "refused": 1,
+      "wrong_settled": 1
+    },
+    "both_in_pair_correct": 0,
+    "calls": 57,
+    "tokens": 132655,
+    "peak": 6132,
+    "median_ms": 2478.625,
+    "p95_ms": 41191.633,
+    "extra_nonauthoritative_citations": 6,
+    "final_context_methods": {
+      "evidence_windows": 6,
+      "indexed_excerpts": 6
+    },
+    "with_retrieval_rounds": 12,
+    "fallback_reasons": {
+      "insufficient_evidence": 4,
+      "additional_source_mentions": 1
+    }
+  },
+  "guard_vs_indexed": {
+    "wins": [],
+    "losses": [],
+    "net": 0,
+    "median_case_time_ratio": 1.00114,
+    "total_call_difference": 0,
+    "total_input_difference": 0,
+    "median_paired_ms_difference": 26.773
+  }
+}

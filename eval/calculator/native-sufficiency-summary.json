@@ -1,0 +1,77 @@
+{
+  "criteria_met": false,
+  "registered": {
+    "correct": 1,
+    "e2e_median_ms": 477.782,
+    "held": 0,
+    "missing_correct": 0,
+    "missing_total": 6,
+    "numeric_callbacks_on_missing": 4,
+    "numeric_correct": 1,
+    "numeric_final_on_missing": 6,
+    "numeric_total": 6,
+    "raw_numeric_final_on_missing": 6,
+    "raw_reply_with_digits_on_missing": 6,
+    "resumed_between_stages": 0,
+    "stages": {
+      "gate": {
+        "callbacks": 0,
+        "median_ms": null,
+        "numeric_callbacks": 0,
+        "requests": 0,
+        "sessions": 0
+      },
+      "solve": {
+        "callbacks": 7,
+        "median_ms": 477.658,
+        "numeric_callbacks": 7,
+        "requests": 12,
+        "sessions": 12
+      }
+    },
+    "trials": 12
+  },
+  "sufficiency": {
+    "correct": 6,
+    "e2e_median_ms": 208.594,
+    "gate_decisions": {
+      "missing": {
+        "MISSING": 6,
+        "READY": 0,
+        "held": 0
+      },
+      "numeric": {
+        "MISSING": 3,
+        "READY": 3,
+        "held": 0
+      }
+    },
+    "held": 0,
+    "missing_correct": 6,
+    "missing_total": 6,
+    "numeric_callbacks_on_missing": 0,
+    "numeric_correct": 0,
+    "numeric_final_on_missing": 0,
+    "numeric_total": 6,
+    "raw_numeric_final_on_missing": 0,
+    "raw_reply_with_digits_on_missing": 0,
+    "resumed_between_stages": 0,
+    "stages": {
+      "gate": {
+        "callbacks": 0,
+        "median_ms": 207.083,
+        "numeric_callbacks": 0,
+        "requests": 12,
+        "sessions": 12
+      },
+      "solve": {
+        "callbacks": 2,
+        "median_ms": 656.967,
+        "numeric_callbacks": 2,
+        "requests": 3,
+        "sessions": 3
+      }
+    },
+    "trials": 12
+  }
+}
