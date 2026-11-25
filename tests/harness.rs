@@ -329,6 +329,47 @@ fn compact_dictionary_quotes_original_bytes_and_checks_distant_updates() {
 }
 
 #[test]
+fn periodic_packet_uses_the_original_offsets_in_both_compact_modes() {
+    let unit = "通知：点検済み。\r\n台帳：記入済み。\r\n";
+    let src = format!(
+        "{}会場は桜館です。\n{}終了。",
+        unit.repeat(180),
+        unit.repeat(160)
+    );
+    let job = json!({"task":"answer","source":src,"question":"会場は？"});
+    for mode in [ContextMode::Repeats, ContextMode::Evidence] {
+        let r = eval(
+            job.clone(),
+            Policy {
+                compact: Some(mode),
+                input_budget: 1200,
+                ..Policy::default()
+            },
+            |request| {
+                assert!(request.prompt.contains("dictionary") && request.prompt.contains("桜館"));
+                Ok(if request.schema.as_ref().unwrap()["properties"]
+                    .get("supported")
+                    .is_some()
+                {
+                    json!({"supported":true})
+                } else {
+                    json!({"answer":"桜館"})
+                }
+                .to_string())
+            },
+        );
+        assert_eq!(r.status, "ok");
+        assert_eq!(r.metrics.calls, 2);
+        assert_eq!(r.metrics.context.unwrap().method, "repeat_blocks");
+        let i = src.find("桜館").unwrap();
+        assert_eq!(
+            r.result["answer"]["spans"],
+            json!([{"start_byte":i,"end_byte":i+"桜館".len()}])
+        );
+    }
+}
+
+#[test]
 fn compact_reads_every_window_and_cannot_quote_an_omitted_sentence() {
     let mut source = (0..27)
         .map(|i| format!("Report {i} {}.", "stored ".repeat(12)))
@@ -426,6 +467,7 @@ fn repeats_mode_uses_the_same_windows_as_standard_for_nonrepeating_text() {
         .join("\n");
     let job = json!({"task":"answer","source":source,"question":"Which room?"});
     let mut standard = Vec::new();
+    let mut standard_checks = 0;
     for mode in [None, Some(ContextMode::Repeats)] {
         let mut prompts = Vec::new();
         let r = eval(
@@ -444,9 +486,11 @@ fn repeats_mode_uses_the_same_windows_as_standard_for_nonrepeating_text() {
         assert!(prompts.len() > 2);
         if mode.is_none() {
             standard = prompts;
+            standard_checks = r.metrics.token_checks;
         } else {
             assert_eq!(r.metrics.context.unwrap().method, "full_scan");
             assert_eq!(prompts, standard);
+            assert_eq!(r.metrics.token_checks, standard_checks);
         }
     }
 }

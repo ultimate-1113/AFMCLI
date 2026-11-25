@@ -82,6 +82,68 @@ fn pack<'a>(source: &'a str, lines: &[Segment<'_>], byte_limit: usize) -> Option
     })
 }
 
+/// Fold an exactly repeated block of up to eight adjacent segments into one
+/// dictionary entry. Keep the source separators on the block itself.
+fn pack_blocks<'a>(source: &'a str, lines: &[Segment<'_>], limit: usize) -> Option<Packed<'a>> {
+    let edge = |i| match i {
+        0 => 0,
+        n if n == lines.len() => source.len(),
+        n => lines[n].start,
+    };
+    let part = |pos: usize, width: usize| &source[edge(pos)..edge(pos + width)];
+    let mut packet = Packed {
+        dictionary: vec![],
+        sequence: vec![],
+    };
+    let mut indices = HashMap::new();
+    let mut bytes = 0;
+    let mut pos = 0;
+    let mut multi = false;
+    while pos < lines.len() {
+        let remaining = lines.len() - pos;
+        let mut best_width = 0;
+        let mut best_length = 0;
+        for w in 1..=8.min(remaining / 3) {
+            let unit = part(pos, w);
+            if part(pos + w, w) != unit || part(pos + 2 * w, w) != unit {
+                continue;
+            }
+            let mut length = 3 * w;
+            while length + w <= remaining && part(pos + length, w) == unit {
+                length += w;
+            }
+            // Prefer total coverage, then the shorter dictionary entry. A short
+            // run can be the prefix of a longer cycle such as AAABBB AAABBB.
+            if length > best_length {
+                best_width = w;
+                best_length = length;
+            }
+        }
+        if best_width != 0 {
+            let unit = part(pos, best_width);
+            let id = *indices.entry(unit).or_insert_with(|| {
+                packet.dictionary.push(unit);
+                bytes += unit.len();
+                packet.dictionary.len() - 1
+            });
+            packet
+                .sequence
+                .push(Piece::Repeat([id, best_length / best_width]));
+            pos += best_length;
+            multi |= best_width > 1;
+        } else {
+            let literal = part(pos, 1);
+            packet.sequence.push(Piece::Literal(literal));
+            bytes += literal.len();
+            pos += 1;
+        }
+        if bytes + packet.sequence.len() > limit {
+            return None;
+        }
+    }
+    multi.then_some(packet)
+}
+
 fn reader(question: &str, context: &Value) -> Request {
     request(
         "Read the material in order. A sequence string is literal; [i,n] repeats dictionary[i] n times (zero-based). Excerpts are in original order with gaps. Copy only the name, place, date or quantity requested, excluding the speaker and surrounding sentence. For example, 'Lee: Pickup is at the Willow Desk.' and 'Which desk?' gives 'Willow Desk'. Respect scope, corrections and cancellations. If the fact is absent, withdrawn without replacement, or conflicting without a resolution, return an empty answer.",
@@ -200,7 +262,13 @@ pub(super) fn answer(
         selection_windows: 0,
     };
     let byte_limit = engine.policy.input_budget.saturating_mul(12);
-    if let Some(packed) = pack(source, lines, byte_limit) {
+    for use_blocks in [false, true] {
+        let packed = if use_blocks {
+            pack_blocks(source, lines, byte_limit)
+        } else {
+            pack(source, lines, byte_limit)
+        };
+        let Some(packed) = packed else { continue };
         let context = json!(packed);
         let r = reader(question, &context);
         // Avoid passing multi-megabyte encodings to the tokenizer. Exact token
@@ -209,6 +277,9 @@ pub(super) fn answer(
             && r.prompt.len() <= byte_limit
             && engine.count(&r)? <= engine.policy.input_budget
         {
+            if use_blocks {
+                usage.method = "repeat_blocks";
+            }
             engine.metrics.context = Some(usage);
             return read(engine, question, &context, &[(0, source)], r).map(Some);
         }
@@ -262,11 +333,7 @@ pub(super) fn answer(
 #[cfg(test)]
 mod tests {
     use super::*;
-    #[test]
-    fn dictionary_roundtrip_keeps_whitespace_order_and_counts() {
-        let source = " \t通知。\r\n監視中。\n監視中。\n撤回。\r\n監視中。\n終了。  ";
-        let lines = document::segments(source);
-        let packed = pack(source, &lines, 4096).unwrap();
+    fn expand(packed: Packed<'_>) -> String {
         let mut restored = String::new();
         for piece in packed.sequence {
             match piece {
@@ -274,8 +341,52 @@ mod tests {
                 Piece::Repeat([id, n]) => restored.push_str(&packed.dictionary[id].repeat(n)),
             }
         }
-        assert_eq!(restored, source);
+        restored
+    }
+    #[test]
+    fn dictionary_roundtrip_keeps_whitespace_order_and_counts() {
+        let source = " \t通知。\r\n監視中。\n監視中。\n撤回。\r\n監視中。\n終了。  ";
+        let lines = document::segments(source);
+        let packed = pack(source, &lines, 4096).unwrap();
+        assert_eq!(expand(packed), source);
         assert!(pack("unique", &document::segments("unique"), 4096).is_none());
+    }
+
+    #[test]
+    fn periodic_packets_preserve_exact_bytes_at_cycle_and_edit_boundaries() {
+        let phrases = [
+            "記録済み。 \r\n",
+            "🌸\n",
+            "C. ",
+            "Ⅳ！\n",
+            "E?\r\n",
+            "F! ",
+            "G。\n",
+            "H\n",
+        ];
+        for width in 2..=8 {
+            for copies in [3, 4, 15] {
+                let group = phrases[..width].join("");
+                let source = format!(
+                    "  先頭。\n{}撤回。 \r\n  {}{}",
+                    group.repeat(copies),
+                    group.repeat(copies + 1),
+                    "末尾 ".repeat(2)
+                );
+                let lines = document::segments(&source);
+                assert_eq!(
+                    expand(pack_blocks(&source, &lines, 20_000).unwrap()),
+                    source
+                );
+                assert!(pack_blocks(&source, &lines, 8).is_none());
+            }
+        }
+        let almost = "A.\nB!\nA.\nB!\nA.\nB?\n";
+        assert!(pack_blocks(almost, &document::segments(almost), 1000).is_none());
+        let nested = "A.\nA.\nA.\nB.\nB.\nB.\n".repeat(23);
+        let p = pack_blocks(&nested, &document::segments(&nested), 1000).unwrap();
+        assert_eq!(p.sequence.len(), 1);
+        assert_eq!(expand(p), nested);
     }
 
     #[test]

@@ -10,12 +10,7 @@ use std::collections::{BTreeMap, BTreeSet};
 
 mod compact;
 
-/// Find a contiguous prefix that fits. Every portion is processed or the entire task is held.
-fn window<'a>(
-    engine: &mut Engine<'_>,
-    s: &[Segment<'a>],
-    make: impl Fn(&[Segment<'a>]) -> Request,
-) -> Run<usize> {
+fn window_budget(engine: &Engine<'_>) -> usize {
     // Leave room for validation feedback when a long compact-mode job has to
     // split its source. A single segment may still use the full model budget.
     let cap = engine.policy.input_budget;
@@ -27,7 +22,17 @@ fn window<'a>(
     } else {
         0
     };
-    let budget = cap - reserve;
+    cap - reserve
+}
+
+/// Find a contiguous prefix that fits. Every portion is processed or the entire task is held.
+fn window<'a>(
+    engine: &mut Engine<'_>,
+    s: &[Segment<'a>],
+    make: impl Fn(&[Segment<'a>]) -> Request,
+) -> Run<usize> {
+    let cap = engine.policy.input_budget;
+    let budget = window_budget(engine);
     let byte_limit = budget.saturating_mul(6);
     let mut bytes = 0;
     let mut high = 0;
@@ -51,7 +56,7 @@ fn window<'a>(
         }
     }
     if lo == 0 {
-        if reserve > 0 && engine.count(&make(&s[..1]))? <= cap {
+        if budget < cap && engine.count(&make(&s[..1]))? <= cap {
             return Ok(1);
         }
         return Err(Fail::Held(
@@ -221,12 +226,20 @@ fn extract(
         return engine.raw(make(source));
     }
     let lines = document::segments(source);
+    let mut first_window = None;
     if let Some(q) =
         question.filter(|_| engine.policy.compact.is_some() && !engine.policy.decompose)
-        && window(engine, &lines, |ls| make(excerpt(source, ls)))? < lines.len()
-        && let Some(result) = compact::answer(engine, source, q, &lines)?
     {
-        return Ok(result);
+        let budget = window_budget(engine);
+        let n = window(engine, &lines, |ls| make(excerpt(source, ls)))?;
+        if n < lines.len()
+            && let Some(result) = compact::answer(engine, source, q, &lines)?
+        {
+            return Ok(result);
+        }
+        if window_budget(engine) == budget {
+            first_window = Some(n);
+        }
     }
     let mut offset = 0;
     let mut merged = Located::new();
@@ -236,7 +249,10 @@ fn extract(
             let n = window(engine, rest, |ls| support_request(q, ls))?;
             (n, read_selected(engine, q, &rest[..n])?)
         } else {
-            let n = window(engine, rest, |ls| make(excerpt(source, ls)))?;
+            let n = match first_window.take() {
+                Some(n) => n,
+                None => window(engine, rest, |ls| make(excerpt(source, ls)))?,
+            };
             let block = excerpt(source, &rest[..n]);
             (
                 n,
