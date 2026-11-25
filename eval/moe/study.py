@@ -267,7 +267,7 @@ def run(args):
                 print(case_id, flush=True)
 
 
-def verify(output):
+def verify(output, quiet=False):
     total = 0
     for track in TRACKS:
         for split in ("dev", "test"):
@@ -281,7 +281,8 @@ def verify(output):
                     raise ValueError(f"incorrect metadata: {i}")
                 verify_row(row, cases[i], module, lock)
             total += len(rows)
-    print(f"Verified fixture locks, recorded usage and scores for {total} case-method results.")
+    if not quiet:
+        print(f"Verified fixture locks, recorded usage and scores for {total} case-method results.")
 
 
 def arguments():
@@ -311,5 +312,5 @@ if __name__ == "__main__":
         print(score_winner(args.output))
     elif args.command == "report":
         from report import report
-        verify(args.output)
+        verify(args.output, quiet=True)
         print(json.dumps(report(args.output), ensure_ascii=False, indent=2))

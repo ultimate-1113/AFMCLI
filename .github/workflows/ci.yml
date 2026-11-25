@@ -22,7 +22,9 @@ jobs:
           rustup toolchain install "${{ matrix.toolchain }}" --profile minimal
           rustup override set "${{ matrix.toolchain }}"
       - name: Check the CLI and library
-        run: cargo test --locked --all-targets
+        run: |
+          cargo test --locked --all-targets
+          cargo test --locked --all-targets --features experimental-index
       - name: Format and lint
         if: matrix.toolchain == 'stable'
         run: |
@@ -53,6 +55,8 @@ jobs:
           python3 -B eval/moe/general_checks.py
           python3 -B eval/moe/special_check.py
           python3 -B eval/moe/study.py verify
+          python3 -B eval/moe/study.py report > "$RUNNER_TEMP/afm-moe-summary.json"
+          cmp "$RUNNER_TEMP/afm-moe-summary.json" eval/moe/results/summary.json
           python3 -B eval/moe/regression.py verify
           python3 -B eval/repeats/check_short.py verify --route records --results eval/moe/results/regression-short.jsonl
           python3 -B tools/test_png_audit.py
