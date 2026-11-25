@@ -1,5 +1,5 @@
 //! Two separately generated readings of the same original evidence.
-use super::{arbiter, compact, excerpt, window};
+use super::{arbiter, compact, excerpt, indexed, window};
 use crate::{
     contract,
     document::{self, Evidence, Segment, Span},
@@ -60,12 +60,12 @@ pub(super) static CHANGE: LazyLock<Regex> = LazyLock::new(|| {
     )
     .unwrap()
 });
-static WANTS_STATE: LazyLock<Regex> = LazyLock::new(|| {
+pub(super) static WANTS_STATE: LazyLock<Regex> = LazyLock::new(|| {
     Regex::new(r"(?ix)
     \b(status|state\s+of|initial(?:ly)?|original(?:ly)?|propos(?:ed|al)|tentative|previous|former|before)\b
     |(?:状況|状態|当初|初回|最初|以前|仮称|仮案|提案された|候補だった)").unwrap()
 });
-static NEG_VALUE: LazyLock<Regex> = LazyLock::new(|| {
+pub(super) static NEG_VALUE: LazyLock<Regex> = LazyLock::new(|| {
     Regex::new(r"(?ix)
     ^(?:pending(?:\s+approval)?|unknown|undecided|unassigned|not\s+(?:yet\s+)?(?:approved|assigned|decided|confirmed)|
     (?:under\s+(?:review|discussion)|no\s+(?:venue|code|value|replacement)\s+(?:has|was|is)\b).*)[.。]?$|
@@ -73,7 +73,7 @@ static NEG_VALUE: LazyLock<Regex> = LazyLock::new(|| {
     (?:されていない|まだない|決まっていない|承認されておらず)[。.]?$").unwrap()
 });
 
-fn literal_name(clause: &str, value: &str) -> bool {
+pub(super) fn literal_name(clause: &str, value: &str) -> bool {
     [
         ("「", "」"),
         ("『", "』"),
@@ -87,7 +87,7 @@ fn literal_name(clause: &str, value: &str) -> bool {
 
 // Restrict the predicate to the mention itself. A negative term inside an assigned
 // proper name or a separate notice about another entity is not a withdrawal.
-fn tentative_mention(clause: &str, value: &str) -> bool {
+pub(super) fn tentative_mention(clause: &str, value: &str) -> bool {
     static BEFORE: LazyLock<Regex> = LazyLock::new(|| {
         Regex::new(r"(?ix)
         \b(?:proposed|suggested|considered|nominated|revoked|withdrew|cancelled|canceled)\s+(?:the\s+)?$|
@@ -110,7 +110,7 @@ fn tentative_mention(clause: &str, value: &str) -> bool {
     }
     found
 }
-fn field_conflict(question: &str, clause: &str, value: &str) -> bool {
+pub(super) fn field_conflict(question: &str, clause: &str, value: &str) -> bool {
     static TYPES: LazyLock<Vec<Regex>> = LazyLock::new(|| {
         [
         r"\b(?:code|identifier|serial|password|pin|reference number)\b|符号|コード|暗証|識別子|受付番号|管理番号",
@@ -242,6 +242,71 @@ pub(super) fn source_finding(v: &Value, parts: &[(usize, &str)], question: &str)
     }
 }
 
+fn only_value(clause: &str, value: &str) -> bool {
+    clause.contains(value)
+        && !clause
+            .replace(value, " ")
+            .chars()
+            .any(char::is_alphanumeric)
+}
+
+// A copied value can survive a short or misplaced draft citation. Recover only a
+// unique occurrence inside evidence actually shown to this reader. The independent
+// reader must still produce its own source-grounded decision.
+fn recover_draft(raw: &Value, parts: &[(usize, &str)], question: &str) -> Option<Finding> {
+    let value = raw["value"].as_str()?.trim();
+    let clause = raw["clause"].as_str()?.trim();
+    if raw["state"] != "set" || value.is_empty() {
+        return None;
+    }
+    if !only_value(clause, value)
+        && document::locate(clause, 0, value).is_ok()
+        && document::locate_parts(parts, clause).is_ok()
+    {
+        // The original quote was found and already failed a substantive validation.
+        return None;
+    }
+    let spans = document::locate_parts(parts, value).ok()?;
+    if spans.len() != 1 {
+        return None;
+    }
+    let span = spans.first()?;
+    let &(base, text) = parts
+        .iter()
+        .find(|(base, s)| span.start_byte >= *base && span.end_byte <= *base + s.len())?;
+    let segments = document::segments(text);
+    let i = segments.partition_point(|s| base + s.end() <= span.start_byte);
+    let line = segments.get(i)?;
+    if span.start_byte < base + line.start || span.end_byte > base + line.end() {
+        return None;
+    }
+
+    let context = line.text.replace(value, " ");
+    if indexed::tokens(&context).is_disjoint(&indexed::tokens(question)) {
+        return None;
+    }
+    let subject = raw["subject"].as_str().unwrap_or("").trim().to_lowercase();
+    if !subject.is_empty()
+        && question.to_lowercase().contains(&subject)
+        && !context.to_lowercase().contains(&subject)
+    {
+        let mut scope = indexed::Scope::default();
+        for (idx, s) in segments[..i].iter().enumerate() {
+            scope.advance(s.text, idx);
+        }
+        if !scope
+            .headers()
+            .any(|idx| segments[idx].text.to_lowercase().contains(&subject))
+        {
+            return None;
+        }
+    }
+
+    let evidence = json!({"state":"set","value":value,"clause":line.text});
+    let found = source_finding(&evidence, &[(base + line.start, line.text)], question);
+    (found.state == "set").then_some(found)
+}
+
 fn columns(draft: bool) -> Value {
     let mut fields = vec![
         (
@@ -287,6 +352,7 @@ struct Draft {
     raw: Value,
     bytes: usize,
     attempt: Option<usize>,
+    recovered: bool,
     finding: Finding,
 }
 
@@ -303,12 +369,19 @@ fn first(
         Ok((v, text.len()))
     })?;
     let attempt = engine.policy.trace.then_some(engine.metrics.calls);
-    let finding = source_finding(&raw, parts, question);
+    let mut first = source_finding(&raw, parts, question);
+    if first.state == "set" && only_value(&first.clause, &first.value) {
+        first = Finding::missing();
+    }
+    let repair = (first.state == "missing")
+        .then(|| recover_draft(&raw, parts, question))
+        .flatten();
     Ok(Draft {
+        recovered: repair.is_some(),
+        finding: repair.unwrap_or(first),
         raw,
         bytes,
         attempt,
-        finding,
     })
 }
 
@@ -328,9 +401,9 @@ fn capsule(draft: &Draft, question: &str, parts: &[(usize, &str)]) -> Value {
     if !change.is_empty() && change.chars().count() <= 20 {
         out["change"] = json!(change);
     }
-    let short: String = f.clause.chars().take(42).collect();
-    if !short.is_empty() {
-        out["excerpt"] = json!(short);
+    let quoted = draft.raw["clause"].as_str().unwrap_or("").trim();
+    if !quoted.is_empty() && f.clause.contains(quoted) {
+        out["excerpt"] = json!(quoted.chars().take(42).collect::<String>());
     }
     for key in ["excerpt", "change", "old", "field", "subject"] {
         if out.to_string().len() < draft.bytes {
@@ -392,9 +465,65 @@ fn focus<'a>(
     selected
 }
 
-fn resolution(first: &Finding, second: &Finding) -> (&'static str, bool) {
+// Only initial capitalization of an ordinary phrase may vary. Output still uses
+// the independent reader's exact bytes from an explicitly assigning source clause.
+fn same_source_spelling(first: &Finding, second: &Finding, question: &str) -> bool {
+    static SENSITIVE: LazyLock<Regex> = LazyLock::new(|| {
+        Regex::new(
+            r"(?ix)
+        \b(code\w*|identifiers?|id|sku|serial|password|passphrase|token|keys?|callsign|filename|
+        username|literal|case[- ]sensitive|reference\s+number|part\s+number)\b|
+        番号|コード|符号|識別子|大文字|小文字|暗号|ファイル名",
+        )
+        .unwrap()
+    });
+    static BINDING: LazyLock<Regex> = LazyLock::new(|| {
+        Regex::new(r"(?ix)
+        \b(is|was|are|were|uses?|selected|chose|chosen|listed|recorded|signed|official|final|designated)\b|
+        [:：=]|(?:採用|記載|記録|選定|正式|とのこと|とする)").unwrap()
+    });
+    if first.state != "set" || second.state != "set" {
+        return false;
+    }
+    let (upper, lower) = if first
+        .value
+        .as_bytes()
+        .first()
+        .is_some_and(u8::is_ascii_uppercase)
+    {
+        (first, second)
+    } else {
+        (second, first)
+    };
+    let (a, b) = (upper.value.as_bytes(), lower.value.as_bytes());
+    if a.is_empty()
+        || b.is_empty()
+        || !a[0].is_ascii_uppercase()
+        || !b[0].is_ascii_lowercase()
+        || a[0].to_ascii_lowercase() != b[0]
+        || a[1..] != b[1..]
+        || !lower
+            .value
+            .split(' ')
+            .all(|word| !word.is_empty() && word.bytes().all(|c| c.is_ascii_lowercase()))
+        || (!lower.value.contains(' ') && !upper.clause.starts_with(&upper.value))
+    {
+        return false;
+    }
+    let context = second.clause.replace(&second.value, " ");
+    ![question, &first.clause, &second.clause]
+        .iter()
+        .any(|s| SENSITIVE.is_match(s))
+        && !indexed::tokens(&context).is_disjoint(&indexed::tokens(question))
+        && (CHANGE.is_match(&context) || BINDING.is_match(&context))
+}
+
+fn resolution(first: &Finding, second: &Finding, question: &str) -> (&'static str, bool) {
     if first.state == second.state && first.value == second.value {
         return ("agreement", true);
+    }
+    if same_source_spelling(first, second, question) {
+        return ("source_spelling_agreement", true);
     }
     if second.state == "unset" {
         let first_is_later = first
@@ -433,6 +562,7 @@ fn checked(
         first_value: d.finding.reported_value(),
         draft_bytes: d.bytes,
         draft_attempt: d.attempt,
+        draft_clause_recovered: d.recovered,
         ..Default::default()
     };
     if d.finding.state == "missing" {
@@ -481,6 +611,9 @@ fn checked(
         log.handoff_sent = true;
     }
     let second = match outcome {
+        Ok(f) if d.recovered && f.state == "set" && only_value(&f.clause, &f.value) => {
+            Finding::missing()
+        }
         Ok(f) => f,
         Err(e) => {
             log.resolution = "second_failed";
@@ -490,10 +623,15 @@ fn checked(
     };
     log.second_state = Some(second.state);
     log.second_value = second.reported_value();
-    let (reason, accept) = resolution(&d.finding, &second);
+    let (mut reason, accept) = resolution(&d.finding, &second, question);
+    if d.recovered && reason == "retained_later_assignment" {
+        reason = "unconfirmed_repaired_draft";
+    }
     log.resolution = reason;
     let mut answer = Finding::missing();
-    if reason != "agreement" && engine.policy.compact == Some(ContextMode::IndexHandoffReview) {
+    if !matches!(reason, "agreement" | "source_spelling_agreement")
+        && engine.policy.compact == Some(ContextMode::IndexHandoffReview)
+    {
         if engine
             .metrics
             .answer_checks

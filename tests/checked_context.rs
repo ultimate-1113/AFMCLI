@@ -372,3 +372,175 @@ fn a_newer_independent_original_clause_can_recover_a_third_value() {
         "independent_later_decision"
     );
 }
+
+#[test]
+fn a_unique_verbatim_value_can_reach_a_second_independent_read() {
+    let decision = "Atlas officially assigned the room to Hazel Hall.";
+    let other = "The clerks signed the envelope.";
+    let source = ["点検票。", decision, other].join("\n");
+    for mode in [
+        ContextMode::IndexChecked,
+        ContextMode::IndexHandoff,
+        ContextMode::IndexHandoffReview,
+    ] {
+        for weak in ["Hazel Hall", "Hazel Hall.", other] {
+            let out = run(
+                &source,
+                "Which room did Atlas assign?",
+                mode,
+                2100,
+                |r, p| {
+                    if p.get("source").is_some() {
+                        if let Some(h) = p.get("handoff") {
+                            assert_ne!(h["excerpt"], decision);
+                            assert_ne!(h["excerpt"], other);
+                        }
+                        response(r, "set", decision, "Hazel Hall")
+                    } else {
+                        response(r, "set", weak, "Hazel Hall")
+                    }
+                },
+            );
+            assert_eq!(out.status, "ok", "{mode:?} {weak}");
+            let at = source.find("Hazel Hall").unwrap();
+            assert_eq!(
+                out.result["answer"]["spans"],
+                json!([{"start_byte":at,"end_byte":at+10}])
+            );
+            assert_eq!(out.metrics.calls, 2);
+            let check = &out.metrics.answer_checks[0];
+            assert!(check.draft_clause_recovered && !check.review_sent);
+        }
+    }
+}
+
+#[test]
+fn weak_citations_for_ambiguous_or_unrelated_values_stop_at_the_first_read() {
+    for (src, candidate) in [
+        (
+            "Atlas assigned room Stone Hall. A second office also assigned room Stone Hall.",
+            "Stone Hall",
+        ),
+        ("Lumen team assigned room Stone Hall.", "Stone Hall"),
+        ("Atlas team assigned the colour taupe.", "taupe"),
+        ("Atlas team proposed Stone Hall for the room.", "Stone Hall"),
+        ("The clerks stacked tins beside the door.", "tins"),
+    ] {
+        let out = run(
+            src,
+            "Which room did the Atlas team assign?",
+            ContextMode::IndexChecked,
+            2000,
+            |r, _| response(r, "set", candidate, candidate),
+        );
+        assert_eq!(out.status, "abstained", "{src}");
+        assert_eq!(out.metrics.calls, 1, "{src}");
+        assert!(!out.metrics.answer_checks[0].draft_clause_recovered);
+    }
+}
+
+#[test]
+fn a_recovered_assignment_needs_an_independent_confirming_clause() {
+    let old = "Atlas has not yet confirmed a room.";
+    let new = "Atlas then officially assigned the room to Hazel Hall.";
+    let src = [old, new].join("\n");
+    for (state, clause, value) in [("unset", old, ""), ("set", "Hazel Hall.", "Hazel Hall")] {
+        let out = run(
+            &src,
+            "Which room did Atlas assign?",
+            ContextMode::IndexHandoff,
+            1900,
+            |r, p| {
+                if p.get("source").is_some() {
+                    response(r, state, clause, value)
+                } else {
+                    response(r, "set", "Hazel Hall", "Hazel Hall")
+                }
+            },
+        );
+        assert_eq!(out.status, "abstained", "{clause}");
+        assert!(out.metrics.answer_checks[0].draft_clause_recovered);
+        assert_eq!(out.metrics.calls, 2);
+    }
+}
+
+#[test]
+fn ordinary_initial_capitalization_uses_the_source_spelling_of_the_independent_decision() {
+    let assignment = "The panel finish that Atlas approved is cloud grey.";
+    let mention = "Cloud grey was the finish visible on the panel.";
+    let src = [assignment, mention].join("\n");
+    for mode in [
+        ContextMode::IndexChecked,
+        ContextMode::IndexHandoff,
+        ContextMode::IndexHandoffReview,
+    ] {
+        let out = run(
+            &src,
+            "Which panel finish did Atlas approve?",
+            mode,
+            1800,
+            |r, p| {
+                if p.get("source").is_some() {
+                    response(r, "set", assignment, "cloud grey")
+                } else {
+                    response(r, "set", mention, "Cloud grey")
+                }
+            },
+        );
+        assert_eq!(out.metrics.calls, 2);
+        assert_eq!(out.result["answer"]["value"], "cloud grey");
+        assert_eq!(
+            out.result["answer"]["spans"][0]["start_byte"],
+            src.find("cloud grey").unwrap()
+        );
+        assert_eq!(
+            out.metrics.answer_checks[0].resolution,
+            "source_spelling_agreement"
+        );
+    }
+}
+
+#[test]
+fn capitalization_of_identifiers_and_an_unrelated_citation_remain_disagreements() {
+    for (q, earlier, later, lower, upper) in [
+        (
+            "Which reference code did Atlas issue?",
+            "The official code Atlas issued is cloud grey.",
+            "Cloud grey was another written code.",
+            "cloud grey",
+            "Cloud grey",
+        ),
+        (
+            "What panel finish was chosen?",
+            "The chosen panel finish is bc-5.",
+            "Bc-5 was recorded on the sample.",
+            "bc-5",
+            "Bc-5",
+        ),
+        (
+            "What panel finish was chosen?",
+            "The clerks noticed cloud grey.",
+            "Cloud grey was the finish on the panel.",
+            "cloud grey",
+            "Cloud grey",
+        ),
+        (
+            "What panel finish was chosen?",
+            "The chosen panel finish is cloud grey.",
+            "CLOUD GREY was printed on the sample.",
+            "cloud grey",
+            "CLOUD GREY",
+        ),
+    ] {
+        let src = [earlier, later].join("\n");
+        let out = run(&src, q, ContextMode::IndexChecked, 1950, |r, p| {
+            if p.get("source").is_some() {
+                response(r, "set", earlier, lower)
+            } else {
+                response(r, "set", later, upper)
+            }
+        });
+        assert_eq!(out.status, "abstained", "{q} {upper}");
+        assert_eq!(out.metrics.answer_checks[0].resolution, "disagreement");
+    }
+}

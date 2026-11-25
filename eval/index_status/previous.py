@@ -21,7 +21,7 @@ OLD_RESULTS = PRIOR / "results/context-test.jsonl"
 OLD_DIGEST = "5ba1160f56ef7abed0c1f3ccc855023072e7f20b358916cfaa45854e978a9815"
 OLD_RUNNER_DIGEST = "6f7b6125ba4ba51840cabeec56293144e5024de9dd0b1ae69279480c629867ba"
 DEFAULT_MODE = "index-checked"
-MODES = (DEFAULT_MODE, "index-handoff", "index-handoff-review", "index-staged")
+MODES = (DEFAULT_MODE, "index-handoff", "index-handoff-review", "index-staged", "index-guard")
 
 
 def cli_args(mode):

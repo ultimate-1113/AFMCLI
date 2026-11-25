@@ -298,6 +298,7 @@ pub(super) fn answer(
         #[cfg(feature = "experimental-index")]
         Some(
             ContextMode::Indexed
+            | ContextMode::IndexGuard
             | ContextMode::IndexChecked
             | ContextMode::IndexHandoff
             | ContextMode::IndexHandoffReview,

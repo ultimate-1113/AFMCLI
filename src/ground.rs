@@ -16,6 +16,8 @@ mod compact;
 #[cfg(feature = "experimental-index")]
 mod indexed;
 mod numbered;
+#[cfg(feature = "experimental-index")]
+mod postcheck;
 mod review;
 #[cfg(feature = "experimental-index")]
 mod staged;
@@ -443,6 +445,22 @@ fn summarize(engine: &mut Engine<'_>, source: &str, n: usize, focus: &str) -> Ru
     }
 }
 pub fn execute(engine: &mut Engine<'_>, job: &Job) -> Run<Output> {
+    #[cfg(feature = "experimental-index")]
+    if engine.policy.compact == Some(ContextMode::IndexGuard) {
+        engine.policy.compact = Some(ContextMode::Indexed);
+        let baseline = execute_grounded(engine, job);
+        engine.policy.compact = Some(ContextMode::IndexGuard);
+        return match job {
+            Job::Answer { question, source } => {
+                baseline.map(|v| postcheck::apply(question, source, v))
+            }
+            _ => baseline,
+        };
+    }
+    execute_grounded(engine, job)
+}
+
+fn execute_grounded(engine: &mut Engine<'_>, job: &Job) -> Run<Output> {
     #[cfg(feature = "experimental-index")]
     if engine.policy.compact == Some(ContextMode::IndexStaged)
         && let Job::Answer { question, source } = job

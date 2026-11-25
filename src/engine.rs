@@ -33,6 +33,8 @@ pub enum ContextMode {
     IndexHandoffReview,
     #[cfg(feature = "experimental-index")]
     IndexStaged,
+    #[cfg(feature = "experimental-index")]
+    IndexGuard,
 }
 #[cfg(feature = "experimental-index")]
 impl ContextMode {
@@ -103,6 +105,8 @@ pub struct AnswerCheck {
     pub second_value: Option<String>,
     pub handoff: Option<Value>,
     pub draft_attempt: Option<usize>,
+    #[serde(skip_serializing_if = "std::ops::Not::not")]
+    pub draft_clause_recovered: bool,
     pub draft_bytes: usize,
     pub handoff_bytes: usize,
     pub handoff_sent: bool,

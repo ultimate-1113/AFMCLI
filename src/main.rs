@@ -26,7 +26,7 @@ struct Args {
     #[cfg_attr(
         feature = "experimental-index",
         arg(
-            help = "Compress long QA sources. records also packs numbered rows and review checks source decisions. The index modes retrieve original excerpts. index-checked uses a second source reading, index-handoff shares a short draft, index-handoff-review checks disagreements, and index-staged reads in stages."
+            help = "Compress long QA sources. records also packs numbered rows and review checks source decisions. The index modes retrieve original excerpts. index-checked uses a second source reading, index-handoff shares a short draft, index-handoff-review checks disagreements, index-staged reads in stages, and index-guard checks final answers without another model call."
         )
     )]
     #[arg(long, global = true, value_enum, num_args=0..=1, require_equals=true, default_missing_value="repeats", conflicts_with_all = ["direct", "decompose"])]
@@ -482,6 +482,7 @@ mod tests {
             ("index-handoff", experimental),
             ("index-handoff-review", experimental),
             ("index-staged", experimental),
+            ("index-guard", experimental),
         ] {
             let option = format!("--compact={value}");
             assert_eq!(
