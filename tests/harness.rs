@@ -372,7 +372,7 @@ fn periodic_packet_uses_the_original_offsets_in_both_compact_modes() {
 #[test]
 fn compact_reads_every_window_and_cannot_quote_an_omitted_sentence() {
     let mut source = (0..27)
-        .map(|i| format!("Report {i} {}.", "stored ".repeat(12)))
+        .map(|i| format!("Report {} {}.", char::from(b'A' + i), "stored ".repeat(12)))
         .collect::<Vec<_>>();
     source[1] = "The meeting moved to Room DELTA.".into();
     source[10] = "Unrelated value UNSEEN.".into();
@@ -430,7 +430,7 @@ fn compact_reads_every_window_and_cannot_quote_an_omitted_sentence() {
 #[test]
 fn compact_falls_back_instead_of_truncating_a_dense_source() {
     let source = (0..36)
-        .map(|i| format!("Entry {i} {}.", "archive ".repeat(9)))
+        .map(|i| format!("Entry {} {}.", char::from(b'A' + i), "archive ".repeat(9)))
         .collect::<Vec<_>>()
         .join("\n");
     let job = json!({"task":"answer","source":source,"question":"Which seal?"});
@@ -462,7 +462,7 @@ fn compact_falls_back_instead_of_truncating_a_dense_source() {
 #[test]
 fn repeats_mode_uses_the_same_windows_as_standard_for_nonrepeating_text() {
     let source = (0..49)
-        .map(|i| format!("Entry {i} {}.", "library ".repeat(11)))
+        .map(|i| format!("Entry {} {}.", char::from(b'A' + i), "library ".repeat(11)))
         .collect::<Vec<_>>()
         .join("\n");
     let job = json!({"task":"answer","source":source,"question":"Which room?"});

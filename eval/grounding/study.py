@@ -13,8 +13,8 @@ HERE = Path(__file__).resolve().parent
 REPEATS = runpy.run_path(str(HERE.parent / "repeats" / "bench.py"))
 CONTEXT = REPEATS["CONTEXT"]
 BASE = runpy.run_path(str(HERE.parent / "bench.py"))
-MODES = {"dev": ("before", "after"), "holdout": ("direct", "before", "after"),
-         "numeric": ("direct", "before", "after")}
+MODES = {"dev": ("before", "packing", "after"), "holdout": ("direct", "before", "packing", "after"),
+         "numeric": ("direct", "before", "packing", "after")}
 
 
 def digest(data):
@@ -49,6 +49,12 @@ def cases(split):
                     gold.append(value)
             result[case_id] = dict(id=case_id, budget=1300, gold=gold,
                 job=dict(task="answer", source="\n".join(rows), question=question))
+            if gold:
+                # A tray number can also occur as a different inspection ID.
+                row = rows[query - 1]
+                start = len(("\n".join(rows[:query - 1]) + "\n").encode()) if query > 1 else 0
+                value_pos = row.rindex(gold[0])
+                result[case_id]["gold_offset"] = start + len(row[:value_pos].encode())
         return result
     for pair in json.loads((HERE / "holdout.json").read_text()):
         rows = pair["rows"]
@@ -91,6 +97,9 @@ def outcome(case, row):
     if value == "":
         return "missed_answer" if case["gold"] else "correct_abstention"
     if value in case["gold"]:
+        if row["mode"] != "direct" and "gold_offset" in case:
+            if not any(s["start_byte"] == case["gold_offset"] for s in answer["spans"]):
+                return "wrong_citation"
         return "correct_answer"
     return "wrong_answer" if case["gold"] else "unsupported_answer"
 
@@ -116,7 +125,8 @@ def run_case(binary, mode, case):
 
 
 def measure(args, panel):
-    paths = {"before": args.before.resolve(), "direct": args.before.resolve(), "after": args.after.resolve()}
+    paths = {"before": args.before.resolve(), "direct": args.before.resolve(),
+             "packing": args.packing.resolve(), "after": args.after.resolve()}
     hashes = {}
     for path in set(paths.values()):
         state = json.loads(subprocess.check_output([path, "doctor"]))
@@ -158,6 +168,7 @@ def verify(path, split):
         print(split, mode, f"{score}/{len(group)}", "both", pairs, dict(counts),
               "calls", sum(r["metrics"]["calls"] for r in group),
               "input", sum(r["metrics"]["sent_input_tokens"] for r in group),
+              "peak", max(r["metrics"]["peak_sent_tokens"] for r in group),
               "median_ms", median(r["elapsed_ms"] for r in group))
     return {r["mode"]: r["binary"] for r in rows}
 
@@ -168,6 +179,7 @@ def main():
     run = commands.add_parser("run")
     run.add_argument("--split", choices=MODES, required=True)
     run.add_argument("--before", type=Path, required=True)
+    run.add_argument("--packing", type=Path, required=True)
     run.add_argument("--after", type=Path, required=True)
     run.add_argument("--output", type=Path, required=True)
     show = commands.add_parser("show")
@@ -186,7 +198,7 @@ def main():
         dev = verify(HERE / "dev.jsonl", "dev")
         held = verify(HERE / "holdout.jsonl", "holdout")
         numeric = verify(HERE / "numeric.jsonl", "numeric")
-        assert dev["after"] == held["after"] and dev["before"] == held["before"] == held["direct"]
+        assert all(dev[k] == held[k] for k in dev) and held["before"] == held["direct"]
         assert numeric == held
 
 

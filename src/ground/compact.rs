@@ -1,4 +1,4 @@
-use super::{excerpt, window};
+use super::{excerpt, numbered, window};
 use crate::{
     contract,
     document::{self, Evidence, Segment},
@@ -145,8 +145,13 @@ fn pack_blocks<'a>(source: &'a str, lines: &[Segment<'_>], limit: usize) -> Opti
 }
 
 fn reader(question: &str, context: &Value) -> Request {
+    let instruction = if context.get("log").is_some() {
+        "Read log in order. Strings are original notices. An object encodes consecutive rows: insert the space-separated digit strings of each row between the successive literal parts, preserving leading zeroes. Answer only with the shortest exact name, date, quantity or identifier asked for. Apply amendments only to the requested subject and attribute. If no applicable value is established return an empty string."
+    } else {
+        "Read the material in order. A sequence string is literal; [i,n] repeats dictionary[i] n times (zero-based). Excerpts are in original order with gaps. Copy only the name, place, date or quantity requested, excluding the speaker and surrounding sentence. For example, 'Lee: Pickup is at the Willow Desk.' and 'Which desk?' gives 'Willow Desk'. Respect scope, corrections and cancellations. If the fact is absent, withdrawn without replacement, or conflicting without a resolution, return an empty answer."
+    };
     request(
-        "Read the material in order. A sequence string is literal; [i,n] repeats dictionary[i] n times (zero-based). Excerpts are in original order with gaps. Copy only the name, place, date or quantity requested, excluding the speaker and surrounding sentence. For example, 'Lee: Pickup is at the Willow Desk.' and 'Which desk?' gives 'Willow Desk'. Respect scope, corrections and cancellations. If the fact is absent, withdrawn without replacement, or conflicting without a resolution, return an empty answer.",
+        instruction,
         json!({"question":question,"material":context}),
         Some(contract::object([(
             "answer".into(),
@@ -262,14 +267,13 @@ pub(super) fn answer(
         selection_windows: 0,
     };
     let byte_limit = engine.policy.input_budget.saturating_mul(12);
-    for use_blocks in [false, true] {
-        let packed = if use_blocks {
-            pack_blocks(source, lines, byte_limit)
-        } else {
-            pack(source, lines, byte_limit)
+    for method in ["repeat_dictionary", "repeat_blocks", "numbered_rows"] {
+        let candidate = match method {
+            "repeat_dictionary" => pack(source, lines, byte_limit).map(|p| json!(p)),
+            "repeat_blocks" => pack_blocks(source, lines, byte_limit).map(|p| json!(p)),
+            _ => numbered::encode(source, lines, question, byte_limit),
         };
-        let Some(packed) = packed else { continue };
-        let context = json!(packed);
+        let Some(context) = candidate else { continue };
         let r = reader(question, &context);
         // Avoid passing multi-megabyte encodings to the tokenizer. Exact token
         // checks still decide whether a candidate can be sent to the model.
@@ -277,9 +281,7 @@ pub(super) fn answer(
             && r.prompt.len() <= byte_limit
             && engine.count(&r)? <= engine.policy.input_budget
         {
-            if use_blocks {
-                usage.method = "repeat_blocks";
-            }
+            usage.method = method;
             engine.metrics.context = Some(usage);
             return read(engine, question, &context, &[(0, source)], r).map(Some);
         }

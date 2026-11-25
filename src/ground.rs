@@ -9,6 +9,7 @@ use serde_json::{Value, json};
 use std::collections::{BTreeMap, BTreeSet};
 
 mod compact;
+mod numbered;
 
 fn window_budget(engine: &Engine<'_>) -> usize {
     // Leave room for validation feedback when a long compact-mode job has to
