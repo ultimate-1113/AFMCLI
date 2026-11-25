@@ -80,6 +80,73 @@ fn answer_request(question: &str, source: &str, direct: bool) -> Request {
     )
 }
 type Located = BTreeMap<String, BTreeMap<String, BTreeSet<Span>>>;
+fn support_request(question: &str, lines: &[Segment<'_>]) -> Request {
+    let evidence: Vec<_> = lines
+        .iter()
+        .map(|s| json!({"id":s.id,"text":s.text}))
+        .collect();
+    request(
+        "Select up to three sentence IDs that together give the requested fact. Include corrections or qualifications that change the answer. Select [] when this passage provides no evidence for the specific question.",
+        json!({"question":question,"sentences":evidence}),
+        Some(contract::object([(
+            "ids".into(),
+            json!({"type":"array","items":{"type":"integer"}}),
+        )])),
+    )
+}
+
+fn read_selected(engine: &mut Engine<'_>, question: &str, lines: &[Segment<'_>]) -> Run<Located> {
+    let selected = if lines.len() == 1 {
+        lines.to_vec()
+    } else {
+        engine.structured(support_request(question, lines), |v| {
+            let mut picked = BTreeSet::new();
+            for n in v["ids"].as_array().unwrap() {
+                let id = n
+                    .as_u64()
+                    .and_then(|i| usize::try_from(i).ok())
+                    .ok_or("invalid sentence ID")?;
+                if !lines.iter().any(|s| s.id == id) || !picked.insert(id) || picked.len() > 3 {
+                    return Err("select up to three distinct IDs from the passage".into());
+                }
+            }
+            Ok(lines
+                .iter()
+                .copied()
+                .filter(|s| picked.contains(&s.id))
+                .collect())
+        })?
+    };
+    if selected.is_empty() {
+        return Ok(Located::new());
+    }
+    let passages: Vec<_> = selected.iter().map(|s| s.text).collect();
+    let reader = answer_request(question, &passages.join("\n"), false);
+    engine.structured(reader, |v| {
+        let answer = v["answer"].as_str().unwrap();
+        if v["answerable"].as_bool() != Some(!answer.is_empty()) {
+            return Err("answerable and the proposed answer must agree".into());
+        }
+        if answer.is_empty() {
+            return Ok(Located::new());
+        }
+        let mut spans = BTreeSet::new();
+        for s in &selected {
+            if let Ok(hits) = document::locate(s.text, s.start, answer) {
+                spans.extend(hits);
+            }
+        }
+        if spans.is_empty() {
+            return Err(
+                "copy an exact answer from a selected sentence or return an empty string".into(),
+            );
+        }
+        Ok(BTreeMap::from([(
+            "answer".into(),
+            BTreeMap::from([(answer.into(), spans)]),
+        )]))
+    })
+}
 fn gather(
     fields: &[Field],
     is_answer: bool,
@@ -141,11 +208,19 @@ fn extract(
     let mut merged = Located::new();
     while offset < lines.len() {
         let rest = &lines[offset..];
-        let n = window(engine, rest, |ls| make(excerpt(source, ls)))?;
-        let block = excerpt(source, &rest[..n]);
-        let local = engine.structured(make(block), |v| {
-            gather(fields, question.is_some(), v, block, rest[0].start)
-        })?;
+        let (n, local) = if let Some(q) = question.filter(|_| engine.policy.decompose) {
+            let n = window(engine, rest, |ls| support_request(q, ls))?;
+            (n, read_selected(engine, q, &rest[..n])?)
+        } else {
+            let n = window(engine, rest, |ls| make(excerpt(source, ls)))?;
+            let block = excerpt(source, &rest[..n]);
+            (
+                n,
+                engine.structured(make(block), |v| {
+                    gather(fields, question.is_some(), v, block, rest[0].start)
+                })?,
+            )
+        };
         for (field, values) in local {
             let dest = merged.entry(field).or_default();
             for (value, spans) in values {

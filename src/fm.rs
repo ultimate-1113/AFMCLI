@@ -1,7 +1,9 @@
 //! Adapter for the public on-device macOS CLI. Mixed image/text requests require --text.
 use crate::json;
+use crate::skills::Skill;
 use regex::Regex;
 use serde_json::Value;
+use std::borrow::Cow;
 use std::io::{Read, Write};
 use std::path::{Path, PathBuf};
 use std::process::{Command, Stdio};
@@ -30,6 +32,7 @@ pub struct Apple {
     pub timeout: Duration,
     pub image: Option<PathBuf>,
     ready: bool,
+    skill: Option<Skill>,
 }
 impl Apple {
     pub fn new(seconds: u64, image: Option<PathBuf>) -> Self {
@@ -37,6 +40,20 @@ impl Apple {
             timeout: Duration::from_secs(seconds),
             image,
             ready: false,
+            skill: None,
+        }
+    }
+    pub fn use_skill(&mut self, skill: Skill) {
+        self.skill = Some(skill);
+    }
+    fn prompt<'a>(&self, original: &'a str) -> Cow<'a, str> {
+        match &self.skill {
+            None => Cow::Borrowed(original),
+            Some(skill) => Cow::Owned(format!(
+                "Use the selected procedure when applicable. Follow the task and its output contract.\n{}\n\n{}",
+                serde_json::json!({"procedure":skill.manifest.name,"guidance":skill.guidance}),
+                original
+            )),
         }
     }
     fn call(&self, args: &[&str], input: &str) -> Result<Vec<u8>, String> {
@@ -155,9 +172,10 @@ impl Model for Apple {
     fn count(&mut self, r: &Request) -> Result<usize, String> {
         self.ready()?;
         let mut a = vec!["count-tokens", "--quiet", "--instructions", &r.instructions];
+        let prompt = self.prompt(&r.prompt);
         let text = match &r.schema {
-            Some(s) => format!("{}\n{}", r.prompt, s),
-            None => r.prompt.clone(),
+            Some(s) => format!("{prompt}\n{s}"),
+            None => prompt.into_owned(),
         };
         let input = if let Some(img) = self.image_arg()? {
             a.extend(["--image", img, "--text", &text]);
@@ -191,17 +209,18 @@ impl Model for Apple {
             std::fs::write(&schema_path, s.to_string()).map_err(|e| e.to_string())?;
             a.extend(["--schema", as_path(&schema_path)?]);
         }
+        let prompt = self.prompt(&r.prompt);
         let input = if let Some(img) = self.image_arg()? {
-            a.extend(["--image", img, "--text", &r.prompt]);
+            a.extend(["--image", img, "--text", &prompt]);
             ""
         } else {
-            &r.prompt
+            &prompt
         };
         self.call(&a, input)?;
         let t = json::parse(
             &std::fs::read_to_string(transcript).map_err(|_| "fm did not record a transcript")?,
         )?;
-        confirm_input(&t, &r.prompt, self.image.is_some())?;
+        confirm_input(&t, &prompt, self.image.is_some())?;
         decode(&t)
     }
 }
@@ -280,8 +299,7 @@ mod process_tests {
     fn terminates_and_reaps_a_timed_out_process() {
         let backend = Apple {
             timeout: Duration::from_millis(40),
-            image: None,
-            ready: false,
+            ..Apple::new(1, None)
         };
         let result = backend.call_at(Path::new("/bin/sleep"), &["3"], "");
         assert_eq!(result.unwrap_err(), "fm timed out");

@@ -197,12 +197,19 @@ fn schema() -> Value {
     ])
 }
 static INTEGERS: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"[+-]?[0-9]+").unwrap());
-fn supported(p: &Problem, src: &str) -> Result<(), String> {
-    let mut allowed: BTreeSet<i64> = INTEGERS
+pub(crate) fn literal_numbers(src: &str) -> BTreeSet<i64> {
+    INTEGERS
         .find_iter(src)
         .filter_map(|m| m.as_str().parse().ok())
-        .collect();
+        .collect()
+}
+pub(crate) fn source_numbers(src: &str) -> BTreeSet<i64> {
+    let mut allowed = literal_numbers(src);
     allowed.extend([-1, 0, 1]);
+    allowed
+}
+fn supported(p: &Problem, src: &str) -> Result<(), String> {
+    let allowed = source_numbers(src);
     for v in &p.variables {
         if !src.contains(&v.name) || !allowed.contains(&v.min) || !allowed.contains(&v.max) {
             return Err("copy literal variable names and numeric bounds from the source".into());
@@ -239,6 +246,9 @@ pub fn run(
         return Ok(Output::new("ok", p.solve().map_err(Fail::Held)?));
     }
     let src = source.unwrap();
+    if engine.policy.decompose {
+        return crate::declarations::interpret(engine, src);
+    }
     let r = request(
         "Translate this bounded integer linear problem into the schema. Preserve literal variable names, coefficients, bounds, inequality strictness and preference order. All weight vectors follow variables in order. Do not invent bounds or objective priorities. If insufficient, return three empty arrays. Use ASCII numeric literals from the source.",
         json!({"source":src}),

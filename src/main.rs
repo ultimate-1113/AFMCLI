@@ -2,7 +2,7 @@ use afmcli::{
     engine::{Engine, Policy, Record},
     fm::{ADVANCED, Apple, Model},
     job::{Field, Job, Label},
-    json,
+    json, skills,
 };
 use clap::{Parser, Subcommand};
 use serde_json::{Value, json};
@@ -16,6 +16,12 @@ use std::{
 #[derive(Parser)]
 #[command(version,about="On-device task harness for AFM 3 Core Advanced",long_about=None)]
 struct Args {
+    /// Apply the named, locally imported text procedure to this invocation's model requests.
+    #[arg(long, global = true, value_name = "NAME")]
+    skill: Option<String>,
+    /// Select supporting source segments for QA or translate an optimization problem by declaration.
+    #[arg(long, global = true, conflicts_with = "direct")]
+    decompose: bool,
     /// Read source or a JSON job from this UTF-8 file (default: stdin).
     #[arg(short = 'i', long, global = true)]
     input: Option<PathBuf>,
@@ -51,6 +57,11 @@ struct Args {
 }
 #[derive(Subcommand)]
 enum Action {
+    /// Import and list local Agent Skills.
+    Skills {
+        #[command(subcommand)]
+        action: SkillAction,
+    },
     /// Check the installed system model.
     Doctor,
     /// Route a free-form instruction to ask, answer, summarize or rewrite.
@@ -104,6 +115,18 @@ enum Action {
     Run,
     /// Read JSON Lines, process jobs sequentially and emit one record per input line.
     Batch,
+}
+#[derive(Subcommand)]
+enum SkillAction {
+    Import {
+        source: PathBuf,
+        /// Also include this local references/*.md or .txt in the imported procedure.
+        #[arg(long = "reference")]
+        references: Vec<String>,
+        #[arg(long)]
+        replace: bool,
+    },
+    List,
 }
 const LIMIT: usize = 8 * 1024 * 1024;
 fn reader(path: Option<&Path>) -> Result<Box<dyn BufRead>, String> {
@@ -325,6 +348,22 @@ fn batch(
 fn run() -> Result<u8, String> {
     let args = Args::parse();
     let mut out = io::stdout().lock();
+    if let Action::Skills { action } = &args.command {
+        let dir = skills::directory()?;
+        let result = match action {
+            SkillAction::Import {
+                source,
+                references,
+                replace,
+            } => {
+                let s = skills::import(&dir, source, references, *replace)?;
+                json!({"skill":s.manifest,"references":s.references,"mode":"instructions-only"})
+            }
+            SkillAction::List => json!({"skills":skills::list(&dir)?}),
+        };
+        emit(&mut out, &result)?;
+        return Ok(0);
+    }
     if args.text && !matches!(args.command, Action::Ask { .. } | Action::Rewrite { .. }) {
         return Err("--text is available for ask and rewrite".into());
     }
@@ -341,8 +380,12 @@ fn run() -> Result<u8, String> {
         trace: args.trace,
         has_image: args.image.is_some(),
         check_support: !args.fast_answer,
+        decompose: args.decompose,
     };
     let mut model = Apple::new(args.timeout, args.image);
+    if let Some(name) = args.skill {
+        model.use_skill(skills::load(&skills::directory()?, &name)?);
+    }
     if matches!(args.command, Action::Doctor) {
         let result = model.ready();
         emit(

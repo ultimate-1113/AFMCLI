@@ -1,17 +1,18 @@
 [package]
 name = "afmcli"
-version = "0.1.1"
+version = "0.2.0"
 edition = "2024"
 rust-version = "1.89"
 description = "A local-first task harness for Apple's AFM 3 Core Advanced"
 license = "MIT"
 repository = "https://github.com/ultimate-1113/AFMCLI"
-include = ["src/**", "tests/**", "Cargo.toml", "Cargo.lock", "LICENSE", "README.md", "NOTICES.md"]
+include = ["src/**", "tests/**", "skills/*/SKILL.md", "Cargo.toml", "Cargo.lock", "LICENSE", "README.md", "NOTICES.md"]
 
 [dependencies]
 clap = { version = "4.5", features = ["derive"] }
 regex = "1"
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
+serde-saphyr = { version = "2.2", default-features = false, features = ["deserialize"] }
 tempfile = "3"
 wait-timeout = "0.2"

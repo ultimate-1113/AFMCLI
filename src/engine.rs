@@ -24,6 +24,7 @@ pub struct Policy {
     pub trace: bool,
     pub has_image: bool,
     pub check_support: bool,
+    pub decompose: bool,
 }
 impl Default for Policy {
     fn default() -> Self {
@@ -35,6 +36,7 @@ impl Default for Policy {
             trace: false,
             has_image: false,
             check_support: true,
+            decompose: false,
         }
     }
 }
