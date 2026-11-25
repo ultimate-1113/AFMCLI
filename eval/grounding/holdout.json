@@ -1,0 +1,317 @@
+[
+  {
+    "id": "harp",
+    "layout": "unique-en",
+    "rows": 62,
+    "budget": 1420,
+    "question": "What room is currently assigned to the harp class?",
+    "opening": "Booking: The harp class is assigned to Violet Room.",
+    "middle": "Office: The piano class has a separate reservation in the same building.",
+    "variants": [
+      {
+        "ending": "Office: We cancelled the piano reservation. The harp booking is still in force.",
+        "gold": [
+          "Violet Room"
+        ]
+      },
+      {
+        "ending": "Office: We cancelled the harp reservation. Its replacement has yet to be decided.",
+        "gold": []
+      }
+    ]
+  },
+  {
+    "id": "azami",
+    "layout": "repeat-ja",
+    "rows": 185,
+    "budget": 1300,
+    "question": "薊便の確定した出発時刻はいつですか？",
+    "opening": "案内：薊便の出発時刻は7時20分に決まりました。",
+    "middle": "運行係：薊便の先の出発時刻を取り消します。",
+    "variants": [
+      {
+        "ending": "運行係：薊便の新しい出発時刻は8時35分です。",
+        "gold": [
+          "8時35分"
+        ]
+      },
+      {
+        "ending": "運行係：薊便の新しい出発時刻は検討中です。",
+        "gold": []
+      }
+    ]
+  },
+  {
+    "id": "seal",
+    "layout": "varied-en",
+    "rows": 64,
+    "budget": 1390,
+    "question": "What is the approved weight limit for the chalk parcels?",
+    "opening": "Office: The chalk parcels have a confirmed size limit of 42 centimetres.",
+    "middle": "Desk: A trial package weighed 16 kilograms.",
+    "variants": [
+      {
+        "ending": "Board: We have approved a weight limit of 19 kilograms for the chalk parcels.",
+        "gold": [
+          "19 kilograms"
+        ]
+      },
+      {
+        "ending": "Board: The proposals address packaging dimensions only. The chalk parcels' weight limit remains open.",
+        "gold": []
+      }
+    ]
+  },
+  {
+    "id": "lilac",
+    "layout": "unique-ja",
+    "rows": 74,
+    "budget": 1450,
+    "question": "菫班の展示で最後に確定した搬入口はどこですか？",
+    "opening": "担当：菫班の搬入口は南門です。",
+    "middle": "受付：この菫班の搬入口はいったん取り消されました。",
+    "variants": [
+      {
+        "ending": "担当：取り消しを撤回し、菫班の搬入口として南門を再承認しました。",
+        "gold": [
+          "南門"
+        ]
+      },
+      {
+        "ending": "担当：北門を使う案は審議中です。菫班の搬入口はまだ確定していません。",
+        "gold": []
+      }
+    ]
+  },
+  {
+    "id": "birch",
+    "layout": "alternating-en",
+    "rows": 135,
+    "budget": 1400,
+    "question": "Who is assigned to collect the morning set of passes?",
+    "opening": "Schedule: Avery collects the morning passes and Noel collects the afternoon passes.",
+    "middle": "Coordinator: We are changing one assignment.",
+    "variants": [
+      {
+        "ending": "Coordinator: Only the afternoon passes now go to Rowan. The morning assignment stands.",
+        "gold": [
+          "Avery"
+        ]
+      },
+      {
+        "ending": "Coordinator: We have removed the morning assignment. Its replacement has yet to be named.",
+        "gold": []
+      }
+    ]
+  },
+  {
+    "id": "water",
+    "layout": "varied-ja",
+    "rows": 58,
+    "budget": 1400,
+    "question": "市民枠の参加費はいくらで合意しましたか？",
+    "opening": "会計：市民枠の参加費は620円で合意しました。",
+    "middle": "記録：職員枠の参加費は改めて検討します。",
+    "variants": [
+      {
+        "ending": "会計：職員枠だけを810円に改定しました。",
+        "gold": [
+          "620円"
+        ]
+      },
+      {
+        "ending": "会計：市民枠の620円は撤回し、新しい市民料金は保留とします。",
+        "gold": []
+      }
+    ]
+  },
+  {
+    "id": "spindle",
+    "layout": "unique-en",
+    "rows": 265,
+    "budget": 6200,
+    "question": "Which day is confirmed for the Spindle inspection?",
+    "opening": "Operations: The Spindle inspection is booked for Tuesday.",
+    "middle": "Office: A Thursday slot is available for a different team.",
+    "variants": [
+      {
+        "ending": "Operations: Spindle's Tuesday appointment is cancelled. Friday is its confirmed inspection day.",
+        "gold": [
+          "Friday"
+        ]
+      },
+      {
+        "ending": "Operations: Tuesday was cancelled. Friday has been suggested for Spindle but is awaiting approval.",
+        "gold": []
+      }
+    ]
+  },
+  {
+    "id": "lamp",
+    "layout": "repeat-ja",
+    "rows": 180,
+    "budget": 1300,
+    "question": "葵号の最終的な寄港地はどこですか？",
+    "opening": "運航：葵号の寄港地は潮見港と掲示しました。",
+    "middle": "受付：葵号について、別の港を希望する声があります。",
+    "variants": [
+      {
+        "ending": "運航：葵号について潮見港の掲示を正式決定として確認しました。",
+        "gold": [
+          "潮見港"
+        ]
+      },
+      {
+        "ending": "運航：葵号の掲示内容は取り下げました。最終的な寄港地の決定は来週です。",
+        "gold": []
+      }
+    ]
+  },
+  {
+    "id": "ember",
+    "layout": "varied-en",
+    "rows": 64,
+    "budget": 1350,
+    "question": "What is the agreed duration of the maple session?",
+    "opening": "East desk: The maple session will run for 42 minutes.",
+    "middle": "West desk: Our schedule lists 65 minutes for that same session.",
+    "variants": [
+      {
+        "ending": "Chair: Both desks have now agreed that the maple session will run for 65 minutes.",
+        "gold": [
+          "65 minutes"
+        ]
+      },
+      {
+        "ending": "Chair: The two durations are still in dispute. Neither has been adopted for the maple session.",
+        "gold": []
+      }
+    ]
+  },
+  {
+    "id": "ivy",
+    "layout": "unique-ja",
+    "rows": 220,
+    "budget": 6200,
+    "question": "木立館が承認した見学日の曜日は？",
+    "opening": "受付：木立館は見学日を水曜日と発表しました。",
+    "middle": "案内：先の見学日の発表を撤回しました。",
+    "variants": [
+      {
+        "ending": "館長：本日の決裁で木立館の見学日を金曜日に定めました。",
+        "gold": [
+          "金曜日"
+        ]
+      },
+      {
+        "ending": "館長：金曜日という案への決裁はまだ下りていません。見学日は未定です。",
+        "gold": []
+      }
+    ]
+  },
+  {
+    "id": "iris",
+    "layout": "alternating-en",
+    "rows": 170,
+    "budget": 1390,
+    "question": "What material is required for the outer tray?",
+    "opening": "Design: The inner tray must be bamboo.",
+    "middle": "Design: The outer tray material is under review.",
+    "variants": [
+      {
+        "ending": "Design: Cork is the required material for the outer tray.",
+        "gold": [
+          "Cork"
+        ]
+      },
+      {
+        "ending": "Design: Cork was proposed for the outer tray. Only the inner tray specification is approved.",
+        "gold": []
+      }
+    ]
+  },
+  {
+    "id": "mist",
+    "layout": "varied-ja",
+    "rows": 65,
+    "budget": 1370,
+    "question": "午前の連絡係は誰に決まりましたか？",
+    "opening": "事務：午前の連絡係には長田が決まりました。",
+    "middle": "進行：午後の連絡係も見直しています。",
+    "variants": [
+      {
+        "ending": "事務：午前の担当は長田から水原に交代しました。",
+        "gold": [
+          "水原"
+        ]
+      },
+      {
+        "ending": "事務：長田は午前の担当を外れます。後任の承認は後日です。",
+        "gold": []
+      }
+    ]
+  },
+  {
+    "id": "reed",
+    "layout": "unique-en",
+    "rows": 60,
+    "budget": 1420,
+    "question": "What is the booking code for the Reed cabin?",
+    "opening": "Clerk: Reed cabin's approved booking code is MOSS-82.",
+    "middle": "Host: The code for a cabin is being reviewed.",
+    "variants": [
+      {
+        "ending": "Clerk: We withdrew the code for the Dune cabin only. That cabin now uses SAND-93.",
+        "gold": [
+          "MOSS-82"
+        ]
+      },
+      {
+        "ending": "Clerk: The Reed cabin code has been withdrawn. An updated Reed code is still pending.",
+        "gold": []
+      }
+    ]
+  },
+  {
+    "id": "palm",
+    "layout": "repeat-ja",
+    "rows": 172,
+    "budget": 1300,
+    "question": "凪組の返却期限はいつですか？",
+    "opening": "進行：凪組の返却期限は11月9日です。",
+    "middle": "進行：凪組について返却期限の延長を申請しました。",
+    "variants": [
+      {
+        "ending": "決裁：延長は承認されず、凪組の現行の期限が有効です。",
+        "gold": [
+          "11月9日"
+        ]
+      },
+      {
+        "ending": "決裁：現行の期限を廃止し、新しい期限の決定は持ち越します。",
+        "gold": []
+      }
+    ]
+  },
+  {
+    "id": "stone",
+    "layout": "alternating-en",
+    "rows": 162,
+    "budget": 1390,
+    "question": "What price was listed for the Fern ticket before the November amendment?",
+    "opening": "Clerk: The original price for the Fern ticket was 18 dollars.",
+    "middle": "Office: A November amendment is being recorded in the register.",
+    "variants": [
+      {
+        "ending": "Clerk: The price in force after the amendment is 25 dollars.",
+        "gold": [
+          "18 dollars"
+        ]
+      },
+      {
+        "ending": "Clerk: The earlier price entry of 18 dollars was a transcription error. The pre-amendment price is unknown.",
+        "gold": []
+      }
+    ]
+  }
+]
