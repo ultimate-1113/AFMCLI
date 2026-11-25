@@ -419,6 +419,38 @@ fn compact_falls_back_instead_of_truncating_a_dense_source() {
 }
 
 #[test]
+fn repeats_mode_uses_the_same_windows_as_standard_for_nonrepeating_text() {
+    let source = (0..49)
+        .map(|i| format!("Entry {i} {}.", "library ".repeat(11)))
+        .collect::<Vec<_>>()
+        .join("\n");
+    let job = json!({"task":"answer","source":source,"question":"Which room?"});
+    let mut standard = Vec::new();
+    for mode in [None, Some(ContextMode::Repeats)] {
+        let mut prompts = Vec::new();
+        let r = eval(
+            job.clone(),
+            Policy {
+                compact: mode,
+                input_budget: 1200,
+                ..Policy::default()
+            },
+            |request| {
+                prompts.push(request.prompt.clone());
+                Ok(json!({"answerable":false,"answer":""}).to_string())
+            },
+        );
+        assert_eq!(r.status, "abstained");
+        assert!(prompts.len() > 2);
+        if mode.is_none() {
+            standard = prompts;
+        } else {
+            assert_eq!(r.metrics.context.unwrap().method, "full_scan");
+            assert_eq!(prompts, standard);
+        }
+    }
+}
+#[test]
 fn summary_copies_only_offered_ids_in_original_order() {
     let j =
         json!({"task":"summarize","source":"Bells rang.\r\n   雨が降った。\n終演。","sentences":2});

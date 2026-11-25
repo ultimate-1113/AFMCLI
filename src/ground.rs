@@ -1,7 +1,7 @@
 use crate::{
     contract,
     document::{self, Evidence, Segment, Span},
-    engine::{Engine, Fail, Output, Run, request},
+    engine::{ContextMode, Engine, Fail, Output, Run, request},
     fm::Request,
     job::{Field, Job},
 };
@@ -19,7 +19,10 @@ fn window<'a>(
     // Leave room for validation feedback when a long compact-mode job has to
     // split its source. A single segment may still use the full model budget.
     let cap = engine.policy.input_budget;
-    let reserve = if engine.metrics.context.is_some() && engine.policy.repairs > 0 {
+    let reserve = if engine.policy.compact == Some(ContextMode::Evidence)
+        && engine.metrics.context.is_some()
+        && engine.policy.repairs > 0
+    {
         (cap / 8).min(64)
     } else {
         0
