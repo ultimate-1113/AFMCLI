@@ -1,0 +1,17 @@
+# AFM 3 Core Advanced implementation study
+
+The baseline is AFMCLI v0.3.2 at `37861465faf1364e6b2c677e0ca030bbbf3eac5a`. All generation uses the Apple system model, greedy decoding, a 6,200-token request budget and one active request. Development and held-out records have separate sources. Freeze every potential specialty panel before choosing a winner. Methods receive the job only. Scorers alone receive the answer and allowed evidence.
+
+| Track | Conditions | Held-out cases |
+|---|---|---|
+| General | Direct, current harness, one common instruction, one task-selected instruction of at most 128 tokens including its wrapper | 10 each for source QA, extraction, classification and numeric-preserving rewrite |
+| Context | Direct, current exact-record compaction, one indexed retrieval with exhaustive fallback, indexed retrieval with one expansion and exhaustive fallback | 10 source documents each near 4,096, 8,192 and 16,384 Apple tokens |
+| Specialty | Direct, current harness and a task-specific host/model procedure. A further host-only table control measures the contribution of the model | 8 development cases per specialty and 30 held-out cases for the chosen specialty |
+
+For general use, keep the current harness and change the guidance only. For long documents, use original UTF-8 ranges, retrieve connected updates and require matching evidence. Score omissions, wrong values and unsupported answers. For specialties, compare a table with updates, translations with protected terms and near-boundary integer constraints. Score exact task requirements without a second model. The test inputs and labels are synthetic. No hidden test annotations may enter routing, ranking or prompt construction.
+
+Select the specialty using development results alone. Disqualify a procedure with more serious errors than the current harness. Rank the others by net additional correct answers and then lower total sent tokens. An exact tie follows alphabetical group order. Do not inspect or execute unselected test panels. Record an empty selection if all procedures are disqualified.
+
+For general adoption require at least three net additional correct answers across 40 cases and improvement in at least two task families. Specialty adoption requires at least three net additional correct answers across 30 cases. Both also require serious errors at or below current and median end-to-end time at most 1.25 times current. Context adoption requires at least as many correct answers, no increase in unsupported answers and at least 20% fewer total sent tokens than current. Count every model call including an unsuccessful retrieval and fallback. The two-retrieval method is the predesignated context candidate. Report one retrieval as an ablation.
+
+Include held and refused jobs in the denominator. For each case and arm, capture all recorded model attempts, final status, score, total submitted input, largest request, call count and wall time from starting the procedure to obtaining the result. This timing includes local process startup, counting, selection, guards and recovery. Report paired wins and losses, median and nearest-rank p95 times, both against current and against direct where applicable. A second evaluation resumes only missing cases from matching fixture and binary hashes. Report the outcome of the previous short, long and numeric regression panels independently. Add passing methods as explicit options only. Failed methods remain available as study prototypes.
