@@ -1,0 +1,61 @@
+[
+  {
+    "id": "pattern-collection",
+    "binary": "130219774035301d610328021548abe4a9a1a123e95bfddc20fcda894717cbb0",
+    "mode": "--compact",
+    "entrypoint": "run",
+    "method": "repeat_blocks",
+    "status": "abstained",
+    "attempts": [
+      {
+        "answer": "梅組の新しい受取日は6月18日です。"
+      },
+      {
+        "supported": false
+      }
+    ],
+    "answer": null
+  },
+  {
+    "id": "pattern-scope",
+    "binary": "130219774035301d610328021548abe4a9a1a123e95bfddc20fcda894717cbb0",
+    "mode": "--compact",
+    "entrypoint": "run",
+    "method": "repeat_blocks",
+    "status": "abstained",
+    "attempts": [
+      {
+        "answer": "Coral Studio"
+      },
+      {
+        "supported": false
+      }
+    ],
+    "answer": null
+  },
+  {
+    "id": "pattern-default",
+    "binary": "130219774035301d610328021548abe4a9a1a123e95bfddc20fcda894717cbb0",
+    "mode": "--compact=evidence",
+    "entrypoint": "answer",
+    "method": "repeat_blocks",
+    "status": "ok",
+    "attempts": [
+      {
+        "answer": "Amber Hall"
+      },
+      {
+        "supported": true
+      }
+    ],
+    "answer": {
+      "spans": [
+        {
+          "end_byte": 79769,
+          "start_byte": 79759
+        }
+      ],
+      "value": "Amber Hall"
+    }
+  }
+]

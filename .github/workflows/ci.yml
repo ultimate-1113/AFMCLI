@@ -42,5 +42,8 @@ jobs:
           python3 -B "$RUNNER_TEMP/afmcli-compact-pilot/eval/context/bench.py" verify --results eval/context/pilot.jsonl
           python3 -B eval/context/bench.py verify --results eval/context/second-pass.jsonl
           python3 -B eval/context/bench.py verify
+          python3 -B eval/repeats/bench.py verify
+          python3 -B eval/repeats/check_short.py verify
+          python3 -B eval/repeats/verifier_probe.py verify
           python3 -B tools/test_png_audit.py
           python3 -B tools/privacy_audit.py --tracked

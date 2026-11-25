@@ -22,14 +22,41 @@ def cases():
     yield from CONTEXT["synthetic"]()
 
 
+def verify_candidate_traces(panel, records):
+    """Link the independent trace runs to the same binary, source and outcomes."""
+    traces = json.loads((HERE / "candidate-traces.json").read_text())
+    assert {trace["id"] for trace in traces} == {
+        "pattern-collection", "pattern-scope", "pattern-default"
+    } and len(traces) == 3
+    after = {row["id"]: row for row in records if row["mode"] == "after"}
+    for trace in traces:
+        row = after[trace["id"]]
+        case = panel[trace["id"]]
+        assert trace["binary"] == row["binary"]
+        assert trace["method"] == row["context"]["method"]
+        assert (trace["status"], trace["answer"]) == (row["status"], row["answer"])
+        reader, verifier = trace["attempts"]
+        assert reader["answer"] and reader["answer"] in case["job"]["source"]
+        assert verifier["supported"] is (trace["status"] == "ok")
+        if trace["answer"] is not None:
+            assert reader["answer"] == trace["answer"]["value"]
+            assert CONTEXT["check_spans"](case["job"], trace["answer"])
+
+
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("action", choices=["run", "verify"])
+    ap.add_argument("action", choices=["run", "verify", "show"])
+    ap.add_argument("--case", help="print this synthetic case as a JSON job")
     ap.add_argument("--before", type=Path)
     ap.add_argument("--after", type=Path)
     ap.add_argument("--results", type=Path, default=HERE/"results.jsonl")
     args = ap.parse_args()
     panel = {c["id"]:c for c in cases()}
+    if args.action == "show":
+        if args.case not in panel:
+            ap.error("supply a known synthetic ID with --case")
+        print(json.dumps(panel[args.case]["job"], ensure_ascii=False))
+        return
     if args.action == "run":
         if not args.before or not args.after:
             ap.error("run needs --before and --after pointing to the two binaries")
@@ -62,6 +89,8 @@ def main():
     records = [json.loads(s) for s in args.results.read_text().splitlines()]
     assert len(records)==2*len(panel)
     assert {(r["id"],r["mode"]) for r in records} == {(i,m) for i in panel for m in ("before","after")}
+    if args.action == "verify" and args.results.resolve() == (HERE / "results.jsonl"):
+        verify_candidate_traces(panel, records)
     for mode in ("before","after"):
         assert len({r["binary"] for r in records if r["mode"]==mode})==1
     groups = defaultdict(list)
