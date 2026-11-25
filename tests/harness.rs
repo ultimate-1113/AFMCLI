@@ -284,7 +284,7 @@ fn compact_dictionary_quotes_original_bytes_and_checks_distant_updates() {
     );
     let job = json!({"task":"answer","source":source,"question":"確定した会場は？"});
     let policy = Policy {
-        compact: Some(ContextMode::Repeats),
+        compact: Some(ContextMode::Review),
         input_budget: 1200,
         ..Default::default()
     };
@@ -336,7 +336,7 @@ fn a_grounded_update_is_checked_alone_and_disagreement_ends_without_repair() {
     );
     let job = json!({"task":"answer","source":text,"question":"What code is approved?"});
     let policy = Policy {
-        compact: Some(ContextMode::Evidence),
+        compact: Some(ContextMode::Review),
         input_budget: 1600,
         ..Default::default()
     };
@@ -374,7 +374,7 @@ fn a_grounded_update_is_checked_alone_and_disagreement_ends_without_repair() {
 }
 
 #[test]
-fn periodic_packet_uses_the_original_offsets_in_both_compact_modes() {
+fn periodic_packet_uses_the_original_offsets_in_each_compact_mode() {
     let unit = "通知：点検済み。\r\n台帳：記入済み。\r\n";
     let src = format!(
         "{}会場は桜館です。\n{}終了。",
@@ -382,7 +382,12 @@ fn periodic_packet_uses_the_original_offsets_in_both_compact_modes() {
         unit.repeat(160)
     );
     let job = json!({"task":"answer","source":src,"question":"会場は？"});
-    for mode in [ContextMode::Repeats, ContextMode::Evidence] {
+    for mode in [
+        ContextMode::Repeats,
+        ContextMode::Evidence,
+        ContextMode::Records,
+        ContextMode::Review,
+    ] {
         let r = eval(
             job.clone(),
             Policy {
@@ -397,6 +402,11 @@ fn periodic_packet_uses_the_original_offsets_in_both_compact_modes() {
                     .is_some()
                 {
                     json!({"basis":"会場は桜館です。","update":"","value":"桜館"})
+                } else if request.schema.as_ref().unwrap()["properties"]
+                    .get("supported")
+                    .is_some()
+                {
+                    json!({"supported":true})
                 } else {
                     json!({"answer":"桜館"})
                 }
@@ -415,6 +425,63 @@ fn periodic_packet_uses_the_original_offsets_in_both_compact_modes() {
 }
 
 #[test]
+fn records_and_review_keep_the_requested_numbered_row_and_its_source_offset() {
+    let source = (0..68)
+        .map(|i| {
+            format!(
+                "Inspection {i:03} assigned tray {:03} and filed the inspection sheet.",
+                i + 200
+            )
+        })
+        .collect::<Vec<_>>()
+        .join("\n");
+    let job =
+        json!({"task":"answer","source":source,"question":"Which tray did inspection 017 assign?"});
+    for mode in [ContextMode::Records, ContextMode::Review] {
+        let record = eval(
+            job.clone(),
+            Policy {
+                compact: Some(mode),
+                input_budget: 1800,
+                ..Default::default()
+            },
+            |r| {
+                let props = &r.schema.as_ref().unwrap()["properties"];
+                let payload: Value =
+                    serde_json::from_str(r.prompt.split_once('\n').unwrap().1).unwrap();
+                assert!(
+                    payload["material"]["log"]
+                        .as_array()
+                        .unwrap()
+                        .iter()
+                        .any(|item| item
+                            .as_str()
+                            .is_some_and(|s| s.contains("Inspection 017 assigned tray 217")))
+                );
+                let response = if props.get("supported").is_some() {
+                    assert_eq!(mode, ContextMode::Records);
+                    json!({"supported":true})
+                } else if props.get("basis").is_some() {
+                    assert_eq!(mode, ContextMode::Review);
+                    assert!(payload.get("candidate").is_none());
+                    json!({"basis":"Inspection 017 assigned tray 217","value":"217","update":""})
+                } else {
+                    json!({"answer":"217"})
+                };
+                Ok(response.to_string())
+            },
+        );
+        assert_eq!(record.status, "ok");
+        assert_eq!(record.metrics.context.unwrap().method, "numbered_rows");
+        assert_eq!(record.result["answer"]["value"], "217");
+        assert_eq!(
+            record.result["answer"]["spans"][0]["start_byte"],
+            source.find("217").unwrap()
+        );
+    }
+}
+
+#[test]
 fn compact_reads_every_window_and_cannot_quote_an_omitted_sentence() {
     let mut source = (0..27)
         .map(|i| format!("Report {} {}.", char::from(b'A' + i), "stored ".repeat(12)))
@@ -424,7 +491,7 @@ fn compact_reads_every_window_and_cannot_quote_an_omitted_sentence() {
     source[25] = "The venue decision was withdrawn.".into();
     let job = json!({"task":"answer","question":"Which room?","source":source.join("\n")});
     let policy = Policy {
-        compact: Some(ContextMode::Evidence),
+        compact: Some(ContextMode::Review),
         input_budget: 1200,
         repairs: 0,
         ..Policy::default()

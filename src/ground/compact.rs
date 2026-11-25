@@ -180,18 +180,35 @@ fn read(
     let Some(evidence) = evidence else {
         return Ok(Output::new("abstained", json!({"answer":null})));
     };
-    if engine.policy.check_support {
-        if let Some(verified) =
-            super::review::confirm(engine, question, context, parts, &evidence.value)?
-        {
-            return Ok(Output::new("ok", json!({"answer":verified})));
-        }
-        let mut out = Output::new("abstained", json!({"answer":null}));
-        out.notes
-            .push("independent source reading did not establish the candidate".into());
-        return Ok(out);
+    if !engine.policy.check_support {
+        return Ok(Output::new("ok", json!({"answer":evidence})));
     }
-    Ok(Output::new("ok", json!({"answer":evidence})))
+    let (confirmed, reason) = if engine.policy.compact == Some(ContextMode::Review) {
+        (
+            super::review::confirm(engine, question, context, parts, &evidence.value)?,
+            "independent source reading did not establish the candidate",
+        )
+    } else {
+        let verify = request(
+            "Check whether the source establishes this exact candidate for the question. Read ALL the supplied material in order, including distant amendments, different speakers and unresolved alternatives. A withdrawn or superseded candidate is unsupported. In encoded material [i,n] repeats dictionary[i] n times; in excerpts gaps separate original ranges.",
+            json!({"question":question,"candidate":evidence.value,"material":context}),
+            Some(contract::object([(
+                "supported".into(),
+                json!({"type":"boolean"}),
+            )])),
+        );
+        let supported = engine.structured(verify, |v| Ok(v["supported"].as_bool().unwrap()))?;
+        (
+            supported.then_some(evidence),
+            "the combined source material did not confirm the candidate",
+        )
+    };
+    if let Some(value) = confirmed {
+        return Ok(Output::new("ok", json!({"answer":value})));
+    }
+    let mut out = Output::new("abstained", json!({"answer":null}));
+    out.notes.push(reason.into());
+    Ok(out)
 }
 
 const MAX_SELECTION: usize = 8;
@@ -266,7 +283,15 @@ pub(super) fn answer(
         let candidate = match method {
             "repeat_dictionary" => pack(source, lines, byte_limit).map(|p| json!(p)),
             "repeat_blocks" => pack_blocks(source, lines, byte_limit).map(|p| json!(p)),
-            _ => numbered::encode(source, lines, question, byte_limit),
+            "numbered_rows"
+                if matches!(
+                    engine.policy.compact,
+                    Some(ContextMode::Records | ContextMode::Review)
+                ) =>
+            {
+                numbered::encode(source, lines, question, byte_limit)
+            }
+            _ => None,
         };
         let Some(context) = candidate else { continue };
         let r = reader(question, &context);

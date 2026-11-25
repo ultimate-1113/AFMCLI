@@ -16,7 +16,10 @@ fn window_budget(engine: &Engine<'_>) -> usize {
     // Leave room for validation feedback when a long compact-mode job has to
     // split its source. A single segment may still use the full model budget.
     let cap = engine.policy.input_budget;
-    let reserve = if engine.policy.compact == Some(ContextMode::Evidence)
+    let reserve = if engine
+        .policy
+        .compact
+        .is_some_and(|mode| mode != ContextMode::Repeats)
         && engine.metrics.context.is_some()
         && engine.policy.repairs > 0
     {

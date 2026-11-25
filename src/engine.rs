@@ -19,6 +19,8 @@ static NUMBER: LazyLock<Regex> =
 pub enum ContextMode {
     Repeats,
     Evidence,
+    Records,
+    Review,
 }
 
 #[derive(Clone, Copy)]
