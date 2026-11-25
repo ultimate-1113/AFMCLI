@@ -34,6 +34,12 @@ def split_output(text,n):
     return [s.strip() for s in re.split(r"(?<=[。！？])\s*|(?<=[.!?])\s+(?=\S)"," ".join(lines)) if s.strip()]
 
 
+def one_repaired_sentence(text):
+    if not isinstance(text,str) or not text.strip() or "\n" in text.strip():
+        return False
+    return not re.search(r"[。！？]\s*\S|[.!?]\s+\S",text.strip())
+
+
 def validate(job):
     source,target=job["source_language"],job["target_language"]
     if {source,target}!={"ja","en"}:
@@ -125,10 +131,9 @@ def run(job,arm,invoke):
         patch=invoke(repair_job(job,idx,original[idx],lines[idx],broken[idx]),("--repairs","0"))
         if not accepted(patch):
             return record(patch["status"],notes=patch.get("notes",[]),draft=draft,attempted=lines,repair_index=idx,initial_violations=broken)
-        patched=split_output(patch.get("result"),1)
-        if len(patched)!=1 or "\n" in patch["result"].strip():
+        if not one_repaired_sentence(patch.get("result")):
             return record("held",notes=["repair did not return one line"],draft=draft,attempted=lines,repair_index=idx,initial_violations=broken)
-        lines[idx]=patched[0]
+        lines[idx]=patch["result"].strip()
     left=[[k for k,ok in public_checks(job,s,t).items() if not ok] for s,t in zip(original,lines)]
     details=dict(draft=draft,attempted=lines,repair_index=idx,initial_violations=broken,residual_violations=left)
     if any(left):
@@ -238,9 +243,10 @@ def grade(job,gold,arm,response):
     after,opposed=checks(job,gold,attempted)
     draft=split_output(diag.get("draft"),len(job["sentences"])) if "draft" in diag else attempted
     before,_=checks(job,gold,draft)
-    common=set(before)&set(after)
-    fixed=sum(not before[k] and after[k] for k in common)
-    damaged=sum(before[k] and not after[k] for k in common)
+    # Unexpected terms/names are themselves an obligation. Absence is correct on the other side of a repair.
+    comparable=(set(before)|set(after)) if before and after else set()
+    fixed=sum(not before.get(k,True) and after.get(k,True) for k in comparable)
+    damaged=sum(before.get(k,True) and not after.get(k,True) for k in comparable)
     safe=lambda prefix:bool(after) and all(v for k,v in after.items() if prefix in k)
     critical=not (safe("/numbers") and safe("/unit ") and safe("/name "))
     correct=bool(delivered and after and all(after.values()))
