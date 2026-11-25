@@ -1,0 +1,515 @@
+{
+  "fast": {
+    "arm": "checked",
+    "passes_primary": false,
+    "passes_previous": false,
+    "passes_both": false,
+    "previous": {
+      "panel": "known-moe-context-test",
+      "mode": "index-checked",
+      "prior_results_sha256": "5ba1160f56ef7abed0c1f3ccc855023072e7f20b358916cfaa45854e978a9815",
+      "checked_binary_sha256": "350bef3f1cfc98c5586f2c2691e1c35f8c5c620d5c85bab7126a0a31f6c32156",
+      "methods": {
+        "records": {
+          "n": 30,
+          "correct": 22,
+          "answerable": {
+            "n": 21,
+            "correct": 18,
+            "explicit_null": 2,
+            "nonempty": 18,
+            "held": 1,
+            "errors": 0
+          },
+          "unanswerable": {
+            "n": 9,
+            "correct": 4,
+            "explicit_null": 4,
+            "nonempty": 2,
+            "held": 2,
+            "errors": 1
+          },
+          "statuses": {
+            "ok": 20,
+            "abstained": 6,
+            "held": 3,
+            "error": 1
+          },
+          "sent_input_tokens": 334359,
+          "peak_tokens": 6165,
+          "model_calls": 106,
+          "total_ms": 282020.438,
+          "median_ms": 6417.786,
+          "p95_ms": 38521.341
+        },
+        "indexed": {
+          "n": 30,
+          "correct": 22,
+          "answerable": {
+            "n": 21,
+            "correct": 19,
+            "explicit_null": 2,
+            "nonempty": 19,
+            "held": 0,
+            "errors": 0
+          },
+          "unanswerable": {
+            "n": 9,
+            "correct": 3,
+            "explicit_null": 3,
+            "nonempty": 4,
+            "held": 2,
+            "errors": 0
+          },
+          "statuses": {
+            "ok": 23,
+            "abstained": 5,
+            "held": 2
+          },
+          "sent_input_tokens": 230715,
+          "peak_tokens": 6134,
+          "model_calls": 100,
+          "total_ms": 148109.142,
+          "median_ms": 2658.4075,
+          "p95_ms": 16637.581
+        },
+        "index-checked": {
+          "n": 30,
+          "correct": 16,
+          "answerable": {
+            "n": 21,
+            "correct": 8,
+            "explicit_null": 13,
+            "nonempty": 8,
+            "held": 0,
+            "errors": 0
+          },
+          "unanswerable": {
+            "n": 9,
+            "correct": 8,
+            "explicit_null": 8,
+            "nonempty": 0,
+            "held": 0,
+            "errors": 1
+          },
+          "statuses": {
+            "abstained": 21,
+            "ok": 8,
+            "error": 1
+          },
+          "sent_input_tokens": 283553,
+          "peak_tokens": 6134,
+          "model_calls": 95,
+          "total_ms": 240700.688,
+          "median_ms": 4589.8955000000005,
+          "p95_ms": 22005.557
+        }
+      },
+      "paired_changes": {
+        "records": {
+          "gained": [
+            "ctx-test-4k-04",
+            "ctx-test-4k-08",
+            "ctx-test-8k-07",
+            "ctx-test-8k-08",
+            "ctx-test-16k-03"
+          ],
+          "lost": [
+            "ctx-test-4k-01",
+            "ctx-test-4k-02",
+            "ctx-test-4k-05",
+            "ctx-test-4k-06",
+            "ctx-test-4k-09",
+            "ctx-test-4k-10",
+            "ctx-test-8k-05",
+            "ctx-test-8k-09",
+            "ctx-test-16k-05",
+            "ctx-test-16k-06",
+            "ctx-test-16k-09"
+          ]
+        },
+        "indexed": {
+          "gained": [
+            "ctx-test-4k-04",
+            "ctx-test-4k-08",
+            "ctx-test-8k-07",
+            "ctx-test-8k-08",
+            "ctx-test-16k-08"
+          ],
+          "lost": [
+            "ctx-test-4k-01",
+            "ctx-test-4k-02",
+            "ctx-test-4k-05",
+            "ctx-test-4k-06",
+            "ctx-test-4k-09",
+            "ctx-test-4k-10",
+            "ctx-test-8k-05",
+            "ctx-test-8k-09",
+            "ctx-test-16k-05",
+            "ctx-test-16k-06",
+            "ctx-test-16k-09"
+          ]
+        }
+      },
+      "previous_indexed_nonempty_on_unanswerable": {
+        "ctx-test-4k-04": {
+          "records": {
+            "status": "ok",
+            "answer": "QF-225",
+            "explicit_null": false,
+            "nonempty": true,
+            "cited_text_matches_source": true,
+            "outcome": "unsupported_answer"
+          },
+          "indexed": {
+            "status": "ok",
+            "answer": "QF-225",
+            "explicit_null": false,
+            "nonempty": true,
+            "cited_text_matches_source": true,
+            "outcome": "unsupported_answer"
+          },
+          "index-checked": {
+            "status": "abstained",
+            "answer": null,
+            "explicit_null": true,
+            "nonempty": false,
+            "cited_text_matches_source": null,
+            "outcome": "correct_abstention"
+          }
+        },
+        "ctx-test-8k-08": {
+          "records": {
+            "status": "ok",
+            "answer": "Vale Hall",
+            "explicit_null": false,
+            "nonempty": true,
+            "cited_text_matches_source": true,
+            "outcome": "unsupported_answer"
+          },
+          "indexed": {
+            "status": "ok",
+            "answer": "Vale Hall",
+            "explicit_null": false,
+            "nonempty": true,
+            "cited_text_matches_source": true,
+            "outcome": "unsupported_answer"
+          },
+          "index-checked": {
+            "status": "abstained",
+            "answer": null,
+            "explicit_null": true,
+            "nonempty": false,
+            "cited_text_matches_source": null,
+            "outcome": "correct_abstention"
+          }
+        },
+        "ctx-test-16k-07": {
+          "records": {
+            "status": "error",
+            "answer": null,
+            "explicit_null": false,
+            "nonempty": false,
+            "cited_text_matches_source": null,
+            "outcome": "error"
+          },
+          "indexed": {
+            "status": "ok",
+            "answer": "grey",
+            "explicit_null": false,
+            "nonempty": true,
+            "cited_text_matches_source": true,
+            "outcome": "unsupported_answer"
+          },
+          "index-checked": {
+            "status": "error",
+            "answer": null,
+            "explicit_null": false,
+            "nonempty": false,
+            "cited_text_matches_source": null,
+            "outcome": "error"
+          }
+        },
+        "ctx-test-16k-08": {
+          "records": {
+            "status": "abstained",
+            "answer": null,
+            "explicit_null": true,
+            "nonempty": false,
+            "cited_text_matches_source": null,
+            "outcome": "correct_abstention"
+          },
+          "indexed": {
+            "status": "ok",
+            "answer": "審議中で、承認された会場はまだない。",
+            "explicit_null": false,
+            "nonempty": true,
+            "cited_text_matches_source": true,
+            "outcome": "unsupported_answer"
+          },
+          "index-checked": {
+            "status": "abstained",
+            "answer": null,
+            "explicit_null": true,
+            "nonempty": false,
+            "cited_text_matches_source": null,
+            "outcome": "correct_abstention"
+          }
+        }
+      }
+    }
+  },
+  "staged": {
+    "arm": "staged",
+    "passes_primary": false,
+    "passes_previous": false,
+    "passes_both": false,
+    "previous": {
+      "panel": "known-moe-context-test",
+      "mode": "index-staged",
+      "prior_results_sha256": "5ba1160f56ef7abed0c1f3ccc855023072e7f20b358916cfaa45854e978a9815",
+      "checked_binary_sha256": "350bef3f1cfc98c5586f2c2691e1c35f8c5c620d5c85bab7126a0a31f6c32156",
+      "methods": {
+        "records": {
+          "n": 30,
+          "correct": 22,
+          "answerable": {
+            "n": 21,
+            "correct": 18,
+            "explicit_null": 2,
+            "nonempty": 18,
+            "held": 1,
+            "errors": 0
+          },
+          "unanswerable": {
+            "n": 9,
+            "correct": 4,
+            "explicit_null": 4,
+            "nonempty": 2,
+            "held": 2,
+            "errors": 1
+          },
+          "statuses": {
+            "ok": 20,
+            "abstained": 6,
+            "held": 3,
+            "error": 1
+          },
+          "sent_input_tokens": 334359,
+          "peak_tokens": 6165,
+          "model_calls": 106,
+          "total_ms": 282020.438,
+          "median_ms": 6417.786,
+          "p95_ms": 38521.341
+        },
+        "indexed": {
+          "n": 30,
+          "correct": 22,
+          "answerable": {
+            "n": 21,
+            "correct": 19,
+            "explicit_null": 2,
+            "nonempty": 19,
+            "held": 0,
+            "errors": 0
+          },
+          "unanswerable": {
+            "n": 9,
+            "correct": 3,
+            "explicit_null": 3,
+            "nonempty": 4,
+            "held": 2,
+            "errors": 0
+          },
+          "statuses": {
+            "ok": 23,
+            "abstained": 5,
+            "held": 2
+          },
+          "sent_input_tokens": 230715,
+          "peak_tokens": 6134,
+          "model_calls": 100,
+          "total_ms": 148109.142,
+          "median_ms": 2658.4075,
+          "p95_ms": 16637.581
+        },
+        "index-staged": {
+          "n": 30,
+          "correct": 18,
+          "answerable": {
+            "n": 21,
+            "correct": 15,
+            "explicit_null": 1,
+            "nonempty": 16,
+            "held": 2,
+            "errors": 0
+          },
+          "unanswerable": {
+            "n": 9,
+            "correct": 3,
+            "explicit_null": 3,
+            "nonempty": 4,
+            "held": 1,
+            "errors": 0
+          },
+          "statuses": {
+            "ok": 20,
+            "abstained": 4,
+            "refused": 3,
+            "held": 3
+          },
+          "sent_input_tokens": 356835,
+          "peak_tokens": 3473,
+          "model_calls": 223,
+          "total_ms": 196898.263,
+          "median_ms": 6134.624,
+          "p95_ms": 11345.178
+        }
+      },
+      "paired_changes": {
+        "records": {
+          "gained": [
+            "ctx-test-4k-04",
+            "ctx-test-8k-10",
+            "ctx-test-16k-03",
+            "ctx-test-16k-10"
+          ],
+          "lost": [
+            "ctx-test-4k-09",
+            "ctx-test-4k-10",
+            "ctx-test-8k-03",
+            "ctx-test-8k-04",
+            "ctx-test-8k-05",
+            "ctx-test-8k-09",
+            "ctx-test-16k-04",
+            "ctx-test-16k-09"
+          ]
+        },
+        "indexed": {
+          "gained": [
+            "ctx-test-4k-04",
+            "ctx-test-8k-10",
+            "ctx-test-16k-08",
+            "ctx-test-16k-10"
+          ],
+          "lost": [
+            "ctx-test-4k-09",
+            "ctx-test-4k-10",
+            "ctx-test-8k-03",
+            "ctx-test-8k-04",
+            "ctx-test-8k-05",
+            "ctx-test-8k-09",
+            "ctx-test-16k-04",
+            "ctx-test-16k-09"
+          ]
+        }
+      },
+      "previous_indexed_nonempty_on_unanswerable": {
+        "ctx-test-4k-04": {
+          "records": {
+            "status": "ok",
+            "answer": "QF-225",
+            "explicit_null": false,
+            "nonempty": true,
+            "cited_text_matches_source": true,
+            "outcome": "unsupported_answer"
+          },
+          "indexed": {
+            "status": "ok",
+            "answer": "QF-225",
+            "explicit_null": false,
+            "nonempty": true,
+            "cited_text_matches_source": true,
+            "outcome": "unsupported_answer"
+          },
+          "index-staged": {
+            "status": "abstained",
+            "answer": null,
+            "explicit_null": true,
+            "nonempty": false,
+            "cited_text_matches_source": null,
+            "outcome": "correct_abstention"
+          }
+        },
+        "ctx-test-8k-08": {
+          "records": {
+            "status": "ok",
+            "answer": "Vale Hall",
+            "explicit_null": false,
+            "nonempty": true,
+            "cited_text_matches_source": true,
+            "outcome": "unsupported_answer"
+          },
+          "indexed": {
+            "status": "ok",
+            "answer": "Vale Hall",
+            "explicit_null": false,
+            "nonempty": true,
+            "cited_text_matches_source": true,
+            "outcome": "unsupported_answer"
+          },
+          "index-staged": {
+            "status": "ok",
+            "answer": "Vale Hall",
+            "explicit_null": false,
+            "nonempty": true,
+            "cited_text_matches_source": true,
+            "outcome": "unsupported_answer"
+          }
+        },
+        "ctx-test-16k-07": {
+          "records": {
+            "status": "error",
+            "answer": null,
+            "explicit_null": false,
+            "nonempty": false,
+            "cited_text_matches_source": null,
+            "outcome": "error"
+          },
+          "indexed": {
+            "status": "ok",
+            "answer": "grey",
+            "explicit_null": false,
+            "nonempty": true,
+            "cited_text_matches_source": true,
+            "outcome": "unsupported_answer"
+          },
+          "index-staged": {
+            "status": "ok",
+            "answer": "grey",
+            "explicit_null": false,
+            "nonempty": true,
+            "cited_text_matches_source": true,
+            "outcome": "unsupported_answer"
+          }
+        },
+        "ctx-test-16k-08": {
+          "records": {
+            "status": "abstained",
+            "answer": null,
+            "explicit_null": true,
+            "nonempty": false,
+            "cited_text_matches_source": null,
+            "outcome": "correct_abstention"
+          },
+          "indexed": {
+            "status": "ok",
+            "answer": "審議中で、承認された会場はまだない。",
+            "explicit_null": false,
+            "nonempty": true,
+            "cited_text_matches_source": true,
+            "outcome": "unsupported_answer"
+          },
+          "index-staged": {
+            "status": "abstained",
+            "answer": null,
+            "explicit_null": true,
+            "nonempty": false,
+            "cited_text_matches_source": null,
+            "outcome": "correct_abstention"
+          }
+        }
+      }
+    }
+  }
+}

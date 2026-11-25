@@ -67,11 +67,17 @@ jobs:
           python3 -B eval/index_status/bench.py report --split test > "$RUNNER_TEMP/index-report.json"
           cmp "$RUNNER_TEMP/index-report.json" eval/index_status/results/summary.json
           python3 -B eval/index_status/targeted_bench.py verify
+          python3 -B eval/index_status/targeted_bench.py report > "$RUNNER_TEMP/index-secondary.json"
+          cmp "$RUNNER_TEMP/index-secondary.json" eval/index_status/results/secondary/summary.json
           python3 -B eval/index_status/regressions.py verify
+          python3 -B eval/index_status/regressions.py report > "$RUNNER_TEMP/index-previous.json"
+          cmp "$RUNNER_TEMP/index-previous.json" eval/index_status/results/previous-summary.json
           python3 -B -m unittest discover -s eval/calculator/native
           python3 -B eval/calculator/verify.py
           python3 -B eval/calculator/native/words.py verify
-          python3 -B eval/calculator/native/sufficiency.py verify --cases eval/calculator/native/sufficiency_cases.json --out eval/calculator/native-sufficiency.jsonl
+          python3 -B eval/calculator/native/sufficiency.py verify --cases eval/calculator/native/sufficiency_cases.json --out eval/calculator/native-sufficiency.jsonl > "$RUNNER_TEMP/calculator-sufficiency.json"
+          python3 -m json.tool --no-ensure-ascii --indent 2 "$RUNNER_TEMP/calculator-sufficiency.json" > "$RUNNER_TEMP/calculator-sufficiency-formatted.json"
+          cmp "$RUNNER_TEMP/calculator-sufficiency-formatted.json" eval/calculator/native-sufficiency-summary.json
           python3 -B eval/calculator/check_math.py --binary target/debug/afmcli
           python3 -B tools/test_png_audit.py
           python3 -B tools/privacy_audit.py --tracked
