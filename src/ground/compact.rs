@@ -144,8 +144,10 @@ fn pack_blocks<'a>(source: &'a str, lines: &[Segment<'_>], limit: usize) -> Opti
     multi.then_some(packet)
 }
 
-fn reader(question: &str, context: &Value) -> Request {
-    let instruction = if context.get("log").is_some() {
+pub(super) fn reader(question: &str, context: &Value) -> Request {
+    let instruction = if context.get("indexed_excerpts").is_some() {
+        "Read the original excerpts in document order. They have gaps. Track the subject, attribute and time of the question, including corrections, withdrawals and notices for a different subject. Copy only the shortest exact value from the applicable excerpt. If these excerpts do not establish the answer, return an empty string."
+    } else if context.get("log").is_some() {
         "Read log in order. Strings are original notices. An object encodes consecutive rows: insert the space-separated digit strings of each row between the successive literal parts, preserving leading zeroes. Answer only with the shortest exact name, date, quantity or identifier asked for. Apply amendments only to the requested subject and attribute. If no applicable value is established return an empty string."
     } else {
         "Read the material in order. A sequence string is literal; [i,n] repeats dictionary[i] n times (zero-based). Excerpts are in original order with gaps. Copy only the name, place, date or quantity requested, excluding the speaker and surrounding sentence. For example, 'Lee: Pickup is at the Willow Desk.' and 'Which desk?' gives 'Willow Desk'. Respect scope, corrections and cancellations. If the fact is absent, withdrawn without replacement, or conflicting without a resolution, return an empty answer."
@@ -160,7 +162,7 @@ fn reader(question: &str, context: &Value) -> Request {
     )
 }
 
-fn read(
+pub(super) fn read(
     engine: &mut Engine<'_>,
     question: &str,
     context: &Value,
@@ -277,6 +279,7 @@ pub(super) fn answer(
         source_segments: lines.len(),
         retained_segments: lines.len(),
         selection_windows: 0,
+        retrieval: None,
     };
     let byte_limit = engine.policy.input_budget.saturating_mul(12);
     for method in ["repeat_dictionary", "repeat_blocks", "numbered_rows"] {
@@ -286,7 +289,12 @@ pub(super) fn answer(
             "numbered_rows"
                 if matches!(
                     engine.policy.compact,
-                    Some(ContextMode::Records | ContextMode::Review)
+                    Some(
+                        ContextMode::Records
+                            | ContextMode::Review
+                            | ContextMode::IndexOnce
+                            | ContextMode::Indexed
+                    )
                 ) =>
             {
                 numbered::encode(source, lines, question, byte_limit)
@@ -314,6 +322,13 @@ pub(super) fn answer(
     usage.method = "evidence_windows";
     usage.retained_segments = 0;
     engine.metrics.context = Some(usage);
+    if matches!(
+        engine.policy.compact,
+        Some(ContextMode::IndexOnce | ContextMode::Indexed)
+    ) && let Some(output) = super::indexed::answer(engine, source, question, lines)?
+    {
+        return Ok(Some(output));
+    }
     let mut kept = vec![false; lines.len()];
     let mut pos = 0;
     while pos < lines.len() {

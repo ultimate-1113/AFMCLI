@@ -21,6 +21,8 @@ pub enum ContextMode {
     Evidence,
     Records,
     Review,
+    IndexOnce,
+    Indexed,
 }
 
 #[derive(Clone, Copy)]
@@ -76,6 +78,26 @@ pub struct ContextUsage {
     pub source_segments: usize,
     pub retained_segments: usize,
     pub selection_windows: usize,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub retrieval: Option<RetrievalUsage>,
+}
+#[derive(Default, Serialize)]
+pub struct RetrievalUsage {
+    pub rounds: Vec<RetrievalRound>,
+    pub fallback: Option<&'static str>,
+}
+#[derive(Serialize)]
+pub struct RetrievalRound {
+    pub sent: bool,
+    pub ranges: Vec<SourceRange>,
+}
+#[derive(Clone, Copy, PartialEq, Eq, Serialize)]
+pub struct SourceRange {
+    pub document_id: usize,
+    pub first_segment_id: usize,
+    pub last_segment_id: usize,
+    pub start_byte: usize,
+    pub end_byte: usize,
 }
 #[derive(Serialize)]
 pub struct Record {

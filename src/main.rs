@@ -22,7 +22,7 @@ struct Args {
     /// Select supporting source segments for QA or translate an optimization problem by declaration.
     #[arg(long, global = true, conflicts_with = "direct")]
     decompose: bool,
-    /// Compress long QA sources. evidence collects excerpts, records also packs numbered rows, and review independently checks source decisions.
+    /// Compress long QA sources. records also packs numbered rows, review checks decisions, and experimental indexed retrieves original excerpts (index-once allows one lookup).
     #[arg(long, global = true, value_enum, num_args=0..=1, require_equals=true, default_missing_value="repeats", conflicts_with_all = ["direct", "decompose"])]
     compact: Option<ContextMode>,
     /// Read source or a JSON job from this UTF-8 file (default: stdin).
