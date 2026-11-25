@@ -88,6 +88,8 @@ def report(output):
         if track == "context":
             checks = {"accuracy": delta["net"] >= 0,
                       "unsupported": candidate["unsupported"] <= base["unsupported"],
+                      "false_positive_on_absent": candidate["outcomes"].get("unsupported_answer", 0)
+                      <= base["outcomes"].get("unsupported_answer", 0),
                       "total_input": candidate["input_tokens"] * 5 <= base["input_tokens"] * 4}
         else:
             checks = {"accuracy": delta["net"] >= 3, "serious": candidate["serious"] <= base["serious"],

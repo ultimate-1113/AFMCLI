@@ -107,11 +107,17 @@ def all_arms(module, case):
 
 
 def score_winner(output):
-    module, cases, _ = frozen("special")
+    module, cases, locks = frozen("special")
     rows = by_key(read_rows(data_path(output, "special", "dev")))
     required = {(c["id"], a) for c in cases["dev"] for a in all_arms(module, c)}
     if set(rows) != required:
         raise ValueError("complete specialty development results are required for selection")
+    for case in cases["dev"]:
+        for arm in all_arms(module, case):
+            row = rows[case["id"], arm]
+            if (row["track"], row["split"], row["group"]) != ("special", "dev", case["group"]):
+                raise ValueError("invalid development metadata")
+            verify_row(row, case, module, locks["dev"])
     from report import choose
     return choose(list(rows.values()))
 
