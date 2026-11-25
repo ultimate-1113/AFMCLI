@@ -58,6 +58,19 @@ def frozen(track, write=False):
             out.write("\n")
     if read_json(path) != lock:
         raise ValueError(f"fixture lock differs: {track}")
+    names = [HERE / f"{track}.py"]
+    if track == "general":
+        names += sorted((HERE / "hints").glob("*/SKILL.md"))
+    if track == "special":
+        names += [HERE / "domains" / f"{name}.py" for name in ("common", "table", "translation", "constraints")]
+    methods = {p.relative_to(HERE).as_posix(): file_hash(p) for p in names}
+    method_file = HERE / "locks" / (track + "-methods.json")
+    if write and not method_file.exists():
+        with method_file.open("x", encoding="utf-8") as out:
+            json.dump(methods, out, sort_keys=True, indent=2)
+            out.write("\n")
+    if read_json(method_file) != methods:
+        raise ValueError(f"procedure, scorer or hint changed: {track}")
     return module, cases, lock
 
 
@@ -128,6 +141,22 @@ def job_call(binary, flags, job, env):
     return record
 
 
+def public_input(fn, case):
+    job = case["job"]
+    if fn.__name__ != "special":
+        return {"job": job}
+    # Infer the public input format without consulting gold or the benchmark difficulty group.
+    if "table" in job:
+        group = "table"
+    elif "sentences" in job:
+        group = "translation"
+    elif set(job) == {"source"}:
+        group = "constraints"
+    else:
+        raise ValueError("unknown specialist input")
+    return {"group": group, "job": job}
+
+
 def measured(binary, fn, arm, case, env):
     steps = []
 
@@ -138,7 +167,7 @@ def measured(binary, fn, arm, case, env):
         return record
 
     start = time.perf_counter_ns()
-    final = fn.run({"group": case["group"], "job": case["job"]}, arm, invoke)
+    final = fn.run(public_input(fn, case), arm, invoke)
     elapsed = round((time.perf_counter_ns() - start) / 1_000_000, 3)
     accepted_result(final)
     index = next((i for i, step in enumerate(steps) if step["record"] == final), None)
@@ -173,7 +202,7 @@ def verify_row(row, case, module, lock):
             raise ValueError("changed model request " + case["id"])
         return copy.deepcopy(step["record"])
 
-    final = module.run({"group": case["group"], "job": case["job"]}, row["arm"], replay)
+    final = module.run(public_input(module, case), row["arm"], replay)
     if next(steps, None) is not None or encode(final) != encode(final_record(row)):
         raise ValueError("stored procedure no longer replays " + case["id"])
     if encode(module.grade(case, row["arm"], final)) != encode(row["score"]):

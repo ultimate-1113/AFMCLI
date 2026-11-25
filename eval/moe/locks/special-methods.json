@@ -1,0 +1,7 @@
+{
+  "domains/common.py": "cd739da75532046bf9ae6e7f38b9061c9d5d7e7a7a7fc47893a7e62868aa2493",
+  "domains/constraints.py": "8dba10fd2d51d250f9568b43d4485ef8b0f2711277ab6f5c103df0aed84da950",
+  "domains/table.py": "d7a7d4f5281c9e38523e3ebe327e561ded764717e6a1fc03848e78cf3062d4d2",
+  "domains/translation.py": "470d75b5c84a1bf6d4261e99dac037df42d6cb3fc5760056e5c4ec1908f18faa",
+  "special.py": "183a033c86303a55b0c5ba70e631d9f2e76a47bed953baf447c94baa6e78bced"
+}
