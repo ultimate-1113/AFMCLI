@@ -50,6 +50,37 @@ def paired(rows, arm, base):
             "net_by_family": dict(sorted(by_group.items()))}
 
 
+def diagnostics(track, rows):
+    if track == "general":
+        chosen = {}
+        for r in rows:
+            if r["arm"] != "selected":
+                continue
+            flags = r["steps"][0]["flags"]
+            name = flags[flags.index("--skill") + 1] if "--skill" in flags else "no_hint"
+            chosen.setdefault(name, set()).add(r["id"])
+        return {name: paired([r for r in rows if r["id"] in ids], "selected", "current")
+                for name, ids in sorted(chosen.items())}
+    if track == "context":
+        details = {}
+        for arm in sorted({r["arm"] for r in rows}):
+            scores = [r["score"] for r in rows if r["arm"] == arm]
+            measured = [s["reader_evidence_recall"] for s in scores if s["reader_evidence_recall"] is not None]
+            retrieved = [s["retrieval_recall"] for s in scores if s["retrieval_recall"] is not None]
+            details[arm] = {"known_reader_coverage_cases": len(measured),
+                            "mean_known_reader_evidence_recall": sum(measured) / len(measured) if measured else None,
+                            "indexed_cases": len(retrieved),
+                            "mean_index_evidence_recall": sum(retrieved) / len(retrieved) if retrieved else None,
+                            "fallback_reasons": dict(Counter(s["fallback"] for s in scores if s["fallback"])),
+                            "retrieval_rounds": dict(Counter(s["retrieval_rounds"] for s in scores))}
+        return details
+    keys = ("answered", "repair_attempted", "units_fixed", "good_units_broken",
+            "numeric_preservation", "unit_preservation", "name_preservation")
+    return {arm: {k: sum(int(r["score"].get(k, 0)) for r in rows
+                         if r["group"] == "translation" and r["arm"] == arm) for k in keys}
+            for arm in sorted({r["arm"] for r in rows if r["group"] == "translation"})}
+
+
 def track_report(track, rows):
     arms = sorted({r["arm"] for r in rows})
     # A code-only table control applies only to this group in the development split.
@@ -70,7 +101,7 @@ def track_report(track, rows):
             subset = [r for r in rows if r["id"].split("-")[2] == tier]
             by_group[tier] = {a: totals([r for r in subset if r["arm"] == a]) for a in arms}
     return {"n_cases": len(groups), "arms": stats, "by_group": by_group,
-            "paired": comparisons}
+            "paired": comparisons, "diagnostics": diagnostics(track, rows)}
 
 
 def report(output):
