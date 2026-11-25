@@ -16,7 +16,16 @@ fn window<'a>(
     s: &[Segment<'a>],
     make: impl Fn(&[Segment<'a>]) -> Request,
 ) -> Run<usize> {
-    let byte_limit = engine.policy.input_budget.saturating_mul(6);
+    // Leave room for validation feedback when a long compact-mode job has to
+    // split its source. A single segment may still use the full model budget.
+    let cap = engine.policy.input_budget;
+    let reserve = if engine.metrics.context.is_some() && engine.policy.repairs > 0 {
+        (cap / 8).min(64)
+    } else {
+        0
+    };
+    let budget = cap - reserve;
+    let byte_limit = budget.saturating_mul(6);
     let mut bytes = 0;
     let mut high = 0;
     for line in s {
@@ -26,19 +35,22 @@ fn window<'a>(
         }
         high += 1;
     }
-    if engine.count(&make(&s[..high]))? <= engine.policy.input_budget {
+    if engine.count(&make(&s[..high]))? <= budget {
         return Ok(high);
     }
     let mut lo = 0;
     while lo + 1 < high {
         let mid = lo + (high - lo) / 2;
-        if engine.count(&make(&s[..mid]))? <= engine.policy.input_budget {
+        if engine.count(&make(&s[..mid]))? <= budget {
             lo = mid;
         } else {
             high = mid;
         }
     }
     if lo == 0 {
+        if reserve > 0 && engine.count(&make(&s[..1]))? <= cap {
+            return Ok(1);
+        }
         return Err(Fail::Held(
             "one source segment and the task instructions exceed the input budget".into(),
         ));
@@ -206,7 +218,8 @@ fn extract(
         return engine.raw(make(source));
     }
     let lines = document::segments(source);
-    if let Some(q) = question.filter(|_| engine.policy.compact && !engine.policy.decompose)
+    if let Some(q) =
+        question.filter(|_| engine.policy.compact.is_some() && !engine.policy.decompose)
         && window(engine, &lines, |ls| make(excerpt(source, ls)))? < lines.len()
         && let Some(result) = compact::answer(engine, source, q, &lines)?
     {

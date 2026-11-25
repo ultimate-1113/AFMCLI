@@ -2,7 +2,7 @@ use super::{excerpt, window};
 use crate::{
     contract,
     document::{self, Evidence, Segment},
-    engine::{ContextUsage, Engine, Fail, Output, Run, request},
+    engine::{ContextMode, ContextUsage, Engine, Fail, Output, Run, request},
     fm::Request,
 };
 use serde::Serialize;
@@ -84,7 +84,7 @@ fn pack<'a>(source: &'a str, lines: &[Segment<'_>], byte_limit: usize) -> Option
 
 fn reader(question: &str, context: &Value) -> Request {
     request(
-        "Read the supplied material in order. For encoded material, each sequence string is literal; a pair [i,n] repeats dictionary[i] n times (zero-based). Excerpts are in original order with gaps between them. Return the shortest verbatim answer in the source language. Respect speaker, scope, corrections and cancellations. If the fact is absent, withdrawn without replacement, or conflicting without a resolution, return an empty answer.",
+        "Read the material in order. A sequence string is literal; [i,n] repeats dictionary[i] n times (zero-based). Excerpts are in original order with gaps. Copy only the name, place, date or quantity requested, excluding the speaker and surrounding sentence. For example, 'Lee: Pickup is at the Willow Desk.' and 'Which desk?' gives 'Willow Desk'. Respect scope, corrections and cancellations. If the fact is absent, withdrawn without replacement, or conflicting without a resolution, return an empty answer.",
         json!({"question":question,"material":context}),
         Some(contract::object([(
             "answer".into(),
@@ -137,34 +137,33 @@ const MAX_SELECTION: usize = 8;
 fn selector(question: &str, lines: &[Segment<'_>]) -> Request {
     let rows: Vec<_> = lines.iter().map(|s| json!([s.id, s.text])).collect();
     request(
-        "Read this part of a longer document or conversation. Select original sentence IDs containing evidence for the question, including earlier proposals, corrections, withdrawals, qualifications and contradictions even when this part has no final answer. Do not answer the question. For no relevant evidence return []. If more than eight sentences matter or the relevant range cannot be isolated, set keep_all=true.",
+        "Read the numbered rows of this part. Pick only rows that help answer the specific question, including proposals, corrections, withdrawals, or changes of scope. A withdrawal can matter even without a replacement. Return the original row numbers in ids. Use [] if no rows help. Use [0] only if the whole part must be kept. An unrelated entry does not need an ID.",
         json!({"question":question,"sentences":rows}),
-        Some(contract::object([
-            (
-                "ids".into(),
-                json!({"type":"array","items":{"type":"integer"}}),
-            ),
-            ("keep_all".into(), json!({"type":"boolean"})),
-        ])),
+        Some(contract::object([(
+            "ids".into(),
+            json!({"type":"array","items":{"type":"integer"}}),
+        )])),
     )
 }
 
 fn selected_indices(value: &Value, block: &[Segment<'_>]) -> Result<Vec<usize>, String> {
-    if value["keep_all"] == true {
+    let ids = value["ids"].as_array().unwrap();
+    if ids.len() == 1 && ids[0].as_u64() == Some(0) {
         return Ok(block.iter().map(|s| s.id - 1).collect());
     }
     let mut unique = BTreeSet::new();
     let bounds = block[0].id..=block.last().unwrap().id;
-    for v in value["ids"].as_array().unwrap() {
+    for v in ids {
         let id = v
             .as_u64()
             .and_then(|n| usize::try_from(n).ok())
             .ok_or("invalid sentence ID")?;
-        if !bounds.contains(&id) || !unique.insert(id - 1) || unique.len() > MAX_SELECTION {
-            return Err(
-                "select up to eight distinct IDs from this window, or set keep_all=true".into(),
-            );
+        if !bounds.contains(&id) || !unique.insert(id - 1) {
+            return Err("select distinct IDs from this window, [] for none, or [0] for all".into());
         }
+    }
+    if unique.len() > MAX_SELECTION {
+        return Ok(block.iter().map(|s| s.id - 1).collect());
     }
     Ok(unique.into_iter().collect())
 }
@@ -213,6 +212,11 @@ pub(super) fn answer(
             engine.metrics.context = Some(usage);
             return read(engine, question, &context, &[(0, source)], r).map(Some);
         }
+    }
+    if engine.policy.compact == Some(ContextMode::Repeats) {
+        usage.method = "full_scan";
+        engine.metrics.context = Some(usage);
+        return Ok(None);
     }
     usage.method = "evidence_windows";
     usage.retained_segments = 0;
@@ -272,5 +276,23 @@ mod tests {
         }
         assert_eq!(restored, source);
         assert!(pack("unique", &document::segments("unique"), 4096).is_none());
+    }
+
+    #[test]
+    fn window_selection_validates_ids_before_mapping_to_source_offsets() {
+        let lines = document::segments("一。二。三。四。");
+        let block = &lines[1..3];
+        assert_eq!(
+            selected_indices(&json!({"ids":[0]}), block).unwrap(),
+            [1, 2]
+        );
+        assert_eq!(selected_indices(&json!({"ids":[3]}), block).unwrap(), [2]);
+        for ids in [json!([0, 2]), json!([2, 2]), json!([1]), json!([-1])] {
+            assert!(selected_indices(&json!({"ids":ids}), block).is_err());
+        }
+        let source = "この部分。\n省いた箇所。\n次の部分。";
+        let ls = document::segments(source);
+        let parts = original_ranges(source, &ls, &[true, false, true]);
+        assert!(document::locate_parts(&parts, "部分。\n次の部分").is_err());
     }
 }

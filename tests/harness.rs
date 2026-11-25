@@ -1,4 +1,4 @@
-use afmcli::engine::{Engine, Policy, Record};
+use afmcli::engine::{ContextMode, Engine, Policy, Record};
 use afmcli::fm::{Model, Request};
 use afmcli::{contract, document, edit, fm, job::Job, json};
 use serde_json::{Value, json};
@@ -239,7 +239,11 @@ fn contradictory_windows_are_not_resolved_by_return_order() {
 fn compact_preserves_the_short_reader_and_charges_all_sent_inputs() {
     let job = json!({"task":"answer","question":"Which room?","source":"Room N4."});
     let mut prompts = Vec::new();
-    for compact in [false, true] {
+    for compact in [
+        None,
+        Some(ContextMode::Repeats),
+        Some(ContextMode::Evidence),
+    ] {
         let mut sent = Vec::new();
         let result = eval(
             job.clone(),
@@ -269,6 +273,7 @@ fn compact_preserves_the_short_reader_and_charges_all_sent_inputs() {
         prompts.push(sent);
     }
     assert_eq!(prompts[0], prompts[1]);
+    assert_eq!(prompts[0], prompts[2]);
 }
 
 #[test]
@@ -279,7 +284,7 @@ fn compact_dictionary_quotes_original_bytes_and_checks_distant_updates() {
     );
     let job = json!({"task":"answer","source":source,"question":"確定した会場は？"});
     let policy = Policy {
-        compact: true,
+        compact: Some(ContextMode::Repeats),
         input_budget: 1200,
         ..Default::default()
     };
@@ -333,7 +338,7 @@ fn compact_reads_every_window_and_cannot_quote_an_omitted_sentence() {
     source[25] = "The venue decision was withdrawn.".into();
     let job = json!({"task":"answer","question":"Which room?","source":source.join("\n")});
     let policy = Policy {
-        compact: true,
+        compact: Some(ContextMode::Evidence),
         input_budget: 1200,
         repairs: 0,
         ..Policy::default()
@@ -352,7 +357,7 @@ fn compact_reads_every_window_and_cannot_quote_an_omitted_sentence() {
                         ids.push(&row[0]);
                     }
                 }
-                return Ok(json!({"ids":ids,"keep_all":false}).to_string());
+                return Ok(json!({"ids":ids}).to_string());
             }
             assert_eq!(seen.len(), 27);
             assert!(r.prompt.contains("withdrawn") && r.prompt.contains("DELTA"));
@@ -376,7 +381,7 @@ fn compact_reads_every_window_and_cannot_quote_an_omitted_sentence() {
             max_calls: 1,
             ..policy
         },
-        |_| Ok(json!({"ids":[],"keep_all":false}).to_string()),
+        |_| Ok(json!({"ids":[]}).to_string()),
     );
     assert_eq!(limited.status, "held");
 }
@@ -391,13 +396,16 @@ fn compact_falls_back_instead_of_truncating_a_dense_source() {
     let record = eval(
         job,
         Policy {
-            compact: true,
+            compact: Some(ContextMode::Evidence),
             input_budget: 1200,
             ..fast()
         },
         |r| {
-            Ok(if r.prompt.contains("keep_all") {
-                json!({"ids":[],"keep_all":true})
+            Ok(if r.schema.as_ref().unwrap()["properties"]
+                .get("ids")
+                .is_some()
+            {
+                json!({"ids":[0]})
             } else {
                 json!({"answerable":false,"answer":""})
             }
@@ -409,6 +417,7 @@ fn compact_falls_back_instead_of_truncating_a_dense_source() {
     assert_eq!(usage.method, "full_scan_fallback");
     assert_eq!(usage.retained_segments, 36);
 }
+
 #[test]
 fn summary_copies_only_offered_ids_in_original_order() {
     let j =
