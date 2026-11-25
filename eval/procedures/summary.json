@@ -1,0 +1,560 @@
+{
+  "complete": {
+    "base": {
+      "calls": 27,
+      "exact_ir": 0,
+      "feasible_set": 8,
+      "gained": 0,
+      "lost": 0,
+      "median_ms": 1338.0,
+      "n": 20,
+      "passed": 8,
+      "preference_order": 7,
+      "provided": 13,
+      "states": {
+        "error": 3,
+        "held": 4,
+        "review": 13
+      }
+    },
+    "combined": {
+      "calls": 62,
+      "exact_ir": 5,
+      "feasible_set": 7,
+      "gained": 2,
+      "lost": 5,
+      "median_ms": 2394.5,
+      "n": 20,
+      "passed": 5,
+      "preference_order": 7,
+      "provided": 18,
+      "states": {
+        "held": 2,
+        "review": 18
+      }
+    },
+    "decompose": {
+      "calls": 55,
+      "exact_ir": 7,
+      "feasible_set": 11,
+      "gained": 3,
+      "lost": 2,
+      "median_ms": 1922.0,
+      "n": 20,
+      "passed": 9,
+      "preference_order": 9,
+      "provided": 18,
+      "states": {
+        "held": 2,
+        "review": 18
+      }
+    },
+    "direct": {
+      "calls": 20,
+      "exact_ir": 0,
+      "feasible_set": 0,
+      "gained": 0,
+      "lost": 8,
+      "median_ms": 600.0,
+      "n": 20,
+      "passed": 0,
+      "preference_order": 0,
+      "provided": 18,
+      "states": {
+        "error": 1,
+        "unverified": 19
+      }
+    },
+    "skill": {
+      "calls": 27,
+      "exact_ir": 0,
+      "feasible_set": 5,
+      "gained": 1,
+      "lost": 2,
+      "median_ms": 1165.5,
+      "n": 20,
+      "passed": 7,
+      "preference_order": 5,
+      "provided": 15,
+      "states": {
+        "error": 1,
+        "held": 4,
+        "review": 15
+      }
+    }
+  },
+  "formula": {
+    "base": {
+      "calls": 10,
+      "exact_ir": 0,
+      "feasible_set": 5,
+      "gained": 0,
+      "lost": 0,
+      "median_ms": 1207.0,
+      "n": 8,
+      "passed": 4,
+      "preference_order": 4,
+      "provided": 7,
+      "states": {
+        "held": 1,
+        "review": 7
+      }
+    },
+    "combined": {
+      "calls": 18,
+      "exact_ir": 5,
+      "feasible_set": 5,
+      "gained": 2,
+      "lost": 1,
+      "median_ms": 1331.5,
+      "n": 8,
+      "passed": 5,
+      "preference_order": 5,
+      "provided": 8,
+      "states": {
+        "review": 8
+      }
+    },
+    "decompose": {
+      "calls": 15,
+      "exact_ir": 5,
+      "feasible_set": 7,
+      "gained": 2,
+      "lost": 0,
+      "median_ms": 926.0,
+      "n": 8,
+      "passed": 6,
+      "preference_order": 6,
+      "provided": 8,
+      "states": {
+        "review": 8
+      }
+    },
+    "direct": {
+      "calls": 8,
+      "exact_ir": 0,
+      "feasible_set": 0,
+      "gained": 0,
+      "lost": 4,
+      "median_ms": 558.0,
+      "n": 8,
+      "passed": 0,
+      "preference_order": 0,
+      "provided": 7,
+      "states": {
+        "error": 1,
+        "unverified": 7
+      }
+    },
+    "skill": {
+      "calls": 10,
+      "exact_ir": 0,
+      "feasible_set": 3,
+      "gained": 0,
+      "lost": 1,
+      "median_ms": 1103.0,
+      "n": 8,
+      "passed": 3,
+      "preference_order": 3,
+      "provided": 6,
+      "states": {
+        "held": 2,
+        "review": 6
+      }
+    }
+  },
+  "incomplete": {
+    "base": {
+      "calls": 5,
+      "exact_ir": 0,
+      "feasible_set": 0,
+      "gained": 0,
+      "lost": 0,
+      "median_ms": 1045.0,
+      "n": 4,
+      "passed": 0,
+      "preference_order": 0,
+      "provided": 3,
+      "states": {
+        "held": 1,
+        "review": 3
+      }
+    },
+    "combined": {
+      "calls": 10,
+      "exact_ir": 0,
+      "feasible_set": 0,
+      "gained": 0,
+      "lost": 0,
+      "median_ms": 1855.0,
+      "n": 4,
+      "passed": 0,
+      "preference_order": 0,
+      "provided": 2,
+      "states": {
+        "held": 2,
+        "review": 2
+      }
+    },
+    "decompose": {
+      "calls": 8,
+      "exact_ir": 0,
+      "feasible_set": 0,
+      "gained": 1,
+      "lost": 0,
+      "median_ms": 1464.5,
+      "n": 4,
+      "passed": 1,
+      "preference_order": 0,
+      "provided": 1,
+      "states": {
+        "abstained": 1,
+        "held": 2,
+        "review": 1
+      }
+    },
+    "direct": {
+      "calls": 4,
+      "exact_ir": 0,
+      "feasible_set": 0,
+      "gained": 0,
+      "lost": 0,
+      "median_ms": 607.5,
+      "n": 4,
+      "passed": 0,
+      "preference_order": 0,
+      "provided": 4,
+      "states": {
+        "unverified": 4
+      }
+    },
+    "skill": {
+      "calls": 6,
+      "exact_ir": 0,
+      "feasible_set": 0,
+      "gained": 0,
+      "lost": 0,
+      "median_ms": 1543.5,
+      "n": 4,
+      "passed": 0,
+      "preference_order": 0,
+      "provided": 2,
+      "states": {
+        "held": 2,
+        "review": 2
+      }
+    }
+  },
+  "jsquad": {
+    "base": {
+      "answered": 20,
+      "calls": 48,
+      "gained": 0,
+      "lost": 0,
+      "median_ms": 736.5,
+      "n": 24,
+      "passed": 18,
+      "states": {
+        "abstained": 1,
+        "held": 1,
+        "ok": 20,
+        "refused": 2
+      },
+      "unsupported_answer": 0
+    },
+    "combined": {
+      "answered": 20,
+      "calls": 70,
+      "gained": 2,
+      "lost": 4,
+      "median_ms": 1160.0,
+      "n": 24,
+      "passed": 16,
+      "states": {
+        "held": 1,
+        "ok": 20,
+        "refused": 3
+      },
+      "unsupported_answer": 0
+    },
+    "decompose": {
+      "answered": 19,
+      "calls": 70,
+      "gained": 1,
+      "lost": 3,
+      "median_ms": 1042.5,
+      "n": 24,
+      "passed": 16,
+      "states": {
+        "abstained": 2,
+        "ok": 19,
+        "refused": 3
+      },
+      "unsupported_answer": 0
+    },
+    "direct": {
+      "answered": 23,
+      "calls": 24,
+      "gained": 0,
+      "lost": 7,
+      "median_ms": 406.5,
+      "n": 24,
+      "passed": 11,
+      "states": {
+        "unverified": 24
+      },
+      "unsupported_answer": 0
+    },
+    "skill": {
+      "answered": 20,
+      "calls": 46,
+      "gained": 2,
+      "lost": 3,
+      "median_ms": 828.5,
+      "n": 24,
+      "passed": 17,
+      "states": {
+        "abstained": 1,
+        "ok": 20,
+        "refused": 3
+      },
+      "unsupported_answer": 0
+    }
+  },
+  "prose": {
+    "base": {
+      "calls": 17,
+      "exact_ir": 0,
+      "feasible_set": 3,
+      "gained": 0,
+      "lost": 0,
+      "median_ms": 2035.0,
+      "n": 12,
+      "passed": 4,
+      "preference_order": 3,
+      "provided": 6,
+      "states": {
+        "error": 3,
+        "held": 3,
+        "review": 6
+      }
+    },
+    "combined": {
+      "calls": 44,
+      "exact_ir": 0,
+      "feasible_set": 2,
+      "gained": 0,
+      "lost": 4,
+      "median_ms": 2533.0,
+      "n": 12,
+      "passed": 0,
+      "preference_order": 2,
+      "provided": 10,
+      "states": {
+        "held": 2,
+        "review": 10
+      }
+    },
+    "decompose": {
+      "calls": 40,
+      "exact_ir": 2,
+      "feasible_set": 4,
+      "gained": 1,
+      "lost": 2,
+      "median_ms": 2090.0,
+      "n": 12,
+      "passed": 3,
+      "preference_order": 3,
+      "provided": 10,
+      "states": {
+        "held": 2,
+        "review": 10
+      }
+    },
+    "direct": {
+      "calls": 12,
+      "exact_ir": 0,
+      "feasible_set": 0,
+      "gained": 0,
+      "lost": 4,
+      "median_ms": 653.0,
+      "n": 12,
+      "passed": 0,
+      "preference_order": 0,
+      "provided": 11,
+      "states": {
+        "unverified": 12
+      }
+    },
+    "skill": {
+      "calls": 17,
+      "exact_ir": 0,
+      "feasible_set": 2,
+      "gained": 1,
+      "lost": 1,
+      "median_ms": 1206.5,
+      "n": 12,
+      "passed": 4,
+      "preference_order": 2,
+      "provided": 9,
+      "states": {
+        "error": 1,
+        "held": 2,
+        "review": 9
+      }
+    }
+  },
+  "qa": {
+    "base": {
+      "answered": 30,
+      "calls": 77,
+      "gained": 0,
+      "lost": 0,
+      "median_ms": 746.5,
+      "n": 40,
+      "passed": 26,
+      "states": {
+        "abstained": 3,
+        "held": 2,
+        "ok": 30,
+        "refused": 5
+      },
+      "unsupported_answer": 3
+    },
+    "combined": {
+      "answered": 32,
+      "calls": 113,
+      "gained": 2,
+      "lost": 6,
+      "median_ms": 1176.5,
+      "n": 40,
+      "passed": 22,
+      "states": {
+        "abstained": 1,
+        "held": 1,
+        "ok": 32,
+        "refused": 6
+      },
+      "unsupported_answer": 6
+    },
+    "decompose": {
+      "answered": 30,
+      "calls": 113,
+      "gained": 2,
+      "lost": 3,
+      "median_ms": 1049.0,
+      "n": 40,
+      "passed": 25,
+      "states": {
+        "abstained": 4,
+        "ok": 30,
+        "refused": 6
+      },
+      "unsupported_answer": 4
+    },
+    "direct": {
+      "answered": 37,
+      "calls": 40,
+      "gained": 0,
+      "lost": 14,
+      "median_ms": 431.5,
+      "n": 40,
+      "passed": 12,
+      "states": {
+        "unverified": 40
+      },
+      "unsupported_answer": 7
+    },
+    "skill": {
+      "answered": 33,
+      "calls": 75,
+      "gained": 2,
+      "lost": 4,
+      "median_ms": 846.0,
+      "n": 40,
+      "passed": 24,
+      "states": {
+        "abstained": 2,
+        "ok": 33,
+        "refused": 5
+      },
+      "unsupported_answer": 6
+    }
+  },
+  "squad": {
+    "base": {
+      "answered": 10,
+      "calls": 29,
+      "gained": 0,
+      "lost": 0,
+      "median_ms": 754.0,
+      "n": 16,
+      "passed": 8,
+      "states": {
+        "abstained": 2,
+        "held": 1,
+        "ok": 10,
+        "refused": 3
+      },
+      "unsupported_answer": 3
+    },
+    "combined": {
+      "answered": 12,
+      "calls": 43,
+      "gained": 0,
+      "lost": 2,
+      "median_ms": 1193.5,
+      "n": 16,
+      "passed": 6,
+      "states": {
+        "abstained": 1,
+        "ok": 12,
+        "refused": 3
+      },
+      "unsupported_answer": 6
+    },
+    "decompose": {
+      "answered": 11,
+      "calls": 43,
+      "gained": 1,
+      "lost": 0,
+      "median_ms": 1057.0,
+      "n": 16,
+      "passed": 9,
+      "states": {
+        "abstained": 2,
+        "ok": 11,
+        "refused": 3
+      },
+      "unsupported_answer": 4
+    },
+    "direct": {
+      "answered": 14,
+      "calls": 16,
+      "gained": 0,
+      "lost": 7,
+      "median_ms": 443.0,
+      "n": 16,
+      "passed": 1,
+      "states": {
+        "unverified": 16
+      },
+      "unsupported_answer": 7
+    },
+    "skill": {
+      "answered": 13,
+      "calls": 29,
+      "gained": 0,
+      "lost": 1,
+      "median_ms": 852.5,
+      "n": 16,
+      "passed": 7,
+      "states": {
+        "abstained": 1,
+        "ok": 13,
+        "refused": 2
+      },
+      "unsupported_answer": 6
+    }
+  }
+}

@@ -18,7 +18,7 @@ def main():
     p.add_argument("archive",type=Path)
     a=p.parse_args()
     files={"afmcli":a.binary.read_bytes(),"LICENSE":(ROOT/"LICENSE").read_bytes(),"NOTICES.md":(ROOT/"NOTICES.md").read_bytes()}
-    for name in ("README.md", "examples/guarded-row.json", "skills/short-evidence/SKILL.md",
+    for name in ("README.md", "examples/guarded-row.json", "eval/procedures/README.md", "skills/short-evidence/SKILL.md",
                  "skills/linear-declarations/SKILL.md"):
         files[name]=(ROOT/name).read_bytes()
     files["START.txt"]=b"Run ./afmcli doctor, then ./afmcli --help. Source and installation instructions: https://github.com/ultimate-1113/AFMCLI\n"

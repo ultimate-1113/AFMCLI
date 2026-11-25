@@ -27,6 +27,8 @@ tar -xzf afmcli-v0.2.0-aarch64-apple-darwin.tar.gz
 
 手元の `SKILL.md` を登録すると、`--skill 名前` を付けたタスクの各生成に、その手順が渡る。同梱の2例は、資料から最短の回答を抜く手順と、整数最適化の変数・制約・目的を読む手順。`--decompose` は独立したオプションで、QAでは根拠文を先に選び、数式化では制約を宣言ごとに扱う。[実機での比較](eval/procedures/README.md)・[Agent Skillsの仕様](https://agentskills.io/specification)
 
+式を含む最適化8問で、段階分割を使うと最終解の正解数が4件から6件に増えた。文章だけで条件を示した12問では4件から3件になった。資料QAの完全一致は、直接回答12/40件、標準26/40件、手順書のみ24/40件、段階分割25/40件、併用22/40件だった。[用途別の正解数・所要時間・失敗例](eval/procedures/README.md)
+
 ```sh
 afmcli skills import skills/short-evidence
 afmcli skills import skills/linear-declarations/SKILL.md
