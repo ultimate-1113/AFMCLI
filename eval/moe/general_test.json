@@ -1,0 +1,285 @@
+[
+  {
+    "id": "general-flight-sheet",
+    "group": "answer",
+    "lang": "en",
+    "job": {"task":"answer","source":"Shift sheet\nKestrel: Leona Fitch takes the morning round. Wren: Dario Cole starts at noon.\nA signed correction assigns Mira Frost to Kestrel's morning round. Dario Cole still covers Wren.","question":"What is the full name of the person now assigned to Kestrel's morning round?"},
+    "gold": ["Mira Frost"]
+  },
+  {
+    "id": "general-ceramics-date",
+    "group": "answer",
+    "lang": "ja",
+    "job": {"task":"answer","source":"窯出し日程の連絡。白磁班は火曜日、釉薬班は木曜日と案内した。後の通知で釉薬班の予定だけ取り消した。次の日取りはまだ決まっていない。","question":"釉薬班の窯出しは何曜日で確定していますか。確定した曜日がある場合だけ答えてください。"},
+    "gold": []
+  },
+  {
+    "id": "general-tool-pressure",
+    "group": "answer",
+    "lang": "en",
+    "job": {"task":"answer","source":"Press setup card. The silver pad cures for 45 s. Set the silver pad pressure to 1.8 bar. For the copper pad the pressure is 2.6 bar.","question":"What pressure is specified for the silver pad? Include its unit."},
+    "gold": ["1.8 bar"]
+  },
+  {
+    "id": "general-theatre-room",
+    "group": "answer",
+    "lang": "ja",
+    "job": {"task":"answer","source":"小劇場の案内\n衣装係は松の間で着替えます。舞台係は杉の間で工具を受け取ります。受付には椿の間を使います。","question":"舞台係が工具を受け取る部屋の名称は何ですか。"},
+    "gold": ["杉の間"]
+  },
+  {
+    "id": "general-mosaic-owner",
+    "group": "answer",
+    "lang": "en",
+    "job": {"task":"answer","source":"The mosaic arrived from Port Luna on Friday. The crate shows which harbor sent it and bears no artist credit.","question":"Whose full name appears as the artist of the mosaic?"},
+    "gold": []
+  },
+  {
+    "id": "general-paper-length",
+    "group": "answer",
+    "lang": "ja",
+    "job": {"task":"answer","source":"文具見本。橙色の紙ひもは長さ32 cm、緑色の紙ひもは長さ18 cm。太さはどちらも2 mm。","question":"緑色の紙ひもの長さを単位付きで答えてください。"},
+    "gold": ["18 cm"]
+  },
+  {
+    "id": "general-reading-room",
+    "group": "answer",
+    "lang": "en",
+    "job": {"task":"answer","source":"Alder Room was designated for poetry readings. The director withdrew the room assignment. The final signed notice reinstated Alder Room for poetry readings; Fern Room remains assigned to rehearsals.","question":"Which room has the final confirmed assignment for poetry readings?"},
+    "gold": ["Alder Room"],
+    "evidence": {"answer":["The final signed notice reinstated Alder Room for poetry readings"]}
+  },
+  {
+    "id": "general-story-book",
+    "group": "answer",
+    "lang": "ja",
+    "job": {"task":"answer","source":"夏の朗読会で読む作品の題名は『潮だまり』です。","question":"朗読作品の題名をかぎ括弧を除いて抜き出してください。"},
+    "gold": ["潮だまり"]
+  },
+  {
+    "id": "general-image-grid",
+    "group": "answer",
+    "lang": "en",
+    "job": {"task":"answer","source":"Row | sample | finish\nA | amber | satin\nB | indigo | matte\nC | lichen | satin\nThe caption under the grid calls the overall cover finish matte.","question":"Which finish is entered in the grid for the indigo sample? Give only the finish."},
+    "gold": ["matte"],
+    "evidence": {"answer":["B | indigo | matte"]}
+  },
+  {
+    "id": "general-order-ref",
+    "group": "answer",
+    "lang": "ja",
+    "job": {"task":"answer","source":"伝票控え。白い封筒の注文番号はHU-83。発送番号はLM-16。茶色の封筒の注文番号はQN-42だが、その注文は撤回され、代わりの注文は入っていない。","question":"現在有効な白い封筒の注文番号を答えてください。"},
+    "gold": ["HU-83"]
+  },
+  {
+    "id": "general-artists-award",
+    "group": "extract",
+    "lang": "en",
+    "job": {"task":"extract","source":"Open-studio award notice. Fellowships go to Hana Quill and Mateo Ash. Iona Reed hosted the ceremony. The notice gives no cash amount.","fields":[{"name":"fellows","description":"Full name of each person awarded a fellowship","many":true},{"name":"host","description":"Full name of the ceremony host","many":false},{"name":"amount","description":"Cash amount of each award, if stated","many":false}]},
+    "gold": {"fellows":["Hana Quill","Mateo Ash"],"host":["Iona Reed"],"amount":[]}
+  },
+  {
+    "id": "general-drawing-list",
+    "group": "extract",
+    "lang": "ja",
+    "job": {"task":"extract","source":"絵本の奥付。絵を描いたのは野村歩、木下紗季、加藤灯の三人。編集は堀川遼。印刷所は載せていない。","fields":[{"name":"artists","description":"絵を担当した人全員の氏名を一人ずつ","many":true},{"name":"editor","description":"編集者の氏名","many":false},{"name":"printer","description":"印刷所名","many":false}]},
+    "gold": {"artists":["野村歩","木下紗季","加藤灯"],"editor":["堀川遼"],"printer":[]}
+  },
+  {
+    "id": "general-kiln-slip",
+    "group": "extract",
+    "lang": "en",
+    "job": {"task":"extract","source":"Kiln slip for the cobalt bowl: wet mass 840 g, fired mass 615 g, wall thickness 4 mm. The base diameter was never measured.","fields":[{"name":"fired","description":"Fired mass with its unit","many":false},{"name":"diameter","description":"Measured base diameter with its unit","many":false}]},
+    "gold": {"fired":["615 g"],"diameter":[]}
+  },
+  {
+    "id": "general-ferry-gate",
+    "group": "extract",
+    "lang": "ja",
+    "job": {"task":"extract","source":"連絡船の掲示。森便の乗り場は東桟橋、丘便の乗り場は西桟橋と発表した。森便の乗り場指定は取り消し、次の指定は保留した。丘便の指定は引き続き有効。","fields":[{"name":"forest","description":"森便の現在確定している乗り場名","many":false},{"name":"hill","description":"丘便の現在確定している乗り場名","many":false}]},
+    "gold": {"forest":[],"hill":["西桟橋"]}
+  },
+  {
+    "id": "general-exhibit-delivery",
+    "group": "extract",
+    "lang": "en",
+    "job": {"task":"extract","source":"Delivery receipt\nThe bench came from Vesta Works. The case came from Moss Studio. A correction names Pico Foundry as the supplier of the case; the entry for the bench stands.","fields":[{"name":"bench","description":"Full current supplier name for the bench","many":false},{"name":"case","description":"Full current supplier name for the case","many":false}]},
+    "gold": {"bench":["Vesta Works"],"case":["Pico Foundry"]}
+  },
+  {
+    "id": "general-map-copies",
+    "group": "extract",
+    "lang": "ja",
+    "job": {"task":"extract","source":"図書室の複写許可票。複写を認めた資料は河川図と街路図。海路図は閲覧だけを認めた。担当窓口は資料係。","fields":[{"name":"approved","description":"複写を許可したすべての資料名を個別に","many":true},{"name":"desk","description":"担当窓口の名前","many":false}]},
+    "gold": {"approved":["河川図","街路図"],"desk":["資料係"]}
+  },
+  {
+    "id": "general-tune-title",
+    "group": "extract",
+    "lang": "en",
+    "job": {"task":"extract","source":"The hand-cranked music box plays a tune titled Bracken Clock.","fields":[{"name":"tune","description":"Complete title of the tune","many":false}]},
+    "gold": {"tune":["Bracken Clock"]}
+  },
+  {
+    "id": "general-spring-water",
+    "group": "extract",
+    "lang": "ja",
+    "job": {"task":"extract","source":"水質速報\n山側の湧水の水温は11.4℃、海側の湧水の水温は16.2℃。雨量計の値は2 mm。湧水の流量はどちらも記録していない。","fields":[{"name":"sea","description":"海側の湧水の水温を単位付きで","many":false},{"name":"flow","description":"海側の湧水の流量を単位付きで","many":false}]},
+    "gold": {"sea":["16.2℃"],"flow":[]}
+  },
+  {
+    "id": "general-stage-scratch",
+    "group": "extract",
+    "lang": "en",
+    "job": {"task":"extract","source":"The rehearsal notebook lists Odile Wynn as the reader. Odile Wynn and Jai Vale signed the closing inventory. A guest named Edda Finch watched. No one signed for transport.","fields":[{"name":"signers","description":"Each full name on the signed closing inventory","many":true},{"name":"transport","description":"Full name of a transport signatory","many":false}]},
+    "gold": {"signers":["Odile Wynn","Jai Vale"],"transport":[]},
+    "evidence": {"signers":["Odile Wynn and Jai Vale signed the closing inventory"]}
+  },
+  {
+    "id": "general-charcoal-receipt",
+    "group": "extract",
+    "lang": "ja",
+    "job": {"task":"extract","source":"手描き看板の領収書には、木炭代を680円と記した。送料の記載はない。","fields":[{"name":"charcoal","description":"木炭代の金額を単位付きで","many":false},{"name":"postage","description":"送料の金額を単位付きで","many":false}]},
+    "gold": {"charcoal":["680円"],"postage":[]}
+  },
+  {
+    "id": "general-greenhouse-door",
+    "group": "classify",
+    "lang": "en",
+    "job": {"task":"classify","source":"The greenhouse door jammed yesterday but has been repaired. Please put a second handle at child height for future visitors.","labels":[{"name":"fault","description":"a currently faulty or unusable part"},{"name":"addition","description":"a request to add a feature"},{"name":"booking","description":"a request to reserve time"}]},
+    "gold": "addition"
+  },
+  {
+    "id": "general-archive-renewal",
+    "group": "classify",
+    "lang": "ja",
+    "job": {"task":"classify","source":"地図帳の返却日は把握しています。手元での調査が続くので、貸出期間を延ばしてください。","labels":[{"name":"return","description":"資料をもう返したという報告"},{"name":"extend","description":"現在の貸出期間を延長する依頼"},{"name":"locate","description":"所在不明の資料を探してほしい依頼"}]},
+    "gold": "extend"
+  },
+  {
+    "id": "general-notice-categories",
+    "group": "classify",
+    "lang": "en",
+    "job": {"task":"classify","source":"The notice records the color of the curtains in the lecture room. It does not ask anyone to change, reserve, or fix anything.","labels":[{"name":"repair","description":"request to repair something"},{"name":"booking","description":"request to reserve the room"},{"name":"purchase","description":"request to buy an item"}]},
+    "gold": ""
+  },
+  {
+    "id": "general-choir-request",
+    "group": "classify",
+    "lang": "ja",
+    "job": {"task":"classify","source":"金曜の練習室の予約を取り消してください。それとは別に、次の演奏会の参加費を返金してください。","labels":[{"name":"refund","description":"参加費の返金を求める依頼"},{"name":"cancel","description":"予約枠を取り消す依頼"},{"name":"invoice","description":"請求書の発行依頼"}]},
+    "gold": ""
+  },
+  {
+    "id": "general-plaster-samples",
+    "group": "classify",
+    "lang": "en",
+    "job": {"task":"classify","source":"Sample note: the plaster tile snapped while it was still on the drying rack. It was never packed or transported.","labels":[{"name":"drying","description":"damage during drying"},{"name":"transit","description":"damage in transport"},{"name":"storage","description":"damage after dry stock was stored"}]},
+    "gold": "drying"
+  },
+  {
+    "id": "general-cafe-table",
+    "group": "classify",
+    "lang": "ja",
+    "job": {"task":"classify","source":"閉店後、丸机に置いてあった紙ナプキンを数えました。","labels":[{"name":"restock","description":"消耗品の補充を求める連絡"},{"name":"repair","description":"机などの設備の破損を報告する連絡"}]},
+    "gold": ""
+  },
+  {
+    "id": "general-parcel-two",
+    "group": "classify",
+    "lang": "en",
+    "job": {"task":"classify","source":"Please send the missing lantern and also email a receipt for my purchase. Both requests are still open.","labels":[{"name":"fulfil","description":"a request to ship an undelivered item"},{"name":"receipt","description":"a request for a payment receipt"},{"name":"return","description":"a request to return a delivered item"}]},
+    "gold": ""
+  },
+  {
+    "id": "general-hall-lost",
+    "group": "classify",
+    "lang": "ja",
+    "job": {"task":"classify","source":"昨日ホールで手袋を片方落としました。見つけた方からの連絡を待っています。貸し出し用の手袋は希望しません。","labels":[{"name":"loan","description":"備品を借りる依頼"},{"name":"found","description":"拾った物を預けたという届出"},{"name":"lost","description":"所持品をなくしたという届出"}]},
+    "gold": "lost"
+  },
+  {
+    "id": "general-ink-color",
+    "group": "classify",
+    "lang": "en",
+    "job": {"task":"classify","source":"The stamp impression is green. That is simply a catalog observation.","labels":[{"name":"contrast","description":"a request to change a design's contrast"},{"name":"smear","description":"a report of ink smearing on paper"}]},
+    "gold": ""
+  },
+  {
+    "id": "general-bath-towel",
+    "group": "classify",
+    "lang": "ja",
+    "job": {"task":"classify","source":"タオルの「交換」と書かれた札の字が読みにくいです。交換は希望しません。札の文字を大きくしてください。","labels":[{"name":"replace","description":"使っているタオルの交換依頼"},{"name":"sign","description":"表示物を読みやすくする改善要望"},{"name":"wash","description":"タオルの洗濯依頼"}]},
+    "gold": "sign"
+  },
+  {
+    "id": "general-ticket-tiers",
+    "group": "rewrite",
+    "lang": "en",
+    "job": {"task":"rewrite","source":"Hey, seats on the gallery level cost €14 each. The balcony level costs €9 a seat, okay?","instruction":"Write a concise ticket notice in English. Keep both seating levels and their prices.","keep_numbers":true,"require_change":true,"max_chars":120},
+    "gold": {"example":"Gallery seats are €14 each and balcony seats are €9 each.","bindings":[["\\bgaller(?:y|ies)\\b","(?:€\\s*14|14\\s*(?:euros?|eur))"],["\\bbalcon(?:y|ies)\\b","(?:€\\s*9|9\\s*(?:euros?|eur))"]],"terms":[],"conditions":[],"contradictions":[]}
+  },
+  {
+    "id": "general-workshop-hours",
+    "group": "rewrite",
+    "lang": "ja",
+    "job": {"task":"rewrite","source":"工作室の受付ね、平日は16時で終わるよ。土曜は14時で終わるんだ。","instruction":"受付の終了時刻を案内する簡潔な掲示文にしてください。曜日と時刻の対応を保ってください。","keep_numbers":true,"require_change":true,"max_chars":74},
+    "gold": {"example":"工作室の受付は平日16時、土曜14時に終了します。","bindings":[["平日|月曜.{0,8}金曜|月[〜～~–ー-]金","16\\s*時"],["土曜(?:日)?|土(?=[・：:はの\\s0-9])","14\\s*時"]],"terms":["受付|受け付け|窓口","終|閉|締|まで"],"conditions":[],"contradictions":["(?:開(?:始|き|く)|始(?:まり|め|まる))[^。]{0,8}(?:16|14)\\s*時|(?:16|14)\\s*時(?:に|から)(?:開(?:始|き|く)|始)","(?:平日|土曜(?:日)?)(?:の受付)?(?:開始|開室)時刻|(?:受付|工作室)は.{0,20}(?:16|14)時に始"]}
+  },
+  {
+    "id": "general-spool-wait",
+    "group": "rewrite",
+    "lang": "en",
+    "job": {"task":"rewrite","source":"Here is the rule: a mixed spool must rest for at least 18 hours before winding. A sealed spool can go straight to winding.","instruction":"Turn the two spool rules into a concise instruction. Keep the minimum delay and the sealed-spool exception.","keep_numbers":true,"require_change":true,"max_chars":165},
+    "gold": {"example":"Before winding, rest a mixed spool for at least 18 hours. A sealed spool needs no wait.","bindings":[["\\b(?:mixed|blended)\\b","18\\s*(?:h(?:ou)?rs?|hours?|h)\\b"]],"terms":["\\bwind(?:ing)?\\b"],"conditions":["(?:at\\s+least|minimum(?:\\s+of)?|no\\s+(?:fewer|less|shorter)\\s+than|not\\s+less\\s+than)\\s*18|18\\s*(?:h(?:ou)?rs?|hours?|h)\\s*(?:or (?:more|longer)|minimum|at (?:a |the )?minimum)","\\bsealed\\b[^.;!?]{0,86}\\b(?:immediat\\w*|direct\\w*|straight|right away|at once|without (?:a |any )?(?:wait\\w*|delay|rest\\w*)|no (?:wait\\w*|rest\\w*|delay)|need(?:s)? (?:no|not)|do(?:es)?(?:n['’]t| not) (?:need|require)|skip\\w*|exempt|bypass\\w*)\\b|\\b(?:immediat\\w*|direct\\w*|skip\\w* (?:the )?wait\\w*|no wait\\w*|without (?:a |any )?(?:rest\\w*|wait\\w*|delay)|no delay)\\b[^.;!?]{0,50}\\bsealed\\b"],"contradictions":["(?:at most|less than|no more than|up to|maximum(?: of)?)\\s*18","(?:after|following)\\s+(?:the\\s+)?winding|after (?:it (?:is|has been)|being) wound|\\bsealed\\b[^.;!?]{0,25}(?:must|needs? to|has to) (?:wait|rest)"]}
+  },
+  {
+    "id": "general-soup-storage",
+    "group": "rewrite",
+    "lang": "ja",
+    "job": {"task":"rewrite","source":"スープは4℃以下にしてね。ふたを開けたら2日以内に使い切って。","instruction":"保存温度の上限と開封後の期限を含む、丁寧な保存案内にしてください。","keep_numbers":true,"require_change":true,"max_chars":80},
+    "gold": {"example":"スープは4℃以下で保存し、開封後2日以内に使い切ってください。","bindings":[["スープ|保存|保管|温度|冷蔵|冷や|保冷","4\\s*(?:°?\\s*c|度(?:以下|以内)?|摂氏)"],["開封|開栓|(?:ふた|蓋)[^。]{0,7}開|使い切|使用|消費|飲み切|お召し上がり","2\\s*日"]],"terms":["(?:使用|使(?:い切|用|う|って)|消費|飲み切|飲んで|食べ切|お召し上がり|召し上が|お使い)"],"conditions":["(?:4\\s*(?:°?\\s*c|度)(?:かそれ)?(?:以下|以内|まで)|(?:最大|上限[^。]{0,8}|最高[^。]{0,8})4\\s*(?:°?\\s*c|度)|4\\s*(?:°?\\s*c|度)[^。]{0,10}(?:超えない|超えず|上回らない))","(?:開封(?:後|から|したら|してから|して)|開栓(?:後|から)|(?:ふた|蓋)[^。]{0,7}開け(?:たら|てから|た後|た日から))","2\\s*日(?:間)?(?:以内|を限度|まで|を超えず)"],"contradictions":["4\\s*(?:°?\\s*c|度)以上|2\\s*日(?:間)?(?:以上|以降)|開封前.{0,6}2\\s*日"]}
+  },
+  {
+    "id": "general-journal-map",
+    "group": "rewrite",
+    "lang": "en",
+    "job": {"task":"rewrite","source":"Listen, on each trip the tide journal permits up to 7 sketches. Maps don't count toward the sketch limit.","instruction":"Write a concise journal rule. Keep the limit per trip and the exception for maps.","keep_numbers":true,"require_change":true,"max_chars":120},
+    "gold": {"example":"Each trip allows up to 7 sketches. Maps are excluded from this limit.","bindings":[["\\b(?:sketch\\w*|drawings?)\\b","7\\b"]],"terms":["\\b(?:trips?|journeys?|outings?|excursions?)\\b"],"conditions":["(?:up to|at most|no more than|not more than|(?:a )?(?:cap|maximum|limit)(?:\\s+(?:is|of|to|at|is set at))?|limited to)\\s*7|7\\s+(?:sketch\\w*|drawings?)\\s*(?:maximum|at most|or (?:fewer|less)|per (?:trip|journey)|is (?:the )?(?:limit|maximum))","\\b(?:maps?|charts?)\\b[^.!?;]{0,55}(?:exclud\\w*|exempt\\w*|outside|separat\\w*|free|(?:do(?:es)?(?:n['’]t| not)|(?:are|is|will) not|(?:aren['’]t|isn['’]t)|won['’]t|not|never)\\s+(?:be\\s+)?(?:count\\w*|inclu\\w*|part|affect\\w*|apply))|(?:exclud\\w*|except(?:ing)?(?: for)?|without counting|apart from|disregard\\w*|ignore|other than|does not (?:include|cover)|not including|no (?:charge|count) for)\\s+(?:any\\s+)?(?:maps?|charts?)\\b","\\b(?:(?:per|each|every|a|one|single)\\s+(?:individual\\s+)?(?:trip|journey|outing|excursion)|(?:trip|journey|outing|excursion)(?:'s)?\\s+(?:permits?|allows?|limit|allowance)|per[- ](?:trip|journey|outing|excursion))\\b"],"contradictions":["(?:at least|no fewer than|minimum(?: of)?)\\s*7|\\b(?:maps?|charts?) (?:count|are included) (?:toward|in)","(?:across|for) all (?:the )?(?:trips|journeys)|(?:maps?|charts?) (?:must|should) (?:be )?count"]}
+  },
+  {
+    "id": "general-stand-price",
+    "group": "rewrite",
+    "lang": "ja",
+    "job": {"task":"rewrite","source":"展示用の架台は1,240円だよ。この値段には送料が入っていないよ。","instruction":"品名と価格、送料の扱いが分かる簡潔な販売案内にしてください。","keep_numbers":true,"require_change":true,"max_chars":68},
+    "gold": {"example":"展示用架台は1,240円で、送料は別途かかります。","bindings":[["架台|展示台|台座|スタンド","1,240\\s*円"]],"terms":[],"conditions":["(?:送料|配送(?:料|費)|送付料|配送料金)[^。]{0,23}(?:別|含(?:ま(?:れ)?ず|めず|めない|まれない|みません|めません|まれません|まれてい(?:ない|ません)|まない)|除|かか|掛か|いただ|有料|対象外|ご負担|お客様負担)|(?:別途|別料金|含まれない|除く)[^。]{0,7}(?:送料|配送(?:料|費))"],"contradictions":["(?:送料|配送(?:料|費))(?:は|が|も)?(?:込み|込です|無料|を含む|を含みます)|(?:送料|配送(?:料|費))を含(?:む|みます)|送料無料","(?:送料|配送料)(?:も|まで)?(?:含む|含みます|含んで|込み|込[みの])|(?:送料|配送料)(?:は|が)(?:含まれてい(?:る|ます)|含まれます|かかりません|不要)"]}
+  },
+  {
+    "id": "general-rinse-dials",
+    "group": "rewrite",
+    "lang": "en",
+    "job": {"task":"rewrite","source":"On the line, the temperature for rinse A is +3.5 °C, okay? For rinse B, the line runs at -1.0 °C.","instruction":"Write a short English setup instruction, preserving both signed settings and their units.","keep_numbers":true,"require_change":true,"max_chars":115},
+    "gold": {"example":"Set rinse A to +3.5 °C and rinse B to -1.0 °C.","bindings":[["\\b(?:rinse|bath|cycle)\\s*a\\b|\\ba\\s*(?=[:=])","\\+3\\.5\\s*(?:°\\s*c|degrees?\\s+celsius|celsius)\\b"],["\\b(?:rinse|bath|cycle)\\s*b\\b|\\bb\\s*(?=[:=])","-1\\.0\\s*(?:°\\s*c|degrees?\\s+celsius|celsius)\\b"]],"terms":[],"conditions":[],"contradictions":[]}
+  },
+  {
+    "id": "general-enclosure-count",
+    "group": "rewrite",
+    "lang": "ja",
+    "job": {"task":"rewrite","source":"ねえ、夕刊を3部送ってね。地図も3枚いっしょに送ってね。","instruction":"発送担当者に向けた簡潔な依頼文にしてください。品目ごとの数と助数詞を残してください。","keep_numbers":true,"require_change":true,"max_chars":68},
+    "gold": {"example":"夕刊3部と地図3枚を同封してください。","bindings":[["夕刊|夕方の新聞","3\\s*部"],["地図|マップ","3\\s*枚"]],"terms":["送|同封|同梱|お届け|封入|お入れ"],"conditions":[],"contradictions":[]}
+  },
+  {
+    "id": "general-print-allowance",
+    "group": "rewrite",
+    "lang": "en",
+    "job": {"task":"rewrite","source":"Oh, one print may use no more than 12 mL of ink. Water used to clean the plate is outside this allowance.","instruction":"Make a concise printing instruction in English. Keep the per-print ink limit and the cleaning-water exception.","keep_numbers":true,"require_change":true,"max_chars":155},
+    "gold": {"example":"Use up to 12 mL of ink per print. Plate-cleaning water is excluded.","bindings":[["\\bink\\b","12\\s*(?:ml|millilit(?:er|re)s?)\\b"]],"terms":["\\bprint(?:s|ing|ed)?\\b","\\b(?:water|rinse)\\b","(?:clean\\w*|rin[sc]\\w*|wash\\w*)"],"conditions":["(?:up to|at most|no more than|not more than|max(?:imum)?(?:\\s+of)?|limit(?:ed)?(?:\\s+(?:to|of|is))?|cap(?:ped)?(?:\\s+(?:at|of))?)\\s*12|12\\s*(?:ml|millilit(?:er|re)s?)\\s*(?:maximum|at most|or less)","(?:water|rinse)[^.;!?]{0,65}(?:exempt\\w*|exclud\\w*|outside|separat\\w*|extra|(?:do(?:es)?(?:n['’]t| not)|(?:is|will) not|isn['’]t|not|never)\\s+(?:be\\s+)?(?:count\\w*|apply|part|inclu\\w*|affect\\w*))|(?:exclud\\w*|except(?:ing)?(?: for)?|without counting|omit\\w*|outside|apart from|not including|do(?:es)? not include|other than|does not apply to|not count)\\b[^.;!?]{0,42}\\bwater\\b","\\b(?:(?:per|each|every|a|one|single)\\s+(?:individual\\s+)?print|print(?:'s)?\\s+(?:limit|allowance|may use|allows?)|per[- ]print)\\b"],"contradictions":["(?:at least|no less than|minimum(?: of)?)\\s*12|\\bwater (?:counts toward|is included in)","(?:across|for) (?:all|a batch of) (?:the )?prints|(?:water (?:must|should) (?:be )?count)"]}
+  },
+  {
+    "id": "general-refund-windows",
+    "group": "rewrite",
+    "lang": "ja",
+    "job": {"task":"rewrite","source":"入館料ね、当日取り消すと40%を返すよ。前日取り消しなら90%が戻るんだ。","instruction":"入館料を取り消したときの返金率を、二つの時期を明示して簡潔に案内してください。","keep_numbers":true,"require_change":true,"max_chars":78},
+    "gold": {"example":"入館料の返金率は、当日の取り消しが40%、前日が90%です。","bindings":[["当日|同日|その日","40\\s*(?:%|パーセント)"],["前日|日(?:の)?前|一日前","90\\s*(?:%|パーセント)"]],"terms":["返(?:金|還|却|す|し|しま)|払(?:い)?戻|戻[るし]"],"conditions":[],"contradictions":["(?:手数料|違約金|キャンセル料)(?:は|として)\\s*(?:40|90)\\s*%"]}
+  }
+]

@@ -1,0 +1,86 @@
+[
+  {
+    "id": "general-dev-loan",
+    "group": "answer",
+    "lang": "en",
+    "job": {"task":"answer","source":"The telescope was assigned to Noor. Tuesday's memo withdrew the assignment. A tripod is still reserved for Omar.","question":"Who currently holds the confirmed telescope assignment? Enter only the name if one is confirmed."},
+    "gold": []
+  },
+  {
+    "id": "general-dev-fan",
+    "group": "answer",
+    "lang": "ja",
+    "job": {"task":"answer","source":"作業表\n手前の送風機は風速7 m/s、奥の送風機は風速4 m/s。電圧はいずれも同じ。","question":"奥の送風機の風速を単位付きで抜き出してください。"},
+    "gold": ["4 m/s"]
+  },
+  {
+    "id": "general-dev-nebula",
+    "group": "answer",
+    "lang": "en",
+    "job": {"task":"answer","source":"The illustrated volume Nebula Notes is bound in birch bark.","question":"What is the book bound in?"},
+    "gold": ["birch bark"]
+  },
+  {
+    "id": "general-dev-verifiers",
+    "group": "extract",
+    "lang": "en",
+    "job": {"task":"extract","source":"Two readers signed the proof: Nel Penn and Tayo West. Ana Rill observed the signing. A price has not been set.","fields":[{"name":"readers","description":"Full name of each person who signed the proof","many":true},{"name":"price","description":"Set price including any unit","many":false}]},
+    "gold": {"readers":["Nel Penn","Tayo West"],"price":[]}
+  },
+  {
+    "id": "general-dev-wheel",
+    "group": "extract",
+    "lang": "ja",
+    "job": {"task":"extract","source":"整備票。前輪の空気圧は230 kPa。後輪は点検を後日に回した。","fields":[{"name":"rear","description":"記載された後輪の空気圧を単位付きで","many":false},{"name":"front","description":"記載された前輪の空気圧を単位付きで","many":false}]},
+    "gold": {"rear":[],"front":["230 kPa"]}
+  },
+  {
+    "id": "general-dev-tile",
+    "group": "extract",
+    "lang": "en",
+    "job": {"task":"extract","source":"The glaze sample carries the catalogue title Orchard Fog.","fields":[{"name":"title","description":"Exact catalogue title of the glaze","many":false}]},
+    "gold": {"title":["Orchard Fog"]}
+  },
+  {
+    "id": "general-dev-orchestral",
+    "group": "classify",
+    "lang": "en",
+    "job": {"task":"classify","source":"Yesterday we asked for new chairs, but that request is closed. Today we are reporting an audible rattle in a music stand.","labels":[{"name":"purchase","description":"a current request to obtain an additional item"},{"name":"repair","description":"a current report of a damaged or faulty item"},{"name":"room","description":"a current request to reserve a room"}]},
+    "gold": "repair"
+  },
+  {
+    "id": "general-dev-wind",
+    "group": "classify",
+    "lang": "ja",
+    "job": {"task":"classify","source":"凧をつくる会への参加を取り消したい。風の観察会への参加も新たに申し込みたい。","labels":[{"name":"cancel","description":"既存の参加申込みを取り消す依頼"},{"name":"join","description":"新規参加の申込み"},{"name":"time","description":"開催時間を尋ねる依頼"}]},
+    "gold": ""
+  },
+  {
+    "id": "general-dev-pier",
+    "group": "classify",
+    "lang": "en",
+    "job": {"task":"classify","source":"The pier was quiet after sunset.","labels":[{"name":"hire","description":"request to hire a boat"},{"name":"damage","description":"report of damage to a boat"}]},
+    "gold": ""
+  },
+  {
+    "id": "general-dev-rink",
+    "group": "rewrite",
+    "lang": "en",
+    "job": {"task":"rewrite","source":"Folks, a mat hire costs £8 for adults. Hey, for juniors it costs £3.","instruction":"Write a concise customer notice in English. Keep each price with the correct group.","keep_numbers":true,"require_change":true,"max_chars":100},
+    "gold": {"example":"Mat hire costs £8 for adults and £3 for juniors.","bindings":[["\\badults?\\b","(?:£\\s*8|8\\s*(?:pounds?|gbp))"],["\\b(?:juniors?|children|kids?|youths?|youngsters)\\b","(?:£\\s*3|3\\s*(?:pounds?|gbp))"]],"terms":["\\b(?:mats?|hire|rent\\w*)\\b"],"conditions":[],"contradictions":[]}
+  },
+  {
+    "id": "general-dev-paper",
+    "group": "rewrite",
+    "lang": "ja",
+    "job": {"task":"rewrite","source":"あのね、上質紙は6枚まで取っていいよ。包装紙はこの上限に含まれないよ。","instruction":"二つの条件を簡潔な掲示文にしてください。","keep_numbers":true,"require_change":true,"max_chars":64},
+    "gold": {"example":"上質紙は6枚まで取れます。包装紙は枚数制限の対象外です。","bindings":[["上質紙","6\\s*枚"]],"terms":[],"conditions":["(?:6\\s*枚(?:を)?(?:まで|以内|以下|上限|限度)|(?:最大|上限[^。]{0,8}|限度[^。]{0,8})6\\s*枚)","(?:包装紙|包み紙)[^。]{0,26}(?:別|含(?:ま(?:れ)?ず|めず|めない|まれない|みません|めません|まれません)|除|数え(?:ない|ません)|対象外|制限[はが]?ない|カウントし(?:ない|ません))"],"contradictions":["(?:少なくとも|最低|最小)\\s*6\\s*枚|6\\s*枚以上"]}
+  },
+  {
+    "id": "general-dev-clay",
+    "group": "rewrite",
+    "lang": "en",
+    "job": {"task":"rewrite","source":"Clay fee notice, folks: the listed fee is 19 euros. Firing is included in that fee.","instruction":"Make a short English notice about the clay fee and what it covers.","keep_numbers":true,"require_change":true,"max_chars":100},
+    "gold": {"example":"The clay fee of 19 euros includes firing.","bindings":[["\\b(?:clay|fee|cost|price)\\b","(?:19\\s*(?:euros?|eur)|€\\s*19)"]],"terms":["\\bfir(?:e|es|ing|ed)\\b"],"conditions":["(?:includ\\w*|cover\\w*|bundl\\w*|comes? with|at no (?:extra|additional) (?:charge|cost)|no extra (?:charge|cost)|free)"],"contradictions":["(?:exclud\\w*|extra charge|charged separately|not included)","\\b(?:not|never|isn['’]t|doesn['’]t|does not|without)\\s+(?:be\\s+)?(?:includ\\w*|cover\\w*|fir(?:e|ing))|\\bfiring\\b[^.;!?]{0,25}(?:costs? extra|(?:separate|additional) fee)"]}
+  }
+]
