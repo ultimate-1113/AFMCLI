@@ -45,5 +45,10 @@ jobs:
           python3 -B eval/repeats/bench.py verify
           python3 -B eval/repeats/check_short.py verify
           python3 -B eval/repeats/verifier_probe.py verify
+          python3 -B eval/grounding/study.py verify
+          python3 -B eval/repeats/check_short.py verify --results eval/grounding/short.jsonl
+          python3 -B eval/repeats/check_short.py verify --route records --results eval/grounding/short-records.jsonl
+          python3 -B eval/repeats/check_short.py verify --route review --results eval/grounding/short-review.jsonl
+          python3 -B eval/grounding/routes.py verify
           python3 -B tools/test_png_audit.py
           python3 -B tools/privacy_audit.py --tracked

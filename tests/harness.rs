@@ -243,6 +243,8 @@ fn compact_preserves_the_short_reader_and_charges_all_sent_inputs() {
         None,
         Some(ContextMode::Repeats),
         Some(ContextMode::Evidence),
+        Some(ContextMode::Records),
+        Some(ContextMode::Review),
     ] {
         let mut sent = Vec::new();
         let result = eval(

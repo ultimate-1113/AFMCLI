@@ -14,7 +14,7 @@ REPEATS = runpy.run_path(str(HERE.parent / "repeats" / "bench.py"))
 CONTEXT = REPEATS["CONTEXT"]
 BASE = runpy.run_path(str(HERE.parent / "bench.py"))
 MODES = {"dev": ("before", "packing", "after"), "holdout": ("direct", "before", "packing", "after"),
-         "numeric": ("direct", "before", "packing", "after")}
+         "numeric": ("direct", "before", "packing", "after"), "controls": ("before", "after")}
 
 
 def digest(data):
@@ -28,6 +28,21 @@ def job_bytes(job):
 def cases(split):
     if split == "dev":
         return {case["id"]: case for case in REPEATS["cases"]()}
+    if split == "controls":
+        base = cases("dev")["unique-withdrawal"]
+        announcement = "Mina: We have withdrawn the previously announced Elm access code. No replacement has been issued."
+        source = base["job"]["source"]
+        assert source.count(announcement) == 1
+        controls = {
+            "original": (announcement, []),
+            "different-target": ("Mina: We have withdrawn the previously announced Oak access code. Our decision applies only to Oak.", ["FERN-29"]),
+            "reinstated": (announcement + "\nMina: A subsequent decision reinstates FERN-29 as the confirmed code for the Elm lockers.", ["FERN-29"]),
+        }
+        return {
+            key: {**base, "id": key, "gold": gold,
+                  "job": {**base["job"], "source": source.replace(announcement, notice)}}
+            for key, (notice, gold) in controls.items()
+        }
     result = {}
     if split == "numeric":
         for case_id, lang, query in json.loads((HERE / "numeric.json").read_text()):
@@ -104,9 +119,9 @@ def outcome(case, row):
     return "wrong_answer" if case["gold"] else "unsupported_answer"
 
 
-def run_case(binary, mode, case):
+def run_case(binary, mode, case, compact_option="--compact=evidence"):
     budget = 6200 if mode == "direct" else case["budget"]
-    flags = ["--direct"] if mode == "direct" else ["--compact=evidence"]
+    flags = ["--direct"] if mode == "direct" else [compact_option]
     payload = job_bytes(case["job"])
     start = monotonic_ns()
     process = subprocess.run(
@@ -187,7 +202,7 @@ def main():
     commands.add_parser("verify")
     args = parser.parse_args()
     if args.command == "show":
-        panel = {**cases("dev"), **cases("holdout"), **cases("numeric")}
+        panel = {case_id: case for split in MODES for case_id, case in cases(split).items()}
         if args.case not in panel:
             parser.error("unknown case ID")
         print(job_bytes(panel[args.case]["job"]).decode())
@@ -198,8 +213,10 @@ def main():
         dev = verify(HERE / "dev.jsonl", "dev")
         held = verify(HERE / "holdout.jsonl", "holdout")
         numeric = verify(HERE / "numeric.jsonl", "numeric")
+        controls = verify(HERE / "controls.jsonl", "controls")
         assert all(dev[k] == held[k] for k in dev) and held["before"] == held["direct"]
         assert numeric == held
+        assert all(controls[k] == held[k] for k in controls)
 
 
 if __name__ == "__main__":
