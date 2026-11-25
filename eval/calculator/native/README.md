@@ -44,6 +44,23 @@ printf '%s' '{"expression":"(7/12 + 5/18)^2"}' | \
 PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s eval/calculator/native
 ```
 
+## 文章題と情報不足の比較
+
+文章題の比較では、式と期待値を渡さず、各条件の最終数値と実際のツール引数を保存できる。追加の6組では数量がそろっているかを別セッションで判定する。モデルが使えるMacのリポジトリ直下で、前にビルドしたSwiftプログラムとRust電卓を指定する。
+
+```sh
+python3 -B eval/calculator/native/words.py run \
+  --native /tmp/afm-calc-study/calculator-probe --calculator "$PWD/target/release/afmcli" \
+  --out /tmp/afm-calc-study/word-comparison.jsonl
+python3 -B eval/calculator/native/sufficiency.py run \
+  --native /tmp/afm-calc-study/calculator-probe --calculator "$PWD/target/release/afmcli" \
+  --cases eval/calculator/native/sufficiency_cases.json --out /tmp/afm-calc-study/sufficiency.jsonl
+python3 -B eval/calculator/native/sufficiency.py verify \
+  --cases eval/calculator/native/sufficiency_cases.json --out /tmp/afm-calc-study/sufficiency.jsonl
+```
+
+任意の1問には `sufficiency.py answer` が使える。標準入力の問題を1つ受け取り、数値または「不明」を1行で出す。出力契約を満たさない回答や実行エラーには「保留」と終了コード3を返す。数式の意味をモデルが推測した結果には、妥当な書式の誤答も含まれうる。[確定式と文章題の実測](../README.md)
+
 ## このMacの fm コマンド
 
 macOS 27.2.1の `/usr/bin/fm respond --help` と `/usr/bin/fm chat --help` は `--tool` を内蔵の `barcode` と `ocr` に限定している。カスタム電卓の登録には上記のSwiftセッションを使用する。`fm serve --help` にはChat CompletionsのHTTPエンドポイントと接続設定がある。現行ビルドのサーバーを介したカスタム関数呼び出しはこの試験の測定対象外である。[AppleのCLIとPython SDK解説](https://developer.apple.com/videos/play/wwdc2026/334/)

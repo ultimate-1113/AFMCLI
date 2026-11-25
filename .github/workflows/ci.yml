@@ -31,6 +31,7 @@ jobs:
           rustup component add rustfmt clippy
           cargo fmt --all -- --check
           cargo clippy --locked --all-targets -- -D warnings
+          cargo clippy --locked --all-targets --features experimental-index -- -D warnings
       - name: Replay synthetic results and check the publication
         run: |
           python3 -B tools/verify_results.py
@@ -59,5 +60,18 @@ jobs:
           cmp "$RUNNER_TEMP/afm-moe-summary.json" eval/moe/results/summary.json
           python3 -B eval/moe/regression.py verify
           python3 -B eval/repeats/check_short.py verify --route records --results eval/moe/results/regression-short.jsonl
+          python3 -B eval/index_status/test_fixtures.py
+          python3 -B eval/index_status/test_targeted.py
+          python3 -B eval/index_status/bench.py verify --split dev
+          python3 -B eval/index_status/bench.py verify --split test
+          python3 -B eval/index_status/bench.py report --split test > "$RUNNER_TEMP/index-report.json"
+          cmp "$RUNNER_TEMP/index-report.json" eval/index_status/results/summary.json
+          python3 -B eval/index_status/targeted_bench.py verify
+          python3 -B eval/index_status/regressions.py verify
+          python3 -B -m unittest discover -s eval/calculator/native
+          python3 -B eval/calculator/verify.py
+          python3 -B eval/calculator/native/words.py verify
+          python3 -B eval/calculator/native/sufficiency.py verify --cases eval/calculator/native/sufficiency_cases.json --out eval/calculator/native-sufficiency.jsonl
+          python3 -B eval/calculator/check_math.py --binary target/debug/afmcli
           python3 -B tools/test_png_audit.py
           python3 -B tools/privacy_audit.py --tracked
