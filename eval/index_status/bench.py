@@ -6,6 +6,7 @@ import json
 import os
 from pathlib import Path
 import runpy
+import shutil
 import subprocess
 import tempfile
 import time
@@ -106,14 +107,29 @@ def save(out, row):
 
 def measure(args, load_panels=frozen, arrange=order):
     panels, lock = load_panels()
+    selected = set(args.arms or ARMS)
+    original = {a: (args.records if a == "records" else args.indexed if a == "indexed"
+                    else args.candidate).resolve() for a in selected}
+    # Put all executables on the same volume before measuring process startup.
+    with tempfile.TemporaryDirectory(prefix="afmcli-study-binaries-") as stage:
+        installed = {}
+        available = {}
+        for i, src in enumerate(sorted(set(original.values()))):
+            dst = Path(stage) / f"afmcli-{i}"
+            shutil.copy2(src, dst)
+            available[dst] = check_binary(dst)
+            if available[dst] != file_hash(src):
+                raise ValueError("source binary changed during staging")
+            installed[src] = dst
+        binaries = {a: installed[src] for a, src in original.items()}
+        measure_rows(args, panels[args.split], lock, binaries, available, arrange)
+
+
+def measure_rows(args, panel, lock, binaries, available, arrange):
     outdir = args.out.resolve()
     outdir.mkdir(parents=True, exist_ok=True)
     output = outdir / (args.split + ".jsonl")
-    by_id = {c["id"]: c for c in panels[args.split]}
-    selected = set(args.arms or ARMS)
-    binaries = {a: (args.records if a == "records" else args.indexed if a == "indexed"
-                    else args.candidate).resolve() for a in selected}
-    available = {p: check_binary(p) for p in set(binaries.values())}
+    by_id = {c["id"]: c for c in panel}
     guard = Path(tempfile.gettempdir()) / f"afmcli-moe-system-{os.getuid()}.lock"
     with guard.open("a") as serial:
         fcntl.flock(serial, fcntl.LOCK_EX)
@@ -132,9 +148,9 @@ def measure(args, load_panels=frozen, arrange=order):
                 raise ValueError("unexpected stored row")
             grade_row(row, by_id[i], lock[i], hashes)
         with output.open("ab") as out:
-            for c, arms in arrange(panels[args.split]):
+            for c, arms in arrange(panel):
                 for a in arms:
-                    if a not in selected or (c["id"], a) in prev:
+                    if a not in binaries or (c["id"], a) in prev:
                         continue
                     option = OPTIONS[a]
                     start = time.perf_counter_ns()
@@ -147,6 +163,7 @@ def measure(args, load_panels=frozen, arrange=order):
                         raise
                     elapsed = round((time.perf_counter_ns() - start) / 1_000_000, 3)
                     row = {"id": c["id"], "split": args.split, "pair": c["pair"], "tier": c["tier"],
+                           "binary_staging": "same_temporary_volume",
                            "language": c["language"], "arm": a, "option": option, "binary": hashes[a],
                            "case_hash": lock[c["id"]], "job_hash": digest(encode(c["job"])),
                            "record": record, "elapsed_ms": elapsed, "score": fixtures.grade(c, record)}
