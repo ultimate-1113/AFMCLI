@@ -52,6 +52,8 @@ def main():
     rows = read_rows(args.output)
     if set(expected) != {(r["split"], r["id"]) for r in rows} or len(rows) != 38:
         raise ValueError("incomplete regression panel")
+    if len({r["binary"] for r in rows}) != 1:
+        raise ValueError("regression panel contains different binaries")
     changed = []
     for row in rows:
         old = expected[row["split"], row["id"]]
@@ -60,6 +62,8 @@ def main():
         if row["observed"] != old["observed"]:
             changed.append((row["split"], row["id"]))
     print(json.dumps({"cases": len(rows), "changed_outputs_or_costs": changed}))
+    if args.action == "verify" and changed:
+        raise ValueError("the saved regression panel differs from v0.3.2")
 
 
 if __name__ == "__main__":
