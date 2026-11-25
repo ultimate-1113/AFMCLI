@@ -97,6 +97,18 @@ def grade_row(row, case, case_hash, fingerprints):
         raise ValueError("invalid metrics: " + case["id"])
     if not row["elapsed_ms"] >= 0 or encode(row["score"]) != encode(fixtures.grade(case, record)):
         raise ValueError("score no longer reproduces: " + case["id"])
+    checks = metrics.get("answer_checks", [])
+    if sum(bool(check["review_sent"]) for check in checks) > int(row["arm"] == "review"):
+        raise ValueError("unexpected independent review")
+    for check in checks:
+        if not check["handoff_sent"]:
+            continue
+        if row["arm"] not in ("handoff", "review") or len(encode(check["handoff"])) != check["handoff_bytes"]:
+            raise ValueError("inconsistent handoff")
+        if len(record.get("attempts", [])) == metrics["calls"]:
+            i = check["draft_attempt"]
+            if not i or not 1 <= i <= metrics["calls"] or len(record["attempts"][i-1]["response"].encode()) != check["draft_bytes"]:
+                raise ValueError("unmatched raw draft")
 
 
 def save(out, row):

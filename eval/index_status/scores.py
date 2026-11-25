@@ -108,15 +108,21 @@ def trace_summary(rows, cases):
 
 def compare(rows, against, method):
     by_pair = {(r["id"], r["arm"]): r for r in rows}
-    wins, losses, ratios = [], [], []
+    wins, losses, ratios, elapsed_differences = [], [], [], []
+    calls_delta = tokens_delta = 0
     for i in sorted({r["id"] for r in rows}):
         a, b = by_pair[i, method], by_pair[i, against]
         if a["score"]["correct"] != b["score"]["correct"]:
             (wins if a["score"]["correct"] else losses).append(i)
         if b["elapsed_ms"] > 0:
             ratios.append(a["elapsed_ms"] / b["elapsed_ms"])
+        elapsed_differences.append(a["elapsed_ms"] - b["elapsed_ms"])
+        calls_delta += a["record"]["metrics"]["calls"] - b["record"]["metrics"]["calls"]
+        tokens_delta += a["record"]["metrics"]["sent_input_tokens"] - b["record"]["metrics"]["sent_input_tokens"]
     return {"wins": wins, "losses": losses, "net": len(wins)-len(losses),
-            "median_case_time_ratio": round(median(ratios), 5)}
+            "median_case_time_ratio": round(median(ratios), 5),
+            "total_call_difference": calls_delta, "total_input_difference": tokens_delta,
+            "median_paired_ms_difference": round(median(elapsed_differences), 3)}
 
 
 def summarize(panel, rows):
