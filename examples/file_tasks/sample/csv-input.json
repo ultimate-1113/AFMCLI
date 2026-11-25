@@ -1,0 +1,18 @@
+{
+  "items": [
+    {
+      "id": "0007",
+      "revision": 3,
+      "item": "ラベル, \"春\"",
+      "quantity": 4,
+      "unit_price": 275
+    },
+    {
+      "id": "0008",
+      "revision": 9,
+      "item": "展示札\n青",
+      "quantity": 4,
+      "unit_price": 180
+    }
+  ]
+}

@@ -59,5 +59,9 @@ jobs:
           cmp "$RUNNER_TEMP/afm-moe-summary.json" eval/moe/results/summary.json
           python3 -B eval/moe/regression.py verify
           python3 -B eval/repeats/check_short.py verify --route records --results eval/moe/results/regression-short.jsonl
+          python3 -B -m unittest discover -s eval/calculator/native
+          python3 -B eval/calculator/verify.py
+          python3 -B eval/calculator/native/words.py verify
+          python3 -B eval/calculator/check_math.py --binary target/debug/afmcli
           python3 -B tools/test_png_audit.py
           python3 -B tools/privacy_audit.py --tracked

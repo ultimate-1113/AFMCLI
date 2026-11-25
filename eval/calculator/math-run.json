@@ -1,0 +1,19 @@
+{
+  "binary_sha256": "1c39d03e8b3878d144b0cb652a5d9188b1ed88b66cd90317855ed0f30cc3ea64",
+  "total": 547,
+  "by_kind": {
+    "rational": 200,
+    "decimal": 100,
+    "choose": 32,
+    "factorial": 32,
+    "angle": 75,
+    "root": 32,
+    "log": 32,
+    "inverse": 32,
+    "invalid": 12
+  },
+  "errors": [],
+  "model_calls": 0,
+  "elapsed_ms": 219.769,
+  "single_batch_jobs_per_second": 2489.0
+}

@@ -8,18 +8,18 @@ Rustで実装した、Mac上の **AFM 3 Core Advanced** 用タスクハーネス
 
 ## インストール
 
-モデル実行には、Apple Intelligenceが有効で、`fm models` に `✓ system (AFM 3 Core Advanced)` と表示されるMacが必要。今回の実機はMac mini M6、32 GB、モデル配置先は内蔵SSD 256 GB、macOS 27.2.1（26B131）。次のコマンドでRust 1.89以上を使い、文脈圧縮を含む現行ソースをインストールできる。[v0.2.0のmacOS向け配布ファイルとSHA-256](https://github.com/ultimate-1113/AFMCLI/releases/tag/v0.2.0)・[AppleのCLI解説](https://developer.apple.com/videos/play/wwdc2026/334/)
+モデル実行には、Apple Intelligenceが有効で、`fm models` に `✓ system (AFM 3 Core Advanced)` と表示されるMacが必要。今回の実機はMac mini M6、32 GB、モデル配置先は内蔵SSD 256 GB、macOS 27.2.1（26B131）。次のコマンドでRust 1.89以上を使い、関数電卓を含むv0.4.0のソースをインストールできる。[v0.4.0のmacOS向け配布ファイルとSHA-256](https://github.com/ultimate-1113/AFMCLI/releases/tag/v0.4.0)・[AppleのCLI解説](https://developer.apple.com/videos/play/wwdc2026/334/)
 
 ```sh
-cargo install --locked --git https://github.com/ultimate-1113/AFMCLI --branch main afmcli
+cargo install --locked --git https://github.com/ultimate-1113/AFMCLI --tag v0.4.0 afmcli
 afmcli doctor
 ```
 
 ダウンロード版はアーカイブと同名の `.sha256` を同じフォルダに置き、空のディレクトリで確認して展開する。
 
 ```sh
-shasum -a 256 -c afmcli-v0.2.0-aarch64-apple-darwin.tar.gz.sha256
-tar -xzf afmcli-v0.2.0-aarch64-apple-darwin.tar.gz
+shasum -a 256 -c afmcli-v0.4.0-aarch64-apple-darwin.tar.gz.sha256
+tar -xzf afmcli-v0.4.0-aarch64-apple-darwin.tar.gz
 ./afmcli doctor
 ```
 
@@ -95,6 +95,19 @@ afmcli --compact answer '会議で最終的に決まった会場はどこです�
 
 11月26日の実機試験では、一般40件で直呼び24件、標準ハーネス39件、タスク別の短い指示を追加した方式36件が正解した。長文の索引検索は送信入力を31%減らし、正答は22/30件で同じだった。未確定の問で値を返す誤りが2件から4件に増えたため、索引検索は研究用ビルドに収録した。翻訳の局所修正では重大な誤りが減ったが、正しい訳の件数は増えなかった。[用途別の結果・失敗例と再現方法](eval/moe/README.md)
 
+## 数式から数値を返す
+
+v0.4.0 の `calc` は、分数・べき乗・三角関数・対数・組み合わせをRustで計算する。確定した式はモデル呼び出し0回で数値を返す。文章題を `calc --from-text` に渡すと、AFMの提案式と値を一緒に確認できる。
+
+```sh
+afmcli --text calc '((7/12 + 5/18) / (11/9 - 2/3))^2'
+# 2.4025
+afmcli --text calc --angle deg '12 * sin(30) + sqrt(144) - log10(1000)'
+# 15
+```
+
+Swiftの公開APIに電卓を登録した試験では、AFMが6問すべてで自らツールを呼び出した。電卓の値は6/6正解、AFMが数値だけを返した最終回答は5/6正解。同じ条件で電卓を登録しなかったときは0/6だった。[式・文章題の比較と実行方法](eval/calculator/README.md)・[Swiftでツールを登録するサンプル](eval/calculator/native/README.md)
+
 ## JSON更新と数理最適化
 
 次の更新では、`open` が12のときだけ3を加える。複数の操作のうち1つでも旧値が合わないと、元の文書全体を返す。CLIは更新案を標準出力へ出す。共有ストアに反映するアプリではストア側で版の照合と書き込みを一つのトランザクションにする。
@@ -111,6 +124,8 @@ afmcli edit -i examples/guarded-row.json
 ```
 
 `set` はスカラー値を置換し、`add` は符号付き64ビット整数を加算する。複数操作は元の文書に対して検証する。重複したパス、存在しないパス、オーバーフローは保留する。
+
+ファイルの例では、TXTからの会場名抽出、JSONの定員更新、改行を含むCSVの数量更新を試せる。CSVは品番を文字列として読み、ID・版・旧値が一致した行を別名のファイルに保存する。[再実行用の例](examples/file_tasks/README.md)・[実際に出力したCSV](examples/file_tasks/sample/after.csv)
 
 ```sh
 printf '%s\n' '{"variables":[{"name":"X","min":0,"max":5}],"constraints":[{"weights":[2],"relation":"ge","rhs":7}],"objectives":[{"weights":[1],"sense":"min"}]}' |
