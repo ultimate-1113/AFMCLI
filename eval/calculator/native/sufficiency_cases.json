@@ -1,0 +1,98 @@
+[
+  {
+    "id": "register-a",
+    "pair": "register",
+    "language": "ja",
+    "question": "紺車と銀車の回転計は別々に積算する。試験前の紺車は418回転だった。試験後の記録は紺車が691回転で、銀車の欄は空白だった。試験中に積算値がゼロに戻ることはなかった。試験中に紺車は何回転したか。",
+    "expected": "273",
+    "reason": "紺車の終了値691から開始値418を引くと273回転。銀車の終了値はこの差に使わない。"
+  },
+  {
+    "id": "register-b",
+    "pair": "register",
+    "language": "ja",
+    "question": "紺車と銀車の回転計は別々に積算する。試験前の紺車は418回転だった。試験後の記録は銀車が691回転で、紺車の欄は空白だった。試験中に積算値がゼロに戻ることはなかった。試験中に紺車は何回転したか。",
+    "expected": null,
+    "reason": "691は銀車の終了値。紺車の終了値が600なら182回転、620なら202回転で、どちらも記録と両立する。"
+  },
+  {
+    "id": "advance-a",
+    "pair": "advance",
+    "language": "en",
+    "question": "A plotter's entire test motion consists of 37 equal forward advances. Its draft total travel of 1094.2 mm was crossed out. The signed sheet gives 1195.1 mm for the bed length and leaves total travel blank. How many millimetres is one advance?",
+    "expected": null,
+    "reason": "The crossed-out travel no longer applies. A bed of that length accommodates both 1110 mm and 1147 mm of travel, giving 30 mm or 31 mm per advance."
+  },
+  {
+    "id": "advance-b",
+    "pair": "advance",
+    "language": "en",
+    "question": "A plotter's entire test motion consists of 37 equal forward advances. Its draft total travel of 1094.2 mm was crossed out. The signed sheet gives 1195.1 mm for total travel and leaves the bed length blank. How many millimetres is one advance?",
+    "expected": "32.3",
+    "reason": "The signed travel divided by the number of equal advances gives 1195.1 ÷ 37 = 32.3 mm. The bed length is unnecessary."
+  },
+  {
+    "id": "matching-a",
+    "pair": "matching",
+    "language": "ja",
+    "question": "封入直前、藍箱には札が235枚あった。紅箱の枚数欄は空白だが、その時点で紅箱と藍箱が同じ枚数だったと照合済みである。その後、紅箱から68枚だけ取り出した。紅箱には何枚残ったか。",
+    "expected": "167",
+    "reason": "照合により紅箱の初めの枚数も235枚と分かる。235から68を引いて167枚。"
+  },
+  {
+    "id": "matching-b",
+    "pair": "matching",
+    "language": "ja",
+    "question": "封入直前、藍箱には札が235枚あった。紅箱の枚数欄は空白で、その時点で紅箱と藍箱が同じ枚数かどうかは照合しなかった。その後、紅箱から68枚だけ取り出した。紅箱には何枚残ったか。",
+    "expected": null,
+    "reason": "藍箱だけの枚数から紅箱の枚数は決まらない。紅箱が235枚なら残りは167枚、236枚なら168枚でも記録に反しない。"
+  },
+  {
+    "id": "frame-a",
+    "pair": "frame",
+    "language": "en",
+    "question": "A film splice is marked at frames 1827 and 2049. The frame numbers are consecutive. The count includes every frame strictly between the marks and the frame at the second mark. The sheet leaves open whether to count the frame at the first mark. How many frames does the count include?",
+    "expected": null,
+    "reason": "Excluding the first marked frame gives 222 frames. Including it gives 223. The sheet permits either convention."
+  },
+  {
+    "id": "frame-b",
+    "pair": "frame",
+    "language": "en",
+    "question": "A film splice is marked at frames 1827 and 2049. The frame numbers are consecutive. The count includes every frame strictly between the marks and the frame at the second mark. The sheet also includes the frame at the first mark. How many frames does the count include?",
+    "expected": "223",
+    "reason": "Both endpoints are included, so the count is 2049 − 1827 + 1 = 223."
+  },
+  {
+    "id": "tag-a",
+    "pair": "tag",
+    "language": "ja",
+    "question": "図版をタグ別に数えると、「和紙」付きは137枚、「箔」付きは96枚だった。横長の図版は28枚で、両方のタグが付いた図版の枚数は未集計である。少なくともどちらかのタグが付いた図版は、重複を除くと何枚か。",
+    "expected": null,
+    "reason": "横長かどうかからタグの重なりは決まらない。重複がなければ233枚、28枚重複していれば205枚になる。"
+  },
+  {
+    "id": "tag-b",
+    "pair": "tag",
+    "language": "ja",
+    "question": "図版をタグ別に数えると、「和紙」付きは137枚、「箔」付きは96枚だった。両方のタグが付いた図版は28枚で、横長の図版の枚数は未集計である。少なくともどちらかのタグが付いた図版は、重複を除くと何枚か。",
+    "expected": "205",
+    "reason": "137と96の和は両タグの28枚を二度数える。233から28を引いて205枚。横長の枚数は不要。"
+  },
+  {
+    "id": "outlet-a",
+    "pair": "outlet",
+    "language": "en",
+    "question": "A splitter sends water to its north and east outlets in a fixed mass ratio. The plate reads 83 to 91, with north listed first and east second. The east outlet collected 117 kg during a run. How many kilograms went north during that run? Give the exact mass, using a fraction if needed.",
+    "expected": "747/7",
+    "reason": "North receives 83/91 of the east mass. Multiplying 117 by 83/91 gives 747/7 kg."
+  },
+  {
+    "id": "outlet-b",
+    "pair": "outlet",
+    "language": "en",
+    "question": "A splitter sends water to its north and east outlets in a fixed mass ratio. The plate reads 83 to 91, but the outlet names have worn off and their order is unknown. The east outlet collected 117 kg during a run. How many kilograms went north during that run? Give the exact mass, using a fraction if needed.",
+    "expected": null,
+    "reason": "Both assignments fit the plate. North receives either 117 × 83/91 = 747/7 kg or 117 × 91/83 = 10647/83 kg."
+  }
+]
