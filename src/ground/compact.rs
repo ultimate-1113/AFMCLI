@@ -144,7 +144,13 @@ fn pack_blocks<'a>(source: &'a str, lines: &[Segment<'_>], limit: usize) -> Opti
     multi.then_some(packet)
 }
 
-pub(super) fn reader(question: &str, context: &Value) -> Request {
+pub(super) fn reader(mode: Option<ContextMode>, question: &str, context: &Value) -> Request {
+    #[cfg(feature = "experimental-index")]
+    if mode.is_some_and(ContextMode::checks_decisions) {
+        return super::checked::reader(question, context);
+    }
+    #[cfg(not(feature = "experimental-index"))]
+    let _ = mode;
     let instruction = if cfg!(feature = "experimental-index")
         && context.get("indexed_excerpts").is_some()
     {
@@ -170,7 +176,17 @@ pub(super) fn read(
     context: &Value,
     parts: &[(usize, &str)],
     r: Request,
+    _original: &str,
 ) -> Run<Output> {
+    #[cfg(feature = "experimental-index")]
+    if engine
+        .policy
+        .compact
+        .is_some_and(ContextMode::checks_decisions)
+    {
+        return super::checked::read(engine, question, parts, r, false, _original)
+            .map(|f| f.output());
+    }
     let evidence = engine.structured(r, |v| {
         let value = v["answer"].as_str().unwrap();
         if value.is_empty() {
@@ -229,7 +245,7 @@ fn selector(question: &str, lines: &[Segment<'_>]) -> Request {
     )
 }
 
-fn selected_indices(value: &Value, block: &[Segment<'_>]) -> Result<Vec<usize>, String> {
+pub(super) fn selected_indices(value: &Value, block: &[Segment<'_>]) -> Result<Vec<usize>, String> {
     let ids = value["ids"].as_array().unwrap();
     if ids.len() == 1 && ids[0].as_u64() == Some(0) {
         return Ok(block.iter().map(|s| s.id - 1).collect());
@@ -280,7 +296,14 @@ pub(super) fn answer(
         #[cfg(feature = "experimental-index")]
         Some(ContextMode::IndexOnce) => true,
         #[cfg(feature = "experimental-index")]
-        Some(ContextMode::Indexed) => true,
+        Some(
+            ContextMode::Indexed
+            | ContextMode::IndexChecked
+            | ContextMode::IndexHandoff
+            | ContextMode::IndexHandoffReview,
+        ) => true,
+        #[cfg(feature = "experimental-index")]
+        Some(ContextMode::IndexStaged) => false,
         None
         | Some(
             ContextMode::Repeats
@@ -314,7 +337,7 @@ pub(super) fn answer(
             _ => None,
         };
         let Some(context) = candidate else { continue };
-        let r = reader(question, &context);
+        let r = reader(engine.policy.compact, question, &context);
         // Avoid passing multi-megabyte encodings to the tokenizer. Exact token
         // checks still decide whether a candidate can be sent to the model.
         if r.prompt.len() < source.len()
@@ -323,7 +346,7 @@ pub(super) fn answer(
         {
             usage.method = method;
             engine.metrics.context = Some(usage);
-            return read(engine, question, &context, &[(0, source)], r).map(Some);
+            return read(engine, question, &context, &[(0, source)], r, source).map(Some);
         }
     }
     if engine.policy.compact == Some(ContextMode::Repeats) {
@@ -365,9 +388,9 @@ pub(super) fn answer(
     }
     if pos == lines.len() && ranges.iter().map(|(_, s)| s.len()).sum::<usize>() <= byte_limit {
         let context = json!({"excerpts":ranges.iter().map(|(_, text)| *text).collect::<Vec<_>>()});
-        let r = reader(question, &context);
+        let r = reader(engine.policy.compact, question, &context);
         if engine.count(&r)? <= engine.policy.input_budget {
-            return read(engine, question, &context, &ranges, r).map(Some);
+            return read(engine, question, &context, &ranges, r, source).map(Some);
         }
     }
     let usage = engine.metrics.context.as_mut().unwrap();

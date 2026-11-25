@@ -25,6 +25,23 @@ pub enum ContextMode {
     IndexOnce,
     #[cfg(feature = "experimental-index")]
     Indexed,
+    #[cfg(feature = "experimental-index")]
+    IndexChecked,
+    #[cfg(feature = "experimental-index")]
+    IndexHandoff,
+    #[cfg(feature = "experimental-index")]
+    IndexHandoffReview,
+    #[cfg(feature = "experimental-index")]
+    IndexStaged,
+}
+#[cfg(feature = "experimental-index")]
+impl ContextMode {
+    pub(crate) fn checks_decisions(self) -> bool {
+        matches!(
+            self,
+            Self::IndexChecked | Self::IndexHandoff | Self::IndexHandoffReview
+        )
+    }
 }
 
 #[derive(Clone, Copy)]
@@ -72,7 +89,30 @@ pub struct Metrics {
     pub sent_input_tokens: usize,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub context: Option<ContextUsage>,
+    #[cfg(feature = "experimental-index")]
+    #[serde(skip_serializing_if = "Vec::is_empty")]
+    pub answer_checks: Vec<AnswerCheck>,
     pub elapsed_ms: u128,
+}
+#[cfg(feature = "experimental-index")]
+#[derive(Default, Serialize)]
+pub struct AnswerCheck {
+    pub first_state: &'static str,
+    pub first_value: Option<String>,
+    pub second_state: Option<&'static str>,
+    pub second_value: Option<String>,
+    pub handoff: Option<Value>,
+    pub draft_attempt: Option<usize>,
+    pub draft_bytes: usize,
+    pub handoff_bytes: usize,
+    pub handoff_sent: bool,
+    pub second_input_tokens: usize,
+    pub resolution: &'static str,
+    pub review_triggered: bool,
+    pub review_sent: bool,
+    pub review_state: Option<&'static str>,
+    pub review_value: Option<String>,
+    pub review_note: Option<&'static str>,
 }
 #[derive(Serialize)]
 pub struct ContextUsage {

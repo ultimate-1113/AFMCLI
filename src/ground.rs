@@ -8,11 +8,17 @@ use crate::{
 use serde_json::{Value, json};
 use std::collections::{BTreeMap, BTreeSet};
 
+#[cfg(feature = "experimental-index")]
+mod arbiter;
+#[cfg(feature = "experimental-index")]
+mod checked;
 mod compact;
 #[cfg(feature = "experimental-index")]
 mod indexed;
 mod numbered;
 mod review;
+#[cfg(feature = "experimental-index")]
+mod staged;
 
 fn window_budget(engine: &Engine<'_>) -> usize {
     // Leave room for validation feedback when a long compact-mode job has to
@@ -233,6 +239,15 @@ fn extract(
         return engine.raw(make(source));
     }
     let lines = document::segments(source);
+    #[cfg(feature = "experimental-index")]
+    if engine
+        .policy
+        .compact
+        .is_some_and(ContextMode::checks_decisions)
+        && let Some(q) = question
+    {
+        return checked::extract(engine, source, q, &lines);
+    }
     let mut first_window = None;
     if let Some(q) =
         question.filter(|_| engine.policy.compact.is_some() && !engine.policy.decompose)
@@ -428,6 +443,12 @@ fn summarize(engine: &mut Engine<'_>, source: &str, n: usize, focus: &str) -> Ru
     }
 }
 pub fn execute(engine: &mut Engine<'_>, job: &Job) -> Run<Output> {
+    #[cfg(feature = "experimental-index")]
+    if engine.policy.compact == Some(ContextMode::IndexStaged)
+        && let Job::Answer { question, source } = job
+    {
+        return staged::answer(engine, source, question);
+    }
     match job {
         Job::Answer { question, source } => extract(
             engine,

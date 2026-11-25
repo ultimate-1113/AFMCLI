@@ -14,7 +14,7 @@ use std::{
 const MAX_ROWS: usize = 65_536;
 const MAX_SELECTED: usize = 96;
 
-static AGGREGATE: LazyLock<Regex> = LazyLock::new(|| {
+pub(super) static AGGREGATE: LazyLock<Regex> = LazyLock::new(|| {
     Regex::new(r"(?ix)
         \b(across\s+all|how\s+many|how\s+often|combined|cumulative|tally|frequency|
         in\s+(?:total|all)|altogether|overall|sum|total|count|every|each|compare|comparison|all|
@@ -23,7 +23,7 @@ static AGGREGATE: LazyLock<Regex> = LazyLock::new(|| {
         |全体|すべて|全て|全件|一覧|総数|合計|合算|通算|何件|何回|いくつの|いくつある|何か所|何箇所|
         何種類|何人|何名|何社|何個|何台|何枚|何組|総計|総額|回数|全拠点|全部署|全支店|全期間|最大|最小|最高|最低|最も|もっとも|平均|中央値|比較|それぞれ|数え|件数").unwrap()
 });
-static REVISION: LazyLock<Regex> = LazyLock::new(|| {
+pub(super) static REVISION: LazyLock<Regex> = LazyLock::new(|| {
     Regex::new(
         r"(?ix)
         \b(amend\w*|correct(?:ion|ed|s)?|withdraw\w*|withdrawn|cancel\w*|revis\w*|
@@ -40,7 +40,7 @@ fn japanese(c: char) -> bool {
     matches!(c as u32, 0x3040..=0x30ff | 0x3400..=0x9fff | 0xf900..=0xfaff | 0x20000..=0x2fa1f)
 }
 
-fn tokens(text: &str) -> BTreeSet<String> {
+pub(super) fn tokens(text: &str) -> BTreeSet<String> {
     const STOP: &[&str] = &[
         "a",
         "an",
@@ -114,7 +114,7 @@ fn tokens(text: &str) -> BTreeSet<String> {
 }
 
 #[derive(Clone, Copy, Default)]
-struct Scope {
+pub(super) struct Scope {
     doc: usize,
     title: Option<usize>,
     section: Option<usize>,
@@ -123,7 +123,7 @@ struct Scope {
     speaker: Option<usize>,
 }
 impl Scope {
-    fn headers(self) -> impl Iterator<Item = usize> {
+    pub(super) fn headers(self) -> impl Iterator<Item = usize> {
         [
             self.title,
             self.section,
@@ -134,7 +134,7 @@ impl Scope {
         .into_iter()
         .flatten()
     }
-    fn advance(&mut self, line: &str, i: usize) {
+    pub(super) fn advance(&mut self, line: &str, i: usize) {
         let lower = line.to_ascii_lowercase();
         if line.starts_with("# ") || lower.starts_with("document:") || line.starts_with("文書：")
         {
@@ -187,7 +187,7 @@ struct Index {
 }
 
 impl Index {
-    fn build(lines: &[Segment<'_>], question: &str) -> Option<Self> {
+    fn build(lines: &[Segment<'_>], question: &str, checked: bool) -> Option<Self> {
         let query = tokens(question);
         if query.is_empty() || query.len() > 192 {
             return None;
@@ -240,6 +240,9 @@ impl Index {
                 .max()
                 .unwrap_or(0);
             row.weight = direct[i] * 3 + heading;
+            if checked && row.weight > 0 && super::checked::CHANGE.is_match(lines[i].text) {
+                row.amendment = true;
+            }
         }
         let mut ranked: Vec<_> = (0..rows.len()).filter(|&i| rows[i].weight > 0).collect();
         // Explicit source position breaks ties independently of hash iteration order.
@@ -338,10 +341,17 @@ pub(super) fn answer(
     if lines.len() > MAX_ROWS || question.len() > 4096 {
         return fallback(engine, "index_size");
     }
-    let Some(index) = Index::build(lines, question) else {
+    let Some(index) = Index::build(
+        lines,
+        question,
+        engine
+            .policy
+            .compact
+            .is_some_and(ContextMode::checks_decisions),
+    ) else {
         return fallback(engine, "no_selective_query_terms");
     };
-    let limit = if engine.policy.compact == Some(ContextMode::Indexed) {
+    let limit = if engine.policy.compact != Some(ContextMode::IndexOnce) {
         2
     } else {
         1
@@ -380,17 +390,29 @@ pub(super) fn answer(
             json!({"document":r.document_id, "first_segment":r.first_segment_id, "last_segment":r.last_segment_id, "text":text})
         }).collect();
         let packet = json!({"indexed_excerpts":excerpts});
-        let request = compact::reader(question, &packet);
+        let request = compact::reader(engine.policy.compact, question, &packet);
         if request.prompt.len() > engine.policy.input_budget.saturating_mul(12)
             || engine.count(&request)? > window_budget(engine)
         {
             return fallback(engine, "packet_exceeds_budget");
         }
         let calls_before = engine.metrics.calls;
-        let reading = compact::read(engine, question, &packet, &parts, request);
+        let reading = if engine
+            .policy
+            .compact
+            .is_some_and(ContextMode::checks_decisions)
+        {
+            super::checked::read(engine, question, &parts, request, false, source).map(|f| {
+                let explicit_unset = f.state == "unset";
+                (f.output(), explicit_unset)
+            })
+        } else {
+            compact::read(engine, question, &packet, &parts, request, source)
+                .map(|out| (out, false))
+        };
         let sent = engine.metrics.calls > calls_before;
         retrieval(engine).rounds.last_mut().unwrap().sent = sent;
-        let output = match reading {
+        let (output, explicit_unset) = match reading {
             Ok(out) => out,
             Err(Fail::Held(_)) if engine.metrics.calls < engine.policy.max_calls => {
                 last_reason = "invalid_or_unconfirmed_reading";
@@ -398,6 +420,12 @@ pub(super) fn answer(
             }
             Err(e) => return Err(e),
         };
+        if explicit_unset && selection.complete {
+            let usage = engine.metrics.context.as_mut().unwrap();
+            usage.method = "indexed_excerpts";
+            usage.retained_segments = count;
+            return Ok(Some(output));
+        }
         if let Some(value) = output.value["answer"]["value"].as_str() {
             let unseen = lines.iter().any(|s| {
                 s.text.contains(value)
