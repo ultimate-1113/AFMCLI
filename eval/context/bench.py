@@ -31,17 +31,35 @@ def filler(layout, i):
         return f"資料係の点検記録第{i+1}号では、棚番号{3*i+7}の封印と台帳番号を照合し、次回の点検欄を空欄のまま保存しました。"
     if layout == "unique-en":
         return f"Inspection entry {i+1} records that the archive staff checked the seal on shelf {3*i+7} against its paper inventory, then initialled the maintenance record."
+    if layout == "varied-ja":
+        places = ["北棟","植栽室","和室","小ホール","旧館","厨房","工作室","応接室"]
+        staff = ["管理人","園芸係","記録係","館長","案内係","夜間当番","清掃係","備品係"]
+        actions = ["の備品一覧を整え、控えを資料室に届けました。","の窓を点検し、修繕に必要な部品を帳簿に記載しました。","に残っていた紙箱を片付け、通路の幅を測りました。"]
+        return f"{staff[i%8]}：{places[(i//8)%8]}{actions[(i+i//8)%3]}"
+    if layout == "varied-en":
+        places = ["reading room","loft","blue gallery","old kitchen","annex","greenhouse","craft room","east wing"]
+        speakers = ["Porter","Curator","Clerk","Cleaner","Caretaker","Archivist","Steward","Florist"]
+        tasks = ["checked the lamps and returned the wooden steps to storage","moved the empty crates and recorded the repairs on paper","compared the printed inventory with the tins on the upper shelf"]
+        return f"{speakers[i%8]}: In the {places[(i//8)%8]} we {tasks[(i+i//8)%3]}."
     raise ValueError(layout)
 
 
 def synthetic():
     cases = []
-    for row in json.loads((HERE / "panel.json").read_text()):
-        source = "\n".join(row["events"][str(i)] if str(i) in row["events"] else filler(row["layout"], i)
-                            for i in range(row["rows"]))
-        cases.append(dict(id=row["id"], cohort=row["layout"].split("-")[0], budget=row["budget"], gold=row["gold"],
-                          job=dict(task="answer", source=source, question=row["question"])))
+    for file in ("panel.json", "holdout.json"):
+        for row in json.loads((HERE / file).read_text()):
+            source = "\n".join(row["events"][str(i)] if str(i) in row["events"] else filler(row["layout"], i)
+                                for i in range(row["rows"]))
+            cohort = row["layout"].split("-")[0]
+            if file == "holdout.json":
+                cohort = "holdout-varied" if cohort == "varied" else "holdout-repeat"
+            cases.append(dict(id=row["id"], cohort=cohort, budget=row["budget"], gold=row["gold"],
+                              job=dict(task="answer", source=source, question=row["question"])))
     return cases
+
+
+def modes(case):
+    return ("baseline","compact","evidence") if case["cohort"] in ("unique","holdout-varied") else ("baseline","compact")
 
 
 def check_spans(job, answer):
@@ -83,19 +101,19 @@ def evaluate(args):
     if args.data:
         cases.extend(dict(c, budget=6200, cohort="external") for c in datasets(args.data) if c["job"]["task"] == "answer")
     rows = [json.loads(line) for line in args.results.read_text().splitlines()] if args.results.exists() else []
-    panel_hash = digest((HERE / "panel.json").read_bytes())
+    panel_hash = digest((HERE / "panel.json").read_bytes() + (HERE / "holdout.json").read_bytes())
     lookup = {(r["id"], r["mode"]): r for r in rows}
     assert len(rows) == len(lookup)
     if args.action == "run":
-        paths = {"baseline": args.baseline.resolve(), "compact": args.binary.resolve()}
+        paths = {"baseline": args.baseline.resolve(), "compact": args.binary.resolve(), "evidence": args.binary.resolve()}
         hashes = {mode: digest(path.read_bytes()) for mode, path in paths.items()}
-        for path in paths.values():
+        for path in set(paths.values()):
             state = json.loads(subprocess.check_output([path, "doctor"]))
             assert state["available"] and state["target"] == "AFM 3 Core Advanced" and state["route"] == "system"
         with args.results.open("a") as output:
             for case in cases:
                 source_hash = digest(case["job"]["source"].encode())
-                for mode in sorted(paths, key=lambda m: digest((case["id"]+m).encode())):
+                for mode in sorted(modes(case), key=lambda m: digest((case["id"]+m).encode())):
                     key = case["id"], mode
                     if key in lookup:
                         old = lookup[key]
@@ -104,6 +122,8 @@ def evaluate(args):
                     cmd = [paths[mode], "--trace", "--timeout", "45", "--input-budget", str(case["budget"])]
                     if mode == "compact":
                         cmd.append("--compact")
+                    elif mode == "evidence":
+                        cmd.append("--compact=evidence")
                     start = time.monotonic_ns()
                     run = subprocess.run([*cmd,"run"],input=json.dumps(case["job"],ensure_ascii=False),
                                          capture_output=True,text=True)
@@ -134,7 +154,7 @@ def evaluate(args):
                     print(case["id"],mode,status,score,row["sent"],flush=True)
     expected = set()
     for case in cases:
-        for mode in ("baseline","compact"):
+        for mode in modes(case):
             key = case["id"],mode
             r = lookup[key]
             expected.add(key)
@@ -152,7 +172,7 @@ def evaluate(args):
         for key in set(lookup)-expected:
             assert lookup[key]["cohort"]=="external" and "answer" not in lookup[key]
     for cohort in sorted({r["cohort"] for r in rows}):
-        for mode in ("baseline","compact"):
+        for mode in sorted({r["mode"] for r in rows if r["cohort"] == cohort}):
             group = [r for r in rows if (r["cohort"],r["mode"])==(cohort,mode)]
             token_counts = [r["sent"] for r in group]
             print(cohort,mode,len(group),sum(r["correct"] for r in group),
