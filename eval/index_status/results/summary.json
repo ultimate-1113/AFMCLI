@@ -1,0 +1,3136 @@
+{
+  "counts": {
+    "all": {
+      "records": {
+        "n": 48,
+        "settled_n": 24,
+        "correct": 24,
+        "settled": 15,
+        "null": 9,
+        "false_nonnull": 11,
+        "outcomes": {
+          "correct_null": 9,
+          "correct_settled": 15,
+          "error": 3,
+          "false_nonnull": 11,
+          "held": 5,
+          "missed_settled": 5
+        },
+        "both_in_pair_correct": 5,
+        "calls": 161,
+        "tokens": 767877,
+        "peak": 6157,
+        "median_ms": 7087.35,
+        "p95_ms": 66639.987,
+        "extra_nonauthoritative_citations": 37,
+        "final_context_methods": {
+          "evidence_windows": 9,
+          "full_input": 16,
+          "full_scan_fallback": 7,
+          "repeat_dictionary": 16
+        }
+      },
+      "indexed": {
+        "n": 48,
+        "settled_n": 24,
+        "correct": 29,
+        "settled": 21,
+        "null": 8,
+        "false_nonnull": 12,
+        "outcomes": {
+          "correct_null": 8,
+          "correct_settled": 21,
+          "error": 1,
+          "false_nonnull": 12,
+          "held": 4,
+          "missed_settled": 2
+        },
+        "both_in_pair_correct": 6,
+        "calls": 138,
+        "tokens": 430417,
+        "peak": 6157,
+        "median_ms": 2951.6775,
+        "p95_ms": 65414.594,
+        "extra_nonauthoritative_citations": 55,
+        "final_context_methods": {
+          "evidence_windows": 2,
+          "full_input": 16,
+          "full_scan_fallback": 2,
+          "indexed_excerpts": 12,
+          "repeat_dictionary": 16
+        }
+      },
+      "guard": {
+        "n": 48,
+        "settled_n": 24,
+        "correct": 29,
+        "settled": 21,
+        "null": 8,
+        "false_nonnull": 12,
+        "outcomes": {
+          "correct_null": 8,
+          "correct_settled": 21,
+          "error": 1,
+          "false_nonnull": 12,
+          "held": 4,
+          "missed_settled": 2
+        },
+        "both_in_pair_correct": 6,
+        "calls": 138,
+        "tokens": 430417,
+        "peak": 6157,
+        "median_ms": 2969.697,
+        "p95_ms": 65366.159,
+        "extra_nonauthoritative_citations": 55,
+        "final_context_methods": {
+          "evidence_windows": 2,
+          "full_input": 16,
+          "full_scan_fallback": 2,
+          "indexed_excerpts": 12,
+          "repeat_dictionary": 16
+        }
+      },
+      "checked": {
+        "n": 48,
+        "settled_n": 24,
+        "correct": 32,
+        "settled": 12,
+        "null": 20,
+        "false_nonnull": 3,
+        "outcomes": {
+          "correct_null": 20,
+          "correct_settled": 12,
+          "error": 1,
+          "false_nonnull": 3,
+          "invalid_evidence": 3,
+          "missed_settled": 9
+        },
+        "both_in_pair_correct": 10,
+        "calls": 142,
+        "tokens": 506527,
+        "peak": 6136,
+        "median_ms": 4903.728,
+        "p95_ms": 65495.225,
+        "extra_nonauthoritative_citations": 6,
+        "final_context_methods": {
+          "evidence_windows": 4,
+          "full_input": 16,
+          "full_scan_fallback": 5,
+          "indexed_excerpts": 7,
+          "repeat_dictionary": 16
+        }
+      },
+      "handoff": {
+        "n": 48,
+        "settled_n": 24,
+        "correct": 25,
+        "settled": 10,
+        "null": 15,
+        "false_nonnull": 8,
+        "outcomes": {
+          "correct_null": 15,
+          "correct_settled": 10,
+          "error": 2,
+          "false_nonnull": 8,
+          "invalid_evidence": 2,
+          "missed_settled": 11
+        },
+        "both_in_pair_correct": 8,
+        "calls": 154,
+        "tokens": 563039,
+        "peak": 6136,
+        "median_ms": 5152.3145,
+        "p95_ms": 68294.433,
+        "extra_nonauthoritative_citations": 10,
+        "final_context_methods": {
+          "evidence_windows": 5,
+          "full_input": 16,
+          "full_scan_fallback": 6,
+          "indexed_excerpts": 5,
+          "repeat_dictionary": 16
+        }
+      },
+      "review": {
+        "n": 48,
+        "settled_n": 24,
+        "correct": 25,
+        "settled": 10,
+        "null": 15,
+        "false_nonnull": 8,
+        "outcomes": {
+          "correct_null": 15,
+          "correct_settled": 10,
+          "error": 2,
+          "false_nonnull": 8,
+          "invalid_evidence": 2,
+          "missed_settled": 11
+        },
+        "both_in_pair_correct": 8,
+        "calls": 154,
+        "tokens": 563039,
+        "peak": 6136,
+        "median_ms": 5007.9805,
+        "p95_ms": 66264.057,
+        "extra_nonauthoritative_citations": 10,
+        "final_context_methods": {
+          "evidence_windows": 5,
+          "full_input": 16,
+          "full_scan_fallback": 6,
+          "indexed_excerpts": 5,
+          "repeat_dictionary": 16
+        }
+      },
+      "staged": {
+        "n": 48,
+        "settled_n": 24,
+        "correct": 21,
+        "settled": 16,
+        "null": 5,
+        "false_nonnull": 16,
+        "outcomes": {
+          "correct_null": 5,
+          "correct_settled": 16,
+          "false_nonnull": 16,
+          "held": 5,
+          "invalid_evidence": 2,
+          "missed_settled": 1,
+          "refused": 2,
+          "wrong_settled": 1
+        },
+        "both_in_pair_correct": 4,
+        "calls": 615,
+        "tokens": 754953,
+        "peak": 2034,
+        "median_ms": 8010.5305,
+        "p95_ms": 15825.288,
+        "extra_nonauthoritative_citations": 19,
+        "final_context_methods": {
+          "staged_ledger": 48
+        }
+      }
+    },
+    "long": {
+      "records": {
+        "n": 32,
+        "settled_n": 16,
+        "correct": 15,
+        "settled": 8,
+        "null": 7,
+        "false_nonnull": 7,
+        "outcomes": {
+          "correct_null": 7,
+          "correct_settled": 8,
+          "error": 3,
+          "false_nonnull": 7,
+          "held": 2,
+          "missed_settled": 5
+        },
+        "both_in_pair_correct": 3,
+        "calls": 129,
+        "tokens": 681425,
+        "peak": 6157,
+        "median_ms": 14471.3645,
+        "p95_ms": 67599.354,
+        "extra_nonauthoritative_citations": 20,
+        "final_context_methods": {
+          "evidence_windows": 9,
+          "full_scan_fallback": 7,
+          "repeat_dictionary": 16
+        }
+      },
+      "indexed": {
+        "n": 32,
+        "settled_n": 16,
+        "correct": 20,
+        "settled": 14,
+        "null": 6,
+        "false_nonnull": 8,
+        "outcomes": {
+          "correct_null": 6,
+          "correct_settled": 14,
+          "error": 1,
+          "false_nonnull": 8,
+          "held": 1,
+          "missed_settled": 2
+        },
+        "both_in_pair_correct": 4,
+        "calls": 106,
+        "tokens": 343965,
+        "peak": 6157,
+        "median_ms": 6720.5655,
+        "p95_ms": 69416.068,
+        "extra_nonauthoritative_citations": 38,
+        "final_context_methods": {
+          "evidence_windows": 2,
+          "full_scan_fallback": 2,
+          "indexed_excerpts": 12,
+          "repeat_dictionary": 16
+        }
+      },
+      "guard": {
+        "n": 32,
+        "settled_n": 16,
+        "correct": 20,
+        "settled": 14,
+        "null": 6,
+        "false_nonnull": 8,
+        "outcomes": {
+          "correct_null": 6,
+          "correct_settled": 14,
+          "error": 1,
+          "false_nonnull": 8,
+          "held": 1,
+          "missed_settled": 2
+        },
+        "both_in_pair_correct": 4,
+        "calls": 106,
+        "tokens": 343965,
+        "peak": 6157,
+        "median_ms": 6739.481,
+        "p95_ms": 69500.771,
+        "extra_nonauthoritative_citations": 38,
+        "final_context_methods": {
+          "evidence_windows": 2,
+          "full_scan_fallback": 2,
+          "indexed_excerpts": 12,
+          "repeat_dictionary": 16
+        }
+      },
+      "checked": {
+        "n": 32,
+        "settled_n": 16,
+        "correct": 20,
+        "settled": 8,
+        "null": 12,
+        "false_nonnull": 3,
+        "outcomes": {
+          "correct_null": 12,
+          "correct_settled": 8,
+          "error": 1,
+          "false_nonnull": 3,
+          "invalid_evidence": 3,
+          "missed_settled": 5
+        },
+        "both_in_pair_correct": 6,
+        "calls": 121,
+        "tokens": 414825,
+        "peak": 6136,
+        "median_ms": 5137.84,
+        "p95_ms": 71774.639,
+        "extra_nonauthoritative_citations": 6,
+        "final_context_methods": {
+          "evidence_windows": 4,
+          "full_scan_fallback": 5,
+          "indexed_excerpts": 7,
+          "repeat_dictionary": 16
+        }
+      },
+      "handoff": {
+        "n": 32,
+        "settled_n": 16,
+        "correct": 14,
+        "settled": 6,
+        "null": 8,
+        "false_nonnull": 7,
+        "outcomes": {
+          "correct_null": 8,
+          "correct_settled": 6,
+          "error": 2,
+          "false_nonnull": 7,
+          "invalid_evidence": 2,
+          "missed_settled": 7
+        },
+        "both_in_pair_correct": 5,
+        "calls": 133,
+        "tokens": 471093,
+        "peak": 6136,
+        "median_ms": 5294.642,
+        "p95_ms": 71465.25,
+        "extra_nonauthoritative_citations": 9,
+        "final_context_methods": {
+          "evidence_windows": 5,
+          "full_scan_fallback": 6,
+          "indexed_excerpts": 5,
+          "repeat_dictionary": 16
+        }
+      },
+      "review": {
+        "n": 32,
+        "settled_n": 16,
+        "correct": 14,
+        "settled": 6,
+        "null": 8,
+        "false_nonnull": 7,
+        "outcomes": {
+          "correct_null": 8,
+          "correct_settled": 6,
+          "error": 2,
+          "false_nonnull": 7,
+          "invalid_evidence": 2,
+          "missed_settled": 7
+        },
+        "both_in_pair_correct": 5,
+        "calls": 133,
+        "tokens": 471093,
+        "peak": 6136,
+        "median_ms": 5280.763999999999,
+        "p95_ms": 71375.247,
+        "extra_nonauthoritative_citations": 9,
+        "final_context_methods": {
+          "evidence_windows": 5,
+          "full_scan_fallback": 6,
+          "indexed_excerpts": 5,
+          "repeat_dictionary": 16
+        }
+      },
+      "staged": {
+        "n": 32,
+        "settled_n": 16,
+        "correct": 13,
+        "settled": 10,
+        "null": 3,
+        "false_nonnull": 10,
+        "outcomes": {
+          "correct_null": 3,
+          "correct_settled": 10,
+          "false_nonnull": 10,
+          "held": 5,
+          "invalid_evidence": 2,
+          "missed_settled": 1,
+          "refused": 1
+        },
+        "both_in_pair_correct": 2,
+        "calls": 497,
+        "tokens": 639400,
+        "peak": 2034,
+        "median_ms": 11150.463,
+        "p95_ms": 15924.752,
+        "extra_nonauthoritative_citations": 12,
+        "final_context_methods": {
+          "staged_ledger": 32
+        }
+      }
+    },
+    "4k": {
+      "records": {
+        "n": 16,
+        "settled_n": 8,
+        "correct": 9,
+        "settled": 7,
+        "null": 2,
+        "false_nonnull": 4,
+        "outcomes": {
+          "correct_null": 2,
+          "correct_settled": 7,
+          "false_nonnull": 4,
+          "held": 3
+        },
+        "both_in_pair_correct": 2,
+        "calls": 32,
+        "tokens": 86452,
+        "peak": 4420,
+        "median_ms": 2790.797,
+        "p95_ms": 4994.714,
+        "extra_nonauthoritative_citations": 17,
+        "final_context_methods": {
+          "full_input": 16
+        }
+      },
+      "indexed": {
+        "n": 16,
+        "settled_n": 8,
+        "correct": 9,
+        "settled": 7,
+        "null": 2,
+        "false_nonnull": 4,
+        "outcomes": {
+          "correct_null": 2,
+          "correct_settled": 7,
+          "false_nonnull": 4,
+          "held": 3
+        },
+        "both_in_pair_correct": 2,
+        "calls": 32,
+        "tokens": 86452,
+        "peak": 4420,
+        "median_ms": 2786.0495,
+        "p95_ms": 5023.025,
+        "extra_nonauthoritative_citations": 17,
+        "final_context_methods": {
+          "full_input": 16
+        }
+      },
+      "guard": {
+        "n": 16,
+        "settled_n": 8,
+        "correct": 9,
+        "settled": 7,
+        "null": 2,
+        "false_nonnull": 4,
+        "outcomes": {
+          "correct_null": 2,
+          "correct_settled": 7,
+          "false_nonnull": 4,
+          "held": 3
+        },
+        "both_in_pair_correct": 2,
+        "calls": 32,
+        "tokens": 86452,
+        "peak": 4420,
+        "median_ms": 2831.7055,
+        "p95_ms": 4987.535,
+        "extra_nonauthoritative_citations": 17,
+        "final_context_methods": {
+          "full_input": 16
+        }
+      },
+      "checked": {
+        "n": 16,
+        "settled_n": 8,
+        "correct": 12,
+        "settled": 4,
+        "null": 8,
+        "false_nonnull": 0,
+        "outcomes": {
+          "correct_null": 8,
+          "correct_settled": 4,
+          "missed_settled": 4
+        },
+        "both_in_pair_correct": 4,
+        "calls": 21,
+        "tokens": 91702,
+        "peak": 4453,
+        "median_ms": 3435.858,
+        "p95_ms": 6790.836,
+        "extra_nonauthoritative_citations": 0,
+        "final_context_methods": {
+          "full_input": 16
+        }
+      },
+      "handoff": {
+        "n": 16,
+        "settled_n": 8,
+        "correct": 11,
+        "settled": 4,
+        "null": 7,
+        "false_nonnull": 1,
+        "outcomes": {
+          "correct_null": 7,
+          "correct_settled": 4,
+          "false_nonnull": 1,
+          "missed_settled": 4
+        },
+        "both_in_pair_correct": 3,
+        "calls": 21,
+        "tokens": 91946,
+        "peak": 4454,
+        "median_ms": 3434.1305,
+        "p95_ms": 6580.674,
+        "extra_nonauthoritative_citations": 1,
+        "final_context_methods": {
+          "full_input": 16
+        }
+      },
+      "review": {
+        "n": 16,
+        "settled_n": 8,
+        "correct": 11,
+        "settled": 4,
+        "null": 7,
+        "false_nonnull": 1,
+        "outcomes": {
+          "correct_null": 7,
+          "correct_settled": 4,
+          "false_nonnull": 1,
+          "missed_settled": 4
+        },
+        "both_in_pair_correct": 3,
+        "calls": 21,
+        "tokens": 91946,
+        "peak": 4454,
+        "median_ms": 3447.4955,
+        "p95_ms": 6636.508,
+        "extra_nonauthoritative_citations": 1,
+        "final_context_methods": {
+          "full_input": 16
+        }
+      },
+      "staged": {
+        "n": 16,
+        "settled_n": 8,
+        "correct": 8,
+        "settled": 6,
+        "null": 2,
+        "false_nonnull": 6,
+        "outcomes": {
+          "correct_null": 2,
+          "correct_settled": 6,
+          "false_nonnull": 6,
+          "refused": 1,
+          "wrong_settled": 1
+        },
+        "both_in_pair_correct": 2,
+        "calls": 118,
+        "tokens": 115553,
+        "peak": 1929,
+        "median_ms": 4732.9794999999995,
+        "p95_ms": 6413.164,
+        "extra_nonauthoritative_citations": 7,
+        "final_context_methods": {
+          "staged_ledger": 16
+        }
+      }
+    },
+    "8k": {
+      "records": {
+        "n": 16,
+        "settled_n": 8,
+        "correct": 10,
+        "settled": 6,
+        "null": 4,
+        "false_nonnull": 4,
+        "outcomes": {
+          "correct_null": 4,
+          "correct_settled": 6,
+          "false_nonnull": 4,
+          "missed_settled": 2
+        },
+        "both_in_pair_correct": 2,
+        "calls": 33,
+        "tokens": 184846,
+        "peak": 5948,
+        "median_ms": 7087.35,
+        "p95_ms": 11641.627,
+        "extra_nonauthoritative_citations": 15,
+        "final_context_methods": {
+          "repeat_dictionary": 16
+        }
+      },
+      "indexed": {
+        "n": 16,
+        "settled_n": 8,
+        "correct": 10,
+        "settled": 6,
+        "null": 4,
+        "false_nonnull": 4,
+        "outcomes": {
+          "correct_null": 4,
+          "correct_settled": 6,
+          "false_nonnull": 4,
+          "missed_settled": 2
+        },
+        "both_in_pair_correct": 2,
+        "calls": 33,
+        "tokens": 184846,
+        "peak": 5948,
+        "median_ms": 6992.0015,
+        "p95_ms": 11299.464,
+        "extra_nonauthoritative_citations": 15,
+        "final_context_methods": {
+          "repeat_dictionary": 16
+        }
+      },
+      "guard": {
+        "n": 16,
+        "settled_n": 8,
+        "correct": 10,
+        "settled": 6,
+        "null": 4,
+        "false_nonnull": 4,
+        "outcomes": {
+          "correct_null": 4,
+          "correct_settled": 6,
+          "false_nonnull": 4,
+          "missed_settled": 2
+        },
+        "both_in_pair_correct": 2,
+        "calls": 33,
+        "tokens": 184846,
+        "peak": 5948,
+        "median_ms": 7081.7065,
+        "p95_ms": 11722.251,
+        "extra_nonauthoritative_citations": 15,
+        "final_context_methods": {
+          "repeat_dictionary": 16
+        }
+      },
+      "checked": {
+        "n": 16,
+        "settled_n": 8,
+        "correct": 10,
+        "settled": 3,
+        "null": 7,
+        "false_nonnull": 1,
+        "outcomes": {
+          "correct_null": 7,
+          "correct_settled": 3,
+          "false_nonnull": 1,
+          "invalid_evidence": 1,
+          "missed_settled": 4
+        },
+        "both_in_pair_correct": 2,
+        "calls": 23,
+        "tokens": 92828,
+        "peak": 5965,
+        "median_ms": 5099.3175,
+        "p95_ms": 6381.862,
+        "extra_nonauthoritative_citations": 2,
+        "final_context_methods": {
+          "repeat_dictionary": 16
+        }
+      },
+      "handoff": {
+        "n": 16,
+        "settled_n": 8,
+        "correct": 7,
+        "settled": 2,
+        "null": 5,
+        "false_nonnull": 3,
+        "outcomes": {
+          "correct_null": 5,
+          "correct_settled": 2,
+          "false_nonnull": 3,
+          "invalid_evidence": 1,
+          "missed_settled": 5
+        },
+        "both_in_pair_correct": 2,
+        "calls": 23,
+        "tokens": 93127,
+        "peak": 5965,
+        "median_ms": 5152.3145,
+        "p95_ms": 5708.618,
+        "extra_nonauthoritative_citations": 4,
+        "final_context_methods": {
+          "repeat_dictionary": 16
+        }
+      },
+      "review": {
+        "n": 16,
+        "settled_n": 8,
+        "correct": 7,
+        "settled": 2,
+        "null": 5,
+        "false_nonnull": 3,
+        "outcomes": {
+          "correct_null": 5,
+          "correct_settled": 2,
+          "false_nonnull": 3,
+          "invalid_evidence": 1,
+          "missed_settled": 5
+        },
+        "both_in_pair_correct": 2,
+        "calls": 23,
+        "tokens": 93127,
+        "peak": 5965,
+        "median_ms": 5007.9805,
+        "p95_ms": 5499.484,
+        "extra_nonauthoritative_citations": 4,
+        "final_context_methods": {
+          "repeat_dictionary": 16
+        }
+      },
+      "staged": {
+        "n": 16,
+        "settled_n": 8,
+        "correct": 7,
+        "settled": 4,
+        "null": 3,
+        "false_nonnull": 3,
+        "outcomes": {
+          "correct_null": 3,
+          "correct_settled": 4,
+          "false_nonnull": 3,
+          "held": 3,
+          "invalid_evidence": 1,
+          "missed_settled": 1,
+          "refused": 1
+        },
+        "both_in_pair_correct": 2,
+        "calls": 181,
+        "tokens": 214221,
+        "peak": 1986,
+        "median_ms": 8010.5305,
+        "p95_ms": 10442.913,
+        "extra_nonauthoritative_citations": 4,
+        "final_context_methods": {
+          "staged_ledger": 16
+        }
+      }
+    },
+    "16k": {
+      "records": {
+        "n": 16,
+        "settled_n": 8,
+        "correct": 5,
+        "settled": 2,
+        "null": 3,
+        "false_nonnull": 3,
+        "outcomes": {
+          "correct_null": 3,
+          "correct_settled": 2,
+          "error": 3,
+          "false_nonnull": 3,
+          "held": 2,
+          "missed_settled": 3
+        },
+        "both_in_pair_correct": 1,
+        "calls": 96,
+        "tokens": 496579,
+        "peak": 6157,
+        "median_ms": 55124.2025,
+        "p95_ms": 87624.794,
+        "extra_nonauthoritative_citations": 5,
+        "final_context_methods": {
+          "evidence_windows": 9,
+          "full_scan_fallback": 7
+        }
+      },
+      "indexed": {
+        "n": 16,
+        "settled_n": 8,
+        "correct": 10,
+        "settled": 8,
+        "null": 2,
+        "false_nonnull": 4,
+        "outcomes": {
+          "correct_null": 2,
+          "correct_settled": 8,
+          "error": 1,
+          "false_nonnull": 4,
+          "held": 1
+        },
+        "both_in_pair_correct": 2,
+        "calls": 73,
+        "tokens": 159119,
+        "peak": 6157,
+        "median_ms": 2433.3465,
+        "p95_ms": 89393.036,
+        "extra_nonauthoritative_citations": 23,
+        "final_context_methods": {
+          "evidence_windows": 2,
+          "full_scan_fallback": 2,
+          "indexed_excerpts": 12
+        }
+      },
+      "guard": {
+        "n": 16,
+        "settled_n": 8,
+        "correct": 10,
+        "settled": 8,
+        "null": 2,
+        "false_nonnull": 4,
+        "outcomes": {
+          "correct_null": 2,
+          "correct_settled": 8,
+          "error": 1,
+          "false_nonnull": 4,
+          "held": 1
+        },
+        "both_in_pair_correct": 2,
+        "calls": 73,
+        "tokens": 159119,
+        "peak": 6157,
+        "median_ms": 2460.684,
+        "p95_ms": 89781.349,
+        "extra_nonauthoritative_citations": 23,
+        "final_context_methods": {
+          "evidence_windows": 2,
+          "full_scan_fallback": 2,
+          "indexed_excerpts": 12
+        }
+      },
+      "checked": {
+        "n": 16,
+        "settled_n": 8,
+        "correct": 10,
+        "settled": 5,
+        "null": 5,
+        "false_nonnull": 2,
+        "outcomes": {
+          "correct_null": 5,
+          "correct_settled": 5,
+          "error": 1,
+          "false_nonnull": 2,
+          "invalid_evidence": 2,
+          "missed_settled": 1
+        },
+        "both_in_pair_correct": 4,
+        "calls": 98,
+        "tokens": 321997,
+        "peak": 6136,
+        "median_ms": 19813.9775,
+        "p95_ms": 91573.738,
+        "extra_nonauthoritative_citations": 4,
+        "final_context_methods": {
+          "evidence_windows": 4,
+          "full_scan_fallback": 5,
+          "indexed_excerpts": 7
+        }
+      },
+      "handoff": {
+        "n": 16,
+        "settled_n": 8,
+        "correct": 7,
+        "settled": 4,
+        "null": 3,
+        "false_nonnull": 4,
+        "outcomes": {
+          "correct_null": 3,
+          "correct_settled": 4,
+          "error": 2,
+          "false_nonnull": 4,
+          "invalid_evidence": 1,
+          "missed_settled": 2
+        },
+        "both_in_pair_correct": 3,
+        "calls": 110,
+        "tokens": 377966,
+        "peak": 6136,
+        "median_ms": 39332.25,
+        "p95_ms": 91182.855,
+        "extra_nonauthoritative_citations": 5,
+        "final_context_methods": {
+          "evidence_windows": 5,
+          "full_scan_fallback": 6,
+          "indexed_excerpts": 5
+        }
+      },
+      "review": {
+        "n": 16,
+        "settled_n": 8,
+        "correct": 7,
+        "settled": 4,
+        "null": 3,
+        "false_nonnull": 4,
+        "outcomes": {
+          "correct_null": 3,
+          "correct_settled": 4,
+          "error": 2,
+          "false_nonnull": 4,
+          "invalid_evidence": 1,
+          "missed_settled": 2
+        },
+        "both_in_pair_correct": 3,
+        "calls": 110,
+        "tokens": 377966,
+        "peak": 6136,
+        "median_ms": 39445.4055,
+        "p95_ms": 90400.517,
+        "extra_nonauthoritative_citations": 5,
+        "final_context_methods": {
+          "evidence_windows": 5,
+          "full_scan_fallback": 6,
+          "indexed_excerpts": 5
+        }
+      },
+      "staged": {
+        "n": 16,
+        "settled_n": 8,
+        "correct": 6,
+        "settled": 6,
+        "null": 0,
+        "false_nonnull": 7,
+        "outcomes": {
+          "correct_settled": 6,
+          "false_nonnull": 7,
+          "held": 2,
+          "invalid_evidence": 1
+        },
+        "both_in_pair_correct": 0,
+        "calls": 316,
+        "tokens": 425179,
+        "peak": 2034,
+        "median_ms": 14794.007000000001,
+        "p95_ms": 16997.731,
+        "extra_nonauthoritative_citations": 8,
+        "final_context_methods": {
+          "staged_ledger": 16
+        }
+      }
+    },
+    "attribution": {
+      "records": {
+        "n": 6,
+        "settled_n": 3,
+        "correct": 4,
+        "settled": 1,
+        "null": 3,
+        "false_nonnull": 0,
+        "outcomes": {
+          "correct_null": 3,
+          "correct_settled": 1,
+          "missed_settled": 2
+        },
+        "both_in_pair_correct": 1,
+        "calls": 24,
+        "tokens": 120691,
+        "peak": 6136,
+        "median_ms": 7168.4535,
+        "p95_ms": 87624.794,
+        "extra_nonauthoritative_citations": 2,
+        "final_context_methods": {
+          "full_input": 2,
+          "full_scan_fallback": 2,
+          "repeat_dictionary": 2
+        }
+      },
+      "indexed": {
+        "n": 6,
+        "settled_n": 3,
+        "correct": 5,
+        "settled": 2,
+        "null": 3,
+        "false_nonnull": 0,
+        "outcomes": {
+          "correct_null": 3,
+          "correct_settled": 2,
+          "missed_settled": 1
+        },
+        "both_in_pair_correct": 2,
+        "calls": 24,
+        "tokens": 83253,
+        "peak": 6136,
+        "median_ms": 5033.2955,
+        "p95_ms": 89393.036,
+        "extra_nonauthoritative_citations": 4,
+        "final_context_methods": {
+          "full_input": 2,
+          "full_scan_fallback": 1,
+          "indexed_excerpts": 1,
+          "repeat_dictionary": 2
+        }
+      },
+      "guard": {
+        "n": 6,
+        "settled_n": 3,
+        "correct": 5,
+        "settled": 2,
+        "null": 3,
+        "false_nonnull": 0,
+        "outcomes": {
+          "correct_null": 3,
+          "correct_settled": 2,
+          "missed_settled": 1
+        },
+        "both_in_pair_correct": 2,
+        "calls": 24,
+        "tokens": 83253,
+        "peak": 6136,
+        "median_ms": 5028.048000000001,
+        "p95_ms": 89781.349,
+        "extra_nonauthoritative_citations": 4,
+        "final_context_methods": {
+          "full_input": 2,
+          "full_scan_fallback": 1,
+          "indexed_excerpts": 1,
+          "repeat_dictionary": 2
+        }
+      },
+      "checked": {
+        "n": 6,
+        "settled_n": 3,
+        "correct": 4,
+        "settled": 1,
+        "null": 3,
+        "false_nonnull": 0,
+        "outcomes": {
+          "correct_null": 3,
+          "correct_settled": 1,
+          "missed_settled": 2
+        },
+        "both_in_pair_correct": 1,
+        "calls": 25,
+        "tokens": 108317,
+        "peak": 6135,
+        "median_ms": 5704.037,
+        "p95_ms": 91573.738,
+        "extra_nonauthoritative_citations": 0,
+        "final_context_methods": {
+          "full_input": 2,
+          "full_scan_fallback": 2,
+          "repeat_dictionary": 2
+        }
+      },
+      "handoff": {
+        "n": 6,
+        "settled_n": 3,
+        "correct": 3,
+        "settled": 1,
+        "null": 2,
+        "false_nonnull": 1,
+        "outcomes": {
+          "correct_null": 2,
+          "correct_settled": 1,
+          "false_nonnull": 1,
+          "missed_settled": 2
+        },
+        "both_in_pair_correct": 1,
+        "calls": 25,
+        "tokens": 108516,
+        "peak": 6135,
+        "median_ms": 5928.7245,
+        "p95_ms": 91182.855,
+        "extra_nonauthoritative_citations": 1,
+        "final_context_methods": {
+          "full_input": 2,
+          "full_scan_fallback": 2,
+          "repeat_dictionary": 2
+        }
+      },
+      "review": {
+        "n": 6,
+        "settled_n": 3,
+        "correct": 3,
+        "settled": 1,
+        "null": 2,
+        "false_nonnull": 1,
+        "outcomes": {
+          "correct_null": 2,
+          "correct_settled": 1,
+          "false_nonnull": 1,
+          "missed_settled": 2
+        },
+        "both_in_pair_correct": 1,
+        "calls": 25,
+        "tokens": 108516,
+        "peak": 6135,
+        "median_ms": 5711.5435,
+        "p95_ms": 90400.517,
+        "extra_nonauthoritative_citations": 1,
+        "final_context_methods": {
+          "full_input": 2,
+          "full_scan_fallback": 2,
+          "repeat_dictionary": 2
+        }
+      },
+      "staged": {
+        "n": 6,
+        "settled_n": 3,
+        "correct": 2,
+        "settled": 1,
+        "null": 1,
+        "false_nonnull": 2,
+        "outcomes": {
+          "correct_null": 1,
+          "correct_settled": 1,
+          "false_nonnull": 2,
+          "refused": 1,
+          "wrong_settled": 1
+        },
+        "both_in_pair_correct": 0,
+        "calls": 71,
+        "tokens": 92748,
+        "peak": 1807,
+        "median_ms": 7679.505999999999,
+        "p95_ms": 16997.731,
+        "extra_nonauthoritative_citations": 3,
+        "final_context_methods": {
+          "staged_ledger": 6
+        }
+      }
+    },
+    "other_attribute": {
+      "records": {
+        "n": 6,
+        "settled_n": 3,
+        "correct": 3,
+        "settled": 1,
+        "null": 2,
+        "false_nonnull": 1,
+        "outcomes": {
+          "correct_null": 2,
+          "correct_settled": 1,
+          "false_nonnull": 1,
+          "missed_settled": 2
+        },
+        "both_in_pair_correct": 0,
+        "calls": 23,
+        "tokens": 117057,
+        "peak": 6136,
+        "median_ms": 9644.067500000001,
+        "p95_ms": 55168.8,
+        "extra_nonauthoritative_citations": 3,
+        "final_context_methods": {
+          "full_input": 2,
+          "full_scan_fallback": 2,
+          "repeat_dictionary": 2
+        }
+      },
+      "indexed": {
+        "n": 6,
+        "settled_n": 3,
+        "correct": 3,
+        "settled": 2,
+        "null": 1,
+        "false_nonnull": 2,
+        "outcomes": {
+          "correct_null": 1,
+          "correct_settled": 2,
+          "false_nonnull": 2,
+          "missed_settled": 1
+        },
+        "both_in_pair_correct": 0,
+        "calls": 13,
+        "tokens": 41003,
+        "peak": 5948,
+        "median_ms": 2762.807,
+        "p95_ms": 11299.464,
+        "extra_nonauthoritative_citations": 8,
+        "final_context_methods": {
+          "full_input": 2,
+          "indexed_excerpts": 2,
+          "repeat_dictionary": 2
+        }
+      },
+      "guard": {
+        "n": 6,
+        "settled_n": 3,
+        "correct": 3,
+        "settled": 2,
+        "null": 1,
+        "false_nonnull": 2,
+        "outcomes": {
+          "correct_null": 1,
+          "correct_settled": 2,
+          "false_nonnull": 2,
+          "missed_settled": 1
+        },
+        "both_in_pair_correct": 0,
+        "calls": 13,
+        "tokens": 41003,
+        "peak": 5948,
+        "median_ms": 2819.8485,
+        "p95_ms": 11722.251,
+        "extra_nonauthoritative_citations": 8,
+        "final_context_methods": {
+          "full_input": 2,
+          "indexed_excerpts": 2,
+          "repeat_dictionary": 2
+        }
+      },
+      "checked": {
+        "n": 6,
+        "settled_n": 3,
+        "correct": 4,
+        "settled": 1,
+        "null": 3,
+        "false_nonnull": 0,
+        "outcomes": {
+          "correct_null": 3,
+          "correct_settled": 1,
+          "missed_settled": 2
+        },
+        "both_in_pair_correct": 1,
+        "calls": 16,
+        "tokens": 65347,
+        "peak": 6136,
+        "median_ms": 4318.068,
+        "p95_ms": 60770.614,
+        "extra_nonauthoritative_citations": 0,
+        "final_context_methods": {
+          "full_input": 2,
+          "full_scan_fallback": 1,
+          "indexed_excerpts": 1,
+          "repeat_dictionary": 2
+        }
+      },
+      "handoff": {
+        "n": 6,
+        "settled_n": 3,
+        "correct": 4,
+        "settled": 1,
+        "null": 3,
+        "false_nonnull": 0,
+        "outcomes": {
+          "correct_null": 3,
+          "correct_settled": 1,
+          "missed_settled": 2
+        },
+        "both_in_pair_correct": 1,
+        "calls": 16,
+        "tokens": 65415,
+        "peak": 6136,
+        "median_ms": 4412.1265,
+        "p95_ms": 60866.8,
+        "extra_nonauthoritative_citations": 0,
+        "final_context_methods": {
+          "full_input": 2,
+          "full_scan_fallback": 1,
+          "indexed_excerpts": 1,
+          "repeat_dictionary": 2
+        }
+      },
+      "review": {
+        "n": 6,
+        "settled_n": 3,
+        "correct": 4,
+        "settled": 1,
+        "null": 3,
+        "false_nonnull": 0,
+        "outcomes": {
+          "correct_null": 3,
+          "correct_settled": 1,
+          "missed_settled": 2
+        },
+        "both_in_pair_correct": 1,
+        "calls": 16,
+        "tokens": 65415,
+        "peak": 6136,
+        "median_ms": 4290.054,
+        "p95_ms": 60912.87,
+        "extra_nonauthoritative_citations": 0,
+        "final_context_methods": {
+          "full_input": 2,
+          "full_scan_fallback": 1,
+          "indexed_excerpts": 1,
+          "repeat_dictionary": 2
+        }
+      },
+      "staged": {
+        "n": 6,
+        "settled_n": 3,
+        "correct": 1,
+        "settled": 1,
+        "null": 0,
+        "false_nonnull": 3,
+        "outcomes": {
+          "correct_settled": 1,
+          "false_nonnull": 3,
+          "missed_settled": 1,
+          "refused": 1
+        },
+        "both_in_pair_correct": 0,
+        "calls": 69,
+        "tokens": 87557,
+        "peak": 1929,
+        "median_ms": 7677.011,
+        "p95_ms": 14309.272,
+        "extra_nonauthoritative_citations": 3,
+        "final_context_methods": {
+          "staged_ledger": 6
+        }
+      }
+    },
+    "other_subject": {
+      "records": {
+        "n": 6,
+        "settled_n": 3,
+        "correct": 3,
+        "settled": 3,
+        "null": 0,
+        "false_nonnull": 3,
+        "outcomes": {
+          "correct_settled": 3,
+          "false_nonnull": 3
+        },
+        "both_in_pair_correct": 0,
+        "calls": 22,
+        "tokens": 84182,
+        "peak": 6129,
+        "median_ms": 6897.129,
+        "p95_ms": 18772.569,
+        "extra_nonauthoritative_citations": 9,
+        "final_context_methods": {
+          "evidence_windows": 2,
+          "full_input": 2,
+          "repeat_dictionary": 2
+        }
+      },
+      "indexed": {
+        "n": 6,
+        "settled_n": 3,
+        "correct": 3,
+        "settled": 3,
+        "null": 0,
+        "false_nonnull": 3,
+        "outcomes": {
+          "correct_settled": 3,
+          "false_nonnull": 3
+        },
+        "both_in_pair_correct": 0,
+        "calls": 16,
+        "tokens": 37876,
+        "peak": 5548,
+        "median_ms": 2717.09,
+        "p95_ms": 7205.142,
+        "extra_nonauthoritative_citations": 11,
+        "final_context_methods": {
+          "full_input": 2,
+          "indexed_excerpts": 2,
+          "repeat_dictionary": 2
+        }
+      },
+      "guard": {
+        "n": 6,
+        "settled_n": 3,
+        "correct": 3,
+        "settled": 3,
+        "null": 0,
+        "false_nonnull": 3,
+        "outcomes": {
+          "correct_settled": 3,
+          "false_nonnull": 3
+        },
+        "both_in_pair_correct": 0,
+        "calls": 16,
+        "tokens": 37876,
+        "peak": 5548,
+        "median_ms": 2712.0905000000002,
+        "p95_ms": 6943.576,
+        "extra_nonauthoritative_citations": 11,
+        "final_context_methods": {
+          "full_input": 2,
+          "indexed_excerpts": 2,
+          "repeat_dictionary": 2
+        }
+      },
+      "checked": {
+        "n": 6,
+        "settled_n": 3,
+        "correct": 4,
+        "settled": 1,
+        "null": 3,
+        "false_nonnull": 0,
+        "outcomes": {
+          "correct_null": 3,
+          "correct_settled": 1,
+          "missed_settled": 2
+        },
+        "both_in_pair_correct": 1,
+        "calls": 23,
+        "tokens": 77484,
+        "peak": 6129,
+        "median_ms": 4978.271500000001,
+        "p95_ms": 23412.134,
+        "extra_nonauthoritative_citations": 0,
+        "final_context_methods": {
+          "evidence_windows": 2,
+          "full_input": 2,
+          "repeat_dictionary": 2
+        }
+      },
+      "handoff": {
+        "n": 6,
+        "settled_n": 3,
+        "correct": 4,
+        "settled": 1,
+        "null": 3,
+        "false_nonnull": 0,
+        "outcomes": {
+          "correct_null": 3,
+          "correct_settled": 1,
+          "missed_settled": 2
+        },
+        "both_in_pair_correct": 1,
+        "calls": 23,
+        "tokens": 77623,
+        "peak": 6129,
+        "median_ms": 4986.1465,
+        "p95_ms": 22945.165,
+        "extra_nonauthoritative_citations": 0,
+        "final_context_methods": {
+          "evidence_windows": 2,
+          "full_input": 2,
+          "repeat_dictionary": 2
+        }
+      },
+      "review": {
+        "n": 6,
+        "settled_n": 3,
+        "correct": 4,
+        "settled": 1,
+        "null": 3,
+        "false_nonnull": 0,
+        "outcomes": {
+          "correct_null": 3,
+          "correct_settled": 1,
+          "missed_settled": 2
+        },
+        "both_in_pair_correct": 1,
+        "calls": 23,
+        "tokens": 77623,
+        "peak": 6129,
+        "median_ms": 4993.717500000001,
+        "p95_ms": 23126.529,
+        "extra_nonauthoritative_citations": 0,
+        "final_context_methods": {
+          "evidence_windows": 2,
+          "full_input": 2,
+          "repeat_dictionary": 2
+        }
+      },
+      "staged": {
+        "n": 6,
+        "settled_n": 3,
+        "correct": 1,
+        "settled": 1,
+        "null": 0,
+        "false_nonnull": 1,
+        "outcomes": {
+          "correct_settled": 1,
+          "false_nonnull": 1,
+          "held": 4
+        },
+        "both_in_pair_correct": 0,
+        "calls": 84,
+        "tokens": 98788,
+        "peak": 1922,
+        "median_ms": 8023.128499999999,
+        "p95_ms": 15825.288,
+        "extra_nonauthoritative_citations": 1,
+        "final_context_methods": {
+          "staged_ledger": 6
+        }
+      }
+    },
+    "proposal": {
+      "records": {
+        "n": 6,
+        "settled_n": 3,
+        "correct": 5,
+        "settled": 3,
+        "null": 2,
+        "false_nonnull": 1,
+        "outcomes": {
+          "correct_null": 2,
+          "correct_settled": 3,
+          "false_nonnull": 1
+        },
+        "both_in_pair_correct": 2,
+        "calls": 20,
+        "tokens": 80328,
+        "peak": 6136,
+        "median_ms": 7267.482,
+        "p95_ms": 17378.15,
+        "extra_nonauthoritative_citations": 4,
+        "final_context_methods": {
+          "evidence_windows": 2,
+          "full_input": 2,
+          "repeat_dictionary": 2
+        }
+      },
+      "indexed": {
+        "n": 6,
+        "settled_n": 3,
+        "correct": 5,
+        "settled": 3,
+        "null": 2,
+        "false_nonnull": 1,
+        "outcomes": {
+          "correct_null": 2,
+          "correct_settled": 3,
+          "false_nonnull": 1
+        },
+        "both_in_pair_correct": 2,
+        "calls": 20,
+        "tokens": 59698,
+        "peak": 6136,
+        "median_ms": 4805.6115,
+        "p95_ms": 19439.734,
+        "extra_nonauthoritative_citations": 6,
+        "final_context_methods": {
+          "evidence_windows": 1,
+          "full_input": 2,
+          "indexed_excerpts": 1,
+          "repeat_dictionary": 2
+        }
+      },
+      "guard": {
+        "n": 6,
+        "settled_n": 3,
+        "correct": 5,
+        "settled": 3,
+        "null": 2,
+        "false_nonnull": 1,
+        "outcomes": {
+          "correct_null": 2,
+          "correct_settled": 3,
+          "false_nonnull": 1
+        },
+        "both_in_pair_correct": 2,
+        "calls": 20,
+        "tokens": 59698,
+        "peak": 6136,
+        "median_ms": 4804.575,
+        "p95_ms": 19558.409,
+        "extra_nonauthoritative_citations": 6,
+        "final_context_methods": {
+          "evidence_windows": 1,
+          "full_input": 2,
+          "indexed_excerpts": 1,
+          "repeat_dictionary": 2
+        }
+      },
+      "checked": {
+        "n": 6,
+        "settled_n": 3,
+        "correct": 6,
+        "settled": 3,
+        "null": 3,
+        "false_nonnull": 0,
+        "outcomes": {
+          "correct_null": 3,
+          "correct_settled": 3
+        },
+        "both_in_pair_correct": 3,
+        "calls": 15,
+        "tokens": 51700,
+        "peak": 6136,
+        "median_ms": 5650.4005,
+        "p95_ms": 19401.71,
+        "extra_nonauthoritative_citations": 0,
+        "final_context_methods": {
+          "evidence_windows": 1,
+          "full_input": 2,
+          "indexed_excerpts": 1,
+          "repeat_dictionary": 2
+        }
+      },
+      "handoff": {
+        "n": 6,
+        "settled_n": 3,
+        "correct": 6,
+        "settled": 3,
+        "null": 3,
+        "false_nonnull": 0,
+        "outcomes": {
+          "correct_null": 3,
+          "correct_settled": 3
+        },
+        "both_in_pair_correct": 3,
+        "calls": 15,
+        "tokens": 51825,
+        "peak": 6136,
+        "median_ms": 5310.343500000001,
+        "p95_ms": 19578.054,
+        "extra_nonauthoritative_citations": 0,
+        "final_context_methods": {
+          "evidence_windows": 1,
+          "full_input": 2,
+          "indexed_excerpts": 1,
+          "repeat_dictionary": 2
+        }
+      },
+      "review": {
+        "n": 6,
+        "settled_n": 3,
+        "correct": 6,
+        "settled": 3,
+        "null": 3,
+        "false_nonnull": 0,
+        "outcomes": {
+          "correct_null": 3,
+          "correct_settled": 3
+        },
+        "both_in_pair_correct": 3,
+        "calls": 15,
+        "tokens": 51825,
+        "peak": 6136,
+        "median_ms": 5191.6365000000005,
+        "p95_ms": 19406.978,
+        "extra_nonauthoritative_citations": 0,
+        "final_context_methods": {
+          "evidence_windows": 1,
+          "full_input": 2,
+          "indexed_excerpts": 1,
+          "repeat_dictionary": 2
+        }
+      },
+      "staged": {
+        "n": 6,
+        "settled_n": 3,
+        "correct": 3,
+        "settled": 3,
+        "null": 0,
+        "false_nonnull": 3,
+        "outcomes": {
+          "correct_settled": 3,
+          "false_nonnull": 3
+        },
+        "both_in_pair_correct": 0,
+        "calls": 84,
+        "tokens": 101447,
+        "peak": 1986,
+        "median_ms": 9634.405,
+        "p95_ms": 15924.752,
+        "extra_nonauthoritative_citations": 3,
+        "final_context_methods": {
+          "staged_ledger": 6
+        }
+      }
+    },
+    "redecision": {
+      "records": {
+        "n": 6,
+        "settled_n": 3,
+        "correct": 3,
+        "settled": 2,
+        "null": 1,
+        "false_nonnull": 0,
+        "outcomes": {
+          "correct_null": 1,
+          "correct_settled": 2,
+          "held": 3
+        },
+        "both_in_pair_correct": 1,
+        "calls": 22,
+        "tokens": 118060,
+        "peak": 6157,
+        "median_ms": 6703.614,
+        "p95_ms": 67599.354,
+        "extra_nonauthoritative_citations": 4,
+        "final_context_methods": {
+          "full_input": 2,
+          "full_scan_fallback": 2,
+          "repeat_dictionary": 2
+        }
+      },
+      "indexed": {
+        "n": 6,
+        "settled_n": 3,
+        "correct": 4,
+        "settled": 3,
+        "null": 1,
+        "false_nonnull": 0,
+        "outcomes": {
+          "correct_null": 1,
+          "correct_settled": 3,
+          "held": 2
+        },
+        "both_in_pair_correct": 1,
+        "calls": 23,
+        "tokens": 82681,
+        "peak": 6157,
+        "median_ms": 5803.752,
+        "p95_ms": 69416.068,
+        "extra_nonauthoritative_citations": 6,
+        "final_context_methods": {
+          "full_input": 2,
+          "full_scan_fallback": 1,
+          "indexed_excerpts": 1,
+          "repeat_dictionary": 2
+        }
+      },
+      "guard": {
+        "n": 6,
+        "settled_n": 3,
+        "correct": 4,
+        "settled": 3,
+        "null": 1,
+        "false_nonnull": 0,
+        "outcomes": {
+          "correct_null": 1,
+          "correct_settled": 3,
+          "held": 2
+        },
+        "both_in_pair_correct": 1,
+        "calls": 23,
+        "tokens": 82681,
+        "peak": 6157,
+        "median_ms": 5807.1355,
+        "p95_ms": 69500.771,
+        "extra_nonauthoritative_citations": 6,
+        "final_context_methods": {
+          "full_input": 2,
+          "full_scan_fallback": 1,
+          "indexed_excerpts": 1,
+          "repeat_dictionary": 2
+        }
+      },
+      "checked": {
+        "n": 6,
+        "settled_n": 3,
+        "correct": 6,
+        "settled": 3,
+        "null": 3,
+        "false_nonnull": 0,
+        "outcomes": {
+          "correct_null": 3,
+          "correct_settled": 3
+        },
+        "both_in_pair_correct": 3,
+        "calls": 20,
+        "tokens": 69973,
+        "peak": 6134,
+        "median_ms": 4919.434,
+        "p95_ms": 71774.639,
+        "extra_nonauthoritative_citations": 0,
+        "final_context_methods": {
+          "full_input": 2,
+          "full_scan_fallback": 1,
+          "indexed_excerpts": 1,
+          "repeat_dictionary": 2
+        }
+      },
+      "handoff": {
+        "n": 6,
+        "settled_n": 3,
+        "correct": 4,
+        "settled": 2,
+        "null": 2,
+        "false_nonnull": 1,
+        "outcomes": {
+          "correct_null": 2,
+          "correct_settled": 2,
+          "false_nonnull": 1,
+          "missed_settled": 1
+        },
+        "both_in_pair_correct": 2,
+        "calls": 28,
+        "tokens": 110968,
+        "peak": 6134,
+        "median_ms": 5751.9115,
+        "p95_ms": 71465.25,
+        "extra_nonauthoritative_citations": 1,
+        "final_context_methods": {
+          "full_input": 2,
+          "full_scan_fallback": 2,
+          "repeat_dictionary": 2
+        }
+      },
+      "review": {
+        "n": 6,
+        "settled_n": 3,
+        "correct": 4,
+        "settled": 2,
+        "null": 2,
+        "false_nonnull": 1,
+        "outcomes": {
+          "correct_null": 2,
+          "correct_settled": 2,
+          "false_nonnull": 1,
+          "missed_settled": 1
+        },
+        "both_in_pair_correct": 2,
+        "calls": 28,
+        "tokens": 110968,
+        "peak": 6134,
+        "median_ms": 5744.838,
+        "p95_ms": 71375.247,
+        "extra_nonauthoritative_citations": 1,
+        "final_context_methods": {
+          "full_input": 2,
+          "full_scan_fallback": 2,
+          "repeat_dictionary": 2
+        }
+      },
+      "staged": {
+        "n": 6,
+        "settled_n": 3,
+        "correct": 4,
+        "settled": 3,
+        "null": 1,
+        "false_nonnull": 2,
+        "outcomes": {
+          "correct_null": 1,
+          "correct_settled": 3,
+          "false_nonnull": 2
+        },
+        "both_in_pair_correct": 1,
+        "calls": 78,
+        "tokens": 95051,
+        "peak": 1723,
+        "median_ms": 8698.724,
+        "p95_ms": 14307.19,
+        "extra_nonauthoritative_citations": 2,
+        "final_context_methods": {
+          "staged_ledger": 6
+        }
+      }
+    },
+    "silent_omission": {
+      "records": {
+        "n": 6,
+        "settled_n": 3,
+        "correct": 3,
+        "settled": 2,
+        "null": 1,
+        "false_nonnull": 2,
+        "outcomes": {
+          "correct_null": 1,
+          "correct_settled": 2,
+          "error": 1,
+          "false_nonnull": 2
+        },
+        "both_in_pair_correct": 1,
+        "calls": 17,
+        "tokens": 81676,
+        "peak": 6135,
+        "median_ms": 7041.956,
+        "p95_ms": 66639.987,
+        "extra_nonauthoritative_citations": 3,
+        "final_context_methods": {
+          "evidence_windows": 2,
+          "full_input": 2,
+          "repeat_dictionary": 2
+        }
+      },
+      "indexed": {
+        "n": 6,
+        "settled_n": 3,
+        "correct": 4,
+        "settled": 3,
+        "null": 1,
+        "false_nonnull": 2,
+        "outcomes": {
+          "correct_null": 1,
+          "correct_settled": 3,
+          "false_nonnull": 2
+        },
+        "both_in_pair_correct": 1,
+        "calls": 12,
+        "tokens": 33418,
+        "peak": 5601,
+        "median_ms": 2694.473,
+        "p95_ms": 7020.333,
+        "extra_nonauthoritative_citations": 4,
+        "final_context_methods": {
+          "full_input": 2,
+          "indexed_excerpts": 2,
+          "repeat_dictionary": 2
+        }
+      },
+      "guard": {
+        "n": 6,
+        "settled_n": 3,
+        "correct": 4,
+        "settled": 3,
+        "null": 1,
+        "false_nonnull": 2,
+        "outcomes": {
+          "correct_null": 1,
+          "correct_settled": 3,
+          "false_nonnull": 2
+        },
+        "both_in_pair_correct": 1,
+        "calls": 12,
+        "tokens": 33418,
+        "peak": 5601,
+        "median_ms": 2734.4835000000003,
+        "p95_ms": 7044.581,
+        "extra_nonauthoritative_citations": 4,
+        "final_context_methods": {
+          "full_input": 2,
+          "indexed_excerpts": 2,
+          "repeat_dictionary": 2
+        }
+      },
+      "checked": {
+        "n": 6,
+        "settled_n": 3,
+        "correct": 2,
+        "settled": 1,
+        "null": 1,
+        "false_nonnull": 2,
+        "outcomes": {
+          "correct_null": 1,
+          "correct_settled": 1,
+          "false_nonnull": 2,
+          "invalid_evidence": 1,
+          "missed_settled": 1
+        },
+        "both_in_pair_correct": 0,
+        "calls": 11,
+        "tokens": 24842,
+        "peak": 5653,
+        "median_ms": 3415.5280000000002,
+        "p95_ms": 5360.932,
+        "extra_nonauthoritative_citations": 3,
+        "final_context_methods": {
+          "full_input": 2,
+          "indexed_excerpts": 2,
+          "repeat_dictionary": 2
+        }
+      },
+      "handoff": {
+        "n": 6,
+        "settled_n": 3,
+        "correct": 2,
+        "settled": 1,
+        "null": 1,
+        "false_nonnull": 2,
+        "outcomes": {
+          "correct_null": 1,
+          "correct_settled": 1,
+          "false_nonnull": 2,
+          "missed_settled": 2
+        },
+        "both_in_pair_correct": 0,
+        "calls": 11,
+        "tokens": 25009,
+        "peak": 5653,
+        "median_ms": 3376.8035,
+        "p95_ms": 5423.291,
+        "extra_nonauthoritative_citations": 2,
+        "final_context_methods": {
+          "full_input": 2,
+          "indexed_excerpts": 2,
+          "repeat_dictionary": 2
+        }
+      },
+      "review": {
+        "n": 6,
+        "settled_n": 3,
+        "correct": 2,
+        "settled": 1,
+        "null": 1,
+        "false_nonnull": 2,
+        "outcomes": {
+          "correct_null": 1,
+          "correct_settled": 1,
+          "false_nonnull": 2,
+          "missed_settled": 2
+        },
+        "both_in_pair_correct": 0,
+        "calls": 11,
+        "tokens": 25009,
+        "peak": 5653,
+        "median_ms": 3387.303,
+        "p95_ms": 5421.009,
+        "extra_nonauthoritative_citations": 2,
+        "final_context_methods": {
+          "full_input": 2,
+          "indexed_excerpts": 2,
+          "repeat_dictionary": 2
+        }
+      },
+      "staged": {
+        "n": 6,
+        "settled_n": 3,
+        "correct": 4,
+        "settled": 3,
+        "null": 1,
+        "false_nonnull": 1,
+        "outcomes": {
+          "correct_null": 1,
+          "correct_settled": 3,
+          "false_nonnull": 1,
+          "held": 1
+        },
+        "both_in_pair_correct": 1,
+        "calls": 78,
+        "tokens": 92951,
+        "peak": 1693,
+        "median_ms": 8117.365,
+        "p95_ms": 13351.239,
+        "extra_nonauthoritative_citations": 1,
+        "final_context_methods": {
+          "staged_ledger": 6
+        }
+      }
+    },
+    "unassigned": {
+      "records": {
+        "n": 6,
+        "settled_n": 3,
+        "correct": 1,
+        "settled": 1,
+        "null": 0,
+        "false_nonnull": 1,
+        "outcomes": {
+          "correct_settled": 1,
+          "error": 2,
+          "false_nonnull": 1,
+          "held": 2
+        },
+        "both_in_pair_correct": 0,
+        "calls": 12,
+        "tokens": 64032,
+        "peak": 6133,
+        "median_ms": 6821.3045,
+        "p95_ms": 64541.62,
+        "extra_nonauthoritative_citations": 3,
+        "final_context_methods": {
+          "evidence_windows": 2,
+          "full_input": 2,
+          "repeat_dictionary": 2
+        }
+      },
+      "indexed": {
+        "n": 6,
+        "settled_n": 3,
+        "correct": 2,
+        "settled": 2,
+        "null": 0,
+        "false_nonnull": 1,
+        "outcomes": {
+          "correct_settled": 2,
+          "error": 1,
+          "false_nonnull": 1,
+          "held": 2
+        },
+        "both_in_pair_correct": 0,
+        "calls": 16,
+        "tokens": 55438,
+        "peak": 6133,
+        "median_ms": 5854.9495,
+        "p95_ms": 65414.594,
+        "extra_nonauthoritative_citations": 4,
+        "final_context_methods": {
+          "evidence_windows": 1,
+          "full_input": 2,
+          "indexed_excerpts": 1,
+          "repeat_dictionary": 2
+        }
+      },
+      "guard": {
+        "n": 6,
+        "settled_n": 3,
+        "correct": 2,
+        "settled": 2,
+        "null": 0,
+        "false_nonnull": 1,
+        "outcomes": {
+          "correct_settled": 2,
+          "error": 1,
+          "false_nonnull": 1,
+          "held": 2
+        },
+        "both_in_pair_correct": 0,
+        "calls": 16,
+        "tokens": 55438,
+        "peak": 6133,
+        "median_ms": 5848.625,
+        "p95_ms": 65366.159,
+        "extra_nonauthoritative_citations": 4,
+        "final_context_methods": {
+          "evidence_windows": 1,
+          "full_input": 2,
+          "indexed_excerpts": 1,
+          "repeat_dictionary": 2
+        }
+      },
+      "checked": {
+        "n": 6,
+        "settled_n": 3,
+        "correct": 3,
+        "settled": 1,
+        "null": 2,
+        "false_nonnull": 0,
+        "outcomes": {
+          "correct_null": 2,
+          "correct_settled": 1,
+          "error": 1,
+          "missed_settled": 2
+        },
+        "both_in_pair_correct": 0,
+        "calls": 11,
+        "tokens": 35046,
+        "peak": 6133,
+        "median_ms": 4006.1135000000004,
+        "p95_ms": 65495.225,
+        "extra_nonauthoritative_citations": 0,
+        "final_context_methods": {
+          "evidence_windows": 1,
+          "full_input": 2,
+          "indexed_excerpts": 1,
+          "repeat_dictionary": 2
+        }
+      },
+      "handoff": {
+        "n": 6,
+        "settled_n": 3,
+        "correct": 1,
+        "settled": 0,
+        "null": 1,
+        "false_nonnull": 1,
+        "outcomes": {
+          "correct_null": 1,
+          "error": 2,
+          "false_nonnull": 1,
+          "missed_settled": 2
+        },
+        "both_in_pair_correct": 0,
+        "calls": 15,
+        "tokens": 49550,
+        "peak": 6133,
+        "median_ms": 4845.1245,
+        "p95_ms": 68294.433,
+        "extra_nonauthoritative_citations": 1,
+        "final_context_methods": {
+          "evidence_windows": 2,
+          "full_input": 2,
+          "repeat_dictionary": 2
+        }
+      },
+      "review": {
+        "n": 6,
+        "settled_n": 3,
+        "correct": 1,
+        "settled": 0,
+        "null": 1,
+        "false_nonnull": 1,
+        "outcomes": {
+          "correct_null": 1,
+          "error": 2,
+          "false_nonnull": 1,
+          "missed_settled": 2
+        },
+        "both_in_pair_correct": 0,
+        "calls": 15,
+        "tokens": 49550,
+        "peak": 6133,
+        "median_ms": 4854.5725,
+        "p95_ms": 66264.057,
+        "extra_nonauthoritative_citations": 1,
+        "final_context_methods": {
+          "evidence_windows": 2,
+          "full_input": 2,
+          "repeat_dictionary": 2
+        }
+      },
+      "staged": {
+        "n": 6,
+        "settled_n": 3,
+        "correct": 5,
+        "settled": 3,
+        "null": 2,
+        "false_nonnull": 1,
+        "outcomes": {
+          "correct_null": 2,
+          "correct_settled": 3,
+          "false_nonnull": 1
+        },
+        "both_in_pair_correct": 2,
+        "calls": 83,
+        "tokens": 97824,
+        "peak": 1766,
+        "median_ms": 7255.656,
+        "p95_ms": 15741.083,
+        "extra_nonauthoritative_citations": 1,
+        "final_context_methods": {
+          "staged_ledger": 6
+        }
+      }
+    },
+    "withdrawn": {
+      "records": {
+        "n": 6,
+        "settled_n": 3,
+        "correct": 2,
+        "settled": 2,
+        "null": 0,
+        "false_nonnull": 3,
+        "outcomes": {
+          "correct_settled": 2,
+          "false_nonnull": 3,
+          "missed_settled": 1
+        },
+        "both_in_pair_correct": 0,
+        "calls": 21,
+        "tokens": 101851,
+        "peak": 6136,
+        "median_ms": 7253.111,
+        "p95_ms": 47939.973,
+        "extra_nonauthoritative_citations": 9,
+        "final_context_methods": {
+          "evidence_windows": 1,
+          "full_input": 2,
+          "full_scan_fallback": 1,
+          "repeat_dictionary": 2
+        }
+      },
+      "indexed": {
+        "n": 6,
+        "settled_n": 3,
+        "correct": 3,
+        "settled": 3,
+        "null": 0,
+        "false_nonnull": 3,
+        "outcomes": {
+          "correct_settled": 3,
+          "false_nonnull": 3
+        },
+        "both_in_pair_correct": 0,
+        "calls": 14,
+        "tokens": 37050,
+        "peak": 5730,
+        "median_ms": 2728.3925,
+        "p95_ms": 7307.636,
+        "extra_nonauthoritative_citations": 12,
+        "final_context_methods": {
+          "full_input": 2,
+          "indexed_excerpts": 2,
+          "repeat_dictionary": 2
+        }
+      },
+      "guard": {
+        "n": 6,
+        "settled_n": 3,
+        "correct": 3,
+        "settled": 3,
+        "null": 0,
+        "false_nonnull": 3,
+        "outcomes": {
+          "correct_settled": 3,
+          "false_nonnull": 3
+        },
+        "both_in_pair_correct": 0,
+        "calls": 14,
+        "tokens": 37050,
+        "peak": 5730,
+        "median_ms": 2712.566,
+        "p95_ms": 7242.504,
+        "extra_nonauthoritative_citations": 12,
+        "final_context_methods": {
+          "full_input": 2,
+          "indexed_excerpts": 2,
+          "repeat_dictionary": 2
+        }
+      },
+      "checked": {
+        "n": 6,
+        "settled_n": 3,
+        "correct": 3,
+        "settled": 1,
+        "null": 2,
+        "false_nonnull": 1,
+        "outcomes": {
+          "correct_null": 2,
+          "correct_settled": 1,
+          "false_nonnull": 1,
+          "invalid_evidence": 2
+        },
+        "both_in_pair_correct": 1,
+        "calls": 21,
+        "tokens": 73818,
+        "peak": 6135,
+        "median_ms": 5813.067,
+        "p95_ms": 53979.945,
+        "extra_nonauthoritative_citations": 3,
+        "final_context_methods": {
+          "full_input": 2,
+          "full_scan_fallback": 1,
+          "indexed_excerpts": 1,
+          "repeat_dictionary": 2
+        }
+      },
+      "handoff": {
+        "n": 6,
+        "settled_n": 3,
+        "correct": 1,
+        "settled": 1,
+        "null": 0,
+        "false_nonnull": 3,
+        "outcomes": {
+          "correct_settled": 1,
+          "false_nonnull": 3,
+          "invalid_evidence": 2
+        },
+        "both_in_pair_correct": 0,
+        "calls": 21,
+        "tokens": 74133,
+        "peak": 6135,
+        "median_ms": 5714.2365,
+        "p95_ms": 55719.335,
+        "extra_nonauthoritative_citations": 5,
+        "final_context_methods": {
+          "full_input": 2,
+          "full_scan_fallback": 1,
+          "indexed_excerpts": 1,
+          "repeat_dictionary": 2
+        }
+      },
+      "review": {
+        "n": 6,
+        "settled_n": 3,
+        "correct": 1,
+        "settled": 1,
+        "null": 0,
+        "false_nonnull": 3,
+        "outcomes": {
+          "correct_settled": 1,
+          "false_nonnull": 3,
+          "invalid_evidence": 2
+        },
+        "both_in_pair_correct": 0,
+        "calls": 21,
+        "tokens": 74133,
+        "peak": 6135,
+        "median_ms": 5767.567,
+        "p95_ms": 55764.282,
+        "extra_nonauthoritative_citations": 5,
+        "final_context_methods": {
+          "full_input": 2,
+          "full_scan_fallback": 1,
+          "indexed_excerpts": 1,
+          "repeat_dictionary": 2
+        }
+      },
+      "staged": {
+        "n": 6,
+        "settled_n": 3,
+        "correct": 1,
+        "settled": 1,
+        "null": 0,
+        "false_nonnull": 3,
+        "outcomes": {
+          "correct_settled": 1,
+          "false_nonnull": 3,
+          "invalid_evidence": 2
+        },
+        "both_in_pair_correct": 0,
+        "calls": 68,
+        "tokens": 88587,
+        "peak": 2034,
+        "median_ms": 7760.3915,
+        "p95_ms": 12066.365,
+        "extra_nonauthoritative_citations": 5,
+        "final_context_methods": {
+          "staged_ledger": 6
+        }
+      }
+    },
+    "en": {
+      "records": {
+        "n": 24,
+        "settled_n": 12,
+        "correct": 10,
+        "settled": 7,
+        "null": 3,
+        "false_nonnull": 5,
+        "outcomes": {
+          "correct_null": 3,
+          "correct_settled": 7,
+          "error": 2,
+          "false_nonnull": 5,
+          "held": 5,
+          "missed_settled": 2
+        },
+        "both_in_pair_correct": 1,
+        "calls": 77,
+        "tokens": 356596,
+        "peak": 6157,
+        "median_ms": 7223.0985,
+        "p95_ms": 64541.62,
+        "extra_nonauthoritative_citations": 15,
+        "final_context_methods": {
+          "evidence_windows": 6,
+          "full_input": 8,
+          "full_scan_fallback": 2,
+          "repeat_dictionary": 8
+        }
+      },
+      "indexed": {
+        "n": 24,
+        "settled_n": 12,
+        "correct": 12,
+        "settled": 9,
+        "null": 3,
+        "false_nonnull": 5,
+        "outcomes": {
+          "correct_null": 3,
+          "correct_settled": 9,
+          "error": 1,
+          "false_nonnull": 5,
+          "held": 4,
+          "missed_settled": 2
+        },
+        "both_in_pair_correct": 1,
+        "calls": 76,
+        "tokens": 245687,
+        "peak": 6157,
+        "median_ms": 4995.961499999999,
+        "p95_ms": 65414.594,
+        "extra_nonauthoritative_citations": 22,
+        "final_context_methods": {
+          "evidence_windows": 2,
+          "full_input": 8,
+          "full_scan_fallback": 1,
+          "indexed_excerpts": 5,
+          "repeat_dictionary": 8
+        }
+      },
+      "guard": {
+        "n": 24,
+        "settled_n": 12,
+        "correct": 12,
+        "settled": 9,
+        "null": 3,
+        "false_nonnull": 5,
+        "outcomes": {
+          "correct_null": 3,
+          "correct_settled": 9,
+          "error": 1,
+          "false_nonnull": 5,
+          "held": 4,
+          "missed_settled": 2
+        },
+        "both_in_pair_correct": 1,
+        "calls": 76,
+        "tokens": 245687,
+        "peak": 6157,
+        "median_ms": 4979.248,
+        "p95_ms": 65366.159,
+        "extra_nonauthoritative_citations": 22,
+        "final_context_methods": {
+          "evidence_windows": 2,
+          "full_input": 8,
+          "full_scan_fallback": 1,
+          "indexed_excerpts": 5,
+          "repeat_dictionary": 8
+        }
+      },
+      "checked": {
+        "n": 24,
+        "settled_n": 12,
+        "correct": 17,
+        "settled": 7,
+        "null": 10,
+        "false_nonnull": 1,
+        "outcomes": {
+          "correct_null": 10,
+          "correct_settled": 7,
+          "error": 1,
+          "false_nonnull": 1,
+          "invalid_evidence": 1,
+          "missed_settled": 4
+        },
+        "both_in_pair_correct": 5,
+        "calls": 70,
+        "tokens": 236547,
+        "peak": 6136,
+        "median_ms": 5022.0605,
+        "p95_ms": 65495.225,
+        "extra_nonauthoritative_citations": 2,
+        "final_context_methods": {
+          "evidence_windows": 4,
+          "full_input": 8,
+          "full_scan_fallback": 1,
+          "indexed_excerpts": 3,
+          "repeat_dictionary": 8
+        }
+      },
+      "handoff": {
+        "n": 24,
+        "settled_n": 12,
+        "correct": 12,
+        "settled": 4,
+        "null": 8,
+        "false_nonnull": 3,
+        "outcomes": {
+          "correct_null": 8,
+          "correct_settled": 4,
+          "error": 2,
+          "false_nonnull": 3,
+          "invalid_evidence": 1,
+          "missed_settled": 6
+        },
+        "both_in_pair_correct": 4,
+        "calls": 82,
+        "tokens": 292337,
+        "peak": 6136,
+        "median_ms": 5337.5185,
+        "p95_ms": 68294.433,
+        "extra_nonauthoritative_citations": 4,
+        "final_context_methods": {
+          "evidence_windows": 5,
+          "full_input": 8,
+          "full_scan_fallback": 2,
+          "indexed_excerpts": 1,
+          "repeat_dictionary": 8
+        }
+      },
+      "review": {
+        "n": 24,
+        "settled_n": 12,
+        "correct": 12,
+        "settled": 4,
+        "null": 8,
+        "false_nonnull": 3,
+        "outcomes": {
+          "correct_null": 8,
+          "correct_settled": 4,
+          "error": 2,
+          "false_nonnull": 3,
+          "invalid_evidence": 1,
+          "missed_settled": 6
+        },
+        "both_in_pair_correct": 4,
+        "calls": 82,
+        "tokens": 292337,
+        "peak": 6136,
+        "median_ms": 5389.236,
+        "p95_ms": 66264.057,
+        "extra_nonauthoritative_citations": 4,
+        "final_context_methods": {
+          "evidence_windows": 5,
+          "full_input": 8,
+          "full_scan_fallback": 2,
+          "indexed_excerpts": 1,
+          "repeat_dictionary": 8
+        }
+      },
+      "staged": {
+        "n": 24,
+        "settled_n": 12,
+        "correct": 10,
+        "settled": 8,
+        "null": 2,
+        "false_nonnull": 8,
+        "outcomes": {
+          "correct_null": 2,
+          "correct_settled": 8,
+          "false_nonnull": 8,
+          "held": 3,
+          "invalid_evidence": 1,
+          "missed_settled": 1,
+          "refused": 1
+        },
+        "both_in_pair_correct": 1,
+        "calls": 334,
+        "tokens": 391411,
+        "peak": 1807,
+        "median_ms": 7853.059,
+        "p95_ms": 15825.288,
+        "extra_nonauthoritative_citations": 9,
+        "final_context_methods": {
+          "staged_ledger": 24
+        }
+      }
+    },
+    "ja": {
+      "records": {
+        "n": 24,
+        "settled_n": 12,
+        "correct": 14,
+        "settled": 8,
+        "null": 6,
+        "false_nonnull": 6,
+        "outcomes": {
+          "correct_null": 6,
+          "correct_settled": 8,
+          "error": 1,
+          "false_nonnull": 6,
+          "missed_settled": 3
+        },
+        "both_in_pair_correct": 4,
+        "calls": 84,
+        "tokens": 411281,
+        "peak": 6136,
+        "median_ms": 6719.912,
+        "p95_ms": 66639.987,
+        "extra_nonauthoritative_citations": 22,
+        "final_context_methods": {
+          "evidence_windows": 3,
+          "full_input": 8,
+          "full_scan_fallback": 5,
+          "repeat_dictionary": 8
+        }
+      },
+      "indexed": {
+        "n": 24,
+        "settled_n": 12,
+        "correct": 17,
+        "settled": 12,
+        "null": 5,
+        "false_nonnull": 7,
+        "outcomes": {
+          "correct_null": 5,
+          "correct_settled": 12,
+          "false_nonnull": 7
+        },
+        "both_in_pair_correct": 5,
+        "calls": 62,
+        "tokens": 184730,
+        "peak": 6136,
+        "median_ms": 2772.568,
+        "p95_ms": 7205.142,
+        "extra_nonauthoritative_citations": 33,
+        "final_context_methods": {
+          "full_input": 8,
+          "full_scan_fallback": 1,
+          "indexed_excerpts": 7,
+          "repeat_dictionary": 8
+        }
+      },
+      "guard": {
+        "n": 24,
+        "settled_n": 12,
+        "correct": 17,
+        "settled": 12,
+        "null": 5,
+        "false_nonnull": 7,
+        "outcomes": {
+          "correct_null": 5,
+          "correct_settled": 12,
+          "false_nonnull": 7
+        },
+        "both_in_pair_correct": 5,
+        "calls": 62,
+        "tokens": 184730,
+        "peak": 6136,
+        "median_ms": 2818.5860000000002,
+        "p95_ms": 7311.108,
+        "extra_nonauthoritative_citations": 33,
+        "final_context_methods": {
+          "full_input": 8,
+          "full_scan_fallback": 1,
+          "indexed_excerpts": 7,
+          "repeat_dictionary": 8
+        }
+      },
+      "checked": {
+        "n": 24,
+        "settled_n": 12,
+        "correct": 15,
+        "settled": 5,
+        "null": 10,
+        "false_nonnull": 2,
+        "outcomes": {
+          "correct_null": 10,
+          "correct_settled": 5,
+          "false_nonnull": 2,
+          "invalid_evidence": 2,
+          "missed_settled": 5
+        },
+        "both_in_pair_correct": 5,
+        "calls": 72,
+        "tokens": 269980,
+        "peak": 6136,
+        "median_ms": 4898.4615,
+        "p95_ms": 60770.614,
+        "extra_nonauthoritative_citations": 4,
+        "final_context_methods": {
+          "full_input": 8,
+          "full_scan_fallback": 4,
+          "indexed_excerpts": 4,
+          "repeat_dictionary": 8
+        }
+      },
+      "handoff": {
+        "n": 24,
+        "settled_n": 12,
+        "correct": 13,
+        "settled": 6,
+        "null": 7,
+        "false_nonnull": 5,
+        "outcomes": {
+          "correct_null": 7,
+          "correct_settled": 6,
+          "false_nonnull": 5,
+          "invalid_evidence": 1,
+          "missed_settled": 5
+        },
+        "both_in_pair_correct": 4,
+        "calls": 72,
+        "tokens": 270702,
+        "peak": 6136,
+        "median_ms": 4904.6095000000005,
+        "p95_ms": 60866.8,
+        "extra_nonauthoritative_citations": 6,
+        "final_context_methods": {
+          "full_input": 8,
+          "full_scan_fallback": 4,
+          "indexed_excerpts": 4,
+          "repeat_dictionary": 8
+        }
+      },
+      "review": {
+        "n": 24,
+        "settled_n": 12,
+        "correct": 13,
+        "settled": 6,
+        "null": 7,
+        "false_nonnull": 5,
+        "outcomes": {
+          "correct_null": 7,
+          "correct_settled": 6,
+          "false_nonnull": 5,
+          "invalid_evidence": 1,
+          "missed_settled": 5
+        },
+        "both_in_pair_correct": 4,
+        "calls": 72,
+        "tokens": 270702,
+        "peak": 6136,
+        "median_ms": 4954.2905,
+        "p95_ms": 60912.87,
+        "extra_nonauthoritative_citations": 6,
+        "final_context_methods": {
+          "full_input": 8,
+          "full_scan_fallback": 4,
+          "indexed_excerpts": 4,
+          "repeat_dictionary": 8
+        }
+      },
+      "staged": {
+        "n": 24,
+        "settled_n": 12,
+        "correct": 11,
+        "settled": 8,
+        "null": 3,
+        "false_nonnull": 8,
+        "outcomes": {
+          "correct_null": 3,
+          "correct_settled": 8,
+          "false_nonnull": 8,
+          "held": 2,
+          "invalid_evidence": 1,
+          "refused": 1,
+          "wrong_settled": 1
+        },
+        "both_in_pair_correct": 3,
+        "calls": 281,
+        "tokens": 363542,
+        "peak": 2034,
+        "median_ms": 8510.482,
+        "p95_ms": 15690.829,
+        "extra_nonauthoritative_citations": 10,
+        "final_context_methods": {
+          "staged_ledger": 24
+        }
+      }
+    }
+  },
+  "gates": {
+    "guard": {
+      "passes": false,
+      "quality": {
+        "fewer_false_nonnull_than_indexed": false,
+        "settled_answers_preserved": true,
+        "total_correct_preserved": true,
+        "false_nonnull_at_most_records": false
+      },
+      "efficiency": {
+        "tokens_at_most_1.05_indexed": true,
+        "median_at_most_1.10_indexed": true,
+        "tokens_below_records": true,
+        "median_below_records": true
+      },
+      "long_input_vs_indexed": 1.0,
+      "long_median_vs_indexed": 1.00281,
+      "input_saving_retained": 1.0,
+      "time_saving_retained": 0.99756
+    },
+    "checked": {
+      "passes": false,
+      "quality": {
+        "fewer_false_nonnull_than_indexed": true,
+        "settled_answers_preserved": false,
+        "total_correct_preserved": true,
+        "false_nonnull_at_most_records": true
+      },
+      "efficiency": {
+        "tokens_at_most_1.05_indexed": false,
+        "median_at_most_1.10_indexed": true,
+        "tokens_below_records": true,
+        "median_below_records": true
+      },
+      "long_input_vs_indexed": 1.20601,
+      "long_median_vs_indexed": 0.7645,
+      "input_saving_retained": 0.79002,
+      "time_saving_retained": 1.2042
+    },
+    "handoff": {
+      "passes": false,
+      "quality": {
+        "fewer_false_nonnull_than_indexed": true,
+        "settled_answers_preserved": false,
+        "total_correct_preserved": false,
+        "false_nonnull_at_most_records": true
+      },
+      "efficiency": {
+        "tokens_at_most_1.05_indexed": false,
+        "median_at_most_1.10_indexed": true,
+        "tokens_below_records": true,
+        "median_below_records": true
+      },
+      "long_input_vs_indexed": 1.3696,
+      "long_median_vs_indexed": 0.78783,
+      "input_saving_retained": 0.62328,
+      "time_saving_retained": 1.18397
+    },
+    "review": {
+      "passes": false,
+      "quality": {
+        "fewer_false_nonnull_than_indexed": true,
+        "settled_answers_preserved": false,
+        "total_correct_preserved": false,
+        "false_nonnull_at_most_records": true
+      },
+      "efficiency": {
+        "tokens_at_most_1.05_indexed": false,
+        "median_at_most_1.10_indexed": true,
+        "tokens_below_records": true,
+        "median_below_records": true
+      },
+      "long_input_vs_indexed": 1.3696,
+      "long_median_vs_indexed": 0.78576,
+      "input_saving_retained": 0.62328,
+      "time_saving_retained": 1.18576
+    },
+    "staged": {
+      "passes": false,
+      "quality": {
+        "fewer_false_nonnull_than_indexed": false,
+        "settled_answers_preserved": false,
+        "total_correct_preserved": false,
+        "false_nonnull_at_most_records": false,
+        "total_correct_improved": false
+      },
+      "efficiency": {},
+      "long_input_vs_indexed": 1.85891,
+      "long_median_vs_indexed": 1.65916,
+      "input_saving_retained": 0.12453,
+      "time_saving_retained": 0.42846
+    }
+  },
+  "fast_candidate_for_old_cases": "checked",
+  "cases_with_equal_indexed_and_guard_observations": {
+    "calls": 48,
+    "sent_input_tokens": 48,
+    "token_checks": 48,
+    "peak_sent_tokens": 48,
+    "identical_recorded_attempts": 48
+  },
+  "paired": {
+    "guard_vs_indexed": {
+      "wins": [],
+      "losses": [],
+      "net": 0,
+      "median_case_time_ratio": 1.00207,
+      "total_call_difference": 0,
+      "total_input_difference": 0,
+      "median_paired_ms_difference": 12.917
+    },
+    "checked_vs_indexed": {
+      "wins": [
+        "index-test-16k-05-n",
+        "index-test-16k-06-n",
+        "index-test-16k-07-n",
+        "index-test-4k-01-n",
+        "index-test-4k-02-n",
+        "index-test-4k-03-n",
+        "index-test-4k-05-n",
+        "index-test-4k-06-n",
+        "index-test-4k-07-n",
+        "index-test-8k-02-n",
+        "index-test-8k-03-n",
+        "index-test-8k-05-n"
+      ],
+      "losses": [
+        "index-test-16k-02-p",
+        "index-test-16k-04-p",
+        "index-test-16k-08-p",
+        "index-test-4k-04-p",
+        "index-test-4k-05-p",
+        "index-test-4k-06-p",
+        "index-test-8k-02-p",
+        "index-test-8k-03-p",
+        "index-test-8k-05-p"
+      ],
+      "net": 3,
+      "median_case_time_ratio": 1.16483,
+      "total_call_difference": 4,
+      "total_input_difference": 76110,
+      "median_paired_ms_difference": 572.169
+    },
+    "handoff_vs_indexed": {
+      "wins": [
+        "index-test-16k-05-n",
+        "index-test-16k-06-n",
+        "index-test-4k-01-n",
+        "index-test-4k-03-n",
+        "index-test-4k-05-n",
+        "index-test-4k-06-n",
+        "index-test-4k-07-n",
+        "index-test-8k-05-n"
+      ],
+      "losses": [
+        "index-test-16k-02-p",
+        "index-test-16k-03-p",
+        "index-test-16k-07-p",
+        "index-test-16k-08-n",
+        "index-test-16k-08-p",
+        "index-test-4k-04-p",
+        "index-test-4k-05-p",
+        "index-test-4k-06-p",
+        "index-test-8k-02-p",
+        "index-test-8k-03-p",
+        "index-test-8k-04-p",
+        "index-test-8k-05-p"
+      ],
+      "net": -4,
+      "median_case_time_ratio": 1.1792,
+      "total_call_difference": 16,
+      "total_input_difference": 132622,
+      "median_paired_ms_difference": 562.957
+    },
+    "review_vs_indexed": {
+      "wins": [
+        "index-test-16k-05-n",
+        "index-test-16k-06-n",
+        "index-test-4k-01-n",
+        "index-test-4k-03-n",
+        "index-test-4k-05-n",
+        "index-test-4k-06-n",
+        "index-test-4k-07-n",
+        "index-test-8k-05-n"
+      ],
+      "losses": [
+        "index-test-16k-02-p",
+        "index-test-16k-03-p",
+        "index-test-16k-07-p",
+        "index-test-16k-08-n",
+        "index-test-16k-08-p",
+        "index-test-4k-04-p",
+        "index-test-4k-05-p",
+        "index-test-4k-06-p",
+        "index-test-8k-02-p",
+        "index-test-8k-03-p",
+        "index-test-8k-04-p",
+        "index-test-8k-05-p"
+      ],
+      "net": -4,
+      "median_case_time_ratio": 1.16517,
+      "total_call_difference": 16,
+      "total_input_difference": 132622,
+      "median_paired_ms_difference": 557.217
+    },
+    "staged_vs_indexed": {
+      "wins": [
+        "index-test-4k-03-n",
+        "index-test-4k-03-p",
+        "index-test-8k-03-n"
+      ],
+      "losses": [
+        "index-test-16k-01-n",
+        "index-test-16k-02-p",
+        "index-test-16k-05-p",
+        "index-test-16k-08-n",
+        "index-test-4k-06-p",
+        "index-test-4k-08-n",
+        "index-test-4k-08-p",
+        "index-test-8k-01-n",
+        "index-test-8k-02-p",
+        "index-test-8k-05-p",
+        "index-test-8k-06-n"
+      ],
+      "net": -8,
+      "median_case_time_ratio": 1.48739,
+      "total_call_difference": 477,
+      "total_input_difference": 324536,
+      "median_paired_ms_difference": 1679.399
+    },
+    "handoff_vs_checked": {
+      "wins": [
+        "index-test-16k-04-p"
+      ],
+      "losses": [
+        "index-test-16k-03-p",
+        "index-test-16k-07-n",
+        "index-test-16k-07-p",
+        "index-test-16k-08-n",
+        "index-test-4k-02-n",
+        "index-test-8k-02-n",
+        "index-test-8k-03-n",
+        "index-test-8k-04-p"
+      ],
+      "net": -7,
+      "median_case_time_ratio": 0.99919,
+      "total_call_difference": 12,
+      "total_input_difference": 56512,
+      "median_paired_ms_difference": -3.373
+    },
+    "review_vs_handoff": {
+      "wins": [],
+      "losses": [],
+      "net": 0,
+      "median_case_time_ratio": 1.00046,
+      "total_call_difference": 0,
+      "total_input_difference": 0,
+      "median_paired_ms_difference": 2.788
+    }
+  },
+  "traces": {
+    "records": {
+      "cases_with_third_call": 0
+    },
+    "indexed": {
+      "cases_with_third_call": 0
+    },
+    "guard": {
+      "cases_with_third_call": 0
+    },
+    "checked": {
+      "cases_with_third_call": 0,
+      "first_decisions": 68,
+      "second_readings": 27
+    },
+    "handoff": {
+      "cases_with_third_call": 0,
+      "correct_first_lost_at_second": 6,
+      "corrected_by_second": 2,
+      "first_decisions": 70,
+      "incorrect_first": 10,
+      "raw_draft_bytes": 7025,
+      "same_wrong_decision_repeated": 8,
+      "scorable_first_decisions_sent": 29,
+      "second_readings": 29,
+      "summaries_sent": 29,
+      "summary_bytes": 5221
+    },
+    "review": {
+      "cases_with_third_call": 0,
+      "correct_first_lost_at_second": 6,
+      "corrected_by_second": 2,
+      "first_decisions": 70,
+      "incorrect_first": 10,
+      "raw_draft_bytes": 7025,
+      "same_wrong_decision_repeated": 8,
+      "scorable_first_decisions_sent": 29,
+      "second_readings": 29,
+      "summaries_sent": 29,
+      "summary_bytes": 5221,
+      "third_triggered": 5
+    },
+    "staged": {
+      "cases_with_third_call": 0
+    }
+  },
+  "observable_evidence": {
+    "records": {
+      "observable_final_packets": 0,
+      "packets_with_whole_decisive_passage": 0,
+      "observable_settled": 0,
+      "packets_with_authoritative_value": 0
+    },
+    "indexed": {
+      "observable_final_packets": 12,
+      "packets_with_whole_decisive_passage": 11,
+      "observable_settled": 8,
+      "packets_with_authoritative_value": 8
+    },
+    "guard": {
+      "observable_final_packets": 12,
+      "packets_with_whole_decisive_passage": 11,
+      "observable_settled": 8,
+      "packets_with_authoritative_value": 8
+    },
+    "checked": {
+      "observable_final_packets": 7,
+      "packets_with_whole_decisive_passage": 6,
+      "observable_settled": 5,
+      "packets_with_authoritative_value": 5
+    },
+    "handoff": {
+      "observable_final_packets": 5,
+      "packets_with_whole_decisive_passage": 4,
+      "observable_settled": 3,
+      "packets_with_authoritative_value": 3
+    },
+    "review": {
+      "observable_final_packets": 5,
+      "packets_with_whole_decisive_passage": 4,
+      "observable_settled": 3,
+      "packets_with_authoritative_value": 3
+    },
+    "staged": {
+      "observable_final_packets": 44,
+      "packets_with_whole_decisive_passage": 41,
+      "observable_settled": 21,
+      "packets_with_authoritative_value": 21
+    }
+  }
+}
