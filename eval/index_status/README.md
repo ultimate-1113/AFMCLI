@@ -113,3 +113,5 @@ python3 -B eval/index_status/regressions.py run --out "$RUN/results" --candidate
 ```
 
 途中で中断しても、同じバイナリ・条件・出力先で再開できる。今回実際に使ったバイナリのSHA-256は計測ファイルに記録した。[実行バイナリ一覧](results/binaries.json)・[原文と正解の指紋](lock.json)・[前回から追跡した4つの誤答](prior.md)
+
+計測後、Rust 1.100のClippyに合わせて、索引が前後の行を列挙するループを同じ範囲のスライス走査に書き換えた。実機の数値を再現するときは、上記の計測用コミット `da1114b` を使う。

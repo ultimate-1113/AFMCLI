@@ -275,10 +275,12 @@ impl Index {
         for i in centers {
             let scope = self.rows[i].scope;
             picked.extend(scope.headers());
-            for p in i.saturating_sub(radius)..(i + 1 + radius).min(lines.len()) {
-                if self.rows[p].scope.doc == scope.doc {
-                    picked.insert(p);
-                    picked.extend(self.rows[p].scope.headers());
+            let start = i.saturating_sub(radius);
+            let end = (i + 1 + radius).min(lines.len());
+            for (offset, row) in self.rows[start..end].iter().enumerate() {
+                if row.scope.doc == scope.doc {
+                    picked.insert(start + offset);
+                    picked.extend(row.scope.headers());
                 }
             }
         }
