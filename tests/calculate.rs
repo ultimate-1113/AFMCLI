@@ -287,5 +287,11 @@ fn cli_stdin_file_position_json_and_batch() {
     assert_eq!(lines[0]["result"]["value"], "0.25");
     assert_eq!(lines[1]["status"], "error");
     assert_eq!(lines[1]["metrics"]["calls"], 0);
-    assert_eq!(cli(&["--text", "calc", "2"], "").0, 2);
+    assert_eq!(cli(&["--text", "calc", "1/3"], ""), (0, "1/3\n".into()));
+    assert_eq!(cli(&["--text", "calc"], "0.1 + 0.2"), (0, "0.3\n".into()));
+    assert_eq!(cli(&["--text", "calc", "1/0"], ""), (2, String::new()));
+    assert_eq!(
+        cli(&["--text", "calc", "--from-text"], "what is two?"),
+        (2, String::new())
+    );
 }

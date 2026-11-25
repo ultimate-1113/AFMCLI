@@ -46,7 +46,7 @@ struct Args {
     /// Skip the second model reading that checks whether a quoted answer addresses its question.
     #[arg(long, global = true)]
     fast_answer: bool,
-    /// Print just the text for a successful ask or rewrite.
+    /// Print just the answer for ask, rewrite, or calc with a supplied expression.
     #[arg(long, global = true)]
     text: bool,
     /// Input token allowance per generation, including instructions and schema.
@@ -322,14 +322,13 @@ fn output(out: &mut impl Write, rec: Record, id: Option<String>, text: bool) -> 
     };
     if text {
         if code == 0 {
-            writeln!(
-                out,
-                "{}",
-                rec.result
-                    .as_str()
-                    .ok_or("text output requires a string result")?
-            )
-            .map_err(|e| e.to_string())?;
+            let value = if rec.task == "calculate" {
+                rec.result.get("value").and_then(Value::as_str)
+            } else {
+                rec.result.as_str()
+            };
+            writeln!(out, "{}", value.ok_or("expected a printable result")?)
+                .map_err(|e| e.to_string())?;
         } else {
             eprintln!("{}: {}", rec.status, rec.notes.join(", "));
         }
@@ -412,8 +411,18 @@ fn run() -> Result<u8, String> {
         emit(&mut out, &result)?;
         return Ok(0);
     }
-    if args.text && !matches!(args.command, Action::Ask { .. } | Action::Rewrite { .. }) {
-        return Err("--text is available for ask and rewrite".into());
+    if args.text
+        && !matches!(
+            args.command,
+            Action::Ask { .. }
+                | Action::Rewrite { .. }
+                | Action::Calc {
+                    from_text: false,
+                    ..
+                }
+        )
+    {
+        return Err("--text requires ask, rewrite, or calc with a supplied expression".into());
     }
     if let Some(p) = &args.image
         && !p.is_file()
