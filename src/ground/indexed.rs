@@ -312,6 +312,26 @@ struct Selection {
     complete: bool,
 }
 
+/// Extract bounded, source-grounded starting points for a reader that also scans every window.
+pub(super) fn seed_rows(lines: &[Segment<'_>], question: &str) -> Vec<usize> {
+    if lines.len() > MAX_ROWS || question.len() > 4096 {
+        return Vec::new();
+    }
+    let Some(index) = Index::build(lines, question, false) else {
+        return Vec::new();
+    };
+    let ranges = index.select(lines, 1, None).ranges;
+    let rows: Vec<_> = ranges
+        .into_iter()
+        .flat_map(|r| (r.first_segment_id - 1)..r.last_segment_id)
+        .collect();
+    if rows.len() <= MAX_SELECTED {
+        rows
+    } else {
+        Vec::new()
+    }
+}
+
 fn retrieval<'a>(engine: &'a mut Engine<'_>) -> &'a mut RetrievalUsage {
     engine
         .metrics

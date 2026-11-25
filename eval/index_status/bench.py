@@ -19,8 +19,8 @@ encode = SHARED["encode"]
 read_rows = SHARED["read_rows"]
 file_hash = SHARED["file_hash"]
 digest = SHARED["digest"]
-ARMS = ("records", "indexed", "checked", "handoff", "review", "staged")
-OPTIONS = dict(zip(ARMS, ("records", "indexed", "index-checked", "index-handoff",
+ARMS = ("records", "indexed", "guard", "checked", "handoff", "review", "staged")
+OPTIONS = dict(zip(ARMS, ("records", "indexed", "index-guard", "index-checked", "index-handoff",
                           "index-handoff-review", "index-staged")))
 RESULTS = HERE / "results"
 
@@ -64,11 +64,11 @@ def frozen(write=False):
 
 
 def order(panel):
-    # Six balanced Williams sequences. Across the 48 evaluation cases, each arm
-    # appears eight times in each position and every immediate predecessor is balanced.
-    first = [0, 1, 5, 2, 4, 3]
+    # Fourteen Williams sequences for seven treatments, alternating reversals in blocks.
+    first = [0, 1, 6, 2, 5, 3, 4]
     for i, c in enumerate(sorted(panel, key=lambda x: digest(("order-v1/" + x["id"]).encode()))):
-        yield c, [ARMS[(n + i) % len(ARMS)] for n in first]
+        sequence = first if (i // len(ARMS)) % 2 == 0 else reversed(first)
+        yield c, [ARMS[(n + i) % len(ARMS)] for n in sequence]
 
 
 def read_manifests(output):

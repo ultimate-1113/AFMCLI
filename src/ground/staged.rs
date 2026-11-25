@@ -1,5 +1,5 @@
 //! Read the question, collect original evidence across all windows, then resolve its state.
-use super::{compact, window};
+use super::{indexed, window};
 use crate::{
     contract,
     document::{self, Evidence, Segment},
@@ -40,41 +40,32 @@ fn original_rows(lines: &[Segment<'_>]) -> Vec<Value> {
 
 fn collect_request(question: &str, scope: &Value, lines: &[Segment<'_>]) -> Request {
     request(
-        "Select original row IDs about the question. Include earlier decisions, proposals, cancellations with no replacement, exclusions and later reinstatements even when they give no value. Include nearby context needed to tell similar subjects apart. Do not decide the answer. [] means no relevant rows in this part; [0] means keep the entire part.",
+        "Collect up to six distinctive, short verbatim quotes about the requested subject and field from this section. Include changes, proposals and withdrawals. When nothing relates, return an empty quotes array. Copy text as written. Do not answer the question.",
         json!({"question":question,"scope":scope,"rows":original_rows(lines)}),
         Some(contract::object([(
-            "ids".into(),
-            json!({"type":"array","items":{"type":"integer"}}),
+            "quotes".into(),
+            json!({"type":"array","items":{"type":"string"}}),
         )])),
     )
 }
 
 fn decision_request(question: &str, lines: &[Segment<'_>]) -> Request {
     request(
-        "Reconstruct the current decision from these original rows in document order. Match the subject, requested attribute and effective time. An example, proposal, earlier withdrawn assignment, or a different subject's decision does not establish the value. A later explicit decision can replace a withdrawal. Return state=set only for the requested confirmed value: give its original row ID and shortest exact value from that row. Otherwise return state=unset, row=0, value empty. A statement that a value is undecided is not the requested name, place, or number.",
+        "Locate the original row that controls the answer at the time the question asks about. Match both the subject and attribute. Prefer the applicable decision or withdrawal to an earlier proposal or a notice about another item. A later explicit reinstatement can supersede a withdrawal. Return just its supplied row ID, or zero if none. Do not produce a value.",
         json!({"question":question,"original_evidence":original_rows(lines)}),
-        Some(contract::object([
-            (
-                "state".into(),
-                json!({"type":"string","enum":["set","unset"]}),
-            ),
-            ("row".into(), json!({"type":"integer"})),
-            ("value".into(), json!({"type":"string"})),
-        ])),
+        Some(contract::object([(
+            "row".into(),
+            json!({"type":"integer"}),
+        )])),
     )
 }
 
-fn resolve(v: &Value, rows: &[Segment<'_>]) -> Result<Option<Evidence>, String> {
-    if v["state"].as_str() == Some("unset") {
+fn resolve(v: &Value, parts: &[(usize, &str)]) -> Result<Option<Evidence>, String> {
+    let value = v["answer"].as_str().ok_or("copy the exact value")?;
+    if value.is_empty() {
         return Ok(None);
     }
-    let id = v["row"].as_u64().and_then(|n| usize::try_from(n).ok());
-    let row = rows
-        .iter()
-        .find(|s| Some(s.id) == id)
-        .ok_or("cite an original evidence row")?;
-    let value = v["value"].as_str().ok_or("copy the exact value")?;
-    let spans = document::locate(row.text, row.start, value)?;
+    let spans = document::locate_parts(parts, value)?;
     Ok(Some(Evidence {
         value: value.to_owned(),
         spans,
@@ -97,6 +88,9 @@ pub(super) fn answer(engine: &mut Engine<'_>, source: &str, question: &str) -> R
     });
     let scope = scope(engine, question)?;
     let mut keep = vec![false; source_rows.len()];
+    for index in indexed::seed_rows(&source_rows, question) {
+        keep[index] = true;
+    }
     let subject = scope["subject"].as_str().unwrap_or("");
     if subject.chars().count() >= 2 {
         let matches: Vec<_> = source_rows
@@ -127,10 +121,27 @@ pub(super) fn answer(engine: &mut Engine<'_>, source: &str, question: &str) -> R
             collect_request(question, &scope, block)
         })?;
         let block = &remaining[..n];
-        let ids = engine.structured(collect_request(question, &scope, block), |v| {
-            compact::selected_indices(v, block)
+        let selected = engine.structured(collect_request(question, &scope, block), |v| {
+            let mut selected = Vec::new();
+            for quote in v["quotes"].as_array().unwrap().iter().take(6) {
+                let quote = quote.as_str().unwrap().trim();
+                if quote.chars().count() < 3 {
+                    continue;
+                }
+                let matches: Vec<_> = block
+                    .iter()
+                    .filter(|r| r.text.contains(quote))
+                    .take(5)
+                    .collect();
+                if matches.len() <= 4 {
+                    for r in matches {
+                        selected.push(r.id - 1);
+                    }
+                }
+            }
+            Ok(selected)
         })?;
-        for index in ids {
+        for index in selected {
             nearby(&mut keep, index);
         }
         engine.metrics.context.as_mut().unwrap().selection_windows += 1;
@@ -169,7 +180,18 @@ pub(super) fn answer(engine: &mut Engine<'_>, source: &str, question: &str) -> R
         ));
     }
     let before = engine.metrics.calls;
-    let decision = engine.structured(req, |v| resolve(v, &evidence_rows));
+    let decision = engine.structured(req, |v| {
+        let id = v["row"].as_u64().and_then(|n| usize::try_from(n).ok());
+        if id == Some(0) {
+            return Ok(None);
+        }
+        evidence_rows
+            .iter()
+            .find(|r| Some(r.id) == id)
+            .copied()
+            .map(Some)
+            .ok_or_else(|| "select an existing row ID or zero".to_string())
+    });
     engine
         .metrics
         .context
@@ -180,7 +202,29 @@ pub(super) fn answer(engine: &mut Engine<'_>, source: &str, question: &str) -> R
         .unwrap()
         .rounds[0]
         .sent = engine.metrics.calls > before;
-    match decision? {
+    let Some(row) = decision? else {
+        return Ok(Output::new("abstained", json!({"answer":null})));
+    };
+    // A sentence giving the value may share the same signed notice with a sentence giving its status.
+    // Restrict the candidate span to the selected paragraph; keep long unbroken input bounded.
+    let mut start = source[..row.start].rfind('\n').map_or(0, |n| n + 1);
+    let mut end = source[row.end()..]
+        .find('\n')
+        .map_or(source.len(), |n| row.end() + n);
+    if end - start > 2400 {
+        start = row.start;
+        end = row.end();
+    }
+    let passage = &source[start..end];
+    let req = request(
+        "Read this original decision notice. For the question, copy just the exact name, number, place or other requested value it establishes. If only a proposal, a cancelled decision without a replacement, an unrelated field, or an undecided matter appears, use an empty string. Do not give a status sentence as the value.",
+        json!({"question":question,"notice":passage}),
+        Some(contract::object([(
+            "answer".into(),
+            json!({"type":"string"}),
+        )])),
+    );
+    match engine.structured(req, |v| resolve(v, &[(start, passage)]))? {
         Some(answer) => Ok(Output::new("ok", json!({"answer":answer}))),
         None => Ok(Output::new("abstained", json!({"answer":null}))),
     }
@@ -193,19 +237,14 @@ mod tests {
     #[test]
     fn a_decision_must_cite_the_actual_selected_row() {
         let rows = document::segments("案は「南」。\n決定は「北」。\n別班は「南」。");
-        let good = resolve(&json!({"state":"set","row":2,"value":"北"}), &rows)
-            .unwrap()
-            .unwrap();
+        let selected = &[(rows[1].start, rows[1].text)];
+        let good = resolve(&json!({"answer":"北"}), selected).unwrap().unwrap();
         let span = good.spans.first().unwrap();
         assert_eq!(
             &"案は「南」。\n決定は「北」。\n別班は「南」。"[span.start_byte..span.end_byte],
             "北"
         );
-        assert!(resolve(&json!({"state":"set","row":2,"value":"南"}), &rows).is_err());
-        assert!(
-            resolve(&json!({"state":"unset","row":0,"value":""}), &rows)
-                .unwrap()
-                .is_none()
-        );
+        assert!(resolve(&json!({"answer":"南"}), selected).is_err());
+        assert!(resolve(&json!({"answer":""}), selected).unwrap().is_none());
     }
 }
