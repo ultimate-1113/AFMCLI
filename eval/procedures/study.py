@@ -176,9 +176,11 @@ def measure(case,mode,args,env,bin_sha,run_key):
     start=time.monotonic()
     run=subprocess.run([str(args.binary.resolve()),*flags,"--trace","run"],input=compact(case["job"]),
                        text=True,capture_output=True,timeout=240,env=env)
-    if run.returncode not in (0,3):
+    response=json.loads(run.stdout) if run.stdout.strip() else {}
+    deadline=(run.returncode==2 and response.get("status")=="error"
+              and response.get("notes")==["fm timed out"])
+    if run.returncode not in (0,3) and not deadline:
         raise RuntimeError(f"{case['id']} {mode} exited {run.returncode}; check model availability")
-    response=json.loads(run.stdout)
     return dict(id=case["id"], mode=mode, cohort=case["cohort"], binary_sha256=bin_sha, run_key=run_key,
                 elapsed_ms=round(1000*(time.monotonic()-start)), response=response, score=grade(case,mode,response))
 
