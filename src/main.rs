@@ -22,7 +22,13 @@ struct Args {
     /// Select supporting source segments for QA or translate an optimization problem by declaration.
     #[arg(long, global = true, conflicts_with = "direct")]
     decompose: bool,
-    /// Compress long QA sources. records also packs numbered rows, review checks decisions, and experimental indexed retrieves original excerpts (index-once allows one lookup).
+    /// Compress long QA sources. evidence collects excerpts, records also packs numbered rows, and review independently checks source decisions.
+    #[cfg_attr(
+        feature = "experimental-index",
+        arg(
+            help = "Compress long QA sources. records also packs numbered rows and review checks source decisions. The experimental index-once and indexed modes retrieve original excerpts."
+        )
+    )]
     #[arg(long, global = true, value_enum, num_args=0..=1, require_equals=true, default_missing_value="repeats", conflicts_with_all = ["direct", "decompose"])]
     compact: Option<ContextMode>,
     /// Read source or a JSON job from this UTF-8 file (default: stdin).
@@ -415,6 +421,31 @@ fn main() -> ExitCode {
         Err(s) => {
             eprintln!("afmcli: {s}");
             ExitCode::from(2)
+        }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn compact_options_follow_build_features() {
+        let experimental = cfg!(feature = "experimental-index");
+        for (value, allowed) in [
+            ("repeats", true),
+            ("evidence", true),
+            ("records", true),
+            ("review", true),
+            ("indexed", experimental),
+            ("index-once", experimental),
+        ] {
+            let option = format!("--compact={value}");
+            assert_eq!(
+                Args::try_parse_from(["afmcli", &option, "run"]).is_ok(),
+                allowed,
+                "{value}"
+            );
         }
     }
 }

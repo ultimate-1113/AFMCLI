@@ -145,7 +145,9 @@ fn pack_blocks<'a>(source: &'a str, lines: &[Segment<'_>], limit: usize) -> Opti
 }
 
 pub(super) fn reader(question: &str, context: &Value) -> Request {
-    let instruction = if context.get("indexed_excerpts").is_some() {
+    let instruction = if cfg!(feature = "experimental-index")
+        && context.get("indexed_excerpts").is_some()
+    {
         "Read the original excerpts in document order. They have gaps. Track the subject, attribute and time of the question, including corrections, withdrawals and notices for a different subject. Copy only the shortest exact value from the applicable excerpt. If these excerpts do not establish the answer, return an empty string."
     } else if context.get("log").is_some() {
         "Read log in order. Strings are original notices. An object encodes consecutive rows: insert the space-separated digit strings of each row between the successive literal parts, preserving leading zeroes. Answer only with the shortest exact name, date, quantity or identifier asked for. Apply amendments only to the requested subject and attribute. If no applicable value is established return an empty string."
@@ -274,11 +276,25 @@ pub(super) fn answer(
     question: &str,
     lines: &[Segment<'_>],
 ) -> Run<Option<Output>> {
+    let indexed = match engine.policy.compact {
+        #[cfg(feature = "experimental-index")]
+        Some(ContextMode::IndexOnce) => true,
+        #[cfg(feature = "experimental-index")]
+        Some(ContextMode::Indexed) => true,
+        None
+        | Some(
+            ContextMode::Repeats
+            | ContextMode::Evidence
+            | ContextMode::Records
+            | ContextMode::Review,
+        ) => false,
+    };
     let mut usage = ContextUsage {
         method: "repeat_dictionary",
         source_segments: lines.len(),
         retained_segments: lines.len(),
         selection_windows: 0,
+        #[cfg(feature = "experimental-index")]
         retrieval: None,
     };
     let byte_limit = engine.policy.input_budget.saturating_mul(12);
@@ -287,15 +303,11 @@ pub(super) fn answer(
             "repeat_dictionary" => pack(source, lines, byte_limit).map(|p| json!(p)),
             "repeat_blocks" => pack_blocks(source, lines, byte_limit).map(|p| json!(p)),
             "numbered_rows"
-                if matches!(
-                    engine.policy.compact,
-                    Some(
-                        ContextMode::Records
-                            | ContextMode::Review
-                            | ContextMode::IndexOnce
-                            | ContextMode::Indexed
-                    )
-                ) =>
+                if indexed
+                    || matches!(
+                        engine.policy.compact,
+                        Some(ContextMode::Records | ContextMode::Review)
+                    ) =>
             {
                 numbered::encode(source, lines, question, byte_limit)
             }
@@ -322,11 +334,8 @@ pub(super) fn answer(
     usage.method = "evidence_windows";
     usage.retained_segments = 0;
     engine.metrics.context = Some(usage);
-    if matches!(
-        engine.policy.compact,
-        Some(ContextMode::IndexOnce | ContextMode::Indexed)
-    ) && let Some(output) = super::indexed::answer(engine, source, question, lines)?
-    {
+    #[cfg(feature = "experimental-index")]
+    if indexed && let Some(output) = super::indexed::answer(engine, source, question, lines)? {
         return Ok(Some(output));
     }
     let mut kept = vec![false; lines.len()];

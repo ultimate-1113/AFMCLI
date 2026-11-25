@@ -9,6 +9,7 @@ use serde_json::{Value, json};
 use std::collections::{BTreeMap, BTreeSet};
 
 mod compact;
+#[cfg(feature = "experimental-index")]
 mod indexed;
 mod numbered;
 mod review;

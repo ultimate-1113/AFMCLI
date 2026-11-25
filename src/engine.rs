@@ -21,7 +21,9 @@ pub enum ContextMode {
     Evidence,
     Records,
     Review,
+    #[cfg(feature = "experimental-index")]
     IndexOnce,
+    #[cfg(feature = "experimental-index")]
     Indexed,
 }
 
@@ -78,19 +80,23 @@ pub struct ContextUsage {
     pub source_segments: usize,
     pub retained_segments: usize,
     pub selection_windows: usize,
+    #[cfg(feature = "experimental-index")]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub retrieval: Option<RetrievalUsage>,
 }
+#[cfg(feature = "experimental-index")]
 #[derive(Default, Serialize)]
 pub struct RetrievalUsage {
     pub rounds: Vec<RetrievalRound>,
     pub fallback: Option<&'static str>,
 }
+#[cfg(feature = "experimental-index")]
 #[derive(Serialize)]
 pub struct RetrievalRound {
     pub sent: bool,
     pub ranges: Vec<SourceRange>,
 }
+#[cfg(feature = "experimental-index")]
 #[derive(Clone, Copy, PartialEq, Eq, Serialize)]
 pub struct SourceRange {
     pub document_id: usize,

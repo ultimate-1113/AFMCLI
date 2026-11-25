@@ -1,3 +1,5 @@
+#![cfg(feature = "experimental-index")]
+
 use afmcli::{
     document,
     engine::{ContextMode, Engine, Policy, Record},
