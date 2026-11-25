@@ -1,6 +1,6 @@
 [package]
 name = "afmcli"
-version = "0.3.1"
+version = "0.3.2"
 edition = "2024"
 rust-version = "1.89"
 description = "A local-first task harness for Apple's AFM 3 Core Advanced"

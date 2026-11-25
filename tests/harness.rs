@@ -296,10 +296,10 @@ fn compact_dictionary_quotes_original_bytes_and_checks_distant_updates() {
                     && r.prompt.contains("再決定")
             );
             Ok(if r.schema.as_ref().unwrap()["properties"]
-                .get("supported")
+                .get("basis")
                 .is_some()
             {
-                json!({"supported":supported})
+                json!({"basis":"青葉館","update":"","value":if supported { "青葉館" } else { "" }})
             } else {
                 json!({"answer":"青葉館"})
             }
@@ -329,6 +329,51 @@ fn compact_dictionary_quotes_original_bytes_and_checks_distant_updates() {
 }
 
 #[test]
+fn a_grounded_update_is_checked_alone_and_disagreement_ends_without_repair() {
+    let text = format!(
+        "Desk: Code ABC-02 is approved.\n{}Desk: The earlier permit has been withdrawn.\n",
+        "Board checked.\n".repeat(240)
+    );
+    let job = json!({"task":"answer","source":text,"question":"What code is approved?"});
+    let policy = Policy {
+        compact: Some(ContextMode::Evidence),
+        input_budget: 1600,
+        ..Default::default()
+    };
+    let record = eval(job.clone(), policy, |r| {
+        let payload: Value = serde_json::from_str(r.prompt.split_once('\n').unwrap().1).unwrap();
+        let props = &r.schema.as_ref().unwrap()["properties"];
+        let response = if props.get("effect").is_some() {
+            assert_eq!(payload["notice"], "The earlier permit has been withdrawn.");
+            assert!(payload.get("material").is_none() && payload.get("candidate").is_none());
+            json!({"effect":"unset","value":""})
+        } else if props.get("basis").is_some() {
+            assert!(payload.get("candidate").is_none());
+            json!({"basis":"Code ABC-02 is approved.","update":"The earlier permit has been withdrawn.","value":"ABC-02"})
+        } else {
+            json!({"answer":"ABC-02"})
+        };
+        Ok(response.to_string())
+    });
+    assert_eq!(
+        (record.status.as_str(), record.metrics.calls),
+        ("abstained", 3)
+    );
+    let rejected = eval(
+        job,
+        policy,
+        stream(&[
+            json!({"answer":"ABC-02"}),
+            json!({"basis":"invented statement","update":"","value":"pending"}),
+        ]),
+    );
+    assert_eq!(
+        (rejected.status.as_str(), rejected.metrics.repairs),
+        ("abstained", 0)
+    );
+}
+
+#[test]
 fn periodic_packet_uses_the_original_offsets_in_both_compact_modes() {
     let unit = "通知：点検済み。\r\n台帳：記入済み。\r\n";
     let src = format!(
@@ -348,10 +393,10 @@ fn periodic_packet_uses_the_original_offsets_in_both_compact_modes() {
             |request| {
                 assert!(request.prompt.contains("dictionary") && request.prompt.contains("桜館"));
                 Ok(if request.schema.as_ref().unwrap()["properties"]
-                    .get("supported")
+                    .get("basis")
                     .is_some()
                 {
-                    json!({"supported":true})
+                    json!({"basis":"会場は桜館です。","update":"","value":"桜館"})
                 } else {
                     json!({"answer":"桜館"})
                 }
@@ -403,8 +448,12 @@ fn compact_reads_every_window_and_cannot_quote_an_omitted_sentence() {
             assert_eq!(seen.len(), 27);
             assert!(r.prompt.contains("withdrawn") && r.prompt.contains("DELTA"));
             assert!(!r.prompt.contains("UNSEEN"));
-            Ok(if payload.get("candidate").is_some() {
-                json!({"supported":false})
+            Ok(if r.schema.as_ref().unwrap()["properties"]
+                .get("basis")
+                .is_some()
+            {
+                assert!(payload.get("candidate").is_none());
+                json!({"basis":"The venue decision was withdrawn.","update":"","value":""})
             } else {
                 json!({"answer":answer})
             }

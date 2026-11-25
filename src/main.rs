@@ -22,7 +22,7 @@ struct Args {
     /// Select supporting source segments for QA or translate an optimization problem by declaration.
     #[arg(long, global = true, conflicts_with = "direct")]
     decompose: bool,
-    /// Compress repeated text in long QA. Use --compact=evidence to also collect evidence across windows.
+    /// Compress repeated text and numbered logs in long QA. Use --compact=evidence to also collect evidence across windows.
     #[arg(long, global = true, value_enum, num_args=0..=1, require_equals=true, default_missing_value="repeats", conflicts_with_all = ["direct", "decompose"])]
     compact: Option<ContextMode>,
     /// Read source or a JSON job from this UTF-8 file (default: stdin).
