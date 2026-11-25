@@ -8,6 +8,8 @@ use crate::{
 use serde_json::{Value, json};
 use std::collections::{BTreeMap, BTreeSet};
 
+mod compact;
+
 /// Find a contiguous prefix that fits. Every portion is processed or the entire task is held.
 fn window<'a>(
     engine: &mut Engine<'_>,
@@ -204,6 +206,12 @@ fn extract(
         return engine.raw(make(source));
     }
     let lines = document::segments(source);
+    if let Some(q) = question.filter(|_| engine.policy.compact && !engine.policy.decompose)
+        && window(engine, &lines, |ls| make(excerpt(source, ls)))? < lines.len()
+        && let Some(result) = compact::answer(engine, source, q, &lines)?
+    {
+        return Ok(result);
+    }
     let mut offset = 0;
     let mut merged = Located::new();
     while offset < lines.len() {

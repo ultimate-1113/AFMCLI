@@ -55,6 +55,10 @@ pub struct Evidence {
     pub spans: BTreeSet<Span>,
 }
 pub fn locate(source: &str, offset: usize, value: &str) -> Result<BTreeSet<Span>, String> {
+    locate_parts(&[(offset, source)], value)
+}
+/// Search each original range independently. A quote cannot bridge omitted text.
+pub(crate) fn locate_parts(parts: &[(usize, &str)], value: &str) -> Result<BTreeSet<Span>, String> {
     if value.trim().is_empty() || value.trim() != value {
         return Err("return a nonempty verbatim span without padding".into());
     }
@@ -64,25 +68,27 @@ pub fn locate(source: &str, offset: usize, value: &str) -> Result<BTreeSet<Span>
         value.chars().next_back().unwrap(),
     );
     let mut out = BTreeSet::new();
-    let mut from = 0;
-    while let Some(i) = source[from..].find(value) {
-        let at = from + i;
-        let end = at + value.len();
-        let joined_left = word(first) && source[..at].chars().next_back().is_some_and(word);
-        let joined_right = word(last) && source[end..].chars().next().is_some_and(word);
-        if !joined_left && !joined_right {
-            out.insert(Span {
-                start_byte: offset + at,
-                end_byte: offset + end,
-            });
-            if out.len() > 256 {
-                return Err(
+    for &(offset, source) in parts {
+        let mut from = 0;
+        while let Some(i) = source[from..].find(value) {
+            let at = from + i;
+            let end = at + value.len();
+            let joined_left = word(first) && source[..at].chars().next_back().is_some_and(word);
+            let joined_right = word(last) && source[end..].chars().next().is_some_and(word);
+            if !joined_left && !joined_right {
+                out.insert(Span {
+                    start_byte: offset + at,
+                    end_byte: offset + end,
+                });
+                if out.len() > 256 {
+                    return Err(
                     "too many indistinguishable source occurrences; return a more specific span"
                         .into(),
                 );
+                }
             }
+            from = at + first.len_utf8();
         }
-        from = at + first.len_utf8();
     }
     if out.is_empty() {
         return Err("a proposed value does not occur verbatim in the supplied source; copy an exact span or leave it empty".into());

@@ -25,6 +25,7 @@ pub struct Policy {
     pub has_image: bool,
     pub check_support: bool,
     pub decompose: bool,
+    pub compact: bool,
 }
 impl Default for Policy {
     fn default() -> Self {
@@ -37,6 +38,7 @@ impl Default for Policy {
             has_image: false,
             check_support: true,
             decompose: false,
+            compact: false,
         }
     }
 }
@@ -55,7 +57,17 @@ pub struct Metrics {
     pub repairs: usize,
     pub token_checks: usize,
     pub peak_sent_tokens: usize,
+    pub sent_input_tokens: usize,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub context: Option<ContextUsage>,
     pub elapsed_ms: u128,
+}
+#[derive(Serialize)]
+pub struct ContextUsage {
+    pub method: &'static str,
+    pub source_segments: usize,
+    pub retained_segments: usize,
+    pub selection_windows: usize,
 }
 #[derive(Serialize)]
 pub struct Record {
@@ -191,6 +203,7 @@ impl<'a> Engine<'a> {
         }
         self.metrics.calls += 1;
         self.metrics.peak_sent_tokens = self.metrics.peak_sent_tokens.max(n);
+        self.metrics.sent_input_tokens += n;
         let raw = self.model.generate(r).map_err(|reason| {
             if reason.starts_with("fm refused the request") {
                 Fail::Refused(reason)

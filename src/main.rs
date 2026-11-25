@@ -22,6 +22,9 @@ struct Args {
     /// Select supporting source segments for QA or translate an optimization problem by declaration.
     #[arg(long, global = true, conflicts_with = "direct")]
     decompose: bool,
+    /// For over-budget source QA, pack repeated text or collect verbatim evidence across windows.
+    #[arg(long, global = true, conflicts_with_all = ["direct", "decompose"])]
+    compact: bool,
     /// Read source or a JSON job from this UTF-8 file (default: stdin).
     #[arg(short = 'i', long, global = true)]
     input: Option<PathBuf>,
@@ -381,6 +384,7 @@ fn run() -> Result<u8, String> {
         has_image: args.image.is_some(),
         check_support: !args.fast_answer,
         decompose: args.decompose,
+        compact: args.compact,
     };
     let mut model = Apple::new(args.timeout, args.image);
     if let Some(name) = args.skill {

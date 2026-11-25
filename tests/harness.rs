@@ -234,6 +234,181 @@ fn contradictory_windows_are_not_resolved_by_return_order() {
     assert_eq!(out.status, "abstained");
     assert!(out.notes[0].contains("conflicting"));
 }
+
+#[test]
+fn compact_preserves_the_short_reader_and_charges_all_sent_inputs() {
+    let job = json!({"task":"answer","question":"Which room?","source":"Room N4."});
+    let mut prompts = Vec::new();
+    for compact in [false, true] {
+        let mut sent = Vec::new();
+        let result = eval(
+            job.clone(),
+            Policy {
+                compact,
+                ..Policy::default()
+            },
+            |r| {
+                sent.push(r.prompt.clone());
+                Ok(if r.schema.as_ref().unwrap()["properties"]
+                    .get("supported")
+                    .is_some()
+                {
+                    json!({"supported":true})
+                } else {
+                    json!({"answer":"N4","answerable":true})
+                }
+                .to_string())
+            },
+        );
+        assert_eq!(result.status, "ok");
+        assert!(result.metrics.context.is_none());
+        assert_eq!(
+            result.metrics.sent_input_tokens,
+            sent.iter().map(|s| s.chars().count()).sum::<usize>()
+        );
+        prompts.push(sent);
+    }
+    assert_eq!(prompts[0], prompts[1]);
+}
+
+#[test]
+fn compact_dictionary_quotes_original_bytes_and_checks_distant_updates() {
+    let source = format!(
+        "初報：青葉館。\n{}再決定：青葉館。\n終了。",
+        "巡回済み、受付票を保存。\n".repeat(240)
+    );
+    let job = json!({"task":"answer","source":source,"question":"確定した会場は？"});
+    let policy = Policy {
+        compact: true,
+        input_budget: 1200,
+        ..Default::default()
+    };
+    for (supported, status) in [(true, "ok"), (false, "abstained")] {
+        let record = eval(job.clone(), policy, |r| {
+            assert!(
+                r.prompt.contains("dictionary")
+                    && r.prompt.contains("初報")
+                    && r.prompt.contains("再決定")
+            );
+            Ok(if r.schema.as_ref().unwrap()["properties"]
+                .get("supported")
+                .is_some()
+            {
+                json!({"supported":supported})
+            } else {
+                json!({"answer":"青葉館"})
+            }
+            .to_string())
+        });
+        assert_eq!(record.status, status);
+        assert_eq!(record.metrics.context.unwrap().method, "repeat_dictionary");
+        if supported {
+            let spans = record.result["answer"]["spans"].as_array().unwrap();
+            assert_eq!(spans.len(), 2);
+            for span in spans {
+                let range = span["start_byte"].as_u64().unwrap() as usize
+                    ..span["end_byte"].as_u64().unwrap() as usize;
+                assert_eq!(&source[range], "青葉館");
+            }
+        }
+    }
+    let false_quote = eval(
+        job,
+        Policy {
+            repairs: 0,
+            ..policy
+        },
+        |_| Ok(json!({"answer":"dictionary"}).to_string()),
+    );
+    assert_eq!(false_quote.status, "held");
+}
+
+#[test]
+fn compact_reads_every_window_and_cannot_quote_an_omitted_sentence() {
+    let mut source = (0..27)
+        .map(|i| format!("Report {i} {}.", "stored ".repeat(12)))
+        .collect::<Vec<_>>();
+    source[1] = "The meeting moved to Room DELTA.".into();
+    source[10] = "Unrelated value UNSEEN.".into();
+    source[25] = "The venue decision was withdrawn.".into();
+    let job = json!({"task":"answer","question":"Which room?","source":source.join("\n")});
+    let policy = Policy {
+        compact: true,
+        input_budget: 1200,
+        repairs: 0,
+        ..Policy::default()
+    };
+    for (answer, expected) in [("DELTA", "abstained"), ("UNSEEN", "held")] {
+        let mut seen = std::collections::BTreeSet::new();
+        let record = eval(job.clone(), policy, |r| {
+            let payload: Value =
+                serde_json::from_str(r.prompt.split_once('\n').unwrap().1).unwrap();
+            if let Some(rows) = payload["sentences"].as_array() {
+                let mut ids = Vec::new();
+                for row in rows {
+                    assert!(seen.insert(row[0].as_u64().unwrap()));
+                    let text = row[1].as_str().unwrap();
+                    if text.contains("DELTA") || text.contains("withdrawn") {
+                        ids.push(&row[0]);
+                    }
+                }
+                return Ok(json!({"ids":ids,"keep_all":false}).to_string());
+            }
+            assert_eq!(seen.len(), 27);
+            assert!(r.prompt.contains("withdrawn") && r.prompt.contains("DELTA"));
+            assert!(!r.prompt.contains("UNSEEN"));
+            Ok(if payload.get("candidate").is_some() {
+                json!({"supported":false})
+            } else {
+                json!({"answer":answer})
+            }
+            .to_string())
+        });
+        assert_eq!(record.status, expected);
+        let usage = record.metrics.context.unwrap();
+        assert_eq!(usage.method, "evidence_windows");
+        assert_eq!(usage.retained_segments, 6);
+        assert!(usage.selection_windows > 1);
+    }
+    let limited = eval(
+        job,
+        Policy {
+            max_calls: 1,
+            ..policy
+        },
+        |_| Ok(json!({"ids":[],"keep_all":false}).to_string()),
+    );
+    assert_eq!(limited.status, "held");
+}
+
+#[test]
+fn compact_falls_back_instead_of_truncating_a_dense_source() {
+    let source = (0..36)
+        .map(|i| format!("Entry {i} {}.", "archive ".repeat(9)))
+        .collect::<Vec<_>>()
+        .join("\n");
+    let job = json!({"task":"answer","source":source,"question":"Which seal?"});
+    let record = eval(
+        job,
+        Policy {
+            compact: true,
+            input_budget: 1200,
+            ..fast()
+        },
+        |r| {
+            Ok(if r.prompt.contains("keep_all") {
+                json!({"ids":[],"keep_all":true})
+            } else {
+                json!({"answerable":false,"answer":""})
+            }
+            .to_string())
+        },
+    );
+    assert_eq!(record.status, "abstained");
+    let usage = record.metrics.context.unwrap();
+    assert_eq!(usage.method, "full_scan_fallback");
+    assert_eq!(usage.retained_segments, 36);
+}
 #[test]
 fn summary_copies_only_offered_ids_in_original_order() {
     let j =
