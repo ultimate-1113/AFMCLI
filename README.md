@@ -8,20 +8,38 @@ Rustで実装した、Mac上の **AFM 3 Core Advanced** 用タスクハーネス
 
 ## インストール
 
-モデル実行には、Apple Intelligenceが有効で、`fm models` に `✓ system (AFM 3 Core Advanced)` と表示されるMacが必要。今回の実機はMac mini M6、32 GB、モデル配置先は内蔵SSD 256 GB、macOS 27.2.1（26B131）。配布バイナリはApple Silicon向けで、アドホック署名。開発環境からはRust 1.89以上でソースをビルドできる。[macOS向け配布ファイルとSHA-256](https://github.com/ultimate-1113/AFMCLI/releases/tag/v0.1.1)・[AppleのCLI解説](https://developer.apple.com/videos/play/wwdc2026/334/)
+モデル実行には、Apple Intelligenceが有効で、`fm models` に `✓ system (AFM 3 Core Advanced)` と表示されるMacが必要。今回の実機はMac mini M6、32 GB、モデル配置先は内蔵SSD 256 GB、macOS 27.2.1（26B131）。配布バイナリはApple Silicon向けで、アドホック署名。開発環境からはRust 1.89以上でソースをビルドできる。[macOS向け配布ファイルとSHA-256](https://github.com/ultimate-1113/AFMCLI/releases/tag/v0.2.0)・[AppleのCLI解説](https://developer.apple.com/videos/play/wwdc2026/334/)
 
 ```sh
-cargo install --locked --git https://github.com/ultimate-1113/AFMCLI --tag v0.1.1 afmcli
+cargo install --locked --git https://github.com/ultimate-1113/AFMCLI --tag v0.2.0 afmcli
 afmcli doctor
 ```
 
 ダウンロード版はアーカイブと同名の `.sha256` を同じフォルダに置き、空のディレクトリで確認して展開する。
 
 ```sh
-shasum -a 256 -c afmcli-v0.1.1-aarch64-apple-darwin.tar.gz.sha256
-tar -xzf afmcli-v0.1.1-aarch64-apple-darwin.tar.gz
+shasum -a 256 -c afmcli-v0.2.0-aarch64-apple-darwin.tar.gz.sha256
+tar -xzf afmcli-v0.2.0-aarch64-apple-darwin.tar.gz
 ./afmcli doctor
 ```
+
+## スキルを読み込む
+
+手元の `SKILL.md` を登録すると、`--skill 名前` を付けたタスクの各生成に、その手順が渡る。同梱の2例は、資料から最短の回答を抜く手順と、整数最適化の変数・制約・目的を読む手順。`--decompose` は独立したオプションで、QAでは根拠文を先に選び、数式化では制約を宣言ごとに扱う。[実機での比較](eval/procedures/README.md)・[Agent Skillsの仕様](https://agentskills.io/specification)
+
+```sh
+afmcli skills import skills/short-evidence
+afmcli skills import skills/linear-declarations/SKILL.md
+afmcli skills list
+printf '%s\n' '旧会場は港館。新会場は青葉館に決定。' |
+  afmcli --skill short-evidence answer '新会場は？'
+printf '%s\n' 'Integer N ranges from 0 to 8. Require N < 4. Maximize N.' |
+  afmcli --decompose solve --from-text
+```
+
+インポートにはフォルダと同名の `name` および `description` を含むYAML frontmatterと、Markdown本文が必要。参照文書はインポート時に `--reference references/guide.md` のように指定する。対象は選んだフォルダ内のMarkdownとテキストで、本文・参照は各64 KiB、合計128 KiBまで。スクリプトの起動、外部ツールの権限付与、自動選択は実装範囲外。手順や参照の長さもタスクの入力トークン予算に含まれる。
+
+Macでの登録先は `~/Library/Application Support/AFMCLI/skills`。`AFMCLI_SKILLS_DIR` で保存先を指定できる。同じ内容は再登録でき、内容の更新には `--replace` を付ける。
 
 ## 文書を渡す
 

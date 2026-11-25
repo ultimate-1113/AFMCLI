@@ -28,9 +28,9 @@ afmcli edit -i examples/guarded-row.json
 Mac mini M6、32 GB、内蔵SSD 256 GB、macOS 27.2.1（26B131）。実機の `system` はAFM 3 Core Advanced。評価したv0.1.1の実行ファイルのSHA-256は `b6f98b9b0446ce1cbb9394ec00ac51c3843397124b9c697efb117cf4e1eff82e`。入力・採点器・実装は実行前に固定した。モデル呼び出しは同時1件、greedy。[固定したファイル](lock.json)・[実行前のコミット](https://github.com/ultimate-1113/AFMCLI/commit/358c7e0)
 
 ```sh
-python3 -B eval/row_guard/run.py verify
 cargo build --locked
-python3 -B eval/row_guard/run.py replay --binary target/debug/afmcli
+git worktree add --detach ../afmcli-row-baseline v0.1.1
+python3 -B ../afmcli-row-baseline/eval/row_guard/run.py replay --output eval/row_guard/results.jsonl --binary target/debug/afmcli
 ```
 
 対応するMacでモデルも再実行する場合は、別の出力先を用意する。
@@ -38,5 +38,5 @@ python3 -B eval/row_guard/run.py replay --binary target/debug/afmcli
 ```sh
 cargo build --release --locked
 mkdir -p eval/work
-python3 -B eval/row_guard/run.py run --binary target/release/afmcli --output eval/work/row-guard.jsonl
+python3 -B ../afmcli-row-baseline/eval/row_guard/run.py run --binary target/release/afmcli --output eval/work/row-guard.jsonl
 ```
