@@ -1,0 +1,36 @@
+{
+  "text_answer": {
+    "spans": [
+      {
+        "end_byte": 39,
+        "start_byte": 30
+      }
+    ],
+    "value": "白波館"
+  },
+  "extractive_summary": [
+    {
+      "end_byte": 138,
+      "id": 3,
+      "start_byte": 87,
+      "text": "受付では受領票を提示してください。"
+    }
+  ],
+  "json_capacity": 30,
+  "csv_updated_id": "0007",
+  "csv_revision": 4,
+  "csv_quantity": 6,
+  "model_calls": {
+    "answer": 2,
+    "summarize": 1,
+    "json_edit": 0,
+    "csv_edit": 0,
+    "calculator": 1
+  },
+  "calculator": {
+    "expression": "18*275 + 320",
+    "value": "5270",
+    "expected": 5270,
+    "status": "review"
+  }
+}
