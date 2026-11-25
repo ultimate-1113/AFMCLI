@@ -8,10 +8,10 @@ Rustで実装した、Mac上の **AFM 3 Core Advanced** 用タスクハーネス
 
 ## インストール
 
-モデル実行には、Apple Intelligenceが有効で、`fm models` に `✓ system (AFM 3 Core Advanced)` と表示されるMacが必要。今回の実機はMac mini M6、32 GB、モデル配置先は内蔵SSD 256 GB、macOS 27.2.1（26B131）。配布バイナリはApple Silicon向けで、アドホック署名。開発環境からはRust 1.89以上でソースをビルドできる。[macOS向け配布ファイルとSHA-256](https://github.com/ultimate-1113/AFMCLI/releases/tag/v0.2.0)・[AppleのCLI解説](https://developer.apple.com/videos/play/wwdc2026/334/)
+モデル実行には、Apple Intelligenceが有効で、`fm models` に `✓ system (AFM 3 Core Advanced)` と表示されるMacが必要。今回の実機はMac mini M6、32 GB、モデル配置先は内蔵SSD 256 GB、macOS 27.2.1（26B131）。次のコマンドでRust 1.89以上を使い、文脈圧縮を含む現行ソースをインストールできる。[v0.2.0のmacOS向け配布ファイルとSHA-256](https://github.com/ultimate-1113/AFMCLI/releases/tag/v0.2.0)・[AppleのCLI解説](https://developer.apple.com/videos/play/wwdc2026/334/)
 
 ```sh
-cargo install --locked --git https://github.com/ultimate-1113/AFMCLI --tag v0.2.0 afmcli
+cargo install --locked --git https://github.com/ultimate-1113/AFMCLI --branch main afmcli
 afmcli doctor
 ```
 
@@ -77,6 +77,18 @@ printf '%s\n' '{"id":"s1","task":"summarize","source":"見学は終了。明日�
   afmcli batch
 ```
 
+### 長い履歴や資料から根拠付きで答える
+
+`--compact` は、一度に読める資料には標準のQAを使う。資料を分けて読む必要があるときは、同一の文を辞書にまとめ、出現順と回数を添えて渡す。この表現からは改行を含む入力全文を復元できる。辞書が入力予算に収まらない場合は元の資料を順に読む。繰り返しの通知を含む会話や作業記録が主な用途である。
+
+```sh
+afmcli --compact answer '会議で最終的に決まった会場はどこですか？' -i minutes.txt
+```
+
+`--compact=evidence` は、辞書が使えない資料の全区間から根拠・条件・撤回を示す文を選び、前後の文も加える。回答と裏付けの再確認には、選んだ範囲を元の順番で渡す。引用を元のUTF-8バイト位置で照合し、離れた範囲をまたぐ引用は保留する。この方式では、文の選択にかかる時間と、関連する文を見落とす可能性がある。選んだ範囲が大きければ全区間の読み取りに戻る。[実機での正答数と処理量](eval/context/README.md)
+
+`metrics.sent_input_tokens` は回答・確認・再試行に送った入力トークンの推定合計。長文の処理時は `metrics.context` に方式、元の文数、保持した文数、根拠選択を完了した区間数が入る。会話を扱う際は、発言者と発言順が分かるテキストを入力する。
+
 ## JSON更新と数理最適化
 
 次の更新では、`open` が12のときだけ3を加える。複数の操作のうち1つでも旧値が合わないと、元の文書全体を返す。CLIは更新案を標準出力へ出す。共有ストアに反映するアプリではストア側で版の照合と書き込みを一つのトランザクションにする。
@@ -107,7 +119,7 @@ printf '%s\n' '{"variables":[{"name":"X","min":0,"max":5}],"constraints":[{"weig
 
 `--direct` は同じタスクをモデルに1回依頼する比較用モードで、結果は `unverified`。`--trace` はモデルが返した文字列を出力に含める。標準の `--repairs 1` は形式や出典など、コードで特定した失敗に対する再試行回数。`--max-calls 24` は1ジョブの生成回数上限。
 
-生成前に `fm count-tokens` で指示・本文を数え、スキーマも計数する。標準入力予算は6,200トークンで、モデルの8,192トークンの文脈に応答用の余裕を持たせた。抽出・引用回答は長文を連続した範囲に分け、全範囲を処理する。単値で異なる候補が残れば保留する。要約は文を選び、複数範囲にまたがるときは候補を再選択する。予算内に全体を処理できない場合は `held` を返す。書き換え・自由回答には全文を渡す。
+生成前に `fm count-tokens` で指示・本文を数え、スキーマも計数する。標準入力予算は6,200トークンで、モデルの8,192トークンの文脈に応答用の余裕を持たせた。標準の抽出・引用回答は長文を連続した範囲に分け、全範囲を処理する。引用回答で区間ごとの候補が食い違った場合は `abstained` を返す。要約は文を選び、複数範囲にまたがるときは候補を再選択する。予算内に全体を処理できない場合は `held` を返す。書き換え・自由回答には全文を渡す。
 
 `structure` が扱うスキーマは、ルートがobject、各階層でproperties・required・additionalProperties=falseを明示したもの。値にはobject、arrayとitems、stringと任意のenum、integer、number、booleanを使える。未対応キーワード、重複したJSONキー、生成結果の型違反にはエラーまたは保留を返す。事実性は原文や業務上の条件と照合して確かめる。
 

@@ -79,12 +79,19 @@ def synth_score(case, status, answer):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("action", choices=("run", "verify"))
+    ap.add_argument("action", choices=("run", "verify", "show"))
+    ap.add_argument("--case", help="synthetic case ID to print as a JSON job")
     ap.add_argument("--baseline", type=Path)
     ap.add_argument("--binary", type=Path, default=ROOT / "target/release/afmcli")
     ap.add_argument("--data", type=Path)
     ap.add_argument("--results", type=Path, default=HERE / "results.jsonl")
     args = ap.parse_args()
+    if args.action == "show":
+        for case in synthetic():
+            if case["id"] == args.case:
+                print(json.dumps(case["job"],ensure_ascii=False))
+                return
+        ap.error("supply a synthetic ID from panel.json or holdout.json with --case")
     if args.action == "run":
         if not args.baseline:
             ap.error("run requires --baseline pointing to the v0.2.0 binary")
@@ -153,6 +160,19 @@ def evaluate(args):
                     lookup[key] = row
                     print(case["id"],mode,status,score,row["sent"],flush=True)
     expected = set()
+    public_fields = {"id","mode","cohort","binary","source_sha256","panel_sha256","budget","status",
+                     "correct","elapsed_ms","calls","peak","sent","context"}
+    for r in rows:
+        fields = public_fields if r["cohort"] == "external" else public_fields | {"answer","notes"}
+        assert set(r) == fields and isinstance(r["correct"], bool)
+        assert len(r["binary"]) == 64 and r["panel_sha256"] == panel_hash
+        assert 0 <= r["peak"] <= r["budget"] and r["calls"] >= 0
+        assert r["sent"] is None or r["sent"] >= r["peak"]
+        if r["context"]:
+            c = r["context"]
+            assert 0 <= c["retained_segments"] <= c["source_segments"] and c["selection_windows"] >= 0
+    for group in ({"baseline"},{"compact","evidence"}):
+        assert len({r["binary"] for r in rows if r["mode"] in group}) == 1
     for case in cases:
         for mode in modes(case):
             key = case["id"],mode
@@ -168,7 +188,10 @@ def evaluate(args):
         historical = [json.loads(l) for l in (HERE.parent/"procedures/results.jsonl").read_text().splitlines()]
         ids = {r["id"] for r in historical if r["cohort"] in ("jsquad","squad")}
         external_keys = {(i,m) for i in ids for m in ("baseline","compact")}
-        assert set(lookup)-expected in (set(),external_keys)
+        if args.results.resolve() == (HERE / "results.jsonl").resolve():
+            assert set(lookup)-expected == external_keys
+        else:
+            assert set(lookup)-expected in (set(),external_keys)
         for key in set(lookup)-expected:
             assert lookup[key]["cohort"]=="external" and "answer" not in lookup[key]
     for cohort in sorted({r["cohort"] for r in rows}):

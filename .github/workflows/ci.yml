@@ -35,7 +35,12 @@ jobs:
           cargo build --locked --bin afmcli
           git worktree add --detach "$RUNNER_TEMP/afmcli-v0.1.1" 35605d85b097bd4ffdcd3e002ad7567053ca5789
           python3 -B "$RUNNER_TEMP/afmcli-v0.1.1/eval/row_guard/run.py" replay --output eval/row_guard/results.jsonl --binary target/debug/afmcli
-          python3 -B eval/procedures/study.py verify
+          git worktree add --detach "$RUNNER_TEMP/afmcli-v0.2.0" 6f771a531949497c80f89db1231d30afcf6bb7d3
+          python3 -B "$RUNNER_TEMP/afmcli-v0.2.0/eval/procedures/study.py" verify --results eval/procedures
           python3 -B eval/procedures/regression.py verify
+          git worktree add --detach "$RUNNER_TEMP/afmcli-compact-pilot" f440105c11ed964033d73185f8c0dc7bd4563cfc
+          python3 -B "$RUNNER_TEMP/afmcli-compact-pilot/eval/context/bench.py" verify --results eval/context/pilot.jsonl
+          python3 -B eval/context/bench.py verify --results eval/context/second-pass.jsonl
+          python3 -B eval/context/bench.py verify
           python3 -B tools/test_png_audit.py
           python3 -B tools/privacy_audit.py --tracked
