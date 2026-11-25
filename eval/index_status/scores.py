@@ -29,6 +29,8 @@ def tallies(rows, cases):
         "median_ms": median(times) if times else None,
         "p95_ms": times[math.ceil(.95 * len(times)) - 1] if times else None,
         "extra_nonauthoritative_citations": sum(r["score"]["extra_nonauthoritative_spans"] for r in rows),
+        "final_context_methods": dict(sorted(Counter(
+            (m.get("context") or {}).get("method", "full_input") for m in metrics).items())),
     }
 
 
@@ -158,7 +160,15 @@ def summarize(panel, rows):
     winner = min(pool, key=lambda a: (total[a]["false_nonnull"], -total[a]["settled"],
                                       long[a]["tokens"], long[a]["median_ms"], a))
     pairings = [(a, "indexed") for a in FAST + ("staged",)] + [("handoff", "checked"), ("review", "handoff")]
+    indexed = {r["id"]: r["record"] for r in rows if r["arm"] == "indexed"}
+    guards = {r["id"]: r["record"] for r in rows if r["arm"] == "guard"}
+    parity = {}
+    for key in ("calls", "sent_input_tokens", "token_checks", "peak_sent_tokens"):
+        parity[key] = sum(indexed[i]["metrics"][key] == guards[i]["metrics"][key] for i in indexed)
+    parity["identical_recorded_attempts"] = sum(
+        indexed[i].get("attempts", []) == guards[i].get("attempts", []) for i in indexed)
     return {"counts": stats, "gates": result, "fast_candidate_for_old_cases": winner,
+            "cases_with_equal_indexed_and_guard_observations": parity,
             "paired": {a + "_vs_" + b: compare(rows, b, a) for a,b in pairings},
             "traces": {a: trace_summary([r for r in rows if r["arm"] == a],cases) for a in ARMS},
             "observable_evidence": {a: mean_reader_coverage([r for r in rows if r["arm"] == a],cases)

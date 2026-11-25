@@ -2,7 +2,6 @@
 import argparse
 from collections import Counter
 import fcntl
-import hashlib
 import json
 import os
 from pathlib import Path
@@ -105,8 +104,8 @@ def save(out, row):
     os.fsync(out.fileno())
 
 
-def measure(args):
-    panels, lock = frozen()
+def measure(args, load_panels=frozen, arrange=order):
+    panels, lock = load_panels()
     outdir = args.out.resolve()
     outdir.mkdir(parents=True, exist_ok=True)
     output = outdir / (args.split + ".jsonl")
@@ -133,7 +132,7 @@ def measure(args):
                 raise ValueError("unexpected stored row")
             grade_row(row, by_id[i], lock[i], hashes)
         with output.open("ab") as out:
-            for c, arms in order(panels[args.split]):
+            for c, arms in arrange(panels[args.split]):
                 for a in arms:
                     if a not in selected or (c["id"], a) in prev:
                         continue
@@ -156,15 +155,15 @@ def measure(args):
                 print(c["id"], flush=True)
 
 
-def verify(output, split):
-    panels, lock = frozen()
+def verify(output, split, load_panels=frozen, arms=ARMS):
+    panels, lock = load_panels()
     panel = {c["id"]: c for c in panels[split]}
     rows = SHARED["by_key"](read_rows(output / (split + ".jsonl")))
-    keys = {(i, a) for i in panel for a in ARMS}
+    keys = {(i, a) for i in panel for a in arms}
     if set(rows) != keys:
         raise ValueError(f"incomplete {split}: {len(rows)} of {len(keys)} case-methods")
     hashes = read_manifests(output)
-    if set(hashes) != set(ARMS):
+    if set(hashes) != set(arms):
         raise ValueError("incomplete binary manifest")
     for (i, a), row in rows.items():
         if row["split"] != split or row["arm"] != a:
