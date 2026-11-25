@@ -8,18 +8,18 @@ Rustで実装した、Mac上の **AFM 3 Core Advanced** 用タスクハーネス
 
 ## インストール
 
-モデル実行には、Apple Intelligenceが有効で、`fm models` に `✓ system (AFM 3 Core Advanced)` と表示されるMacが必要。今回の実機はMac mini M6、32 GB、モデル配置先は内蔵SSD 256 GB、macOS 27.2.1（26B131）。次のコマンドでRust 1.89以上を使い、文脈圧縮を含む現行ソースをインストールできる。[v0.2.0のmacOS向け配布ファイルとSHA-256](https://github.com/ultimate-1113/AFMCLI/releases/tag/v0.2.0)・[AppleのCLI解説](https://developer.apple.com/videos/play/wwdc2026/334/)
+モデル実行には、Apple Intelligenceが有効で、`fm models` に `✓ system (AFM 3 Core Advanced)` と表示されるMacが必要。今回の実機はMac mini M6、32 GB、モデル配置先は内蔵SSD 256 GB、macOS 27.2.1（26B131）。次のコマンドでRust 1.89以上を使い、関数電卓を含むv0.4.0のソースをインストールできる。[v0.4.0のmacOS向け配布ファイルとSHA-256](https://github.com/ultimate-1113/AFMCLI/releases/tag/v0.4.0)・[AppleのCLI解説](https://developer.apple.com/videos/play/wwdc2026/334/)
 
 ```sh
-cargo install --locked --git https://github.com/ultimate-1113/AFMCLI --branch main afmcli
+cargo install --locked --git https://github.com/ultimate-1113/AFMCLI --tag v0.4.0 afmcli
 afmcli doctor
 ```
 
 ダウンロード版はアーカイブと同名の `.sha256` を同じフォルダに置き、空のディレクトリで確認して展開する。
 
 ```sh
-shasum -a 256 -c afmcli-v0.2.0-aarch64-apple-darwin.tar.gz.sha256
-tar -xzf afmcli-v0.2.0-aarch64-apple-darwin.tar.gz
+shasum -a 256 -c afmcli-v0.4.0-aarch64-apple-darwin.tar.gz.sha256
+tar -xzf afmcli-v0.4.0-aarch64-apple-darwin.tar.gz
 ./afmcli doctor
 ```
 

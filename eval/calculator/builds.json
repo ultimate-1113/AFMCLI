@@ -15,8 +15,8 @@
       "calculator_sha256": "8f36cc0b5eb7c9e8db27c59150daca8d2fbe4af2ffe1650f96ec5361ba24a3c9"
     },
     "math-run.json": {
-      "calculator_sha256": "c77dee185909ac495a3fab8470f7bed36047b570550eb6b9a7ea31b0071a27d2",
-      "source_commit": "7beb294"
+      "calculator_sha256": "1c39d03e8b3878d144b0cb652a5d9188b1ed88b66cd90317855ed0f30cc3ea64",
+      "release": "v0.4.0"
     }
   },
   "source_sha256": {

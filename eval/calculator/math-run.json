@@ -1,5 +1,5 @@
 {
-  "binary_sha256": "c77dee185909ac495a3fab8470f7bed36047b570550eb6b9a7ea31b0071a27d2",
+  "binary_sha256": "1c39d03e8b3878d144b0cb652a5d9188b1ed88b66cd90317855ed0f30cc3ea64",
   "total": 547,
   "by_kind": {
     "rational": 200,
@@ -14,6 +14,6 @@
   },
   "errors": [],
   "model_calls": 0,
-  "elapsed_ms": 239.703,
-  "single_batch_jobs_per_second": 2282.0
+  "elapsed_ms": 219.769,
+  "single_batch_jobs_per_second": 2489.0
 }
