@@ -1,0 +1,3539 @@
+{
+  "specialty": "translation",
+  "gates": {
+    "general": {
+      "adopt": false,
+      "checks": {
+        "accuracy": false,
+        "serious": false,
+        "median": true,
+        "families": false
+      }
+    },
+    "context": {
+      "adopt": false,
+      "checks": {
+        "accuracy": true,
+        "unsupported": false,
+        "false_positive_on_absent": false,
+        "total_input": true
+      }
+    },
+    "special": {
+      "adopt": false,
+      "checks": {
+        "accuracy": false,
+        "serious": true,
+        "median": true
+      }
+    }
+  },
+  "panels": {
+    "general_dev": {
+      "n_cases": 12,
+      "arms": {
+        "common": {
+          "n": 12,
+          "correct": 10,
+          "serious": 1,
+          "unsupported": 0,
+          "input_tokens": 4535,
+          "peak_tokens": 370,
+          "calls": 15,
+          "token_checks": 15,
+          "median_ms": 426.3365,
+          "p95_ms": 746.26,
+          "outcomes": {
+            "correct_abstention": 3,
+            "correct_answer": 2,
+            "correct_extraction": 2,
+            "correct_label": 1,
+            "correct_rewrite": 2,
+            "extra_extraction": 1,
+            "refused": 1
+          },
+          "statuses": {
+            "abstained": 3,
+            "ok": 7,
+            "partial": 1,
+            "refused": 1
+          }
+        },
+        "current": {
+          "n": 12,
+          "correct": 10,
+          "serious": 2,
+          "unsupported": 0,
+          "input_tokens": 3530,
+          "peak_tokens": 303,
+          "calls": 15,
+          "token_checks": 15,
+          "median_ms": 402.6375,
+          "p95_ms": 689.692,
+          "outcomes": {
+            "correct_abstention": 3,
+            "correct_answer": 2,
+            "correct_extraction": 2,
+            "correct_label": 1,
+            "correct_rewrite": 2,
+            "extra_extraction": 1,
+            "unverified_facts": 1
+          },
+          "statuses": {
+            "abstained": 3,
+            "ok": 8,
+            "partial": 1
+          }
+        },
+        "direct": {
+          "n": 12,
+          "correct": 3,
+          "serious": 5,
+          "unsupported": 1,
+          "input_tokens": 2584,
+          "peak_tokens": 267,
+          "calls": 12,
+          "token_checks": 12,
+          "median_ms": 348.8555,
+          "p95_ms": 495.9,
+          "outcomes": {
+            "correct_answer": 1,
+            "correct_extraction": 1,
+            "correct_label": 1,
+            "extra_extraction": 2,
+            "invalid_format": 1,
+            "refused": 1,
+            "style_or_length": 2,
+            "unsupported_answer": 1,
+            "wrong_label": 2
+          },
+          "statuses": {
+            "refused": 1,
+            "unverified": 11
+          }
+        },
+        "selected": {
+          "n": 12,
+          "correct": 9,
+          "serious": 2,
+          "unsupported": 1,
+          "input_tokens": 4277,
+          "peak_tokens": 370,
+          "calls": 15,
+          "token_checks": 15,
+          "median_ms": 414.5435,
+          "p95_ms": 755.764,
+          "outcomes": {
+            "correct_abstention": 2,
+            "correct_answer": 2,
+            "correct_extraction": 2,
+            "correct_label": 1,
+            "correct_rewrite": 2,
+            "extra_extraction": 1,
+            "unsupported_answer": 1,
+            "unverified_facts": 1
+          },
+          "statuses": {
+            "abstained": 2,
+            "ok": 9,
+            "partial": 1
+          }
+        }
+      },
+      "by_group": {
+        "answer": {
+          "common": {
+            "n": 3,
+            "correct": 3,
+            "serious": 0,
+            "unsupported": 0,
+            "input_tokens": 1908,
+            "peak_tokens": 370,
+            "calls": 6,
+            "token_checks": 6,
+            "median_ms": 703.509,
+            "p95_ms": 746.26,
+            "outcomes": {
+              "correct_abstention": 1,
+              "correct_answer": 2
+            },
+            "statuses": {
+              "abstained": 1,
+              "ok": 2
+            }
+          },
+          "current": {
+            "n": 3,
+            "correct": 3,
+            "serious": 0,
+            "unsupported": 0,
+            "input_tokens": 1506,
+            "peak_tokens": 303,
+            "calls": 6,
+            "token_checks": 6,
+            "median_ms": 676.816,
+            "p95_ms": 689.692,
+            "outcomes": {
+              "correct_abstention": 1,
+              "correct_answer": 2
+            },
+            "statuses": {
+              "abstained": 1,
+              "ok": 2
+            }
+          },
+          "direct": {
+            "n": 3,
+            "correct": 1,
+            "serious": 1,
+            "unsupported": 1,
+            "input_tokens": 607,
+            "peak_tokens": 217,
+            "calls": 3,
+            "token_checks": 3,
+            "median_ms": 337.335,
+            "p95_ms": 430.236,
+            "outcomes": {
+              "correct_answer": 1,
+              "invalid_format": 1,
+              "unsupported_answer": 1
+            },
+            "statuses": {
+              "unverified": 3
+            }
+          },
+          "selected": {
+            "n": 3,
+            "correct": 2,
+            "serious": 1,
+            "unsupported": 1,
+            "input_tokens": 1790,
+            "peak_tokens": 370,
+            "calls": 6,
+            "token_checks": 6,
+            "median_ms": 701.194,
+            "p95_ms": 755.764,
+            "outcomes": {
+              "correct_answer": 2,
+              "unsupported_answer": 1
+            },
+            "statuses": {
+              "ok": 3
+            }
+          }
+        },
+        "classify": {
+          "common": {
+            "n": 3,
+            "correct": 3,
+            "serious": 0,
+            "unsupported": 0,
+            "input_tokens": 944,
+            "peak_tokens": 333,
+            "calls": 3,
+            "token_checks": 3,
+            "median_ms": 414.276,
+            "p95_ms": 438.397,
+            "outcomes": {
+              "correct_abstention": 2,
+              "correct_label": 1
+            },
+            "statuses": {
+              "abstained": 2,
+              "ok": 1
+            }
+          },
+          "current": {
+            "n": 3,
+            "correct": 3,
+            "serious": 0,
+            "unsupported": 0,
+            "input_tokens": 743,
+            "peak_tokens": 266,
+            "calls": 3,
+            "token_checks": 3,
+            "median_ms": 375.947,
+            "p95_ms": 399.837,
+            "outcomes": {
+              "correct_abstention": 2,
+              "correct_label": 1
+            },
+            "statuses": {
+              "abstained": 2,
+              "ok": 1
+            }
+          },
+          "direct": {
+            "n": 3,
+            "correct": 1,
+            "serious": 2,
+            "unsupported": 0,
+            "input_tokens": 666,
+            "peak_tokens": 238,
+            "calls": 3,
+            "token_checks": 3,
+            "median_ms": 319.922,
+            "p95_ms": 323.924,
+            "outcomes": {
+              "correct_label": 1,
+              "wrong_label": 2
+            },
+            "statuses": {
+              "unverified": 3
+            }
+          },
+          "selected": {
+            "n": 3,
+            "correct": 3,
+            "serious": 0,
+            "unsupported": 0,
+            "input_tokens": 820,
+            "peak_tokens": 343,
+            "calls": 3,
+            "token_checks": 3,
+            "median_ms": 383.112,
+            "p95_ms": 417.25,
+            "outcomes": {
+              "correct_abstention": 2,
+              "correct_label": 1
+            },
+            "statuses": {
+              "abstained": 2,
+              "ok": 1
+            }
+          }
+        },
+        "extract": {
+          "common": {
+            "n": 3,
+            "correct": 2,
+            "serious": 1,
+            "unsupported": 0,
+            "input_tokens": 914,
+            "peak_tokens": 326,
+            "calls": 3,
+            "token_checks": 3,
+            "median_ms": 457.171,
+            "p95_ms": 460.902,
+            "outcomes": {
+              "correct_extraction": 2,
+              "extra_extraction": 1
+            },
+            "statuses": {
+              "ok": 2,
+              "partial": 1
+            }
+          },
+          "current": {
+            "n": 3,
+            "correct": 2,
+            "serious": 1,
+            "unsupported": 0,
+            "input_tokens": 713,
+            "peak_tokens": 259,
+            "calls": 3,
+            "token_checks": 3,
+            "median_ms": 405.438,
+            "p95_ms": 454.618,
+            "outcomes": {
+              "correct_extraction": 2,
+              "extra_extraction": 1
+            },
+            "statuses": {
+              "ok": 2,
+              "partial": 1
+            }
+          },
+          "direct": {
+            "n": 3,
+            "correct": 1,
+            "serious": 2,
+            "unsupported": 0,
+            "input_tokens": 737,
+            "peak_tokens": 267,
+            "calls": 3,
+            "token_checks": 3,
+            "median_ms": 442.292,
+            "p95_ms": 495.9,
+            "outcomes": {
+              "correct_extraction": 1,
+              "extra_extraction": 2
+            },
+            "statuses": {
+              "unverified": 3
+            }
+          },
+          "selected": {
+            "n": 3,
+            "correct": 2,
+            "serious": 1,
+            "unsupported": 0,
+            "input_tokens": 856,
+            "peak_tokens": 329,
+            "calls": 3,
+            "token_checks": 3,
+            "median_ms": 411.837,
+            "p95_ms": 462.459,
+            "outcomes": {
+              "correct_extraction": 2,
+              "extra_extraction": 1
+            },
+            "statuses": {
+              "ok": 2,
+              "partial": 1
+            }
+          }
+        },
+        "rewrite": {
+          "common": {
+            "n": 3,
+            "correct": 2,
+            "serious": 0,
+            "unsupported": 0,
+            "input_tokens": 769,
+            "peak_tokens": 257,
+            "calls": 3,
+            "token_checks": 3,
+            "median_ms": 380.654,
+            "p95_ms": 395.86,
+            "outcomes": {
+              "correct_rewrite": 2,
+              "refused": 1
+            },
+            "statuses": {
+              "ok": 2,
+              "refused": 1
+            }
+          },
+          "current": {
+            "n": 3,
+            "correct": 2,
+            "serious": 1,
+            "unsupported": 0,
+            "input_tokens": 568,
+            "peak_tokens": 190,
+            "calls": 3,
+            "token_checks": 3,
+            "median_ms": 365.311,
+            "p95_ms": 408.621,
+            "outcomes": {
+              "correct_rewrite": 2,
+              "unverified_facts": 1
+            },
+            "statuses": {
+              "ok": 3
+            }
+          },
+          "direct": {
+            "n": 3,
+            "correct": 0,
+            "serious": 0,
+            "unsupported": 0,
+            "input_tokens": 574,
+            "peak_tokens": 192,
+            "calls": 3,
+            "token_checks": 3,
+            "median_ms": 375.727,
+            "p95_ms": 440.682,
+            "outcomes": {
+              "refused": 1,
+              "style_or_length": 2
+            },
+            "statuses": {
+              "refused": 1,
+              "unverified": 2
+            }
+          },
+          "selected": {
+            "n": 3,
+            "correct": 2,
+            "serious": 0,
+            "unsupported": 0,
+            "input_tokens": 811,
+            "peak_tokens": 271,
+            "calls": 3,
+            "token_checks": 3,
+            "median_ms": 400.981,
+            "p95_ms": 462.138,
+            "outcomes": {
+              "correct_rewrite": 2,
+              "unverified_facts": 1
+            },
+            "statuses": {
+              "ok": 3
+            }
+          }
+        }
+      },
+      "paired": {
+        "common": {
+          "current": {
+            "net": 0,
+            "wins": [],
+            "losses": [],
+            "net_by_family": {
+              "answer": 0,
+              "classify": 0,
+              "extract": 0,
+              "rewrite": 0
+            }
+          },
+          "direct": {
+            "net": 7,
+            "wins": [
+              "general-dev-clay",
+              "general-dev-fan",
+              "general-dev-loan",
+              "general-dev-pier",
+              "general-dev-rink",
+              "general-dev-verifiers",
+              "general-dev-wind"
+            ],
+            "losses": [],
+            "net_by_family": {
+              "answer": 2,
+              "classify": 2,
+              "extract": 1,
+              "rewrite": 2
+            }
+          }
+        },
+        "selected": {
+          "current": {
+            "net": -1,
+            "wins": [
+              "general-dev-paper"
+            ],
+            "losses": [
+              "general-dev-loan",
+              "general-dev-rink"
+            ],
+            "net_by_family": {
+              "answer": -1,
+              "classify": 0,
+              "extract": 0,
+              "rewrite": 0
+            }
+          },
+          "direct": {
+            "net": 6,
+            "wins": [
+              "general-dev-clay",
+              "general-dev-fan",
+              "general-dev-paper",
+              "general-dev-pier",
+              "general-dev-verifiers",
+              "general-dev-wind"
+            ],
+            "losses": [],
+            "net_by_family": {
+              "answer": 1,
+              "classify": 2,
+              "extract": 1,
+              "rewrite": 2
+            }
+          }
+        }
+      },
+      "diagnostics": {
+        "label-scope": {
+          "net": 0,
+          "wins": [],
+          "losses": [],
+          "net_by_family": {
+            "classify": 0
+          }
+        },
+        "no_hint": {
+          "net": 0,
+          "wins": [],
+          "losses": [],
+          "net_by_family": {
+            "answer": 0,
+            "classify": 0,
+            "extract": 0
+          }
+        },
+        "number-binding": {
+          "net": 0,
+          "wins": [
+            "general-dev-paper"
+          ],
+          "losses": [
+            "general-dev-rink"
+          ],
+          "net_by_family": {
+            "rewrite": 0
+          }
+        },
+        "revision-scope": {
+          "net": -1,
+          "wins": [],
+          "losses": [
+            "general-dev-loan"
+          ],
+          "net_by_family": {
+            "answer": -1
+          }
+        },
+        "separate-items": {
+          "net": 0,
+          "wins": [],
+          "losses": [],
+          "net_by_family": {
+            "extract": 0
+          }
+        },
+        "value-units": {
+          "net": 0,
+          "wins": [],
+          "losses": [],
+          "net_by_family": {
+            "answer": 0,
+            "extract": 0
+          }
+        }
+      }
+    },
+    "general_test": {
+      "n_cases": 40,
+      "arms": {
+        "common": {
+          "n": 40,
+          "correct": 35,
+          "serious": 4,
+          "unsupported": 1,
+          "input_tokens": 15566,
+          "peak_tokens": 387,
+          "calls": 49,
+          "token_checks": 49,
+          "median_ms": 426.1975,
+          "p95_ms": 722.843,
+          "outcomes": {
+            "correct_abstention": 5,
+            "correct_answer": 8,
+            "correct_extraction": 9,
+            "correct_label": 5,
+            "correct_rewrite": 8,
+            "extra_extraction": 1,
+            "unsupported_answer": 1,
+            "unverified_facts": 2,
+            "wrong_label": 1
+          },
+          "statuses": {
+            "abstained": 5,
+            "ok": 29,
+            "partial": 6
+          }
+        },
+        "current": {
+          "n": 40,
+          "correct": 39,
+          "serious": 1,
+          "unsupported": 0,
+          "input_tokens": 12283,
+          "peak_tokens": 320,
+          "calls": 49,
+          "token_checks": 49,
+          "median_ms": 405.8645,
+          "p95_ms": 690.834,
+          "outcomes": {
+            "correct_abstention": 7,
+            "correct_answer": 8,
+            "correct_extraction": 9,
+            "correct_label": 5,
+            "correct_rewrite": 10,
+            "extra_extraction": 1
+          },
+          "statuses": {
+            "abstained": 7,
+            "ok": 27,
+            "partial": 6
+          }
+        },
+        "direct": {
+          "n": 40,
+          "correct": 24,
+          "serious": 7,
+          "unsupported": 4,
+          "input_tokens": 9216,
+          "peak_tokens": 302,
+          "calls": 40,
+          "token_checks": 40,
+          "median_ms": 377.5285,
+          "p95_ms": 509.955,
+          "outcomes": {
+            "correct_abstention": 3,
+            "correct_answer": 5,
+            "correct_extraction": 7,
+            "correct_label": 5,
+            "correct_rewrite": 4,
+            "extra_extraction": 2,
+            "invalid_format": 1,
+            "style_or_length": 4,
+            "unsupported_answer": 1,
+            "unverified_facts": 2,
+            "wrong_answer": 3,
+            "wrong_label": 3
+          },
+          "statuses": {
+            "unverified": 40
+          }
+        },
+        "selected": {
+          "n": 40,
+          "correct": 36,
+          "serious": 3,
+          "unsupported": 1,
+          "input_tokens": 15770,
+          "peak_tokens": 395,
+          "calls": 50,
+          "token_checks": 50,
+          "median_ms": 439.7525,
+          "p95_ms": 728.128,
+          "outcomes": {
+            "correct_abstention": 5,
+            "correct_answer": 8,
+            "correct_extraction": 9,
+            "correct_label": 5,
+            "correct_rewrite": 9,
+            "extra_extraction": 1,
+            "held": 1,
+            "unsupported_answer": 1,
+            "wrong_label": 1
+          },
+          "statuses": {
+            "abstained": 5,
+            "held": 1,
+            "ok": 28,
+            "partial": 6
+          }
+        }
+      },
+      "by_group": {
+        "answer": {
+          "common": {
+            "n": 10,
+            "correct": 9,
+            "serious": 1,
+            "unsupported": 1,
+            "input_tokens": 6337,
+            "peak_tokens": 387,
+            "calls": 19,
+            "token_checks": 19,
+            "median_ms": 708.8834999999999,
+            "p95_ms": 742.55,
+            "outcomes": {
+              "correct_abstention": 1,
+              "correct_answer": 8,
+              "unsupported_answer": 1
+            },
+            "statuses": {
+              "abstained": 1,
+              "ok": 9
+            }
+          },
+          "current": {
+            "n": 10,
+            "correct": 10,
+            "serious": 0,
+            "unsupported": 0,
+            "input_tokens": 5064,
+            "peak_tokens": 320,
+            "calls": 19,
+            "token_checks": 19,
+            "median_ms": 673.9175,
+            "p95_ms": 697.95,
+            "outcomes": {
+              "correct_abstention": 2,
+              "correct_answer": 8
+            },
+            "statuses": {
+              "abstained": 2,
+              "ok": 8
+            }
+          },
+          "direct": {
+            "n": 10,
+            "correct": 6,
+            "serious": 1,
+            "unsupported": 4,
+            "input_tokens": 2168,
+            "peak_tokens": 234,
+            "calls": 10,
+            "token_checks": 10,
+            "median_ms": 330.3695,
+            "p95_ms": 511.323,
+            "outcomes": {
+              "correct_abstention": 1,
+              "correct_answer": 5,
+              "unsupported_answer": 1,
+              "wrong_answer": 3
+            },
+            "statuses": {
+              "unverified": 10
+            }
+          },
+          "selected": {
+            "n": 10,
+            "correct": 9,
+            "serious": 1,
+            "unsupported": 1,
+            "input_tokens": 6240,
+            "peak_tokens": 395,
+            "calls": 19,
+            "token_checks": 19,
+            "median_ms": 714.6055,
+            "p95_ms": 756.84,
+            "outcomes": {
+              "correct_abstention": 1,
+              "correct_answer": 8,
+              "unsupported_answer": 1
+            },
+            "statuses": {
+              "abstained": 1,
+              "ok": 9
+            }
+          }
+        },
+        "classify": {
+          "common": {
+            "n": 10,
+            "correct": 9,
+            "serious": 1,
+            "unsupported": 0,
+            "input_tokens": 3228,
+            "peak_tokens": 338,
+            "calls": 10,
+            "token_checks": 10,
+            "median_ms": 402.962,
+            "p95_ms": 424.916,
+            "outcomes": {
+              "correct_abstention": 4,
+              "correct_label": 5,
+              "wrong_label": 1
+            },
+            "statuses": {
+              "abstained": 4,
+              "ok": 6
+            }
+          },
+          "current": {
+            "n": 10,
+            "correct": 10,
+            "serious": 0,
+            "unsupported": 0,
+            "input_tokens": 2558,
+            "peak_tokens": 271,
+            "calls": 10,
+            "token_checks": 10,
+            "median_ms": 378.72249999999997,
+            "p95_ms": 403.633,
+            "outcomes": {
+              "correct_abstention": 5,
+              "correct_label": 5
+            },
+            "statuses": {
+              "abstained": 5,
+              "ok": 5
+            }
+          },
+          "direct": {
+            "n": 10,
+            "correct": 7,
+            "serious": 3,
+            "unsupported": 0,
+            "input_tokens": 2289,
+            "peak_tokens": 243,
+            "calls": 10,
+            "token_checks": 10,
+            "median_ms": 303.8515,
+            "p95_ms": 334.052,
+            "outcomes": {
+              "correct_abstention": 2,
+              "correct_label": 5,
+              "wrong_label": 3
+            },
+            "statuses": {
+              "unverified": 10
+            }
+          },
+          "selected": {
+            "n": 10,
+            "correct": 9,
+            "serious": 1,
+            "unsupported": 0,
+            "input_tokens": 3097,
+            "peak_tokens": 348,
+            "calls": 10,
+            "token_checks": 10,
+            "median_ms": 391.4465,
+            "p95_ms": 403.728,
+            "outcomes": {
+              "correct_abstention": 4,
+              "correct_label": 5,
+              "wrong_label": 1
+            },
+            "statuses": {
+              "abstained": 4,
+              "ok": 6
+            }
+          }
+        },
+        "extract": {
+          "common": {
+            "n": 10,
+            "correct": 9,
+            "serious": 1,
+            "unsupported": 0,
+            "input_tokens": 3342,
+            "peak_tokens": 361,
+            "calls": 10,
+            "token_checks": 10,
+            "median_ms": 417.8315,
+            "p95_ms": 549.719,
+            "outcomes": {
+              "correct_extraction": 9,
+              "extra_extraction": 1
+            },
+            "statuses": {
+              "ok": 4,
+              "partial": 6
+            }
+          },
+          "current": {
+            "n": 10,
+            "correct": 9,
+            "serious": 1,
+            "unsupported": 0,
+            "input_tokens": 2672,
+            "peak_tokens": 294,
+            "calls": 10,
+            "token_checks": 10,
+            "median_ms": 411.647,
+            "p95_ms": 516.459,
+            "outcomes": {
+              "correct_extraction": 9,
+              "extra_extraction": 1
+            },
+            "statuses": {
+              "ok": 4,
+              "partial": 6
+            }
+          },
+          "direct": {
+            "n": 10,
+            "correct": 7,
+            "serious": 2,
+            "unsupported": 0,
+            "input_tokens": 2752,
+            "peak_tokens": 302,
+            "calls": 10,
+            "token_checks": 10,
+            "median_ms": 434.053,
+            "p95_ms": 530.05,
+            "outcomes": {
+              "correct_extraction": 7,
+              "extra_extraction": 2,
+              "invalid_format": 1
+            },
+            "statuses": {
+              "unverified": 10
+            }
+          },
+          "selected": {
+            "n": 10,
+            "correct": 9,
+            "serious": 1,
+            "unsupported": 0,
+            "input_tokens": 3327,
+            "peak_tokens": 370,
+            "calls": 10,
+            "token_checks": 10,
+            "median_ms": 424.92,
+            "p95_ms": 553.343,
+            "outcomes": {
+              "correct_extraction": 9,
+              "extra_extraction": 1
+            },
+            "statuses": {
+              "ok": 4,
+              "partial": 6
+            }
+          }
+        },
+        "rewrite": {
+          "common": {
+            "n": 10,
+            "correct": 8,
+            "serious": 1,
+            "unsupported": 0,
+            "input_tokens": 2659,
+            "peak_tokens": 274,
+            "calls": 10,
+            "token_checks": 10,
+            "median_ms": 440.69550000000004,
+            "p95_ms": 529.986,
+            "outcomes": {
+              "correct_rewrite": 8,
+              "unverified_facts": 2
+            },
+            "statuses": {
+              "ok": 10
+            }
+          },
+          "current": {
+            "n": 10,
+            "correct": 10,
+            "serious": 0,
+            "unsupported": 0,
+            "input_tokens": 1989,
+            "peak_tokens": 207,
+            "calls": 10,
+            "token_checks": 10,
+            "median_ms": 404.95799999999997,
+            "p95_ms": 456.0,
+            "outcomes": {
+              "correct_rewrite": 10
+            },
+            "statuses": {
+              "ok": 10
+            }
+          },
+          "direct": {
+            "n": 10,
+            "correct": 4,
+            "serious": 1,
+            "unsupported": 0,
+            "input_tokens": 2007,
+            "peak_tokens": 209,
+            "calls": 10,
+            "token_checks": 10,
+            "median_ms": 419.2115,
+            "p95_ms": 495.256,
+            "outcomes": {
+              "correct_rewrite": 4,
+              "style_or_length": 4,
+              "unverified_facts": 2
+            },
+            "statuses": {
+              "unverified": 10
+            }
+          },
+          "selected": {
+            "n": 10,
+            "correct": 9,
+            "serious": 0,
+            "unsupported": 0,
+            "input_tokens": 3106,
+            "peak_tokens": 307,
+            "calls": 11,
+            "token_checks": 11,
+            "median_ms": 466.868,
+            "p95_ms": 1381.501,
+            "outcomes": {
+              "correct_rewrite": 9,
+              "held": 1
+            },
+            "statuses": {
+              "held": 1,
+              "ok": 9
+            }
+          }
+        }
+      },
+      "paired": {
+        "common": {
+          "current": {
+            "net": -4,
+            "wins": [],
+            "losses": [
+              "general-ceramics-date",
+              "general-choir-request",
+              "general-rinse-dials",
+              "general-spool-wait"
+            ],
+            "net_by_family": {
+              "answer": -1,
+              "classify": -1,
+              "extract": 0,
+              "rewrite": -2
+            }
+          },
+          "direct": {
+            "net": 11,
+            "wins": [
+              "general-cafe-table",
+              "general-charcoal-receipt",
+              "general-enclosure-count",
+              "general-journal-map",
+              "general-paper-length",
+              "general-parcel-two",
+              "general-reading-room",
+              "general-refund-windows",
+              "general-soup-storage",
+              "general-stage-scratch",
+              "general-stand-price",
+              "general-theatre-room"
+            ],
+            "losses": [
+              "general-spool-wait"
+            ],
+            "net_by_family": {
+              "answer": 3,
+              "classify": 2,
+              "extract": 2,
+              "rewrite": 4
+            }
+          }
+        },
+        "selected": {
+          "current": {
+            "net": -3,
+            "wins": [],
+            "losses": [
+              "general-ceramics-date",
+              "general-choir-request",
+              "general-spool-wait"
+            ],
+            "net_by_family": {
+              "answer": -1,
+              "classify": -1,
+              "extract": 0,
+              "rewrite": -1
+            }
+          },
+          "direct": {
+            "net": 12,
+            "wins": [
+              "general-cafe-table",
+              "general-charcoal-receipt",
+              "general-enclosure-count",
+              "general-journal-map",
+              "general-paper-length",
+              "general-parcel-two",
+              "general-reading-room",
+              "general-refund-windows",
+              "general-rinse-dials",
+              "general-soup-storage",
+              "general-stage-scratch",
+              "general-stand-price",
+              "general-theatre-room"
+            ],
+            "losses": [
+              "general-spool-wait"
+            ],
+            "net_by_family": {
+              "answer": 3,
+              "classify": 2,
+              "extract": 2,
+              "rewrite": 5
+            }
+          }
+        }
+      },
+      "diagnostics": {
+        "label-scope": {
+          "net": -1,
+          "wins": [],
+          "losses": [
+            "general-choir-request"
+          ],
+          "net_by_family": {
+            "classify": -1
+          }
+        },
+        "no_hint": {
+          "net": 0,
+          "wins": [],
+          "losses": [],
+          "net_by_family": {
+            "answer": 0,
+            "classify": 0,
+            "extract": 0
+          }
+        },
+        "number-binding": {
+          "net": -1,
+          "wins": [],
+          "losses": [
+            "general-spool-wait"
+          ],
+          "net_by_family": {
+            "rewrite": -1
+          }
+        },
+        "revision-scope": {
+          "net": -1,
+          "wins": [],
+          "losses": [
+            "general-ceramics-date"
+          ],
+          "net_by_family": {
+            "answer": -1,
+            "extract": 0
+          }
+        },
+        "separate-items": {
+          "net": 0,
+          "wins": [],
+          "losses": [],
+          "net_by_family": {
+            "extract": 0
+          }
+        },
+        "subject-scope": {
+          "net": 0,
+          "wins": [],
+          "losses": [],
+          "net_by_family": {
+            "answer": 0
+          }
+        },
+        "value-units": {
+          "net": 0,
+          "wins": [],
+          "losses": [],
+          "net_by_family": {
+            "answer": 0,
+            "extract": 0
+          }
+        }
+      }
+    },
+    "context_dev": {
+      "n_cases": 6,
+      "arms": {
+        "current": {
+          "n": 6,
+          "correct": 4,
+          "serious": 1,
+          "unsupported": 1,
+          "input_tokens": 86764,
+          "peak_tokens": 6129,
+          "calls": 24,
+          "token_checks": 129,
+          "median_ms": 6808.543,
+          "p95_ms": 20644.694,
+          "outcomes": {
+            "correct_answer": 4,
+            "held": 1,
+            "unsupported_answer": 1
+          },
+          "statuses": {
+            "held": 1,
+            "ok": 5
+          }
+        },
+        "direct": {
+          "n": 6,
+          "correct": 1,
+          "serious": 1,
+          "unsupported": 1,
+          "input_tokens": 8567,
+          "peak_tokens": 4294,
+          "calls": 2,
+          "token_checks": 6,
+          "median_ms": 68.7285,
+          "p95_ms": 2206.575,
+          "outcomes": {
+            "correct_answer": 1,
+            "held": 4,
+            "unsupported_answer": 1
+          },
+          "statuses": {
+            "held": 4,
+            "unverified": 2
+          }
+        },
+        "indexed": {
+          "n": 6,
+          "correct": 4,
+          "serious": 1,
+          "unsupported": 1,
+          "input_tokens": 62935,
+          "peak_tokens": 6116,
+          "calls": 22,
+          "token_checks": 92,
+          "median_ms": 3870.1335,
+          "p95_ms": 23365.249,
+          "outcomes": {
+            "correct_answer": 4,
+            "held": 1,
+            "unsupported_answer": 1
+          },
+          "statuses": {
+            "held": 1,
+            "ok": 5
+          }
+        },
+        "once": {
+          "n": 6,
+          "correct": 4,
+          "serious": 1,
+          "unsupported": 1,
+          "input_tokens": 59121,
+          "peak_tokens": 6116,
+          "calls": 20,
+          "token_checks": 90,
+          "median_ms": 3746.8575,
+          "p95_ms": 21490.773,
+          "outcomes": {
+            "correct_answer": 4,
+            "held": 1,
+            "unsupported_answer": 1
+          },
+          "statuses": {
+            "held": 1,
+            "ok": 5
+          }
+        }
+      },
+      "by_group": {
+        "absent": {
+          "current": {
+            "n": 1,
+            "correct": 0,
+            "serious": 0,
+            "unsupported": 0,
+            "input_tokens": 8745,
+            "peak_tokens": 4386,
+            "calls": 2,
+            "token_checks": 2,
+            "median_ms": 4829.627,
+            "p95_ms": 4829.627,
+            "outcomes": {
+              "held": 1
+            },
+            "statuses": {
+              "held": 1
+            }
+          },
+          "direct": {
+            "n": 1,
+            "correct": 0,
+            "serious": 1,
+            "unsupported": 1,
+            "input_tokens": 4273,
+            "peak_tokens": 4273,
+            "calls": 1,
+            "token_checks": 1,
+            "median_ms": 2206.575,
+            "p95_ms": 2206.575,
+            "outcomes": {
+              "unsupported_answer": 1
+            },
+            "statuses": {
+              "unverified": 1
+            }
+          },
+          "indexed": {
+            "n": 1,
+            "correct": 0,
+            "serious": 0,
+            "unsupported": 0,
+            "input_tokens": 8745,
+            "peak_tokens": 4386,
+            "calls": 2,
+            "token_checks": 2,
+            "median_ms": 4761.23,
+            "p95_ms": 4761.23,
+            "outcomes": {
+              "held": 1
+            },
+            "statuses": {
+              "held": 1
+            }
+          },
+          "once": {
+            "n": 1,
+            "correct": 0,
+            "serious": 0,
+            "unsupported": 0,
+            "input_tokens": 8745,
+            "peak_tokens": 4386,
+            "calls": 2,
+            "token_checks": 2,
+            "median_ms": 4864.83,
+            "p95_ms": 4864.83,
+            "outcomes": {
+              "held": 1
+            },
+            "statuses": {
+              "held": 1
+            }
+          }
+        },
+        "aggregate": {
+          "current": {
+            "n": 1,
+            "correct": 1,
+            "serious": 0,
+            "unsupported": 0,
+            "input_tokens": 10418,
+            "peak_tokens": 6114,
+            "calls": 4,
+            "token_checks": 21,
+            "median_ms": 6705.34,
+            "p95_ms": 6705.34,
+            "outcomes": {
+              "correct_answer": 1
+            },
+            "statuses": {
+              "ok": 1
+            }
+          },
+          "direct": {
+            "n": 1,
+            "correct": 0,
+            "serious": 0,
+            "unsupported": 0,
+            "input_tokens": 0,
+            "peak_tokens": 0,
+            "calls": 0,
+            "token_checks": 1,
+            "median_ms": 63.143,
+            "p95_ms": 63.143,
+            "outcomes": {
+              "held": 1
+            },
+            "statuses": {
+              "held": 1
+            }
+          },
+          "indexed": {
+            "n": 1,
+            "correct": 1,
+            "serious": 0,
+            "unsupported": 0,
+            "input_tokens": 10418,
+            "peak_tokens": 6114,
+            "calls": 4,
+            "token_checks": 21,
+            "median_ms": 6921.865,
+            "p95_ms": 6921.865,
+            "outcomes": {
+              "correct_answer": 1
+            },
+            "statuses": {
+              "ok": 1
+            }
+          },
+          "once": {
+            "n": 1,
+            "correct": 1,
+            "serious": 0,
+            "unsupported": 0,
+            "input_tokens": 10418,
+            "peak_tokens": 6114,
+            "calls": 4,
+            "token_checks": 21,
+            "median_ms": 7039.017,
+            "p95_ms": 7039.017,
+            "outcomes": {
+              "correct_answer": 1
+            },
+            "statuses": {
+              "ok": 1
+            }
+          }
+        },
+        "amendment": {
+          "current": {
+            "n": 2,
+            "correct": 1,
+            "serious": 1,
+            "unsupported": 1,
+            "input_tokens": 41132,
+            "peak_tokens": 6127,
+            "calls": 10,
+            "token_checks": 62,
+            "median_ms": 13778.22,
+            "p95_ms": 20644.694,
+            "outcomes": {
+              "correct_answer": 1,
+              "unsupported_answer": 1
+            },
+            "statuses": {
+              "ok": 2
+            }
+          },
+          "direct": {
+            "n": 2,
+            "correct": 0,
+            "serious": 0,
+            "unsupported": 0,
+            "input_tokens": 0,
+            "peak_tokens": 0,
+            "calls": 0,
+            "token_checks": 2,
+            "median_ms": 66.6425,
+            "p95_ms": 66.943,
+            "outcomes": {
+              "held": 2
+            },
+            "statuses": {
+              "held": 2
+            }
+          },
+          "indexed": {
+            "n": 2,
+            "correct": 1,
+            "serious": 1,
+            "unsupported": 1,
+            "input_tokens": 37625,
+            "peak_tokens": 6116,
+            "calls": 12,
+            "token_checks": 55,
+            "median_ms": 12297.216,
+            "p95_ms": 23365.249,
+            "outcomes": {
+              "correct_answer": 1,
+              "unsupported_answer": 1
+            },
+            "statuses": {
+              "ok": 2
+            }
+          },
+          "once": {
+            "n": 2,
+            "correct": 1,
+            "serious": 1,
+            "unsupported": 1,
+            "input_tokens": 33811,
+            "peak_tokens": 6116,
+            "calls": 10,
+            "token_checks": 53,
+            "median_ms": 11384.4675,
+            "p95_ms": 21490.773,
+            "outcomes": {
+              "correct_answer": 1,
+              "unsupported_answer": 1
+            },
+            "statuses": {
+              "ok": 2
+            }
+          }
+        },
+        "different_target": {
+          "current": {
+            "n": 1,
+            "correct": 1,
+            "serious": 0,
+            "unsupported": 0,
+            "input_tokens": 21789,
+            "peak_tokens": 6129,
+            "calls": 6,
+            "token_checks": 42,
+            "median_ms": 14953.588,
+            "p95_ms": 14953.588,
+            "outcomes": {
+              "correct_answer": 1
+            },
+            "statuses": {
+              "ok": 1
+            }
+          },
+          "direct": {
+            "n": 1,
+            "correct": 0,
+            "serious": 0,
+            "unsupported": 0,
+            "input_tokens": 0,
+            "peak_tokens": 0,
+            "calls": 0,
+            "token_checks": 1,
+            "median_ms": 70.514,
+            "p95_ms": 70.514,
+            "outcomes": {
+              "held": 1
+            },
+            "statuses": {
+              "held": 1
+            }
+          },
+          "indexed": {
+            "n": 1,
+            "correct": 1,
+            "serious": 0,
+            "unsupported": 0,
+            "input_tokens": 1467,
+            "peak_tokens": 737,
+            "calls": 2,
+            "token_checks": 12,
+            "median_ms": 1208.656,
+            "p95_ms": 1208.656,
+            "outcomes": {
+              "correct_answer": 1
+            },
+            "statuses": {
+              "ok": 1
+            }
+          },
+          "once": {
+            "n": 1,
+            "correct": 1,
+            "serious": 0,
+            "unsupported": 0,
+            "input_tokens": 1467,
+            "peak_tokens": 737,
+            "calls": 2,
+            "token_checks": 12,
+            "median_ms": 1237.364,
+            "p95_ms": 1237.364,
+            "outcomes": {
+              "correct_answer": 1
+            },
+            "statuses": {
+              "ok": 1
+            }
+          }
+        },
+        "early": {
+          "current": {
+            "n": 1,
+            "correct": 1,
+            "serious": 0,
+            "unsupported": 0,
+            "input_tokens": 4680,
+            "peak_tokens": 4380,
+            "calls": 2,
+            "token_checks": 2,
+            "median_ms": 2618.148,
+            "p95_ms": 2618.148,
+            "outcomes": {
+              "correct_answer": 1
+            },
+            "statuses": {
+              "ok": 1
+            }
+          },
+          "direct": {
+            "n": 1,
+            "correct": 1,
+            "serious": 0,
+            "unsupported": 0,
+            "input_tokens": 4294,
+            "peak_tokens": 4294,
+            "calls": 1,
+            "token_checks": 1,
+            "median_ms": 2201.852,
+            "p95_ms": 2201.852,
+            "outcomes": {
+              "correct_answer": 1
+            },
+            "statuses": {
+              "unverified": 1
+            }
+          },
+          "indexed": {
+            "n": 1,
+            "correct": 1,
+            "serious": 0,
+            "unsupported": 0,
+            "input_tokens": 4680,
+            "peak_tokens": 4380,
+            "calls": 2,
+            "token_checks": 2,
+            "median_ms": 2979.037,
+            "p95_ms": 2979.037,
+            "outcomes": {
+              "correct_answer": 1
+            },
+            "statuses": {
+              "ok": 1
+            }
+          },
+          "once": {
+            "n": 1,
+            "correct": 1,
+            "serious": 0,
+            "unsupported": 0,
+            "input_tokens": 4680,
+            "peak_tokens": 4380,
+            "calls": 2,
+            "token_checks": 2,
+            "median_ms": 2628.885,
+            "p95_ms": 2628.885,
+            "outcomes": {
+              "correct_answer": 1
+            },
+            "statuses": {
+              "ok": 1
+            }
+          }
+        },
+        "4k": {
+          "current": {
+            "n": 2,
+            "correct": 1,
+            "serious": 0,
+            "unsupported": 0,
+            "input_tokens": 13425,
+            "peak_tokens": 4386,
+            "calls": 4,
+            "token_checks": 4,
+            "median_ms": 3723.8875000000003,
+            "p95_ms": 4829.627,
+            "outcomes": {
+              "correct_answer": 1,
+              "held": 1
+            },
+            "statuses": {
+              "held": 1,
+              "ok": 1
+            }
+          },
+          "direct": {
+            "n": 2,
+            "correct": 1,
+            "serious": 1,
+            "unsupported": 1,
+            "input_tokens": 8567,
+            "peak_tokens": 4294,
+            "calls": 2,
+            "token_checks": 2,
+            "median_ms": 2204.2135,
+            "p95_ms": 2206.575,
+            "outcomes": {
+              "correct_answer": 1,
+              "unsupported_answer": 1
+            },
+            "statuses": {
+              "unverified": 2
+            }
+          },
+          "indexed": {
+            "n": 2,
+            "correct": 1,
+            "serious": 0,
+            "unsupported": 0,
+            "input_tokens": 13425,
+            "peak_tokens": 4386,
+            "calls": 4,
+            "token_checks": 4,
+            "median_ms": 3870.1335,
+            "p95_ms": 4761.23,
+            "outcomes": {
+              "correct_answer": 1,
+              "held": 1
+            },
+            "statuses": {
+              "held": 1,
+              "ok": 1
+            }
+          },
+          "once": {
+            "n": 2,
+            "correct": 1,
+            "serious": 0,
+            "unsupported": 0,
+            "input_tokens": 13425,
+            "peak_tokens": 4386,
+            "calls": 4,
+            "token_checks": 4,
+            "median_ms": 3746.8575,
+            "p95_ms": 4864.83,
+            "outcomes": {
+              "correct_answer": 1,
+              "held": 1
+            },
+            "statuses": {
+              "held": 1,
+              "ok": 1
+            }
+          }
+        },
+        "8k": {
+          "current": {
+            "n": 2,
+            "correct": 2,
+            "serious": 0,
+            "unsupported": 0,
+            "input_tokens": 20698,
+            "peak_tokens": 6127,
+            "calls": 8,
+            "token_checks": 43,
+            "median_ms": 6808.543,
+            "p95_ms": 6911.746,
+            "outcomes": {
+              "correct_answer": 2
+            },
+            "statuses": {
+              "ok": 2
+            }
+          },
+          "direct": {
+            "n": 2,
+            "correct": 0,
+            "serious": 0,
+            "unsupported": 0,
+            "input_tokens": 0,
+            "peak_tokens": 0,
+            "calls": 0,
+            "token_checks": 2,
+            "median_ms": 64.7425,
+            "p95_ms": 66.342,
+            "outcomes": {
+              "held": 2
+            },
+            "statuses": {
+              "held": 2
+            }
+          },
+          "indexed": {
+            "n": 2,
+            "correct": 2,
+            "serious": 0,
+            "unsupported": 0,
+            "input_tokens": 11823,
+            "peak_tokens": 6114,
+            "calls": 6,
+            "token_checks": 32,
+            "median_ms": 4075.524,
+            "p95_ms": 6921.865,
+            "outcomes": {
+              "correct_answer": 2
+            },
+            "statuses": {
+              "ok": 2
+            }
+          },
+          "once": {
+            "n": 2,
+            "correct": 2,
+            "serious": 0,
+            "unsupported": 0,
+            "input_tokens": 11823,
+            "peak_tokens": 6114,
+            "calls": 6,
+            "token_checks": 32,
+            "median_ms": 4158.5895,
+            "p95_ms": 7039.017,
+            "outcomes": {
+              "correct_answer": 2
+            },
+            "statuses": {
+              "ok": 2
+            }
+          }
+        },
+        "16k": {
+          "current": {
+            "n": 2,
+            "correct": 1,
+            "serious": 1,
+            "unsupported": 1,
+            "input_tokens": 52641,
+            "peak_tokens": 6129,
+            "calls": 12,
+            "token_checks": 82,
+            "median_ms": 17799.141,
+            "p95_ms": 20644.694,
+            "outcomes": {
+              "correct_answer": 1,
+              "unsupported_answer": 1
+            },
+            "statuses": {
+              "ok": 2
+            }
+          },
+          "direct": {
+            "n": 2,
+            "correct": 0,
+            "serious": 0,
+            "unsupported": 0,
+            "input_tokens": 0,
+            "peak_tokens": 0,
+            "calls": 0,
+            "token_checks": 2,
+            "median_ms": 68.7285,
+            "p95_ms": 70.514,
+            "outcomes": {
+              "held": 2
+            },
+            "statuses": {
+              "held": 2
+            }
+          },
+          "indexed": {
+            "n": 2,
+            "correct": 1,
+            "serious": 1,
+            "unsupported": 1,
+            "input_tokens": 37687,
+            "peak_tokens": 6116,
+            "calls": 12,
+            "token_checks": 56,
+            "median_ms": 12286.9525,
+            "p95_ms": 23365.249,
+            "outcomes": {
+              "correct_answer": 1,
+              "unsupported_answer": 1
+            },
+            "statuses": {
+              "ok": 2
+            }
+          },
+          "once": {
+            "n": 2,
+            "correct": 1,
+            "serious": 1,
+            "unsupported": 1,
+            "input_tokens": 33873,
+            "peak_tokens": 6116,
+            "calls": 10,
+            "token_checks": 54,
+            "median_ms": 11364.068500000001,
+            "p95_ms": 21490.773,
+            "outcomes": {
+              "correct_answer": 1,
+              "unsupported_answer": 1
+            },
+            "statuses": {
+              "ok": 2
+            }
+          }
+        }
+      },
+      "paired": {
+        "indexed": {
+          "current": {
+            "net": 0,
+            "wins": [],
+            "losses": [],
+            "net_by_family": {
+              "absent": 0,
+              "aggregate": 0,
+              "amendment": 0,
+              "different_target": 0,
+              "early": 0
+            }
+          },
+          "direct": {
+            "net": 3,
+            "wins": [
+              "ctx-dev-16k-06",
+              "ctx-dev-8k-03",
+              "ctx-dev-8k-09"
+            ],
+            "losses": [],
+            "net_by_family": {
+              "absent": 0,
+              "aggregate": 1,
+              "amendment": 1,
+              "different_target": 1,
+              "early": 0
+            }
+          }
+        },
+        "once": {
+          "current": {
+            "net": 0,
+            "wins": [],
+            "losses": [],
+            "net_by_family": {
+              "absent": 0,
+              "aggregate": 0,
+              "amendment": 0,
+              "different_target": 0,
+              "early": 0
+            }
+          },
+          "direct": {
+            "net": 3,
+            "wins": [
+              "ctx-dev-16k-06",
+              "ctx-dev-8k-03",
+              "ctx-dev-8k-09"
+            ],
+            "losses": [],
+            "net_by_family": {
+              "absent": 0,
+              "aggregate": 1,
+              "amendment": 1,
+              "different_target": 1,
+              "early": 0
+            }
+          }
+        }
+      },
+      "diagnostics": {
+        "current": {
+          "known_reader_coverage_cases": 2,
+          "mean_known_reader_evidence_recall": 1.0,
+          "indexed_cases": 0,
+          "mean_index_evidence_recall": null,
+          "fallback_reasons": {},
+          "retrieval_rounds": {
+            "0": 6
+          }
+        },
+        "direct": {
+          "known_reader_coverage_cases": 2,
+          "mean_known_reader_evidence_recall": 1.0,
+          "indexed_cases": 0,
+          "mean_index_evidence_recall": null,
+          "fallback_reasons": {},
+          "retrieval_rounds": {
+            "0": 6
+          }
+        },
+        "indexed": {
+          "known_reader_coverage_cases": 4,
+          "mean_known_reader_evidence_recall": 1.0,
+          "indexed_cases": 3,
+          "mean_index_evidence_recall": 1.0,
+          "fallback_reasons": {
+            "whole_document_question": 1,
+            "insufficient_evidence": 1
+          },
+          "retrieval_rounds": {
+            "0": 3,
+            "1": 2,
+            "2": 1
+          }
+        },
+        "once": {
+          "known_reader_coverage_cases": 4,
+          "mean_known_reader_evidence_recall": 1.0,
+          "indexed_cases": 3,
+          "mean_index_evidence_recall": 1.0,
+          "fallback_reasons": {
+            "whole_document_question": 1,
+            "insufficient_evidence": 1
+          },
+          "retrieval_rounds": {
+            "0": 3,
+            "1": 3
+          }
+        }
+      }
+    },
+    "context_test": {
+      "n_cases": 30,
+      "arms": {
+        "current": {
+          "n": 30,
+          "correct": 22,
+          "serious": 2,
+          "unsupported": 2,
+          "input_tokens": 334359,
+          "peak_tokens": 6165,
+          "calls": 106,
+          "token_checks": 580,
+          "median_ms": 6417.786,
+          "p95_ms": 38521.341,
+          "outcomes": {
+            "correct_abstention": 4,
+            "correct_answer": 18,
+            "error": 1,
+            "held": 3,
+            "missed_answer": 2,
+            "unsupported_answer": 2
+          },
+          "statuses": {
+            "abstained": 6,
+            "error": 1,
+            "held": 3,
+            "ok": 20
+          }
+        },
+        "direct": {
+          "n": 30,
+          "correct": 1,
+          "serious": 9,
+          "unsupported": 9,
+          "input_tokens": 42895,
+          "peak_tokens": 4317,
+          "calls": 10,
+          "token_checks": 30,
+          "median_ms": 66.7955,
+          "p95_ms": 2437.993,
+          "outcomes": {
+            "correct_answer": 1,
+            "held": 20,
+            "unsupported_answer": 3,
+            "wrong_answer": 6
+          },
+          "statuses": {
+            "held": 20,
+            "unverified": 10
+          }
+        },
+        "indexed": {
+          "n": 30,
+          "correct": 22,
+          "serious": 4,
+          "unsupported": 4,
+          "input_tokens": 230715,
+          "peak_tokens": 6134,
+          "calls": 100,
+          "token_checks": 420,
+          "median_ms": 2658.4075,
+          "p95_ms": 16637.581,
+          "outcomes": {
+            "correct_abstention": 3,
+            "correct_answer": 19,
+            "held": 2,
+            "missed_answer": 2,
+            "unsupported_answer": 4
+          },
+          "statuses": {
+            "abstained": 5,
+            "held": 2,
+            "ok": 23
+          }
+        },
+        "once": {
+          "n": 30,
+          "correct": 22,
+          "serious": 4,
+          "unsupported": 4,
+          "input_tokens": 215811,
+          "peak_tokens": 6134,
+          "calls": 92,
+          "token_checks": 412,
+          "median_ms": 2649.44,
+          "p95_ms": 15321.611,
+          "outcomes": {
+            "correct_abstention": 3,
+            "correct_answer": 19,
+            "held": 2,
+            "missed_answer": 2,
+            "unsupported_answer": 4
+          },
+          "statuses": {
+            "abstained": 5,
+            "held": 2,
+            "ok": 23
+          }
+        }
+      },
+      "by_group": {
+        "absent": {
+          "current": {
+            "n": 6,
+            "correct": 2,
+            "serious": 1,
+            "unsupported": 1,
+            "input_tokens": 63365,
+            "peak_tokens": 6129,
+            "calls": 18,
+            "token_checks": 110,
+            "median_ms": 5681.8205,
+            "p95_ms": 38521.341,
+            "outcomes": {
+              "correct_abstention": 2,
+              "error": 1,
+              "held": 2,
+              "unsupported_answer": 1
+            },
+            "statuses": {
+              "abstained": 2,
+              "error": 1,
+              "held": 2,
+              "ok": 1
+            }
+          },
+          "direct": {
+            "n": 6,
+            "correct": 0,
+            "serious": 2,
+            "unsupported": 2,
+            "input_tokens": 8554,
+            "peak_tokens": 4279,
+            "calls": 2,
+            "token_checks": 6,
+            "median_ms": 72.09700000000001,
+            "p95_ms": 2317.342,
+            "outcomes": {
+              "held": 4,
+              "unsupported_answer": 2
+            },
+            "statuses": {
+              "held": 4,
+              "unverified": 2
+            }
+          },
+          "indexed": {
+            "n": 6,
+            "correct": 1,
+            "serious": 3,
+            "unsupported": 3,
+            "input_tokens": 36188,
+            "peak_tokens": 6129,
+            "calls": 18,
+            "token_checks": 65,
+            "median_ms": 3378.6265000000003,
+            "p95_ms": 8157.429,
+            "outcomes": {
+              "correct_abstention": 1,
+              "held": 2,
+              "unsupported_answer": 3
+            },
+            "statuses": {
+              "abstained": 1,
+              "held": 2,
+              "ok": 3
+            }
+          },
+          "once": {
+            "n": 6,
+            "correct": 1,
+            "serious": 3,
+            "unsupported": 3,
+            "input_tokens": 34879,
+            "peak_tokens": 6129,
+            "calls": 16,
+            "token_checks": 63,
+            "median_ms": 3397.189,
+            "p95_ms": 7324.423,
+            "outcomes": {
+              "correct_abstention": 1,
+              "held": 2,
+              "unsupported_answer": 3
+            },
+            "statuses": {
+              "abstained": 1,
+              "held": 2,
+              "ok": 3
+            }
+          }
+        },
+        "aggregate": {
+          "current": {
+            "n": 6,
+            "correct": 4,
+            "serious": 0,
+            "unsupported": 0,
+            "input_tokens": 70829,
+            "peak_tokens": 6133,
+            "calls": 24,
+            "token_checks": 127,
+            "median_ms": 6668.058,
+            "p95_ms": 13491.749,
+            "outcomes": {
+              "correct_answer": 4,
+              "missed_answer": 2
+            },
+            "statuses": {
+              "abstained": 2,
+              "ok": 4
+            }
+          },
+          "direct": {
+            "n": 6,
+            "correct": 0,
+            "serious": 2,
+            "unsupported": 2,
+            "input_tokens": 8616,
+            "peak_tokens": 4317,
+            "calls": 2,
+            "token_checks": 6,
+            "median_ms": 68.4505,
+            "p95_ms": 2257.927,
+            "outcomes": {
+              "held": 4,
+              "wrong_answer": 2
+            },
+            "statuses": {
+              "held": 4,
+              "unverified": 2
+            }
+          },
+          "indexed": {
+            "n": 6,
+            "correct": 4,
+            "serious": 0,
+            "unsupported": 0,
+            "input_tokens": 70829,
+            "peak_tokens": 6133,
+            "calls": 24,
+            "token_checks": 127,
+            "median_ms": 6690.2855,
+            "p95_ms": 13471.838,
+            "outcomes": {
+              "correct_answer": 4,
+              "missed_answer": 2
+            },
+            "statuses": {
+              "abstained": 2,
+              "ok": 4
+            }
+          },
+          "once": {
+            "n": 6,
+            "correct": 4,
+            "serious": 0,
+            "unsupported": 0,
+            "input_tokens": 70829,
+            "peak_tokens": 6133,
+            "calls": 24,
+            "token_checks": 127,
+            "median_ms": 6674.883,
+            "p95_ms": 13479.834,
+            "outcomes": {
+              "correct_answer": 4,
+              "missed_answer": 2
+            },
+            "statuses": {
+              "abstained": 2,
+              "ok": 4
+            }
+          }
+        },
+        "amendment": {
+          "current": {
+            "n": 6,
+            "correct": 4,
+            "serious": 1,
+            "unsupported": 1,
+            "input_tokens": 74097,
+            "peak_tokens": 6165,
+            "calls": 21,
+            "token_checks": 123,
+            "median_ms": 6310.1865,
+            "p95_ms": 51514.55,
+            "outcomes": {
+              "correct_abstention": 2,
+              "correct_answer": 2,
+              "held": 1,
+              "unsupported_answer": 1
+            },
+            "statuses": {
+              "abstained": 2,
+              "held": 1,
+              "ok": 3
+            }
+          },
+          "direct": {
+            "n": 6,
+            "correct": 1,
+            "serious": 1,
+            "unsupported": 1,
+            "input_tokens": 8576,
+            "peak_tokens": 4293,
+            "calls": 2,
+            "token_checks": 6,
+            "median_ms": 71.0915,
+            "p95_ms": 2227.887,
+            "outcomes": {
+              "correct_answer": 1,
+              "held": 4,
+              "unsupported_answer": 1
+            },
+            "statuses": {
+              "held": 4,
+              "unverified": 2
+            }
+          },
+          "indexed": {
+            "n": 6,
+            "correct": 5,
+            "serious": 1,
+            "unsupported": 1,
+            "input_tokens": 54369,
+            "peak_tokens": 6132,
+            "calls": 25,
+            "token_checks": 94,
+            "median_ms": 2618.532,
+            "p95_ms": 16637.581,
+            "outcomes": {
+              "correct_abstention": 2,
+              "correct_answer": 3,
+              "unsupported_answer": 1
+            },
+            "statuses": {
+              "abstained": 2,
+              "ok": 4
+            }
+          },
+          "once": {
+            "n": 6,
+            "correct": 5,
+            "serious": 1,
+            "unsupported": 1,
+            "input_tokens": 45560,
+            "peak_tokens": 6132,
+            "calls": 21,
+            "token_checks": 90,
+            "median_ms": 2626.4465,
+            "p95_ms": 15321.611,
+            "outcomes": {
+              "correct_abstention": 2,
+              "correct_answer": 3,
+              "unsupported_answer": 1
+            },
+            "statuses": {
+              "abstained": 2,
+              "ok": 4
+            }
+          }
+        },
+        "different_target": {
+          "current": {
+            "n": 6,
+            "correct": 6,
+            "serious": 0,
+            "unsupported": 0,
+            "input_tokens": 84789,
+            "peak_tokens": 6134,
+            "calls": 25,
+            "token_checks": 130,
+            "median_ms": 6448.0895,
+            "p95_ms": 21986.774,
+            "outcomes": {
+              "correct_answer": 6
+            },
+            "statuses": {
+              "ok": 6
+            }
+          },
+          "direct": {
+            "n": 6,
+            "correct": 0,
+            "serious": 2,
+            "unsupported": 2,
+            "input_tokens": 8586,
+            "peak_tokens": 4311,
+            "calls": 2,
+            "token_checks": 6,
+            "median_ms": 65.084,
+            "p95_ms": 2435.227,
+            "outcomes": {
+              "held": 4,
+              "wrong_answer": 2
+            },
+            "statuses": {
+              "held": 4,
+              "unverified": 2
+            }
+          },
+          "indexed": {
+            "n": 6,
+            "correct": 6,
+            "serious": 0,
+            "unsupported": 0,
+            "input_tokens": 55494,
+            "peak_tokens": 6134,
+            "calls": 21,
+            "token_checks": 83,
+            "median_ms": 1960.7775,
+            "p95_ms": 25249.042,
+            "outcomes": {
+              "correct_answer": 6
+            },
+            "statuses": {
+              "ok": 6
+            }
+          },
+          "once": {
+            "n": 6,
+            "correct": 6,
+            "serious": 0,
+            "unsupported": 0,
+            "input_tokens": 50708,
+            "peak_tokens": 6134,
+            "calls": 19,
+            "token_checks": 81,
+            "median_ms": 1934.315,
+            "p95_ms": 23256.148,
+            "outcomes": {
+              "correct_answer": 6
+            },
+            "statuses": {
+              "ok": 6
+            }
+          }
+        },
+        "early": {
+          "current": {
+            "n": 6,
+            "correct": 6,
+            "serious": 0,
+            "unsupported": 0,
+            "input_tokens": 41279,
+            "peak_tokens": 6132,
+            "calls": 18,
+            "token_checks": 90,
+            "median_ms": 2641.5385,
+            "p95_ms": 13467.273,
+            "outcomes": {
+              "correct_answer": 6
+            },
+            "statuses": {
+              "ok": 6
+            }
+          },
+          "direct": {
+            "n": 6,
+            "correct": 0,
+            "serious": 2,
+            "unsupported": 2,
+            "input_tokens": 8563,
+            "peak_tokens": 4291,
+            "calls": 2,
+            "token_checks": 6,
+            "median_ms": 67.6765,
+            "p95_ms": 2439.887,
+            "outcomes": {
+              "held": 4,
+              "wrong_answer": 2
+            },
+            "statuses": {
+              "held": 4,
+              "unverified": 2
+            }
+          },
+          "indexed": {
+            "n": 6,
+            "correct": 6,
+            "serious": 0,
+            "unsupported": 0,
+            "input_tokens": 13835,
+            "peak_tokens": 4377,
+            "calls": 12,
+            "token_checks": 51,
+            "median_ms": 1313.6280000000002,
+            "p95_ms": 2690.364,
+            "outcomes": {
+              "correct_answer": 6
+            },
+            "statuses": {
+              "ok": 6
+            }
+          },
+          "once": {
+            "n": 6,
+            "correct": 6,
+            "serious": 0,
+            "unsupported": 0,
+            "input_tokens": 13835,
+            "peak_tokens": 4377,
+            "calls": 12,
+            "token_checks": 51,
+            "median_ms": 1319.665,
+            "p95_ms": 2817.244,
+            "outcomes": {
+              "correct_answer": 6
+            },
+            "statuses": {
+              "ok": 6
+            }
+          }
+        },
+        "4k": {
+          "current": {
+            "n": 10,
+            "correct": 8,
+            "serious": 1,
+            "unsupported": 1,
+            "input_tokens": 55051,
+            "peak_tokens": 4403,
+            "calls": 21,
+            "token_checks": 21,
+            "median_ms": 2650.2745,
+            "p95_ms": 5035.524,
+            "outcomes": {
+              "correct_abstention": 1,
+              "correct_answer": 7,
+              "held": 1,
+              "unsupported_answer": 1
+            },
+            "statuses": {
+              "abstained": 1,
+              "held": 1,
+              "ok": 8
+            }
+          },
+          "direct": {
+            "n": 10,
+            "correct": 1,
+            "serious": 9,
+            "unsupported": 9,
+            "input_tokens": 42895,
+            "peak_tokens": 4317,
+            "calls": 10,
+            "token_checks": 10,
+            "median_ms": 2295.194,
+            "p95_ms": 2439.887,
+            "outcomes": {
+              "correct_answer": 1,
+              "unsupported_answer": 3,
+              "wrong_answer": 6
+            },
+            "statuses": {
+              "unverified": 10
+            }
+          },
+          "indexed": {
+            "n": 10,
+            "correct": 8,
+            "serious": 1,
+            "unsupported": 1,
+            "input_tokens": 55051,
+            "peak_tokens": 4403,
+            "calls": 21,
+            "token_checks": 21,
+            "median_ms": 2670.0339999999997,
+            "p95_ms": 5041.662,
+            "outcomes": {
+              "correct_abstention": 1,
+              "correct_answer": 7,
+              "held": 1,
+              "unsupported_answer": 1
+            },
+            "statuses": {
+              "abstained": 1,
+              "held": 1,
+              "ok": 8
+            }
+          },
+          "once": {
+            "n": 10,
+            "correct": 8,
+            "serious": 1,
+            "unsupported": 1,
+            "input_tokens": 55051,
+            "peak_tokens": 4403,
+            "calls": 21,
+            "token_checks": 21,
+            "median_ms": 2666.203,
+            "p95_ms": 5076.707,
+            "outcomes": {
+              "correct_abstention": 1,
+              "correct_answer": 7,
+              "held": 1,
+              "unsupported_answer": 1
+            },
+            "statuses": {
+              "abstained": 1,
+              "held": 1,
+              "ok": 8
+            }
+          }
+        },
+        "8k": {
+          "current": {
+            "n": 10,
+            "correct": 7,
+            "serious": 1,
+            "unsupported": 1,
+            "input_tokens": 90486,
+            "peak_tokens": 6129,
+            "calls": 35,
+            "token_checks": 191,
+            "median_ms": 6441.425,
+            "p95_ms": 6691.214,
+            "outcomes": {
+              "correct_abstention": 1,
+              "correct_answer": 6,
+              "held": 1,
+              "missed_answer": 1,
+              "unsupported_answer": 1
+            },
+            "statuses": {
+              "abstained": 2,
+              "held": 1,
+              "ok": 7
+            }
+          },
+          "direct": {
+            "n": 10,
+            "correct": 0,
+            "serious": 0,
+            "unsupported": 0,
+            "input_tokens": 0,
+            "peak_tokens": 0,
+            "calls": 0,
+            "token_checks": 10,
+            "median_ms": 62.659,
+            "p95_ms": 66.361,
+            "outcomes": {
+              "held": 10
+            },
+            "statuses": {
+              "held": 10
+            }
+          },
+          "indexed": {
+            "n": 10,
+            "correct": 7,
+            "serious": 1,
+            "unsupported": 1,
+            "input_tokens": 64308,
+            "peak_tokens": 6129,
+            "calls": 35,
+            "token_checks": 159,
+            "median_ms": 2668.63,
+            "p95_ms": 9161.571,
+            "outcomes": {
+              "correct_abstention": 1,
+              "correct_answer": 6,
+              "held": 1,
+              "missed_answer": 1,
+              "unsupported_answer": 1
+            },
+            "statuses": {
+              "abstained": 2,
+              "held": 1,
+              "ok": 7
+            }
+          },
+          "once": {
+            "n": 10,
+            "correct": 7,
+            "serious": 1,
+            "unsupported": 1,
+            "input_tokens": 58613,
+            "peak_tokens": 6129,
+            "calls": 31,
+            "token_checks": 155,
+            "median_ms": 2709.8705,
+            "p95_ms": 7324.423,
+            "outcomes": {
+              "correct_abstention": 1,
+              "correct_answer": 6,
+              "held": 1,
+              "missed_answer": 1,
+              "unsupported_answer": 1
+            },
+            "statuses": {
+              "abstained": 2,
+              "held": 1,
+              "ok": 7
+            }
+          }
+        },
+        "16k": {
+          "current": {
+            "n": 10,
+            "correct": 7,
+            "serious": 0,
+            "unsupported": 0,
+            "input_tokens": 188822,
+            "peak_tokens": 6165,
+            "calls": 50,
+            "token_checks": 368,
+            "median_ms": 13479.510999999999,
+            "p95_ms": 51514.55,
+            "outcomes": {
+              "correct_abstention": 2,
+              "correct_answer": 5,
+              "error": 1,
+              "held": 1,
+              "missed_answer": 1
+            },
+            "statuses": {
+              "abstained": 3,
+              "error": 1,
+              "held": 1,
+              "ok": 5
+            }
+          },
+          "direct": {
+            "n": 10,
+            "correct": 0,
+            "serious": 0,
+            "unsupported": 0,
+            "input_tokens": 0,
+            "peak_tokens": 0,
+            "calls": 0,
+            "token_checks": 10,
+            "median_ms": 66.632,
+            "p95_ms": 77.833,
+            "outcomes": {
+              "held": 10
+            },
+            "statuses": {
+              "held": 10
+            }
+          },
+          "indexed": {
+            "n": 10,
+            "correct": 7,
+            "serious": 2,
+            "unsupported": 2,
+            "input_tokens": 111356,
+            "peak_tokens": 6134,
+            "calls": 44,
+            "token_checks": 240,
+            "median_ms": 1366.297,
+            "p95_ms": 25249.042,
+            "outcomes": {
+              "correct_abstention": 1,
+              "correct_answer": 6,
+              "missed_answer": 1,
+              "unsupported_answer": 2
+            },
+            "statuses": {
+              "abstained": 2,
+              "ok": 8
+            }
+          },
+          "once": {
+            "n": 10,
+            "correct": 7,
+            "serious": 2,
+            "unsupported": 2,
+            "input_tokens": 102147,
+            "peak_tokens": 6134,
+            "calls": 40,
+            "token_checks": 236,
+            "median_ms": 1366.4,
+            "p95_ms": 23256.148,
+            "outcomes": {
+              "correct_abstention": 1,
+              "correct_answer": 6,
+              "missed_answer": 1,
+              "unsupported_answer": 2
+            },
+            "statuses": {
+              "abstained": 2,
+              "ok": 8
+            }
+          }
+        }
+      },
+      "paired": {
+        "indexed": {
+          "current": {
+            "net": 0,
+            "wins": [
+              "ctx-test-16k-03"
+            ],
+            "losses": [
+              "ctx-test-16k-08"
+            ],
+            "net_by_family": {
+              "absent": -1,
+              "aggregate": 0,
+              "amendment": 1,
+              "different_target": 0,
+              "early": 0
+            }
+          },
+          "direct": {
+            "net": 21,
+            "wins": [
+              "ctx-test-16k-01",
+              "ctx-test-16k-02",
+              "ctx-test-16k-03",
+              "ctx-test-16k-04",
+              "ctx-test-16k-05",
+              "ctx-test-16k-06",
+              "ctx-test-16k-09",
+              "ctx-test-4k-01",
+              "ctx-test-4k-02",
+              "ctx-test-4k-05",
+              "ctx-test-4k-06",
+              "ctx-test-4k-07",
+              "ctx-test-4k-09",
+              "ctx-test-4k-10",
+              "ctx-test-8k-01",
+              "ctx-test-8k-02",
+              "ctx-test-8k-03",
+              "ctx-test-8k-04",
+              "ctx-test-8k-05",
+              "ctx-test-8k-06",
+              "ctx-test-8k-09"
+            ],
+            "losses": [],
+            "net_by_family": {
+              "absent": 1,
+              "aggregate": 4,
+              "amendment": 4,
+              "different_target": 6,
+              "early": 6
+            }
+          }
+        },
+        "once": {
+          "current": {
+            "net": 0,
+            "wins": [
+              "ctx-test-16k-03"
+            ],
+            "losses": [
+              "ctx-test-16k-08"
+            ],
+            "net_by_family": {
+              "absent": -1,
+              "aggregate": 0,
+              "amendment": 1,
+              "different_target": 0,
+              "early": 0
+            }
+          },
+          "direct": {
+            "net": 21,
+            "wins": [
+              "ctx-test-16k-01",
+              "ctx-test-16k-02",
+              "ctx-test-16k-03",
+              "ctx-test-16k-04",
+              "ctx-test-16k-05",
+              "ctx-test-16k-06",
+              "ctx-test-16k-09",
+              "ctx-test-4k-01",
+              "ctx-test-4k-02",
+              "ctx-test-4k-05",
+              "ctx-test-4k-06",
+              "ctx-test-4k-07",
+              "ctx-test-4k-09",
+              "ctx-test-4k-10",
+              "ctx-test-8k-01",
+              "ctx-test-8k-02",
+              "ctx-test-8k-03",
+              "ctx-test-8k-04",
+              "ctx-test-8k-05",
+              "ctx-test-8k-06",
+              "ctx-test-8k-09"
+            ],
+            "losses": [],
+            "net_by_family": {
+              "absent": 1,
+              "aggregate": 4,
+              "amendment": 4,
+              "different_target": 6,
+              "early": 6
+            }
+          }
+        }
+      },
+      "diagnostics": {
+        "current": {
+          "known_reader_coverage_cases": 13,
+          "mean_known_reader_evidence_recall": 1.0,
+          "indexed_cases": 0,
+          "mean_index_evidence_recall": null,
+          "fallback_reasons": {},
+          "retrieval_rounds": {
+            "0": 30
+          }
+        },
+        "direct": {
+          "known_reader_coverage_cases": 10,
+          "mean_known_reader_evidence_recall": 1.0,
+          "indexed_cases": 0,
+          "mean_index_evidence_recall": null,
+          "fallback_reasons": {},
+          "retrieval_rounds": {
+            "0": 30
+          }
+        },
+        "indexed": {
+          "known_reader_coverage_cases": 22,
+          "mean_known_reader_evidence_recall": 1.0,
+          "indexed_cases": 13,
+          "mean_index_evidence_recall": 1.0,
+          "fallback_reasons": {
+            "insufficient_evidence": 4,
+            "whole_document_question": 4
+          },
+          "retrieval_rounds": {
+            "0": 17,
+            "1": 9,
+            "2": 4
+          }
+        },
+        "once": {
+          "known_reader_coverage_cases": 22,
+          "mean_known_reader_evidence_recall": 1.0,
+          "indexed_cases": 13,
+          "mean_index_evidence_recall": 1.0,
+          "fallback_reasons": {
+            "insufficient_evidence": 4,
+            "whole_document_question": 4
+          },
+          "retrieval_rounds": {
+            "0": 17,
+            "1": 13
+          }
+        }
+      }
+    },
+    "special_dev": {
+      "n_cases": 24,
+      "arms": {
+        "candidate": {
+          "n": 24,
+          "correct": 3,
+          "serious": 0,
+          "unsupported": 0,
+          "input_tokens": 21285,
+          "peak_tokens": 1168,
+          "calls": 46,
+          "token_checks": 46,
+          "median_ms": 1535.8835,
+          "p95_ms": 3571.872,
+          "outcomes": {
+            "correct": 3,
+            "incomplete": 21
+          },
+          "statuses": {
+            "held": 20,
+            "ok": 4
+          }
+        },
+        "code": {
+          "n": 8,
+          "correct": 7,
+          "serious": 0,
+          "unsupported": 0,
+          "input_tokens": 0,
+          "peak_tokens": 0,
+          "calls": 0,
+          "token_checks": 0,
+          "median_ms": 0.1295,
+          "p95_ms": 0.591,
+          "outcomes": {
+            "correct": 7,
+            "incomplete": 1
+          },
+          "statuses": {
+            "abstained": 1,
+            "held": 1,
+            "ok": 6
+          }
+        },
+        "current": {
+          "n": 24,
+          "correct": 6,
+          "serious": 14,
+          "unsupported": 0,
+          "input_tokens": 13475,
+          "peak_tokens": 791,
+          "calls": 29,
+          "token_checks": 29,
+          "median_ms": 831.3505,
+          "p95_ms": 2530.36,
+          "outcomes": {
+            "correct": 6,
+            "incomplete": 4,
+            "serious_error": 14
+          },
+          "statuses": {
+            "held": 3,
+            "ok": 16,
+            "review": 5
+          }
+        },
+        "direct": {
+          "n": 24,
+          "correct": 0,
+          "serious": 21,
+          "unsupported": 0,
+          "input_tokens": 10738,
+          "peak_tokens": 799,
+          "calls": 24,
+          "token_checks": 24,
+          "median_ms": 781.6545,
+          "p95_ms": 1342.559,
+          "outcomes": {
+            "incomplete": 3,
+            "serious_error": 21
+          },
+          "statuses": {
+            "unverified": 24
+          }
+        }
+      },
+      "by_group": {
+        "constraints": {
+          "candidate": {
+            "n": 8,
+            "correct": 0,
+            "serious": 0,
+            "unsupported": 0,
+            "input_tokens": 9367,
+            "peak_tokens": 709,
+            "calls": 26,
+            "token_checks": 26,
+            "median_ms": 1926.511,
+            "p95_ms": 3759.952,
+            "outcomes": {
+              "incomplete": 8
+            },
+            "statuses": {
+              "held": 8
+            }
+          },
+          "current": {
+            "n": 8,
+            "correct": 3,
+            "serious": 2,
+            "unsupported": 0,
+            "input_tokens": 5303,
+            "peak_tokens": 448,
+            "calls": 13,
+            "token_checks": 13,
+            "median_ms": 2245.0455,
+            "p95_ms": 2730.99,
+            "outcomes": {
+              "correct": 3,
+              "incomplete": 3,
+              "serious_error": 2
+            },
+            "statuses": {
+              "held": 3,
+              "review": 5
+            }
+          },
+          "direct": {
+            "n": 8,
+            "correct": 0,
+            "serious": 6,
+            "unsupported": 0,
+            "input_tokens": 2406,
+            "peak_tokens": 327,
+            "calls": 8,
+            "token_checks": 8,
+            "median_ms": 1306.684,
+            "p95_ms": 1446.254,
+            "outcomes": {
+              "incomplete": 2,
+              "serious_error": 6
+            },
+            "statuses": {
+              "unverified": 8
+            }
+          }
+        },
+        "table": {
+          "candidate": {
+            "n": 8,
+            "correct": 0,
+            "serious": 0,
+            "unsupported": 0,
+            "input_tokens": 8865,
+            "peak_tokens": 1168,
+            "calls": 8,
+            "token_checks": 8,
+            "median_ms": 1535.8835,
+            "p95_ms": 2190.439,
+            "outcomes": {
+              "incomplete": 8
+            },
+            "statuses": {
+              "held": 8
+            }
+          },
+          "code": {
+            "n": 8,
+            "correct": 7,
+            "serious": 0,
+            "unsupported": 0,
+            "input_tokens": 0,
+            "peak_tokens": 0,
+            "calls": 0,
+            "token_checks": 0,
+            "median_ms": 0.1295,
+            "p95_ms": 0.591,
+            "outcomes": {
+              "correct": 7,
+              "incomplete": 1
+            },
+            "statuses": {
+              "abstained": 1,
+              "held": 1,
+              "ok": 6
+            }
+          },
+          "current": {
+            "n": 8,
+            "correct": 0,
+            "serious": 8,
+            "unsupported": 0,
+            "input_tokens": 5969,
+            "peak_tokens": 791,
+            "calls": 8,
+            "token_checks": 8,
+            "median_ms": 831.3505,
+            "p95_ms": 919.989,
+            "outcomes": {
+              "serious_error": 8
+            },
+            "statuses": {
+              "ok": 8
+            }
+          },
+          "direct": {
+            "n": 8,
+            "correct": 0,
+            "serious": 8,
+            "unsupported": 0,
+            "input_tokens": 6033,
+            "peak_tokens": 799,
+            "calls": 8,
+            "token_checks": 8,
+            "median_ms": 781.6545,
+            "p95_ms": 933.476,
+            "outcomes": {
+              "serious_error": 8
+            },
+            "statuses": {
+              "unverified": 8
+            }
+          }
+        },
+        "translation": {
+          "candidate": {
+            "n": 8,
+            "correct": 3,
+            "serious": 0,
+            "unsupported": 0,
+            "input_tokens": 3053,
+            "peak_tokens": 281,
+            "calls": 12,
+            "token_checks": 12,
+            "median_ms": 775.932,
+            "p95_ms": 1029.639,
+            "outcomes": {
+              "correct": 3,
+              "incomplete": 5
+            },
+            "statuses": {
+              "held": 4,
+              "ok": 4
+            }
+          },
+          "current": {
+            "n": 8,
+            "correct": 3,
+            "serious": 4,
+            "unsupported": 0,
+            "input_tokens": 2203,
+            "peak_tokens": 281,
+            "calls": 8,
+            "token_checks": 8,
+            "median_ms": 598.775,
+            "p95_ms": 658.292,
+            "outcomes": {
+              "correct": 3,
+              "incomplete": 1,
+              "serious_error": 4
+            },
+            "statuses": {
+              "ok": 8
+            }
+          },
+          "direct": {
+            "n": 8,
+            "correct": 0,
+            "serious": 7,
+            "unsupported": 0,
+            "input_tokens": 2299,
+            "peak_tokens": 293,
+            "calls": 8,
+            "token_checks": 8,
+            "median_ms": 593.693,
+            "p95_ms": 628.52,
+            "outcomes": {
+              "incomplete": 1,
+              "serious_error": 7
+            },
+            "statuses": {
+              "unverified": 8
+            }
+          }
+        }
+      },
+      "paired": {
+        "candidate": {
+          "current": {
+            "net": -3,
+            "wins": [],
+            "losses": [
+              "constraints-dev-01",
+              "constraints-dev-03",
+              "constraints-dev-04"
+            ],
+            "net_by_family": {
+              "constraints": -3,
+              "table": 0,
+              "translation": 0
+            }
+          },
+          "direct": {
+            "net": 3,
+            "wins": [
+              "translation-dev-02",
+              "translation-dev-04",
+              "translation-dev-06"
+            ],
+            "losses": [],
+            "net_by_family": {
+              "constraints": 0,
+              "table": 0,
+              "translation": 3
+            }
+          }
+        },
+        "code": {
+          "current": {
+            "net": 7,
+            "wins": [
+              "table-dev-01",
+              "table-dev-02",
+              "table-dev-04",
+              "table-dev-05",
+              "table-dev-06",
+              "table-dev-07",
+              "table-dev-08"
+            ],
+            "losses": [],
+            "net_by_family": {
+              "table": 7
+            }
+          },
+          "direct": {
+            "net": 7,
+            "wins": [
+              "table-dev-01",
+              "table-dev-02",
+              "table-dev-04",
+              "table-dev-05",
+              "table-dev-06",
+              "table-dev-07",
+              "table-dev-08"
+            ],
+            "losses": [],
+            "net_by_family": {
+              "table": 7
+            }
+          }
+        }
+      },
+      "diagnostics": {
+        "candidate": {
+          "answered": 4,
+          "repair_attempted": 4,
+          "units_fixed": 0,
+          "good_units_broken": 2,
+          "numeric_preservation": 7,
+          "unit_preservation": 4,
+          "name_preservation": 8
+        },
+        "current": {
+          "answered": 8,
+          "repair_attempted": 0,
+          "units_fixed": 0,
+          "good_units_broken": 0,
+          "numeric_preservation": 8,
+          "unit_preservation": 4,
+          "name_preservation": 8
+        },
+        "direct": {
+          "answered": 8,
+          "repair_attempted": 0,
+          "units_fixed": 0,
+          "good_units_broken": 0,
+          "numeric_preservation": 3,
+          "unit_preservation": 1,
+          "name_preservation": 3
+        }
+      }
+    },
+    "special_test": {
+      "n_cases": 30,
+      "arms": {
+        "candidate": {
+          "n": 30,
+          "correct": 10,
+          "serious": 1,
+          "unsupported": 0,
+          "input_tokens": 11305,
+          "peak_tokens": 283,
+          "calls": 44,
+          "token_checks": 44,
+          "median_ms": 657.6815,
+          "p95_ms": 1072.692,
+          "outcomes": {
+            "correct": 10,
+            "incomplete": 19,
+            "serious_error": 1
+          },
+          "statuses": {
+            "held": 17,
+            "ok": 12,
+            "refused": 1
+          }
+        },
+        "current": {
+          "n": 30,
+          "correct": 10,
+          "serious": 17,
+          "unsupported": 0,
+          "input_tokens": 8231,
+          "peak_tokens": 283,
+          "calls": 30,
+          "token_checks": 30,
+          "median_ms": 559.0725,
+          "p95_ms": 697.605,
+          "outcomes": {
+            "correct": 10,
+            "incomplete": 3,
+            "serious_error": 17
+          },
+          "statuses": {
+            "ok": 29,
+            "refused": 1
+          }
+        },
+        "direct": {
+          "n": 30,
+          "correct": 3,
+          "serious": 22,
+          "unsupported": 0,
+          "input_tokens": 8591,
+          "peak_tokens": 295,
+          "calls": 30,
+          "token_checks": 30,
+          "median_ms": 586.6065,
+          "p95_ms": 712.934,
+          "outcomes": {
+            "correct": 3,
+            "incomplete": 5,
+            "serious_error": 22
+          },
+          "statuses": {
+            "refused": 2,
+            "unverified": 28
+          }
+        }
+      },
+      "by_group": {
+        "translation": {
+          "candidate": {
+            "n": 30,
+            "correct": 10,
+            "serious": 1,
+            "unsupported": 0,
+            "input_tokens": 11305,
+            "peak_tokens": 283,
+            "calls": 44,
+            "token_checks": 44,
+            "median_ms": 657.6815,
+            "p95_ms": 1072.692,
+            "outcomes": {
+              "correct": 10,
+              "incomplete": 19,
+              "serious_error": 1
+            },
+            "statuses": {
+              "held": 17,
+              "ok": 12,
+              "refused": 1
+            }
+          },
+          "current": {
+            "n": 30,
+            "correct": 10,
+            "serious": 17,
+            "unsupported": 0,
+            "input_tokens": 8231,
+            "peak_tokens": 283,
+            "calls": 30,
+            "token_checks": 30,
+            "median_ms": 559.0725,
+            "p95_ms": 697.605,
+            "outcomes": {
+              "correct": 10,
+              "incomplete": 3,
+              "serious_error": 17
+            },
+            "statuses": {
+              "ok": 29,
+              "refused": 1
+            }
+          },
+          "direct": {
+            "n": 30,
+            "correct": 3,
+            "serious": 22,
+            "unsupported": 0,
+            "input_tokens": 8591,
+            "peak_tokens": 295,
+            "calls": 30,
+            "token_checks": 30,
+            "median_ms": 586.6065,
+            "p95_ms": 712.934,
+            "outcomes": {
+              "correct": 3,
+              "incomplete": 5,
+              "serious_error": 22
+            },
+            "statuses": {
+              "refused": 2,
+              "unverified": 28
+            }
+          }
+        }
+      },
+      "paired": {
+        "candidate": {
+          "current": {
+            "net": 0,
+            "wins": [],
+            "losses": [],
+            "net_by_family": {
+              "translation": 0
+            }
+          },
+          "direct": {
+            "net": 7,
+            "wins": [
+              "translation-test-03",
+              "translation-test-05",
+              "translation-test-07",
+              "translation-test-09",
+              "translation-test-13",
+              "translation-test-14",
+              "translation-test-15",
+              "translation-test-25",
+              "translation-test-28"
+            ],
+            "losses": [
+              "translation-test-04",
+              "translation-test-20"
+            ],
+            "net_by_family": {
+              "translation": 7
+            }
+          }
+        }
+      },
+      "diagnostics": {
+        "candidate": {
+          "answered": 12,
+          "repair_attempted": 14,
+          "units_fixed": 2,
+          "good_units_broken": 6,
+          "numeric_preservation": 26,
+          "unit_preservation": 13,
+          "name_preservation": 23
+        },
+        "current": {
+          "answered": 29,
+          "repair_attempted": 0,
+          "units_fixed": 0,
+          "good_units_broken": 0,
+          "numeric_preservation": 26,
+          "unit_preservation": 13,
+          "name_preservation": 22
+        },
+        "direct": {
+          "answered": 28,
+          "repair_attempted": 0,
+          "units_fixed": 0,
+          "good_units_broken": 0,
+          "numeric_preservation": 19,
+          "unit_preservation": 11,
+          "name_preservation": 14
+        }
+      }
+    }
+  }
+}

@@ -5,16 +5,16 @@ from pathlib import Path
 import runpy
 import subprocess
 
-from study import encode, file_hash, read_rows, stored
-
 HERE = Path(__file__).resolve().parent
+# Older panels import their own module named "study" during initialization.
+RUNNER = runpy.run_path(str(HERE / "study.py"))
 OLD = HERE.parent / "grounding"
 ROUTES = runpy.run_path(str(OLD / "routes.py"))
 STUDY = ROUTES["STUDY"]
 
 
 def checks():
-    rows = read_rows(OLD / "public.jsonl")
+    rows = RUNNER["read_rows"](OLD / "public.jsonl")
     return {(r["split"], r["id"]): r for r in rows
             if r["option"] == "--compact=records" and r["split"] in ("holdout", "numeric")}
 
@@ -34,8 +34,8 @@ def main():
         if not doctor.get("available") or doctor["target"] != "AFM 3 Core Advanced":
             raise RuntimeError("Core Advanced unavailable")
         args.output.parent.mkdir(exist_ok=True, parents=True)
-        prior = {(r["split"], r["id"]): r for r in stored(args.output)}
-        fingerprint = file_hash(binary)
+        prior = {(r["split"], r["id"]): r for r in RUNNER["stored"](args.output)}
+        fingerprint = RUNNER["file_hash"](binary)
         if any(r["binary"] != fingerprint for r in prior.values()):
             raise ValueError("binary changed")
         with args.output.open("ab") as stream:
@@ -47,9 +47,9 @@ def main():
                     row = {"split": split, "id": i, "binary": fingerprint,
                            "job_sha256": result["job_sha256"], "observed": ROUTES["observation"](result),
                            "elapsed_ms": result["elapsed_ms"]}
-                    stream.write(encode(row) + b"\n")
+                    stream.write(RUNNER["encode"](row) + b"\n")
                     stream.flush()
-    rows = read_rows(args.output)
+    rows = RUNNER["read_rows"](args.output)
     if set(expected) != {(r["split"], r["id"]) for r in rows} or len(rows) != 38:
         raise ValueError("incomplete regression panel")
     if len({r["binary"] for r in rows}) != 1:

@@ -21,6 +21,7 @@
   "baseline_binary_sha256": "33a86bdedebe8486322853f8ba62f060b46b41e62bb3a299430fe3b07fb12910",
   "index_study_source_commit": "99af598",
   "index_study_binary_sha256": "0fcce6ce6cebb4b3b3a1371789bb4f8695cbafbbd30f4e132decec1c3e5cabe2",
+  "release_regression_build_sha256": "dde51fccfe9825d8ee87ab7ac04217f7f12302de763bdd920ecf17f75294941a",
   "rustc": "1.99.1",
   "inference_program": "Apple Foundation Models CLI"
 }

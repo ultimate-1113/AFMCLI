@@ -18,8 +18,12 @@ def choose(rows):
 
 
 def totals(rows):
+    from study import final_record
     times = sorted(r["elapsed_ms"] for r in rows)
-    outcomes = Counter(r["score"].get("outcome", "unclassified") for r in rows)
+    outcomes = Counter(r["score"].get("outcome") or (
+        "correct" if r["score"]["correct"] else "serious_error" if r["score"]["serious"] else "incomplete")
+        for r in rows)
+    statuses = Counter(final_record(r)["status"] for r in rows)
     return {"n": len(rows), "correct": sum(bool(r["score"]["correct"]) for r in rows),
             "serious": sum(bool(r["score"]["serious"]) for r in rows),
             "unsupported": sum(bool(r["score"].get("unsupported")) or
@@ -30,7 +34,7 @@ def totals(rows):
             "calls": sum(r["calls"] for r in rows), "token_checks": sum(r["token_checks"] for r in rows),
             "median_ms": median(times) if times else None,
             "p95_ms": times[math.ceil(len(times) * .95) - 1] if times else None,
-            "outcomes": dict(sorted(outcomes.items()))}
+            "outcomes": dict(sorted(outcomes.items())), "statuses": dict(sorted(statuses.items()))}
 
 
 def paired(rows, arm, base):

@@ -10,6 +10,12 @@ python3 -B eval/moe/study.py report
 python3 -B eval/moe/regression.py verify
 ```
 
+手元の文書で索引方式を試す場合は、研究用のCargo機能を有効にする。次の例は原文と同じ言語で具体的な項目を尋ねる。
+
+```sh
+cargo run --release --locked --features experimental-index -- --compact=indexed answer '最終的に承認された会場はどこですか？' < minutes.txt
+```
+
 ## Macで再計測する
 
 Appleの `fm models` に利用可能な `system (AFM 3 Core Advanced)` が表示されるMacを使う。Rust 1.89以降とPython 3.9以降が必要。一般・専門試験では全条件で同じv0.3.2バイナリを使う。全文検索の試験は、現行2条件にv0.3.2、索引2条件に凍結した研究用コードを使う。以前のコミットを独立した作業ディレクトリに展開する。
