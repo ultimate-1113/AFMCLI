@@ -1,0 +1,26 @@
+{
+  "model": "AFM 3 Core Advanced",
+  "route": "system",
+  "os": "macOS 27.2.1 (26B131)",
+  "swift": "Apple Swift 6.4.2",
+  "files": {
+    "direct.jsonl": {
+      "cli_sha256": "dde51fccfe9825d8ee87ab7ac04217f7f12302de763bdd920ecf17f75294941a"
+    },
+    "native-formulas.jsonl, words.jsonl": {
+      "calculator_sha256": "8f36cc0b5eb7c9e8db27c59150daca8d2fbe4af2ffe1650f96ec5361ba24a3c9"
+    },
+    "native-paired.jsonl, native-explicit.jsonl, native-words.jsonl": {
+      "swift_probe_sha256": "7ad9351902de677f40fa5bb8821ed2229c865d2b596add0c3681f0cfbb90f594",
+      "calculator_sha256": "8f36cc0b5eb7c9e8db27c59150daca8d2fbe4af2ffe1650f96ec5361ba24a3c9"
+    },
+    "math-run.json": {
+      "calculator_sha256": "c77dee185909ac495a3fab8470f7bed36047b570550eb6b9a7ea31b0071a27d2",
+      "source_commit": "7beb294"
+    }
+  },
+  "source_sha256": {
+    "src/calc.rs": "85a3febbde11c6269bbe6ac8d49598e40a01906c019cb30c0a2cba4f31221f44",
+    "eval/calculator/native/CalculatorProbe.swift": "8dadf31d74c6b5f98aa18b4feae5f31b09718e09a2cca7c3e1b0f6c2fcef68b8"
+  }
+}
