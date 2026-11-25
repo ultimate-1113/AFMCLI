@@ -66,6 +66,25 @@ struct Args {
 }
 #[derive(Subcommand)]
 enum Action {
+    /// Evaluate a scientific expression locally. --from-text can ask AFM to propose an expression.
+    #[command(
+        after_help = "Use + - * / ^, postfix !, parentheses and scientific notation. The symbols × ÷ − also work.\nFunctions include sqrt, abs, exp, ln, log/log10 (base 10), sin/cos/tan, asin/acos/atan, sinh/cosh/tanh, nCr(n,r) and nPr(n,r). Constants include pi (or π) and e.\nFinite decimals and integer arithmetic use checked 128-bit rationals. The JSON field approximate identifies floating-point results.\nExamples\n  afmcli calc '(1+2)^3'\n  afmcli calc --angle deg 'sin(30)'"
+    )]
+    Calc {
+        /// Ask for an expression when the input is prose. A successful model interpretation returns review.
+        #[arg(long)]
+        from_text: bool,
+        /// Unit for circular trigonometric arguments and inverse trigonometric results.
+        #[arg(long, value_enum, default_value = "rad")]
+        angle: afmcli::calc::Angle,
+        /// Expression or natural language text. Otherwise read stdin or --input.
+        #[arg(
+            value_name = "EXPRESSION",
+            allow_hyphen_values = true,
+            conflicts_with = "input"
+        )]
+        formula: Option<String>,
+    },
     /// Import and list local Agent Skills.
     Skills {
         #[command(subcommand)]
@@ -177,6 +196,26 @@ fn unpack(mut data: Value) -> Result<(Option<String>, Job), String> {
 }
 fn one(command: Action, s: String) -> Result<(Option<String>, Job), String> {
     let job = match command {
+        Action::Calc {
+            from_text,
+            angle,
+            formula,
+        } => {
+            if formula.is_some() && !s.trim().is_empty() {
+                return Err("supply calculation input once, as an argument or on stdin".into());
+            }
+            let input = formula.unwrap_or(s);
+            let (expression, source) = if from_text {
+                (None, Some(input))
+            } else {
+                (Some(input), None)
+            };
+            Job::Calculate {
+                expression,
+                source,
+                angle,
+            }
+        }
         Action::Solve { from_text } => {
             if from_text {
                 Job::Solve {

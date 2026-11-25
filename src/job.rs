@@ -77,6 +77,13 @@ pub enum Job {
         problem: Option<crate::solve::Problem>,
         source: Option<String>,
     },
+    #[serde(alias = "calc")]
+    Calculate {
+        expression: Option<String>,
+        source: Option<String>,
+        #[serde(default, alias = "angle_unit")]
+        angle: crate::calc::Angle,
+    },
 }
 fn default_n() -> usize {
     3
@@ -94,6 +101,7 @@ impl Job {
             Self::Structure { .. } => "structure",
             Self::Edit { .. } => "edit",
             Self::Solve { .. } => "solve",
+            Self::Calculate { .. } => "calculate",
         }
     }
     pub fn validate(&self, has_image: bool) -> Result<(), String> {
@@ -111,6 +119,16 @@ impl Job {
         let mut source = None;
         let mut instruction = None;
         match self {
+            Self::Calculate {
+                expression,
+                source: s,
+                ..
+            } => {
+                if s.is_some() == expression.is_some() {
+                    return Err("provide exactly one of expression or source".into());
+                }
+                source = s.as_ref();
+            }
             Self::Solve { source: s, problem } => {
                 if s.is_some() == problem.is_some() {
                     return Err("provide one of source or problem".into());
