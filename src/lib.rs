@@ -1,3 +1,4 @@
+pub mod calc;
 pub mod contract;
 mod declarations;
 pub mod document;

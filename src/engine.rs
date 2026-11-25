@@ -395,6 +395,11 @@ impl<'a> Engine<'a> {
                 out.value = json!({"route":route,"output":out.value});
                 Ok(out)
             }
+            Job::Calculate {
+                expression,
+                source,
+                angle,
+            } => crate::calc::run(self, expression.as_deref(), source.as_deref(), *angle),
             Job::Solve { problem, source } => {
                 crate::solve::run(self, problem.as_ref(), source.as_deref())
             }
