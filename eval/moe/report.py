@@ -68,9 +68,9 @@ def diagnostics(track, rows):
             measured = [s["reader_evidence_recall"] for s in scores if s["reader_evidence_recall"] is not None]
             retrieved = [s["retrieval_recall"] for s in scores if s["retrieval_recall"] is not None]
             details[arm] = {"known_reader_coverage_cases": len(measured),
-                            "mean_known_reader_evidence_recall": sum(measured) / len(measured) if measured else None,
+                            "mean_known_reader_evidence_recall": math.fsum(measured) / len(measured) if measured else None,
                             "indexed_cases": len(retrieved),
-                            "mean_index_evidence_recall": sum(retrieved) / len(retrieved) if retrieved else None,
+                            "mean_index_evidence_recall": math.fsum(retrieved) / len(retrieved) if retrieved else None,
                             "fallback_reasons": dict(Counter(s["fallback"] for s in scores if s["fallback"])),
                             "retrieval_rounds": dict(Counter(s["retrieval_rounds"] for s in scores))}
         return details

@@ -1,0 +1,14 @@
+[
+  {
+    "track": "context",
+    "split": "test",
+    "case_id": "ctx-test-16k-07",
+    "arm": "current",
+    "completed_case_methods_before_interruption": 105,
+    "source": "fm",
+    "reported_exit_code": 1,
+    "stage": "original runner stopped before appending this case-method",
+    "measurements_retained": false,
+    "handling": "Preserved all completed rows. Restarted the affected case-method with the same baseline binary, inputs and scorer. Subsequent per-job fm errors are retained and scored. Aggregate time, token and call totals cover completed records. The abandoned attempt's metrics are unknown."
+  }
+]

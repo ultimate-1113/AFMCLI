@@ -132,9 +132,10 @@ def expected(track, split, cases, output):
 def accepted_result(record):
     if not isinstance(record, dict) or not isinstance(record.get("status"), str):
         raise ValueError("CLI did not return an AFMCLI record")
-    if record["status"] in ("error", "backend_error") and not any(
-            "timed out" in note for note in record.get("notes", [])):
-        raise RuntimeError("AFM backend failure: " + str(record.get("notes", ""))[:450])
+    if record["status"] in ("error", "backend_error"):
+        notes = " ".join(record.get("notes", [])).casefold()
+        if any(term in notes for term in ("license", "agreement", "must list an available", "could not start fm")):
+            raise RuntimeError("AFM configuration failure: " + notes[:450])
 
 
 def job_call(binary, flags, job, env):
