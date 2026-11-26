@@ -146,6 +146,14 @@ printf '%s\n' '{"variables":[{"name":"X","min":0,"max":5}],"constraints":[{"weig
 
 `structure` が扱うスキーマは、ルートがobject、各階層でproperties・required・additionalProperties=falseを明示したもの。値にはobject、arrayとitems、stringと任意のenum、integer、number、booleanを使える。未対応キーワード、重複したJSONキー、生成結果の型違反にはエラーまたは保留を返す。事実性は原文や業務上の条件と照合して確かめる。
 
+## AFMの生成と検索を同時に進める実験
+
+M6でCore Advancedに同じ文章を3回生成させると、GPU全体の使用率は85標本すべてで0%表示だった。Metalで検索を同時に動かすと、重なった区間のGPU使用率の中央値は73%になった。ANEの演算使用率はこの環境の公開情報からは取得できていない。[観測値と10秒の使用率チェック](eval/combinations/hardware/activity/README.md)
+
+4,096行に対する1,024問分の検索を480回続ける条件では、明示GPUの仕事をAFMに重ねると、同じ巡で個別に測った時間の和より全体で31%短く、回答単体の待ち時間は約4%長かった。1問ずつ検索する用途では、文書の索引をあらかじめ作って保持すると原文選択が約48 msから0.5 msになった。[用途別の実測と再現手順](eval/combinations/README.md)
+
+別の7巡で480バッチをGPUとANE優先のCore MLに半分ずつ分けると、検索単独ではGPUだけの1.237秒から0.842秒に短縮した。AFMの回答と検索結果の両方がそろうまでの中央値は、GPUだけで2.523秒、分担で2.573秒だった。[割り振りごとの待ち時間と出力の照合](eval/combinations/hardware/batched/README.md)
+
 ## 再現とライセンス
 
 ```sh

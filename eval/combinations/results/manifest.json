@@ -1,0 +1,18 @@
+{
+  "binaries": {
+    "calculator": "1c39d03e8b3878d144b0cb652a5d9188b1ed88b66cd90317855ed0f30cc3ea64",
+    "checked": "350bef3f1cfc98c5586f2c2691e1c35f8c5c620d5c85bab7126a0a31f6c32156",
+    "indexed": "0fcce6ce6cebb4b3b3a1371789bb4f8695cbafbbd30f4e132decec1c3e5cabe2",
+    "native": "7ad9351902de677f40fa5bb8821ed2229c865d2b596add0c3681f0cfbb90f594"
+  },
+  "lock_sha256": "c732bb4d6ec0c626cef926684ed61ea134afd39cbe6eee493729f9633828a666",
+  "model": {
+    "availability": "available",
+    "available": true,
+    "core_advanced_3": true,
+    "event": "model",
+    "os": "Version 27.2.1 (Build 26B131)",
+    "route": "system",
+    "variant": "AFM 3 Core Advanced"
+  }
+}

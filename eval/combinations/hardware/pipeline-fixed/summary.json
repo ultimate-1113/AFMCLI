@@ -1,0 +1,346 @@
+{
+  "batches": [
+    {
+      "batch_ms": 2735.921,
+      "fm_process_after_input_ms": [
+        663.024,
+        530.054,
+        624.427,
+        549.445
+      ],
+      "overlap_ms": 0.0,
+      "pairwise_overlap_ms": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "policy": "cpuOnly",
+      "position": 1,
+      "retrieval_ms": [
+        0.266,
+        0.455,
+        0.521,
+        0.591
+      ],
+      "round": 1,
+      "schedule": "sequential"
+    },
+    {
+      "batch_ms": 2432.779,
+      "fm_process_after_input_ms": [
+        590.06,
+        529.316,
+        610.623,
+        549.136
+      ],
+      "overlap_ms": 1.747,
+      "pairwise_overlap_ms": [
+        0.484,
+        0.583,
+        0.68
+      ],
+      "policy": "cpuAndNeuralEngine",
+      "position": 2,
+      "retrieval_ms": [
+        0.524,
+        0.484,
+        0.583,
+        0.68
+      ],
+      "round": 1,
+      "schedule": "prefetch"
+    },
+    {
+      "batch_ms": 2441.235,
+      "fm_process_after_input_ms": [
+        592.552,
+        533.476,
+        615.728,
+        545.25
+      ],
+      "overlap_ms": 0.0,
+      "pairwise_overlap_ms": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "policy": "cpuAndNeuralEngine",
+      "position": 3,
+      "retrieval_ms": [
+        0.492,
+        0.445,
+        0.523,
+        0.554
+      ],
+      "round": 1,
+      "schedule": "sequential"
+    },
+    {
+      "batch_ms": 2424.144,
+      "fm_process_after_input_ms": [
+        589.386,
+        525.767,
+        608.179,
+        551.261
+      ],
+      "overlap_ms": 1.547,
+      "pairwise_overlap_ms": [
+        0.455,
+        0.534,
+        0.558
+      ],
+      "policy": "cpuOnly",
+      "position": 4,
+      "retrieval_ms": [
+        0.47,
+        0.455,
+        0.534,
+        0.558
+      ],
+      "round": 1,
+      "schedule": "prefetch"
+    },
+    {
+      "batch_ms": 2407.899,
+      "fm_process_after_input_ms": [
+        537.727,
+        604.068,
+        523.346,
+        590.284
+      ],
+      "overlap_ms": 1.43,
+      "pairwise_overlap_ms": [
+        0.526,
+        0.457,
+        0.447
+      ],
+      "policy": "cpuOnly",
+      "position": 1,
+      "retrieval_ms": [
+        0.567,
+        0.526,
+        0.457,
+        0.447
+      ],
+      "round": 2,
+      "schedule": "prefetch"
+    },
+    {
+      "batch_ms": 2443.146,
+      "fm_process_after_input_ms": [
+        550.39,
+        613.669,
+        529.002,
+        596.483
+      ],
+      "overlap_ms": 0.0,
+      "pairwise_overlap_ms": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "policy": "cpuAndNeuralEngine",
+      "position": 2,
+      "retrieval_ms": [
+        0.633,
+        0.524,
+        0.456,
+        0.467
+      ],
+      "round": 2,
+      "schedule": "sequential"
+    },
+    {
+      "batch_ms": 2424.341,
+      "fm_process_after_input_ms": [
+        546.033,
+        605.995,
+        529.822,
+        591.234
+      ],
+      "overlap_ms": 1.504,
+      "pairwise_overlap_ms": [
+        0.538,
+        0.503,
+        0.463
+      ],
+      "policy": "cpuAndNeuralEngine",
+      "position": 3,
+      "retrieval_ms": [
+        0.602,
+        0.538,
+        0.503,
+        0.463
+      ],
+      "round": 2,
+      "schedule": "prefetch"
+    },
+    {
+      "batch_ms": 2426.772,
+      "fm_process_after_input_ms": [
+        546.439,
+        608.348,
+        525.047,
+        594.296
+      ],
+      "overlap_ms": 0.0,
+      "pairwise_overlap_ms": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "policy": "cpuOnly",
+      "position": 4,
+      "retrieval_ms": [
+        0.565,
+        0.497,
+        0.447,
+        0.451
+      ],
+      "round": 2,
+      "schedule": "sequential"
+    }
+  ],
+  "by_policy": {
+    "cpuAndNeuralEngine": {
+      "grade_counts": {
+        "correct_settled": 8,
+        "false_nonnull": 4,
+        "held": 4
+      },
+      "inner_tensor_or_prediction": {
+        "max_ms": 0.215,
+        "median_ms": 0.148,
+        "min_ms": 0.13,
+        "n": 16
+      },
+      "query_preparation": {
+        "max_ms": 0.126,
+        "median_ms": 0.082,
+        "min_ms": 0.059,
+        "n": 16
+      },
+      "retrieval_to_selected": {
+        "max_ms": 0.68,
+        "median_ms": 0.523,
+        "min_ms": 0.445,
+        "n": 16
+      },
+      "swift_process_or_index_round_trip": {
+        "max_ms": 0.567,
+        "median_ms": 0.422,
+        "min_ms": 0.366,
+        "n": 16
+      }
+    },
+    "cpuOnly": {
+      "grade_counts": {
+        "correct_settled": 8,
+        "false_nonnull": 4,
+        "held": 4
+      },
+      "inner_tensor_or_prediction": {
+        "max_ms": 0.162,
+        "median_ms": 0.134,
+        "min_ms": 0.067,
+        "n": 16
+      },
+      "query_preparation": {
+        "max_ms": 0.116,
+        "median_ms": 0.088,
+        "min_ms": 0.047,
+        "n": 16
+      },
+      "retrieval_to_selected": {
+        "max_ms": 0.591,
+        "median_ms": 0.483,
+        "min_ms": 0.266,
+        "n": 16
+      },
+      "swift_process_or_index_round_trip": {
+        "max_ms": 0.505,
+        "median_ms": 0.397,
+        "min_ms": 0.21,
+        "n": 16
+      }
+    }
+  },
+  "by_question": {
+    "index-test-16k-01-p": {
+      "distinct_raw_structured_answers": 1,
+      "distinct_validated_answers": 1,
+      "grades": {
+        "correct_settled": 8
+      },
+      "runs": 8,
+      "select_and_prompt_identical": true
+    },
+    "index-test-16k-02-n": {
+      "distinct_raw_structured_answers": 1,
+      "distinct_validated_answers": 1,
+      "grades": {
+        "held": 8
+      },
+      "runs": 8,
+      "select_and_prompt_identical": true
+    },
+    "index-test-8k-01-p": {
+      "distinct_raw_structured_answers": 1,
+      "distinct_validated_answers": 1,
+      "grades": {
+        "correct_settled": 8
+      },
+      "runs": 8,
+      "select_and_prompt_identical": true
+    },
+    "index-test-8k-02-n": {
+      "distinct_raw_structured_answers": 1,
+      "distinct_validated_answers": 1,
+      "grades": {
+        "false_nonnull": 8
+      },
+      "runs": 8,
+      "select_and_prompt_identical": true
+    }
+  },
+  "fm_submissions": 32,
+  "paired": [
+    {
+      "actual_overlap_ms": 1.547,
+      "policy": "cpuOnly",
+      "prefetch_ms": 2424.144,
+      "round": 1,
+      "saved_ms": 311.777,
+      "saved_percent": 11.4,
+      "sequential_ms": 2735.921
+    },
+    {
+      "actual_overlap_ms": 1.43,
+      "policy": "cpuOnly",
+      "prefetch_ms": 2407.899,
+      "round": 2,
+      "saved_ms": 18.873,
+      "saved_percent": 0.78,
+      "sequential_ms": 2426.772
+    },
+    {
+      "actual_overlap_ms": 1.747,
+      "policy": "cpuAndNeuralEngine",
+      "prefetch_ms": 2432.779,
+      "round": 1,
+      "saved_ms": 8.456,
+      "saved_percent": 0.35,
+      "sequential_ms": 2441.235
+    },
+    {
+      "actual_overlap_ms": 1.504,
+      "policy": "cpuAndNeuralEngine",
+      "prefetch_ms": 2424.341,
+      "round": 2,
+      "saved_ms": 18.805,
+      "saved_percent": 0.77,
+      "sequential_ms": 2443.146
+    }
+  ],
+  "simultaneous_fm_max": 1
+}

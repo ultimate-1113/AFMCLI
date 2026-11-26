@@ -1,0 +1,16 @@
+{
+  "status": "excluded",
+  "contention_source_sha256": "62ac2148b39794d356b64c9015c96b97e4d67c45266f7c48a79c612ee5456a0b",
+  "python": "3.9.6",
+  "reason": "Python monotonic_ns uses a per-process origin on this system interpreter. The native host and MPS absolute clocks use boot uptime.",
+  "observed_python_monotonic_ns_in_separate_clock_probe": 5651666,
+  "observed_mach_ns_in_same_clock_probe": 1312261531160583,
+  "fixed_batches_from_first_calibration": 480,
+  "completed_blocks_before_validation": 7,
+  "timed_afm_calls_excluded": 28,
+  "warmup_and_calibration_afm_calls_excluded": 2,
+  "failure": "ValueError: inconsistent native and parent clocks",
+  "published_measurements_from_this_run": 0,
+  "raw_capture": "The first runner validated before saving and did not persist the rejected trial rows.",
+  "correction": "Use mach_absolute_time and mach_timebase_info in Python, check all native process brackets before any timed condition, retain 480 batches and repeat all seven blocks."
+}

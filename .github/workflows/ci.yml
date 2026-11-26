@@ -79,5 +79,24 @@ jobs:
           python3 -m json.tool --no-ensure-ascii --indent 2 "$RUNNER_TEMP/calculator-sufficiency.json" > "$RUNNER_TEMP/calculator-sufficiency-formatted.json"
           cmp "$RUNNER_TEMP/calculator-sufficiency-formatted.json" eval/calculator/native-sufficiency-summary.json
           python3 -B eval/calculator/check_math.py --binary target/debug/afmcli
+          python3 -B -m unittest discover -s eval/combinations
+          python3 -B eval/combinations/study.py verify
+          python3 -B eval/combinations/study.py report > "$RUNNER_TEMP/combined-methods.json"
+          cmp "$RUNNER_TEMP/combined-methods.json" eval/combinations/results/summary.json
+          python3 -B eval/combinations/review_control.py replay --out eval/combinations/results/review-control.jsonl
+          hw=eval/combinations/hardware
+          python3 -B "$hw/public_records.py" single verify --out "$hw/results"
+          python3 -B "$hw/public_records.py" batch verify --out "$hw/pipeline-tensor"
+          python3 -B "$hw/public_records.py" batch verify --out "$hw/pipeline-fixed"
+          python3 -B "$hw/activity/activity.py" replay --out "$hw/activity/observations.json" > "$RUNNER_TEMP/afm-activity.json"
+          cmp "$RUNNER_TEMP/afm-activity.json" "$hw/activity/summary.json"
+          python3 -B "$hw/batched/matrix_data.py" "$RUNNER_TEMP/afm-search-inputs"
+          python3 -B "$hw/batched/survey.py" replay --inputs "$RUNNER_TEMP/afm-search-inputs" --out "$hw/batched/results"
+          python3 -B "$hw/batched/integer_replay.py" --out "$hw/batched/results"
+          python3 -B "$hw/batched/contention.py" replay --out "$hw/batched/results"
+          python3 -B "$hw/batched/split_devices.py" replay --out "$hw/batched/results"
+          python3 -I -S -B "$hw/placement/replay.py"
+          python3 -B "$hw/document_image/study.py" verify --out "$hw/document_image/results"
+          python3 -B "$hw/document_image/vision_activity.py" verify --raw "$hw/document_image/results/vision-activity.json" --summary "$hw/document_image/results/vision-activity-summary.json"
           python3 -B tools/test_png_audit.py
           python3 -B tools/privacy_audit.py --tracked

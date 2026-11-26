@@ -1,0 +1,859 @@
+{
+  "environment": {
+    "macos": "27.2.1",
+    "build": "26B131",
+    "arch": "arm64",
+    "chip": "Apple M6",
+    "python": "3.12.16",
+    "numpy": "2.5.5",
+    "coremltools": "9.0",
+    "swift": "Apple Swift version 6.4.2 (swiftlang-6.4.2.1.9 clang-2100.4.1.1)\nTarget: arm64-apple-macosx27.2.0",
+    "compute_plan_api": "MLComputePlan.deviceUsage(for:)"
+  },
+  "index": {
+    "dimension": 1024,
+    "row_count": 4096,
+    "queries": 1024,
+    "weights_sha256_f16le": "db12fafed4ba00cf142bd5af7bbb0663612f12678d6310b0bde4627f2ded40b7",
+    "package_bytes": 8390521,
+    "compiled_bytes": 8390596,
+    "convert_and_serialize_ns": 35195500,
+    "compile_process_wall_ns": 21988625,
+    "compile_ns": 16941916,
+    "move_ns": 79625,
+    "canonical_raw_sha256": {
+      "documents.f32": "a7969c344a6cd7d30703801baef9920b62ef90f5c80930dc3232350f54db8e6e",
+      "queries.f32": "0609349a0eef1b92cf5cd0c02801b86d57596f88b180cc5c5373172011cd1b3c"
+    },
+    "weight_cast_ns": 817791
+  },
+  "M": 4096,
+  "K": 1024,
+  "Q": 1024,
+  "benchmark_rows": 4096,
+  "bank_rows": 1024,
+  "banks": {
+    "0": {
+      "offset_rows": 0,
+      "integer_ref_and_rank_ns": 733789584,
+      "scores_sha256_u16le": "e15a1613ade5a93962a4bf6c4529cf73fdf3db4cdebae59feb0651c3e195879f",
+      "scores_sha256_f16le": "276ced3826e29d52205af32c68e06bbd0fdb102b6b221bfbdd2645d10dbc8652",
+      "stable_rank_sha256_u16le": "8a5f8c0731b3f866a1b792dcdf4df2221de57161fbd621ae263b6afe61b4cb39",
+      "elements": 4194304
+    },
+    "1": {
+      "offset_rows": 1024,
+      "integer_ref_and_rank_ns": 727400500,
+      "scores_sha256_u16le": "a772a403051c936b346b0c42e6aefc38546e84019b67ec5f7e17f213a0626116",
+      "scores_sha256_f16le": "5d745df62623c981736f092775d1117e1d6c196420bf9a19ca8cd3fafa647224",
+      "stable_rank_sha256_u16le": "2a1e6cf50365c907181658cf316cdf031620a1061357427bf6a00e699eaf5cf3",
+      "elements": 4194304
+    }
+  },
+  "arms": {
+    "cpuOnly": {
+      "ready": {
+        "dimension": 1024,
+        "load_ns": 23972000,
+        "policy": "cpuOnly",
+        "queries": 1024,
+        "ready": true,
+        "row_count": 4096
+      },
+      "startup_wall_ns": 29277916,
+      "prepack": [
+        {
+          "id": "pack0",
+          "pack_ns": 1629000,
+          "prepared": "0"
+        },
+        {
+          "id": "pack1",
+          "pack_ns": 1521000,
+          "prepared": "1"
+        }
+      ],
+      "warm": [
+        {
+          "complete_ns": 1312127379466166,
+          "elements": 4194304,
+          "id": "2",
+          "native_total_ns": 4765542,
+          "pack_ns": 834,
+          "postprocess_ns": 2405209,
+          "predict_ns": 2193792,
+          "predict_start_ns": 1312127377107291,
+          "prediction_returned_ns": 1312127379301083,
+          "readback_ns": 165083,
+          "scores_sha256_f16le": "276ced3826e29d52205af32c68e06bbd0fdb102b6b221bfbdd2645d10dbc8652",
+          "start_ns": 1312127377105916,
+          "wall_ns": 4854250,
+          "bank": 0,
+          "full_materialized_ns": 2358875
+        },
+        {
+          "complete_ns": 1312127384183625,
+          "elements": 4194304,
+          "id": "3",
+          "native_total_ns": 4644500,
+          "pack_ns": 333,
+          "postprocess_ns": 2393166,
+          "predict_ns": 2106834,
+          "predict_start_ns": 1312127381932791,
+          "prediction_returned_ns": 1312127384039625,
+          "readback_ns": 144000,
+          "scores_sha256_f16le": "5d745df62623c981736f092775d1117e1d6c196420bf9a19ca8cd3fafa647224",
+          "start_ns": 1312127381932375,
+          "wall_ns": 4681875,
+          "bank": 1,
+          "full_materialized_ns": 2250834
+        },
+        {
+          "complete_ns": 1312127388832625,
+          "elements": 4194304,
+          "id": "4",
+          "native_total_ns": 4615625,
+          "pack_ns": 208,
+          "postprocess_ns": 2397791,
+          "predict_ns": 2079417,
+          "predict_start_ns": 1312127386615041,
+          "prediction_returned_ns": 1312127388694458,
+          "readback_ns": 138167,
+          "scores_sha256_f16le": "276ced3826e29d52205af32c68e06bbd0fdb102b6b221bfbdd2645d10dbc8652",
+          "start_ns": 1312127386614833,
+          "wall_ns": 4651584,
+          "bank": 0,
+          "full_materialized_ns": 2217584
+        },
+        {
+          "complete_ns": 1312127393480666,
+          "elements": 4194304,
+          "id": "5",
+          "native_total_ns": 4613250,
+          "pack_ns": 167,
+          "postprocess_ns": 2397125,
+          "predict_ns": 2075209,
+          "predict_start_ns": 1312127391264791,
+          "prediction_returned_ns": 1312127393340000,
+          "readback_ns": 140666,
+          "scores_sha256_f16le": "5d745df62623c981736f092775d1117e1d6c196420bf9a19ca8cd3fafa647224",
+          "start_ns": 1312127391264583,
+          "wall_ns": 4638458,
+          "bank": 1,
+          "full_materialized_ns": 2215875
+        },
+        {
+          "complete_ns": 1312127398114291,
+          "elements": 4194304,
+          "id": "6",
+          "native_total_ns": 4606417,
+          "pack_ns": 125,
+          "postprocess_ns": 2395917,
+          "predict_ns": 2072167,
+          "predict_start_ns": 1312127395903958,
+          "prediction_returned_ns": 1312127397976125,
+          "readback_ns": 138166,
+          "scores_sha256_f16le": "276ced3826e29d52205af32c68e06bbd0fdb102b6b221bfbdd2645d10dbc8652",
+          "start_ns": 1312127395903833,
+          "wall_ns": 4634375,
+          "bank": 0,
+          "full_materialized_ns": 2210333
+        },
+        {
+          "complete_ns": 1312127402749166,
+          "elements": 4194304,
+          "id": "7",
+          "native_total_ns": 4603292,
+          "pack_ns": 167,
+          "postprocess_ns": 2394042,
+          "predict_ns": 2067458,
+          "predict_start_ns": 1312127400540125,
+          "prediction_returned_ns": 1312127402607583,
+          "readback_ns": 141583,
+          "scores_sha256_f16le": "5d745df62623c981736f092775d1117e1d6c196420bf9a19ca8cd3fafa647224",
+          "start_ns": 1312127400539958,
+          "wall_ns": 4624916,
+          "bank": 1,
+          "full_materialized_ns": 2209041
+        },
+        {
+          "complete_ns": 1312127407378375,
+          "elements": 4194304,
+          "id": "8",
+          "native_total_ns": 4604792,
+          "pack_ns": 167,
+          "postprocess_ns": 2392500,
+          "predict_ns": 2072291,
+          "predict_start_ns": 1312127405166250,
+          "prediction_returned_ns": 1312127407238541,
+          "readback_ns": 139834,
+          "scores_sha256_f16le": "276ced3826e29d52205af32c68e06bbd0fdb102b6b221bfbdd2645d10dbc8652",
+          "start_ns": 1312127405166083,
+          "wall_ns": 4626250,
+          "bank": 0,
+          "full_materialized_ns": 2212125
+        },
+        {
+          "complete_ns": 1312127412034208,
+          "elements": 4194304,
+          "id": "9",
+          "native_total_ns": 4603375,
+          "pack_ns": 166,
+          "postprocess_ns": 2393125,
+          "predict_ns": 2069625,
+          "predict_start_ns": 1312127409824208,
+          "prediction_returned_ns": 1312127411893833,
+          "readback_ns": 140375,
+          "scores_sha256_f16le": "5d745df62623c981736f092775d1117e1d6c196420bf9a19ca8cd3fafa647224",
+          "start_ns": 1312127409824000,
+          "wall_ns": 4626500,
+          "bank": 1,
+          "full_materialized_ns": 2210000
+        },
+        {
+          "complete_ns": 1312127416663541,
+          "elements": 4194304,
+          "id": "10",
+          "native_total_ns": 4603042,
+          "pack_ns": 125,
+          "postprocess_ns": 2391917,
+          "predict_ns": 2070625,
+          "predict_start_ns": 1312127414452541,
+          "prediction_returned_ns": 1312127416523166,
+          "readback_ns": 140375,
+          "scores_sha256_f16le": "276ced3826e29d52205af32c68e06bbd0fdb102b6b221bfbdd2645d10dbc8652",
+          "start_ns": 1312127414452416,
+          "wall_ns": 4623958,
+          "bank": 0,
+          "full_materialized_ns": 2211000
+        },
+        {
+          "complete_ns": 1312127421286041,
+          "elements": 4194304,
+          "id": "11",
+          "native_total_ns": 4601250,
+          "pack_ns": 166,
+          "postprocess_ns": 2392167,
+          "predict_ns": 2067000,
+          "predict_start_ns": 1312127419077208,
+          "prediction_returned_ns": 1312127421144208,
+          "readback_ns": 141833,
+          "scores_sha256_f16le": "5d745df62623c981736f092775d1117e1d6c196420bf9a19ca8cd3fafa647224",
+          "start_ns": 1312127419077000,
+          "wall_ns": 4624334,
+          "bank": 1,
+          "full_materialized_ns": 2208833
+        },
+        {
+          "complete_ns": 1312127425916833,
+          "elements": 4194304,
+          "id": "12",
+          "native_total_ns": 4605083,
+          "pack_ns": 125,
+          "postprocess_ns": 2391333,
+          "predict_ns": 2070667,
+          "predict_start_ns": 1312127423703291,
+          "prediction_returned_ns": 1312127425773958,
+          "readback_ns": 142875,
+          "scores_sha256_f16le": "276ced3826e29d52205af32c68e06bbd0fdb102b6b221bfbdd2645d10dbc8652",
+          "start_ns": 1312127423703125,
+          "wall_ns": 4624833,
+          "bank": 0,
+          "full_materialized_ns": 2213542
+        },
+        {
+          "complete_ns": 1312127430547458,
+          "elements": 4194304,
+          "id": "13",
+          "native_total_ns": 4608042,
+          "pack_ns": 125,
+          "postprocess_ns": 2389625,
+          "predict_ns": 2072083,
+          "predict_start_ns": 1312127428329250,
+          "prediction_returned_ns": 1312127430401333,
+          "readback_ns": 146125,
+          "scores_sha256_f16le": "5d745df62623c981736f092775d1117e1d6c196420bf9a19ca8cd3fafa647224",
+          "start_ns": 1312127428329083,
+          "wall_ns": 4632500,
+          "bank": 1,
+          "full_materialized_ns": 2218208
+        }
+      ],
+      "first_per_bank": [
+        {
+          "complete_ns": 1312127077134208,
+          "elements": 4194304,
+          "id": "0",
+          "native_total_ns": 16877292,
+          "pack_ns": 417,
+          "postprocess_ns": 13094042,
+          "predict_ns": 3348458,
+          "predict_start_ns": 1312127073353458,
+          "prediction_returned_ns": 1312127076701916,
+          "readback_ns": 432292,
+          "scores_sha256_f16le": "276ced3826e29d52205af32c68e06bbd0fdb102b6b221bfbdd2645d10dbc8652",
+          "scores_sha256_u16le": "e15a1613ade5a93962a4bf6c4529cf73fdf3db4cdebae59feb0651c3e195879f",
+          "start_ns": 1312127073351208,
+          "wall_ns": 16983583,
+          "bank": 0,
+          "full_materialized_ns": 3780750,
+          "native_rank_sha256_u16le": "8a5f8c0731b3f866a1b792dcdf4df2221de57161fbd621ae263b6afe61b4cb39"
+        },
+        {
+          "complete_ns": 1312127230256125,
+          "elements": 4194304,
+          "id": "1",
+          "native_total_ns": 15331458,
+          "pack_ns": 1250,
+          "postprocess_ns": 12716166,
+          "predict_ns": 2307708,
+          "predict_start_ns": 1312127227642750,
+          "prediction_returned_ns": 1312127229950458,
+          "readback_ns": 305667,
+          "scores_sha256_f16le": "5d745df62623c981736f092775d1117e1d6c196420bf9a19ca8cd3fafa647224",
+          "scores_sha256_u16le": "a772a403051c936b346b0c42e6aefc38546e84019b67ec5f7e17f213a0626116",
+          "start_ns": 1312127227640875,
+          "wall_ns": 15448500,
+          "bank": 1,
+          "full_materialized_ns": 2613375,
+          "native_rank_sha256_u16le": "2a1e6cf50365c907181658cf316cdf031620a1061357427bf6a00e699eaf5cf3"
+        }
+      ],
+      "warm_materialized": {
+        "count": 12,
+        "minimum_ms": 2.208833,
+        "median_ms": 2.2128335,
+        "p95_ms": 2.358875,
+        "maximum_ms": 2.358875
+      },
+      "warm_wire": {
+        "count": 12,
+        "minimum_ms": 4.623958,
+        "median_ms": 4.6295,
+        "p95_ms": 4.85425,
+        "maximum_ms": 4.85425
+      },
+      "warm_predict": {
+        "count": 12,
+        "minimum_ms": 2.067,
+        "median_ms": 2.072125,
+        "p95_ms": 2.193792,
+        "maximum_ms": 2.193792
+      },
+      "plan": {
+        "all_compute_devices": [
+          {
+            "core_count": 32,
+            "kind": "neuralEngine",
+            "name": "Neural Engine"
+          },
+          {
+            "kind": "gpu",
+            "name": "Apple M6"
+          },
+          {
+            "kind": "cpu",
+            "name": "CPU"
+          }
+        ],
+        "available_compute_devices": [
+          {
+            "core_count": 32,
+            "kind": "neuralEngine",
+            "name": "Neural Engine"
+          },
+          {
+            "kind": "gpu",
+            "name": "Apple M6"
+          },
+          {
+            "kind": "cpu",
+            "name": "CPU"
+          }
+        ],
+        "functions": {
+          "main": [
+            {
+              "estimated_cost_weight": null,
+              "operator": "const",
+              "outputs": [
+                "scores_weight_0"
+              ],
+              "preferred": null,
+              "supported": null
+            },
+            {
+              "estimated_cost_weight": null,
+              "operator": "const",
+              "outputs": [
+                "scores_strides_0"
+              ],
+              "preferred": null,
+              "supported": null
+            },
+            {
+              "estimated_cost_weight": null,
+              "operator": "const",
+              "outputs": [
+                "scores_pad_type_0"
+              ],
+              "preferred": null,
+              "supported": null
+            },
+            {
+              "estimated_cost_weight": null,
+              "operator": "const",
+              "outputs": [
+                "scores_pad_0"
+              ],
+              "preferred": null,
+              "supported": null
+            },
+            {
+              "estimated_cost_weight": null,
+              "operator": "const",
+              "outputs": [
+                "scores_dilations_0"
+              ],
+              "preferred": null,
+              "supported": null
+            },
+            {
+              "estimated_cost_weight": null,
+              "operator": "const",
+              "outputs": [
+                "scores_groups_0"
+              ],
+              "preferred": null,
+              "supported": null
+            },
+            {
+              "estimated_cost_weight": 1,
+              "operator": "ios16.conv",
+              "outputs": [
+                "scores"
+              ],
+              "preferred": {
+                "kind": "cpu",
+                "name": "CPU"
+              },
+              "supported": [
+                {
+                  "kind": "cpu",
+                  "name": "CPU"
+                }
+              ]
+            }
+          ]
+        },
+        "load_plan_ns": 26692333,
+        "policy": "cpuOnly"
+      }
+    },
+    "cpuAndNeuralEngine": {
+      "ready": {
+        "dimension": 1024,
+        "load_ns": 133803042,
+        "policy": "cpuAndNeuralEngine",
+        "queries": 1024,
+        "ready": true,
+        "row_count": 4096
+      },
+      "startup_wall_ns": 138280667,
+      "prepack": [
+        {
+          "id": "pack0",
+          "pack_ns": 1955250,
+          "prepared": "0"
+        },
+        {
+          "id": "pack1",
+          "pack_ns": 1795458,
+          "prepared": "1"
+        }
+      ],
+      "warm": [
+        {
+          "complete_ns": 1312127912781458,
+          "elements": 4194304,
+          "id": "2",
+          "native_total_ns": 3504334,
+          "pack_ns": 667,
+          "postprocess_ns": 2431250,
+          "predict_ns": 876375,
+          "predict_start_ns": 1312127911709458,
+          "prediction_returned_ns": 1312127912585833,
+          "readback_ns": 195625,
+          "scores_sha256_f16le": "276ced3826e29d52205af32c68e06bbd0fdb102b6b221bfbdd2645d10dbc8652",
+          "start_ns": 1312127911708541,
+          "wall_ns": 3595125,
+          "bank": 0,
+          "full_materialized_ns": 1072000
+        },
+        {
+          "complete_ns": 1312127916158750,
+          "elements": 4194304,
+          "id": "3",
+          "native_total_ns": 3294333,
+          "pack_ns": 375,
+          "postprocess_ns": 2412875,
+          "predict_ns": 735375,
+          "predict_start_ns": 1312127915277875,
+          "prediction_returned_ns": 1312127916013250,
+          "readback_ns": 145500,
+          "scores_sha256_f16le": "5d745df62623c981736f092775d1117e1d6c196420bf9a19ca8cd3fafa647224",
+          "start_ns": 1312127915277333,
+          "wall_ns": 3334208,
+          "bank": 1,
+          "full_materialized_ns": 880875
+        },
+        {
+          "complete_ns": 1312127919461416,
+          "elements": 4194304,
+          "id": "4",
+          "native_total_ns": 3264292,
+          "pack_ns": 209,
+          "postprocess_ns": 2413625,
+          "predict_ns": 708750,
+          "predict_start_ns": 1312127918611083,
+          "prediction_returned_ns": 1312127919319833,
+          "readback_ns": 141583,
+          "scores_sha256_f16le": "276ced3826e29d52205af32c68e06bbd0fdb102b6b221bfbdd2645d10dbc8652",
+          "start_ns": 1312127918610791,
+          "wall_ns": 3301333,
+          "bank": 0,
+          "full_materialized_ns": 850333
+        },
+        {
+          "complete_ns": 1312127922794333,
+          "elements": 4194304,
+          "id": "5",
+          "native_total_ns": 3289125,
+          "pack_ns": 208,
+          "postprocess_ns": 2409000,
+          "predict_ns": 691583,
+          "predict_start_ns": 1312127921914500,
+          "prediction_returned_ns": 1312127922606083,
+          "readback_ns": 188250,
+          "scores_sha256_f16le": "5d745df62623c981736f092775d1117e1d6c196420bf9a19ca8cd3fafa647224",
+          "start_ns": 1312127921914250,
+          "wall_ns": 3321750,
+          "bank": 1,
+          "full_materialized_ns": 879833
+        },
+        {
+          "complete_ns": 1312127926103625,
+          "elements": 4194304,
+          "id": "6",
+          "native_total_ns": 3276958,
+          "pack_ns": 125,
+          "postprocess_ns": 2408416,
+          "predict_ns": 723584,
+          "predict_start_ns": 1312127925235291,
+          "prediction_returned_ns": 1312127925958875,
+          "readback_ns": 144750,
+          "scores_sha256_f16le": "276ced3826e29d52205af32c68e06bbd0fdb102b6b221bfbdd2645d10dbc8652",
+          "start_ns": 1312127925235125,
+          "wall_ns": 3300583,
+          "bank": 0,
+          "full_materialized_ns": 868334
+        },
+        {
+          "complete_ns": 1312127929384208,
+          "elements": 4194304,
+          "id": "7",
+          "native_total_ns": 3261125,
+          "pack_ns": 125,
+          "postprocess_ns": 2414458,
+          "predict_ns": 701792,
+          "predict_start_ns": 1312127928537791,
+          "prediction_returned_ns": 1312127929239583,
+          "readback_ns": 144625,
+          "scores_sha256_f16le": "5d745df62623c981736f092775d1117e1d6c196420bf9a19ca8cd3fafa647224",
+          "start_ns": 1312127928537625,
+          "wall_ns": 3295541,
+          "bank": 1,
+          "full_materialized_ns": 846417
+        },
+        {
+          "complete_ns": 1312127932677250,
+          "elements": 4194304,
+          "id": "8",
+          "native_total_ns": 3242458,
+          "pack_ns": 250,
+          "postprocess_ns": 2409666,
+          "predict_ns": 692125,
+          "predict_start_ns": 1312127931844791,
+          "prediction_returned_ns": 1312127932536916,
+          "readback_ns": 140334,
+          "scores_sha256_f16le": "276ced3826e29d52205af32c68e06bbd0fdb102b6b221bfbdd2645d10dbc8652",
+          "start_ns": 1312127931844500,
+          "wall_ns": 3275166,
+          "bank": 0,
+          "full_materialized_ns": 832459
+        },
+        {
+          "complete_ns": 1312127935934791,
+          "elements": 4194304,
+          "id": "9",
+          "native_total_ns": 3228791,
+          "pack_ns": 208,
+          "postprocess_ns": 2411709,
+          "predict_ns": 676000,
+          "predict_start_ns": 1312127935118000,
+          "prediction_returned_ns": 1312127935794000,
+          "readback_ns": 140791,
+          "scores_sha256_f16le": "5d745df62623c981736f092775d1117e1d6c196420bf9a19ca8cd3fafa647224",
+          "start_ns": 1312127935117750,
+          "wall_ns": 3257666,
+          "bank": 1,
+          "full_materialized_ns": 816791
+        },
+        {
+          "complete_ns": 1312127939206041,
+          "elements": 4194304,
+          "id": "10",
+          "native_total_ns": 3237667,
+          "pack_ns": 167,
+          "postprocess_ns": 2408417,
+          "predict_ns": 686833,
+          "predict_start_ns": 1312127938377000,
+          "prediction_returned_ns": 1312127939063833,
+          "readback_ns": 142208,
+          "scores_sha256_f16le": "276ced3826e29d52205af32c68e06bbd0fdb102b6b221bfbdd2645d10dbc8652",
+          "start_ns": 1312127938376833,
+          "wall_ns": 3259875,
+          "bank": 0,
+          "full_materialized_ns": 829041
+        },
+        {
+          "complete_ns": 1312127942450500,
+          "elements": 4194304,
+          "id": "11",
+          "native_total_ns": 3221583,
+          "pack_ns": 125,
+          "postprocess_ns": 2408666,
+          "predict_ns": 674166,
+          "predict_start_ns": 1312127941637750,
+          "prediction_returned_ns": 1312127942311916,
+          "readback_ns": 138584,
+          "scores_sha256_f16le": "5d745df62623c981736f092775d1117e1d6c196420bf9a19ca8cd3fafa647224",
+          "start_ns": 1312127941637625,
+          "wall_ns": 3244542,
+          "bank": 1,
+          "full_materialized_ns": 812750
+        },
+        {
+          "complete_ns": 1312127945740916,
+          "elements": 4194304,
+          "id": "12",
+          "native_total_ns": 3291500,
+          "pack_ns": 166,
+          "postprocess_ns": 2433375,
+          "predict_ns": 711959,
+          "predict_start_ns": 1312127944883041,
+          "prediction_returned_ns": 1312127945595000,
+          "readback_ns": 145916,
+          "scores_sha256_f16le": "276ced3826e29d52205af32c68e06bbd0fdb102b6b221bfbdd2645d10dbc8652",
+          "start_ns": 1312127944882875,
+          "wall_ns": 3312292,
+          "bank": 0,
+          "full_materialized_ns": 857875
+        },
+        {
+          "complete_ns": 1312127949081708,
+          "elements": 4194304,
+          "id": "13",
+          "native_total_ns": 3296542,
+          "pack_ns": 125,
+          "postprocess_ns": 2412000,
+          "predict_ns": 739541,
+          "predict_start_ns": 1312127948197375,
+          "prediction_returned_ns": 1312127948936916,
+          "readback_ns": 144792,
+          "scores_sha256_f16le": "5d745df62623c981736f092775d1117e1d6c196420bf9a19ca8cd3fafa647224",
+          "start_ns": 1312127948197208,
+          "wall_ns": 3317959,
+          "bank": 1,
+          "full_materialized_ns": 884333
+        }
+      ],
+      "first_per_bank": [
+        {
+          "complete_ns": 1312127611777416,
+          "elements": 4194304,
+          "id": "0",
+          "native_total_ns": 18340083,
+          "pack_ns": 250,
+          "postprocess_ns": 15793875,
+          "predict_ns": 1789667,
+          "predict_start_ns": 1312127609233791,
+          "prediction_returned_ns": 1312127611023458,
+          "readback_ns": 753958,
+          "scores_sha256_f16le": "276ced3826e29d52205af32c68e06bbd0fdb102b6b221bfbdd2645d10dbc8652",
+          "scores_sha256_u16le": "e15a1613ade5a93962a4bf6c4529cf73fdf3db4cdebae59feb0651c3e195879f",
+          "start_ns": 1312127609231375,
+          "wall_ns": 18391292,
+          "bank": 0,
+          "full_materialized_ns": 2543625,
+          "native_rank_sha256_u16le": "8a5f8c0731b3f866a1b792dcdf4df2221de57161fbd621ae263b6afe61b4cb39"
+        },
+        {
+          "complete_ns": 1312127765468500,
+          "elements": 4194304,
+          "id": "1",
+          "native_total_ns": 13826041,
+          "pack_ns": 875,
+          "postprocess_ns": 12467583,
+          "predict_ns": 1052833,
+          "predict_start_ns": 1312127764111500,
+          "prediction_returned_ns": 1312127765164333,
+          "readback_ns": 304167,
+          "scores_sha256_f16le": "5d745df62623c981736f092775d1117e1d6c196420bf9a19ca8cd3fafa647224",
+          "scores_sha256_u16le": "a772a403051c936b346b0c42e6aefc38546e84019b67ec5f7e17f213a0626116",
+          "start_ns": 1312127764110125,
+          "wall_ns": 13928333,
+          "bank": 1,
+          "full_materialized_ns": 1357000,
+          "native_rank_sha256_u16le": "2a1e6cf50365c907181658cf316cdf031620a1061357427bf6a00e699eaf5cf3"
+        }
+      ],
+      "warm_materialized": {
+        "count": 12,
+        "minimum_ms": 0.81275,
+        "median_ms": 0.854104,
+        "p95_ms": 1.072,
+        "maximum_ms": 1.072
+      },
+      "warm_wire": {
+        "count": 12,
+        "minimum_ms": 3.244542,
+        "median_ms": 3.300958,
+        "p95_ms": 3.595125,
+        "maximum_ms": 3.595125
+      },
+      "warm_predict": {
+        "count": 12,
+        "minimum_ms": 0.674166,
+        "median_ms": 0.705271,
+        "p95_ms": 0.876375,
+        "maximum_ms": 0.876375
+      },
+      "plan": {
+        "all_compute_devices": [
+          {
+            "core_count": 32,
+            "kind": "neuralEngine",
+            "name": "Neural Engine"
+          },
+          {
+            "kind": "gpu",
+            "name": "Apple M6"
+          },
+          {
+            "kind": "cpu",
+            "name": "CPU"
+          }
+        ],
+        "available_compute_devices": [
+          {
+            "core_count": 32,
+            "kind": "neuralEngine",
+            "name": "Neural Engine"
+          },
+          {
+            "kind": "gpu",
+            "name": "Apple M6"
+          },
+          {
+            "kind": "cpu",
+            "name": "CPU"
+          }
+        ],
+        "functions": {
+          "main": [
+            {
+              "estimated_cost_weight": null,
+              "operator": "const",
+              "outputs": [
+                "scores_weight_0"
+              ],
+              "preferred": null,
+              "supported": null
+            },
+            {
+              "estimated_cost_weight": null,
+              "operator": "const",
+              "outputs": [
+                "scores_strides_0"
+              ],
+              "preferred": null,
+              "supported": null
+            },
+            {
+              "estimated_cost_weight": null,
+              "operator": "const",
+              "outputs": [
+                "scores_pad_type_0"
+              ],
+              "preferred": null,
+              "supported": null
+            },
+            {
+              "estimated_cost_weight": null,
+              "operator": "const",
+              "outputs": [
+                "scores_pad_0"
+              ],
+              "preferred": null,
+              "supported": null
+            },
+            {
+              "estimated_cost_weight": null,
+              "operator": "const",
+              "outputs": [
+                "scores_dilations_0"
+              ],
+              "preferred": null,
+              "supported": null
+            },
+            {
+              "estimated_cost_weight": null,
+              "operator": "const",
+              "outputs": [
+                "scores_groups_0"
+              ],
+              "preferred": null,
+              "supported": null
+            },
+            {
+              "estimated_cost_weight": 1,
+              "operator": "ios16.conv",
+              "outputs": [
+                "scores"
+              ],
+              "preferred": {
+                "core_count": 32,
+                "kind": "neuralEngine",
+                "name": "Neural Engine"
+              },
+              "supported": [
+                {
+                  "kind": "cpu",
+                  "name": "CPU"
+                },
+                {
+                  "core_count": 32,
+                  "kind": "neuralEngine",
+                  "name": "Neural Engine"
+                }
+              ]
+            }
+          ]
+        },
+        "load_plan_ns": 102065250,
+        "policy": "cpuAndNeuralEngine"
+      }
+    }
+  }
+}

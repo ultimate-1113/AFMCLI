@@ -1,0 +1,168 @@
+{
+  "contention_medians": {},
+  "pages_per_aux_job": 0,
+  "selected_size": null,
+  "survey": [
+    {
+      "absolute_error_after": 158826,
+      "absolute_error_before": 372230,
+      "changed_pixels": 4972,
+      "cpu_pool_setup_ms": 0.002,
+      "eligible": false,
+      "fresh_gpu_to_cpu": 4.04622,
+      "fresh_gpu_wins_of_five": 0,
+      "fresh_mps": {
+        "first_ms": 2.292,
+        "gpu_command_median_ms": 0.319,
+        "warm_max_ms": 0.629,
+        "warm_median_ms": 0.594,
+        "warm_min_ms": 0.552
+      },
+      "fresh_vimage": {
+        "first_ms": 0.15,
+        "gpu_command_median_ms": 0.0,
+        "warm_max_ms": 0.165,
+        "warm_median_ms": 0.147,
+        "warm_min_ms": 0.136
+      },
+      "gpu_context_ms": 27.215,
+      "gpu_pool_setup_ms": 0.045,
+      "noise_pixels": 2953,
+      "pixels": 393216,
+      "pooled_gpu_to_cpu": 3.72944,
+      "pooled_gpu_wins_of_five": 0,
+      "pooled_mps": {
+        "first_ms": 0.559,
+        "gpu_command_median_ms": 0.327,
+        "warm_max_ms": 0.571,
+        "warm_median_ms": 0.529,
+        "warm_min_ms": 0.485
+      },
+      "pooled_vimage": {
+        "first_ms": 0.139,
+        "gpu_command_median_ms": 0.0,
+        "warm_max_ms": 0.158,
+        "warm_median_ms": 0.142,
+        "warm_min_ms": 0.127
+      },
+      "size": [
+        512,
+        768
+      ],
+      "source_generation_ms": 0.82
+    },
+    {
+      "absolute_error_after": 1443926,
+      "absolute_error_before": 6287769,
+      "changed_pixels": 59098,
+      "cpu_pool_setup_ms": 0.031,
+      "eligible": false,
+      "fresh_gpu_to_cpu": 5.27701,
+      "fresh_gpu_wins_of_five": 0,
+      "fresh_mps": {
+        "first_ms": 3.342,
+        "gpu_command_median_ms": 2.271,
+        "warm_max_ms": 3.313,
+        "warm_median_ms": 3.284,
+        "warm_min_ms": 3.241
+      },
+      "fresh_vimage": {
+        "first_ms": 0.636,
+        "gpu_command_median_ms": 0.0,
+        "warm_max_ms": 0.626,
+        "warm_median_ms": 0.622,
+        "warm_min_ms": 0.618
+      },
+      "gpu_context_ms": 26.939,
+      "gpu_pool_setup_ms": 0.042,
+      "noise_pixels": 49336,
+      "pixels": 6291456,
+      "pooled_gpu_to_cpu": 5.33024,
+      "pooled_gpu_wins_of_five": 0,
+      "pooled_mps": {
+        "first_ms": 8.655,
+        "gpu_command_median_ms": 2.506,
+        "warm_max_ms": 3.742,
+        "warm_median_ms": 3.132,
+        "warm_min_ms": 2.975
+      },
+      "pooled_vimage": {
+        "first_ms": 0.655,
+        "gpu_command_median_ms": 0.0,
+        "warm_max_ms": 0.609,
+        "warm_median_ms": 0.588,
+        "warm_min_ms": 0.586
+      },
+      "size": [
+        2048,
+        3072
+      ],
+      "source_generation_ms": 13.375
+    },
+    {
+      "absolute_error_after": 1931231,
+      "absolute_error_before": 25003903,
+      "changed_pixels": 209751,
+      "cpu_pool_setup_ms": 0.139,
+      "eligible": false,
+      "fresh_gpu_to_cpu": 5.62666,
+      "fresh_gpu_wins_of_five": 0,
+      "fresh_mps": {
+        "first_ms": 20.492,
+        "gpu_command_median_ms": 11.276,
+        "warm_max_ms": 18.574,
+        "warm_median_ms": 14.669,
+        "warm_min_ms": 14.527
+      },
+      "fresh_vimage": {
+        "first_ms": 2.666,
+        "gpu_command_median_ms": 0.0,
+        "warm_max_ms": 2.691,
+        "warm_median_ms": 2.607,
+        "warm_min_ms": 2.497
+      },
+      "gpu_context_ms": 25.571,
+      "gpu_pool_setup_ms": 0.04,
+      "noise_pixels": 196824,
+      "pixels": 25165824,
+      "pooled_gpu_to_cpu": 5.38033,
+      "pooled_gpu_wins_of_five": 0,
+      "pooled_mps": {
+        "first_ms": 14.59,
+        "gpu_command_median_ms": 11.643,
+        "warm_max_ms": 14.025,
+        "warm_median_ms": 12.925,
+        "warm_min_ms": 12.635
+      },
+      "pooled_vimage": {
+        "first_ms": 2.416,
+        "gpu_command_median_ms": 0.0,
+        "warm_max_ms": 2.434,
+        "warm_median_ms": 2.402,
+        "warm_min_ms": 2.381
+      },
+      "size": [
+        4096,
+        6144
+      ],
+      "source_generation_ms": 48.645
+    }
+  ],
+  "vision": {
+    "mps": {
+      "answer": "42",
+      "correct_exact": true,
+      "status": "ok"
+    },
+    "original": {
+      "answer": "42",
+      "correct_exact": true,
+      "status": "ok"
+    },
+    "vimage": {
+      "answer": "42",
+      "correct_exact": true,
+      "status": "ok"
+    }
+  }
+}

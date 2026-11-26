@@ -1,0 +1,71 @@
+{
+  "active_ane_counters": null,
+  "binary_sha256": "83b162e9dbb5b4a1829b909d6c1764b68f83dfb74d6bfc04f3e96a951f6808b5",
+  "cases": [
+    {
+      "afm": true,
+      "id": "index-test-8k-01-p",
+      "language": "ja",
+      "policies": [
+        "cpuOnly",
+        "cpuAndNeuralEngine"
+      ],
+      "source_tokens_from_public_lock": 8224,
+      "tier": "8k"
+    },
+    {
+      "afm": true,
+      "id": "index-test-8k-02-n",
+      "language": "en",
+      "policies": [
+        "cpuAndNeuralEngine",
+        "cpuOnly"
+      ],
+      "source_tokens_from_public_lock": 8272,
+      "tier": "8k"
+    },
+    {
+      "afm": true,
+      "id": "index-test-16k-02-n",
+      "language": "ja",
+      "policies": [
+        "cpuOnly",
+        "cpuAndNeuralEngine"
+      ],
+      "source_tokens_from_public_lock": 16315,
+      "tier": "16k"
+    },
+    {
+      "afm": true,
+      "id": "index-test-16k-01-p",
+      "language": "en",
+      "policies": [
+        "cpuAndNeuralEngine",
+        "cpuOnly"
+      ],
+      "source_tokens_from_public_lock": 16431,
+      "tier": "16k"
+    }
+  ],
+  "chip": "Apple M6",
+  "doctor": {
+    "available": true,
+    "route": "system",
+    "target": "AFM 3 Core Advanced"
+  },
+  "doctor_sha256": "1c39d03e8b3878d144b0cb652a5d9188b1ed88b66cd90317855ed0f30cc3ea64",
+  "engine": "tensor",
+  "machine": "arm64",
+  "os": "27.2.1",
+  "os_build": "26B131",
+  "placement_observed": false,
+  "source_files": {
+    "Rank.swift": "64bc02975d3090d2d115055de24c67966c5be1e04c76702f6b10a39069381ec0",
+    "backend.py": "20c541ad90e29663f92b0dc2c24a807fba1363f8ad3ec9c2d089dec4e4b7815d",
+    "lock.json": "5bafed6cd3292d0723ca28f3018e8011b29eafcc396e3706eec28acc521783cb",
+    "pipeline_study.py": "0dd47938c655f8956e828fbd2575a259f9c5da74bb6e1ef2d813d26ecbf296dd",
+    "rank_study.py": "27b27d2c8d078888fdf1264588ec80f5976fd2c449f1818ece4253478cb35e07"
+  },
+  "swift": "Apple Swift version 6.4.2 (swiftlang-6.4.2.1.9 clang-2100.4.1.1)\nTarget: arm64-apple-macosx27.2.0",
+  "utc": "2026-11-26T03:47:18.753082+00:00"
+}

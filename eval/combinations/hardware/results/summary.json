@@ -1,0 +1,120 @@
+{
+  "pairs_with_equal_reader_input": 4,
+  "policies": {
+    "cpuAndNeuralEngine": {
+      "actual_e2e_including_afm": {
+        "max_ms": 634.781,
+        "median_ms": 592.72,
+        "min_ms": 557.535,
+        "n": 4
+      },
+      "afm_grades": {
+        "correct_settled": 2,
+        "false_nonnull": 1,
+        "held": 1
+      },
+      "first_query_through_readback": {
+        "max_ms": 0.205,
+        "median_ms": 0.19,
+        "min_ms": 0.177,
+        "n": 8
+      },
+      "four_queries_swift_process": {
+        "max_ms": 33.079,
+        "median_ms": 31.223,
+        "min_ms": 29.219,
+        "n": 8
+      },
+      "host_features_and_warm_queries": {
+        "max_ms": 13.545,
+        "median_ms": 9.19,
+        "min_ms": 5.719,
+        "n": 8
+      },
+      "one_query_host_features": {
+        "max_ms": 13.056,
+        "median_ms": 8.708,
+        "min_ms": 5.556,
+        "n": 4
+      },
+      "one_query_swift_process": {
+        "max_ms": 34.182,
+        "median_ms": 31.829,
+        "min_ms": 30.306,
+        "n": 4
+      },
+      "reader_observed": {
+        "max_ms": 589.024,
+        "median_ms": 549.783,
+        "min_ms": 519.684,
+        "n": 4
+      },
+      "reader_submissions": 4,
+      "warm_query_through_readback": {
+        "max_ms": 0.079,
+        "median_ms": 0.06,
+        "min_ms": 0.047,
+        "n": 24
+      }
+    },
+    "cpuOnly": {
+      "actual_e2e_including_afm": {
+        "max_ms": 935.362,
+        "median_ms": 604.933,
+        "min_ms": 553.106,
+        "n": 4
+      },
+      "afm_grades": {
+        "correct_settled": 2,
+        "false_nonnull": 1,
+        "held": 1
+      },
+      "first_query_through_readback": {
+        "max_ms": 1.715,
+        "median_ms": 0.205,
+        "min_ms": 0.173,
+        "n": 8
+      },
+      "four_queries_swift_process": {
+        "max_ms": 281.583,
+        "median_ms": 32.999,
+        "min_ms": 29.079,
+        "n": 8
+      },
+      "host_features_and_warm_queries": {
+        "max_ms": 13.975,
+        "median_ms": 9.199,
+        "min_ms": 5.656,
+        "n": 8
+      },
+      "one_query_host_features": {
+        "max_ms": 13.187,
+        "median_ms": 8.457,
+        "min_ms": 5.67,
+        "n": 4
+      },
+      "one_query_swift_process": {
+        "max_ms": 34.262,
+        "median_ms": 31.712,
+        "min_ms": 28.941,
+        "n": 4
+      },
+      "reader_observed": {
+        "max_ms": 899.831,
+        "median_ms": 558.044,
+        "min_ms": 514.781,
+        "n": 4
+      },
+      "reader_submissions": 4,
+      "warm_query_through_readback": {
+        "max_ms": 0.084,
+        "median_ms": 0.061,
+        "min_ms": 0.051,
+        "n": 24
+      }
+    }
+  },
+  "scored_candidates_checked": 28336,
+  "source_documents": 8,
+  "tensor_trials_checked": 64
+}

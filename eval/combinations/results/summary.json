@@ -1,0 +1,2277 @@
+{
+  "calc": {
+    "adoption": {
+      "evidence_formula": {
+        "conditions": {
+          "fewer_missing_nonnull": true,
+          "settled_preserved": true,
+          "total_improved": false
+        },
+        "passed": false
+      },
+      "formula": {
+        "conditions": {
+          "fewer_missing_nonnull": false,
+          "settled_preserved": true,
+          "total_improved": true
+        },
+        "passed": false
+      },
+      "native_value": {
+        "conditions": {
+          "fewer_missing_nonnull": false,
+          "settled_preserved": true,
+          "total_improved": false
+        },
+        "passed": false
+      },
+      "parallel": {
+        "conditions": {
+          "fewer_missing_nonnull": true,
+          "settled_preserved": true,
+          "total_improved": false
+        },
+        "passed": false
+      },
+      "plain": {
+        "conditions": {
+          "fewer_missing_nonnull": false,
+          "settled_preserved": true,
+          "total_improved": true
+        },
+        "passed": false
+      },
+      "selective": {
+        "conditions": {
+          "fewer_missing_nonnull": false,
+          "settled_preserved": true,
+          "total_improved": false
+        },
+        "passed": false
+      }
+    },
+    "all": {
+      "evidence_formula": {
+        "both_in_pair_correct": 0,
+        "correct": 0,
+        "count": 16,
+        "counted_input_tokens": 6340,
+        "host_calc": 0,
+        "max_counted_input": 414,
+        "median_ms": 1209.909,
+        "missing_correct": 0,
+        "missing_n": 8,
+        "missing_nonnull": 0,
+        "native_callbacks": 0,
+        "native_requests": 0,
+        "native_visible_prompt_tokens": 0,
+        "outcomes": {
+          "held": 16
+        },
+        "p95_ms": 45039.503,
+        "requests": 17,
+        "routes": {
+          "evidence stages": 1,
+          "evidence:missing": 1,
+          "quantity0.quote:not_in_source": 5,
+          "quantity0:unsupported_number": 5,
+          "relation0:not_in_source": 3,
+          "target:not_in_source": 1
+        },
+        "sent_structured_reads": 17,
+        "settled_correct": 0,
+        "settled_n": 8,
+        "third_counted": 0,
+        "third_disagreements": 0,
+        "third_sent": 0,
+        "trials_with_extra_read": 16,
+        "trials_with_native_callback": 0
+      },
+      "formula": {
+        "both_in_pair_correct": 0,
+        "correct": 3,
+        "count": 16,
+        "counted_input_tokens": 4417,
+        "host_calc": 15,
+        "max_counted_input": 317,
+        "median_ms": 506.831,
+        "missing_correct": 0,
+        "missing_n": 8,
+        "missing_nonnull": 8,
+        "native_callbacks": 0,
+        "native_requests": 0,
+        "native_visible_prompt_tokens": 0,
+        "outcomes": {
+          "held": 1,
+          "number": 15
+        },
+        "p95_ms": 45035.621,
+        "requests": 16,
+        "routes": {
+          "calculator_value": 15,
+          "formula_reader_failed": 1
+        },
+        "sent_structured_reads": 16,
+        "settled_correct": 3,
+        "settled_n": 8,
+        "third_counted": 0,
+        "third_disagreements": 0,
+        "third_sent": 0,
+        "trials_with_extra_read": 16,
+        "trials_with_native_callback": 0
+      },
+      "native": {
+        "both_in_pair_correct": 0,
+        "correct": 1,
+        "count": 16,
+        "counted_input_tokens": 0,
+        "host_calc": 0,
+        "max_counted_input": 0,
+        "median_ms": 683.452,
+        "missing_correct": 1,
+        "missing_n": 8,
+        "missing_nonnull": 5,
+        "native_callbacks": 18,
+        "native_requests": 16,
+        "native_visible_prompt_tokens": 1809,
+        "outcomes": {
+          "held": 4,
+          "number": 10,
+          "unknown": 2
+        },
+        "p95_ms": 977.535,
+        "requests": 16,
+        "routes": {
+          "native_final": 16
+        },
+        "sent_structured_reads": 0,
+        "settled_correct": 0,
+        "settled_n": 8,
+        "third_counted": 0,
+        "third_disagreements": 0,
+        "third_sent": 0,
+        "trials_with_extra_read": 0,
+        "trials_with_native_callback": 16
+      },
+      "native_value": {
+        "both_in_pair_correct": 0,
+        "correct": 0,
+        "count": 16,
+        "counted_input_tokens": 0,
+        "host_calc": 0,
+        "max_counted_input": 0,
+        "median_ms": 687.61,
+        "missing_correct": 0,
+        "missing_n": 8,
+        "missing_nonnull": 8,
+        "native_callbacks": 18,
+        "native_requests": 16,
+        "native_visible_prompt_tokens": 1809,
+        "outcomes": {
+          "number": 16
+        },
+        "p95_ms": 977.9,
+        "requests": 16,
+        "routes": {
+          "last_callback": 16
+        },
+        "sent_structured_reads": 0,
+        "settled_correct": 0,
+        "settled_n": 8,
+        "third_counted": 0,
+        "third_disagreements": 0,
+        "third_sent": 0,
+        "trials_with_extra_read": 0,
+        "trials_with_native_callback": 16
+      },
+      "parallel": {
+        "both_in_pair_correct": 0,
+        "correct": 0,
+        "count": 16,
+        "counted_input_tokens": 6340,
+        "host_calc": 0,
+        "max_counted_input": 414,
+        "median_ms": 1977.08,
+        "missing_correct": 0,
+        "missing_n": 8,
+        "missing_nonnull": 0,
+        "native_callbacks": 18,
+        "native_requests": 16,
+        "native_visible_prompt_tokens": 1809,
+        "outcomes": {
+          "held": 16
+        },
+        "p95_ms": 45706.645,
+        "requests": 33,
+        "routes": {
+          "branch_held": 16
+        },
+        "sent_structured_reads": 17,
+        "settled_correct": 0,
+        "settled_n": 8,
+        "third_counted": 0,
+        "third_disagreements": 0,
+        "third_sent": 0,
+        "trials_with_extra_read": 16,
+        "trials_with_native_callback": 16
+      },
+      "plain": {
+        "both_in_pair_correct": 0,
+        "correct": 4,
+        "count": 16,
+        "counted_input_tokens": 0,
+        "host_calc": 0,
+        "max_counted_input": 0,
+        "median_ms": 198.584,
+        "missing_correct": 3,
+        "missing_n": 8,
+        "missing_nonnull": 5,
+        "native_callbacks": 0,
+        "native_requests": 16,
+        "native_visible_prompt_tokens": 1809,
+        "outcomes": {
+          "number": 9,
+          "unknown": 7
+        },
+        "p95_ms": 466.13,
+        "requests": 16,
+        "routes": {
+          "unregistered-final": 16
+        },
+        "sent_structured_reads": 0,
+        "settled_correct": 1,
+        "settled_n": 8,
+        "third_counted": 0,
+        "third_disagreements": 0,
+        "third_sent": 0,
+        "trials_with_extra_read": 0,
+        "trials_with_native_callback": 0
+      },
+      "selective": {
+        "both_in_pair_correct": 0,
+        "correct": 0,
+        "count": 16,
+        "counted_input_tokens": 3044,
+        "host_calc": 0,
+        "max_counted_input": 414,
+        "median_ms": 963.117,
+        "missing_correct": 0,
+        "missing_n": 8,
+        "missing_nonnull": 5,
+        "native_callbacks": 18,
+        "native_requests": 16,
+        "native_visible_prompt_tokens": 1809,
+        "outcomes": {
+          "held": 7,
+          "number": 9
+        },
+        "p95_ms": 2610.451,
+        "requests": 24,
+        "routes": {
+          "branch_held": 7,
+          "final_confirms_callback": 9
+        },
+        "sent_structured_reads": 8,
+        "settled_correct": 0,
+        "settled_n": 8,
+        "third_counted": 0,
+        "third_disagreements": 0,
+        "third_sent": 0,
+        "trials_with_extra_read": 7,
+        "trials_with_native_callback": 16
+      }
+    },
+    "language": {
+      "en": {
+        "evidence_formula": {
+          "both_in_pair_correct": 0,
+          "correct": 0,
+          "count": 8,
+          "counted_input_tokens": 2900,
+          "host_calc": 0,
+          "max_counted_input": 371,
+          "median_ms": 1118.751,
+          "missing_correct": 0,
+          "missing_n": 4,
+          "missing_nonnull": 0,
+          "native_callbacks": 0,
+          "native_requests": 0,
+          "native_visible_prompt_tokens": 0,
+          "outcomes": {
+            "held": 8
+          },
+          "p95_ms": 1545.815,
+          "requests": 8,
+          "routes": {
+            "quantity0.quote:not_in_source": 2,
+            "quantity0:unsupported_number": 2,
+            "relation0:not_in_source": 3,
+            "target:not_in_source": 1
+          },
+          "sent_structured_reads": 8,
+          "settled_correct": 0,
+          "settled_n": 4,
+          "third_counted": 0,
+          "third_disagreements": 0,
+          "third_sent": 0,
+          "trials_with_extra_read": 8,
+          "trials_with_native_callback": 0
+        },
+        "formula": {
+          "both_in_pair_correct": 0,
+          "correct": 1,
+          "count": 8,
+          "counted_input_tokens": 2124,
+          "host_calc": 7,
+          "max_counted_input": 274,
+          "median_ms": 532.981,
+          "missing_correct": 0,
+          "missing_n": 4,
+          "missing_nonnull": 4,
+          "native_callbacks": 0,
+          "native_requests": 0,
+          "native_visible_prompt_tokens": 0,
+          "outcomes": {
+            "held": 1,
+            "number": 7
+          },
+          "p95_ms": 45035.621,
+          "requests": 8,
+          "routes": {
+            "calculator_value": 7,
+            "formula_reader_failed": 1
+          },
+          "sent_structured_reads": 8,
+          "settled_correct": 1,
+          "settled_n": 4,
+          "third_counted": 0,
+          "third_disagreements": 0,
+          "third_sent": 0,
+          "trials_with_extra_read": 8,
+          "trials_with_native_callback": 0
+        },
+        "native": {
+          "both_in_pair_correct": 0,
+          "correct": 1,
+          "count": 8,
+          "counted_input_tokens": 0,
+          "host_calc": 0,
+          "max_counted_input": 0,
+          "median_ms": 711.363,
+          "missing_correct": 1,
+          "missing_n": 4,
+          "missing_nonnull": 3,
+          "native_callbacks": 10,
+          "native_requests": 8,
+          "native_visible_prompt_tokens": 820,
+          "outcomes": {
+            "number": 6,
+            "unknown": 2
+          },
+          "p95_ms": 977.535,
+          "requests": 8,
+          "routes": {
+            "native_final": 8
+          },
+          "sent_structured_reads": 0,
+          "settled_correct": 0,
+          "settled_n": 4,
+          "third_counted": 0,
+          "third_disagreements": 0,
+          "third_sent": 0,
+          "trials_with_extra_read": 0,
+          "trials_with_native_callback": 8
+        },
+        "native_value": {
+          "both_in_pair_correct": 0,
+          "correct": 0,
+          "count": 8,
+          "counted_input_tokens": 0,
+          "host_calc": 0,
+          "max_counted_input": 0,
+          "median_ms": 713.733,
+          "missing_correct": 0,
+          "missing_n": 4,
+          "missing_nonnull": 4,
+          "native_callbacks": 10,
+          "native_requests": 8,
+          "native_visible_prompt_tokens": 820,
+          "outcomes": {
+            "number": 8
+          },
+          "p95_ms": 977.9,
+          "requests": 8,
+          "routes": {
+            "last_callback": 8
+          },
+          "sent_structured_reads": 0,
+          "settled_correct": 0,
+          "settled_n": 4,
+          "third_counted": 0,
+          "third_disagreements": 0,
+          "third_sent": 0,
+          "trials_with_extra_read": 0,
+          "trials_with_native_callback": 8
+        },
+        "parallel": {
+          "both_in_pair_correct": 0,
+          "correct": 0,
+          "count": 8,
+          "counted_input_tokens": 2900,
+          "host_calc": 0,
+          "max_counted_input": 371,
+          "median_ms": 1977.08,
+          "missing_correct": 0,
+          "missing_n": 4,
+          "missing_nonnull": 0,
+          "native_callbacks": 10,
+          "native_requests": 8,
+          "native_visible_prompt_tokens": 820,
+          "outcomes": {
+            "held": 8
+          },
+          "p95_ms": 2230.582,
+          "requests": 16,
+          "routes": {
+            "branch_held": 8
+          },
+          "sent_structured_reads": 8,
+          "settled_correct": 0,
+          "settled_n": 4,
+          "third_counted": 0,
+          "third_disagreements": 0,
+          "third_sent": 0,
+          "trials_with_extra_read": 8,
+          "trials_with_native_callback": 8
+        },
+        "plain": {
+          "both_in_pair_correct": 0,
+          "correct": 1,
+          "count": 8,
+          "counted_input_tokens": 0,
+          "host_calc": 0,
+          "max_counted_input": 0,
+          "median_ms": 197.898,
+          "missing_correct": 1,
+          "missing_n": 4,
+          "missing_nonnull": 3,
+          "native_callbacks": 0,
+          "native_requests": 8,
+          "native_visible_prompt_tokens": 820,
+          "outcomes": {
+            "number": 5,
+            "unknown": 3
+          },
+          "p95_ms": 213.84,
+          "requests": 8,
+          "routes": {
+            "unregistered-final": 8
+          },
+          "sent_structured_reads": 0,
+          "settled_correct": 0,
+          "settled_n": 4,
+          "third_counted": 0,
+          "third_disagreements": 0,
+          "third_sent": 0,
+          "trials_with_extra_read": 0,
+          "trials_with_native_callback": 0
+        },
+        "selective": {
+          "both_in_pair_correct": 0,
+          "correct": 0,
+          "count": 8,
+          "counted_input_tokens": 715,
+          "host_calc": 0,
+          "max_counted_input": 359,
+          "median_ms": 854.713,
+          "missing_correct": 0,
+          "missing_n": 4,
+          "missing_nonnull": 3,
+          "native_callbacks": 10,
+          "native_requests": 8,
+          "native_visible_prompt_tokens": 820,
+          "outcomes": {
+            "held": 2,
+            "number": 6
+          },
+          "p95_ms": 2232.186,
+          "requests": 10,
+          "routes": {
+            "branch_held": 2,
+            "final_confirms_callback": 6
+          },
+          "sent_structured_reads": 2,
+          "settled_correct": 0,
+          "settled_n": 4,
+          "third_counted": 0,
+          "third_disagreements": 0,
+          "third_sent": 0,
+          "trials_with_extra_read": 2,
+          "trials_with_native_callback": 8
+        }
+      },
+      "ja": {
+        "evidence_formula": {
+          "both_in_pair_correct": 0,
+          "correct": 0,
+          "count": 8,
+          "counted_input_tokens": 3440,
+          "host_calc": 0,
+          "max_counted_input": 414,
+          "median_ms": 1226.886,
+          "missing_correct": 0,
+          "missing_n": 4,
+          "missing_nonnull": 0,
+          "native_callbacks": 0,
+          "native_requests": 0,
+          "native_visible_prompt_tokens": 0,
+          "outcomes": {
+            "held": 8
+          },
+          "p95_ms": 45039.503,
+          "requests": 9,
+          "routes": {
+            "evidence stages": 1,
+            "evidence:missing": 1,
+            "quantity0.quote:not_in_source": 3,
+            "quantity0:unsupported_number": 3
+          },
+          "sent_structured_reads": 9,
+          "settled_correct": 0,
+          "settled_n": 4,
+          "third_counted": 0,
+          "third_disagreements": 0,
+          "third_sent": 0,
+          "trials_with_extra_read": 8,
+          "trials_with_native_callback": 0
+        },
+        "formula": {
+          "both_in_pair_correct": 0,
+          "correct": 2,
+          "count": 8,
+          "counted_input_tokens": 2293,
+          "host_calc": 8,
+          "max_counted_input": 317,
+          "median_ms": 506.831,
+          "missing_correct": 0,
+          "missing_n": 4,
+          "missing_nonnull": 4,
+          "native_callbacks": 0,
+          "native_requests": 0,
+          "native_visible_prompt_tokens": 0,
+          "outcomes": {
+            "number": 8
+          },
+          "p95_ms": 648.999,
+          "requests": 8,
+          "routes": {
+            "calculator_value": 8
+          },
+          "sent_structured_reads": 8,
+          "settled_correct": 2,
+          "settled_n": 4,
+          "third_counted": 0,
+          "third_disagreements": 0,
+          "third_sent": 0,
+          "trials_with_extra_read": 8,
+          "trials_with_native_callback": 0
+        },
+        "native": {
+          "both_in_pair_correct": 0,
+          "correct": 0,
+          "count": 8,
+          "counted_input_tokens": 0,
+          "host_calc": 0,
+          "max_counted_input": 0,
+          "median_ms": 683.149,
+          "missing_correct": 0,
+          "missing_n": 4,
+          "missing_nonnull": 2,
+          "native_callbacks": 8,
+          "native_requests": 8,
+          "native_visible_prompt_tokens": 989,
+          "outcomes": {
+            "held": 4,
+            "number": 4
+          },
+          "p95_ms": 837.632,
+          "requests": 8,
+          "routes": {
+            "native_final": 8
+          },
+          "sent_structured_reads": 0,
+          "settled_correct": 0,
+          "settled_n": 4,
+          "third_counted": 0,
+          "third_disagreements": 0,
+          "third_sent": 0,
+          "trials_with_extra_read": 0,
+          "trials_with_native_callback": 8
+        },
+        "native_value": {
+          "both_in_pair_correct": 0,
+          "correct": 0,
+          "count": 8,
+          "counted_input_tokens": 0,
+          "host_calc": 0,
+          "max_counted_input": 0,
+          "median_ms": 682.675,
+          "missing_correct": 0,
+          "missing_n": 4,
+          "missing_nonnull": 4,
+          "native_callbacks": 8,
+          "native_requests": 8,
+          "native_visible_prompt_tokens": 989,
+          "outcomes": {
+            "number": 8
+          },
+          "p95_ms": 838.845,
+          "requests": 8,
+          "routes": {
+            "last_callback": 8
+          },
+          "sent_structured_reads": 0,
+          "settled_correct": 0,
+          "settled_n": 4,
+          "third_counted": 0,
+          "third_disagreements": 0,
+          "third_sent": 0,
+          "trials_with_extra_read": 0,
+          "trials_with_native_callback": 8
+        },
+        "parallel": {
+          "both_in_pair_correct": 0,
+          "correct": 0,
+          "count": 8,
+          "counted_input_tokens": 3440,
+          "host_calc": 0,
+          "max_counted_input": 414,
+          "median_ms": 1962.028,
+          "missing_correct": 0,
+          "missing_n": 4,
+          "missing_nonnull": 0,
+          "native_callbacks": 8,
+          "native_requests": 8,
+          "native_visible_prompt_tokens": 989,
+          "outcomes": {
+            "held": 8
+          },
+          "p95_ms": 45706.645,
+          "requests": 17,
+          "routes": {
+            "branch_held": 8
+          },
+          "sent_structured_reads": 9,
+          "settled_correct": 0,
+          "settled_n": 4,
+          "third_counted": 0,
+          "third_disagreements": 0,
+          "third_sent": 0,
+          "trials_with_extra_read": 8,
+          "trials_with_native_callback": 8
+        },
+        "plain": {
+          "both_in_pair_correct": 0,
+          "correct": 3,
+          "count": 8,
+          "counted_input_tokens": 0,
+          "host_calc": 0,
+          "max_counted_input": 0,
+          "median_ms": 201.319,
+          "missing_correct": 2,
+          "missing_n": 4,
+          "missing_nonnull": 2,
+          "native_callbacks": 0,
+          "native_requests": 8,
+          "native_visible_prompt_tokens": 989,
+          "outcomes": {
+            "number": 4,
+            "unknown": 4
+          },
+          "p95_ms": 466.13,
+          "requests": 8,
+          "routes": {
+            "unregistered-final": 8
+          },
+          "sent_structured_reads": 0,
+          "settled_correct": 1,
+          "settled_n": 4,
+          "third_counted": 0,
+          "third_disagreements": 0,
+          "third_sent": 0,
+          "trials_with_extra_read": 0,
+          "trials_with_native_callback": 0
+        },
+        "selective": {
+          "both_in_pair_correct": 0,
+          "correct": 0,
+          "count": 8,
+          "counted_input_tokens": 2329,
+          "host_calc": 0,
+          "max_counted_input": 414,
+          "median_ms": 1729.364,
+          "missing_correct": 0,
+          "missing_n": 4,
+          "missing_nonnull": 2,
+          "native_callbacks": 8,
+          "native_requests": 8,
+          "native_visible_prompt_tokens": 989,
+          "outcomes": {
+            "held": 5,
+            "number": 3
+          },
+          "p95_ms": 2610.451,
+          "requests": 14,
+          "routes": {
+            "branch_held": 5,
+            "final_confirms_callback": 3
+          },
+          "sent_structured_reads": 6,
+          "settled_correct": 0,
+          "settled_n": 4,
+          "third_counted": 0,
+          "third_disagreements": 0,
+          "third_sent": 0,
+          "trials_with_extra_read": 5,
+          "trials_with_native_callback": 8
+        }
+      }
+    },
+    "paired": {
+      "evidence_formula_vs_formula": {
+        "introduced_nonnull": [],
+        "losses": [
+          "calc-sieve-p",
+          "calc-stencil-p",
+          "calc-tickets-p"
+        ],
+        "prevented_nonnull": [
+          "calc-badges-m",
+          "calc-cartons-m",
+          "calc-sieve-m",
+          "calc-splice-m",
+          "calc-stacks-m",
+          "calc-stencil-m",
+          "calc-tickets-m",
+          "calc-trolley-m"
+        ],
+        "wins": []
+      },
+      "evidence_formula_vs_native": {
+        "introduced_nonnull": [],
+        "losses": [
+          "calc-badges-m"
+        ],
+        "prevented_nonnull": [
+          "calc-cartons-m",
+          "calc-splice-m",
+          "calc-stencil-m",
+          "calc-tickets-m",
+          "calc-trolley-m"
+        ],
+        "wins": []
+      },
+      "formula_vs_native": {
+        "introduced_nonnull": [
+          "calc-badges-m",
+          "calc-sieve-m",
+          "calc-stacks-m"
+        ],
+        "losses": [
+          "calc-badges-m"
+        ],
+        "prevented_nonnull": [],
+        "wins": [
+          "calc-sieve-p",
+          "calc-stencil-p",
+          "calc-tickets-p"
+        ]
+      },
+      "native_value_vs_native": {
+        "introduced_nonnull": [
+          "calc-badges-m",
+          "calc-sieve-m",
+          "calc-stacks-m"
+        ],
+        "losses": [
+          "calc-badges-m"
+        ],
+        "prevented_nonnull": [],
+        "wins": []
+      },
+      "parallel_vs_evidence_formula": {
+        "introduced_nonnull": [],
+        "losses": [],
+        "prevented_nonnull": [],
+        "wins": []
+      },
+      "parallel_vs_native": {
+        "introduced_nonnull": [],
+        "losses": [
+          "calc-badges-m"
+        ],
+        "prevented_nonnull": [
+          "calc-cartons-m",
+          "calc-splice-m",
+          "calc-stencil-m",
+          "calc-tickets-m",
+          "calc-trolley-m"
+        ],
+        "wins": []
+      },
+      "plain_vs_native": {
+        "introduced_nonnull": [
+          "calc-sieve-m",
+          "calc-stacks-m"
+        ],
+        "losses": [],
+        "prevented_nonnull": [
+          "calc-splice-m",
+          "calc-stencil-m"
+        ],
+        "wins": [
+          "calc-splice-m",
+          "calc-stacks-p",
+          "calc-stencil-m"
+        ]
+      },
+      "selective_vs_native": {
+        "introduced_nonnull": [],
+        "losses": [
+          "calc-badges-m"
+        ],
+        "prevented_nonnull": [],
+        "wins": []
+      },
+      "selective_vs_parallel": {
+        "introduced_nonnull": [
+          "calc-cartons-m",
+          "calc-splice-m",
+          "calc-stencil-m",
+          "calc-tickets-m",
+          "calc-trolley-m"
+        ],
+        "losses": [],
+        "prevented_nonnull": [],
+        "wins": []
+      }
+    }
+  },
+  "qa": {
+    "adoption": {
+      "anchored": {
+        "conditions": {
+          "fewer_missing_nonnull": true,
+          "input_within_105pct": false,
+          "median_within_110pct": false,
+          "settled_preserved": false,
+          "total_preserved": false
+        },
+        "passed": false
+      },
+      "arbitrate": {
+        "conditions": {
+          "fewer_missing_nonnull": true,
+          "input_within_105pct": false,
+          "median_within_110pct": false,
+          "settled_preserved": false,
+          "total_preserved": false
+        },
+        "passed": false
+      },
+      "checked": {
+        "conditions": {
+          "fewer_missing_nonnull": true,
+          "input_within_105pct": false,
+          "median_within_110pct": false,
+          "settled_preserved": false,
+          "total_preserved": true
+        },
+        "passed": false
+      },
+      "independent": {
+        "conditions": {
+          "fewer_missing_nonnull": true,
+          "input_within_105pct": false,
+          "median_within_110pct": false,
+          "settled_preserved": false,
+          "total_preserved": false
+        },
+        "passed": false
+      },
+      "packet": {
+        "conditions": {
+          "fewer_missing_nonnull": true,
+          "input_within_105pct": true,
+          "median_within_110pct": true,
+          "settled_preserved": false,
+          "total_preserved": false
+        },
+        "passed": false
+      },
+      "selective": {
+        "conditions": {
+          "fewer_missing_nonnull": false,
+          "input_within_105pct": true,
+          "median_within_110pct": true,
+          "settled_preserved": true,
+          "total_preserved": true
+        },
+        "passed": false
+      }
+    },
+    "all": {
+      "anchored": {
+        "both_in_pair_correct": 0,
+        "correct": 9,
+        "count": 24,
+        "counted_input_tokens": 187130,
+        "host_calc": 0,
+        "max_counted_input": 6160,
+        "median_ms": 3703.936,
+        "missing_correct": 0,
+        "missing_n": 12,
+        "missing_nonnull": 9,
+        "native_callbacks": 0,
+        "native_requests": 0,
+        "native_visible_prompt_tokens": 0,
+        "outcomes": {
+          "correct_settled": 9,
+          "error": 2,
+          "false_nonnull": 9,
+          "held": 4
+        },
+        "p95_ms": 61743.387,
+        "requests": 130,
+        "routes": {
+          "fresh_held": 4,
+          "fresh_set": 18,
+          "indexed_error": 2
+        },
+        "sent_structured_reads": 22,
+        "settled_correct": 9,
+        "settled_n": 12,
+        "third_counted": 0,
+        "third_disagreements": 0,
+        "third_sent": 0,
+        "trials_with_extra_read": 22,
+        "trials_with_native_callback": 0
+      },
+      "arbitrate": {
+        "both_in_pair_correct": 0,
+        "correct": 9,
+        "count": 24,
+        "counted_input_tokens": 188914,
+        "host_calc": 0,
+        "max_counted_input": 6160,
+        "median_ms": 3658.344,
+        "missing_correct": 0,
+        "missing_n": 12,
+        "missing_nonnull": 9,
+        "native_callbacks": 0,
+        "native_requests": 0,
+        "native_visible_prompt_tokens": 0,
+        "outcomes": {
+          "correct_settled": 9,
+          "error": 2,
+          "false_nonnull": 9,
+          "held": 4
+        },
+        "p95_ms": 62086.929,
+        "requests": 133,
+        "routes": {
+          "agree_value": 17,
+          "arbiter_set": 1,
+          "indexed_error": 2,
+          "packet_held": 4
+        },
+        "sent_structured_reads": 25,
+        "settled_correct": 9,
+        "settled_n": 12,
+        "third_counted": 1,
+        "third_disagreements": 1,
+        "third_sent": 1,
+        "trials_with_extra_read": 24,
+        "trials_with_native_callback": 0
+      },
+      "checked": {
+        "both_in_pair_correct": 3,
+        "correct": 12,
+        "count": 24,
+        "counted_input_tokens": 428098,
+        "host_calc": 0,
+        "max_counted_input": 6160,
+        "median_ms": 25045.18,
+        "missing_correct": 7,
+        "missing_n": 12,
+        "missing_nonnull": 2,
+        "native_callbacks": 0,
+        "native_requests": 0,
+        "native_visible_prompt_tokens": 0,
+        "outcomes": {
+          "correct_null": 7,
+          "correct_settled": 5,
+          "error": 4,
+          "false_nonnull": 2,
+          "held": 2,
+          "missed_settled": 4
+        },
+        "p95_ms": 71571.415,
+        "requests": 134,
+        "routes": {
+          "published-checked": 24
+        },
+        "sent_structured_reads": 0,
+        "settled_correct": 5,
+        "settled_n": 12,
+        "third_counted": 0,
+        "third_disagreements": 0,
+        "third_sent": 0,
+        "trials_with_extra_read": 0,
+        "trials_with_native_callback": 0
+      },
+      "independent": {
+        "both_in_pair_correct": 0,
+        "correct": 9,
+        "count": 24,
+        "counted_input_tokens": 188647,
+        "host_calc": 0,
+        "max_counted_input": 6160,
+        "median_ms": 3585.171,
+        "missing_correct": 0,
+        "missing_n": 12,
+        "missing_nonnull": 8,
+        "native_callbacks": 0,
+        "native_requests": 0,
+        "native_visible_prompt_tokens": 0,
+        "outcomes": {
+          "correct_settled": 9,
+          "error": 2,
+          "false_nonnull": 8,
+          "held": 5
+        },
+        "p95_ms": 62121.621,
+        "requests": 132,
+        "routes": {
+          "agree_value": 17,
+          "different_values": 1,
+          "indexed_error": 2,
+          "packet_held": 4
+        },
+        "sent_structured_reads": 24,
+        "settled_correct": 9,
+        "settled_n": 12,
+        "third_counted": 0,
+        "third_disagreements": 0,
+        "third_sent": 0,
+        "trials_with_extra_read": 24,
+        "trials_with_native_callback": 0
+      },
+      "indexed": {
+        "both_in_pair_correct": 0,
+        "correct": 11,
+        "count": 24,
+        "counted_input_tokens": 168399,
+        "host_calc": 0,
+        "max_counted_input": 6160,
+        "median_ms": 2643.367,
+        "missing_correct": 1,
+        "missing_n": 12,
+        "missing_nonnull": 10,
+        "native_callbacks": 0,
+        "native_requests": 0,
+        "native_visible_prompt_tokens": 0,
+        "outcomes": {
+          "correct_null": 1,
+          "correct_settled": 10,
+          "error": 2,
+          "false_nonnull": 10,
+          "missed_settled": 1
+        },
+        "p95_ms": 61139.754,
+        "requests": 108,
+        "routes": {
+          "indexed": 24
+        },
+        "sent_structured_reads": 0,
+        "settled_correct": 10,
+        "settled_n": 12,
+        "third_counted": 0,
+        "third_disagreements": 0,
+        "third_sent": 0,
+        "trials_with_extra_read": 0,
+        "trials_with_native_callback": 0
+      },
+      "packet": {
+        "both_in_pair_correct": 0,
+        "correct": 9,
+        "count": 24,
+        "counted_input_tokens": 20248,
+        "host_calc": 0,
+        "max_counted_input": 907,
+        "median_ms": 969.519,
+        "missing_correct": 0,
+        "missing_n": 12,
+        "missing_nonnull": 9,
+        "native_callbacks": 0,
+        "native_requests": 0,
+        "native_visible_prompt_tokens": 0,
+        "outcomes": {
+          "correct_settled": 9,
+          "false_nonnull": 9,
+          "held": 6
+        },
+        "p95_ms": 1097.854,
+        "requests": 24,
+        "routes": {
+          "fresh_held": 6,
+          "fresh_set": 18
+        },
+        "sent_structured_reads": 24,
+        "settled_correct": 9,
+        "settled_n": 12,
+        "third_counted": 0,
+        "third_disagreements": 0,
+        "third_sent": 0,
+        "trials_with_extra_read": 24,
+        "trials_with_native_callback": 0
+      },
+      "selective": {
+        "both_in_pair_correct": 0,
+        "correct": 11,
+        "count": 24,
+        "counted_input_tokens": 170102,
+        "host_calc": 0,
+        "max_counted_input": 6160,
+        "median_ms": 2733.989,
+        "missing_correct": 1,
+        "missing_n": 12,
+        "missing_nonnull": 10,
+        "native_callbacks": 0,
+        "native_requests": 0,
+        "native_visible_prompt_tokens": 0,
+        "outcomes": {
+          "correct_null": 1,
+          "correct_settled": 10,
+          "error": 2,
+          "false_nonnull": 10,
+          "missed_settled": 1
+        },
+        "p95_ms": 61092.365,
+        "requests": 110,
+        "routes": {
+          "indexed_error": 2,
+          "keep_indexed_after_check": 2,
+          "keep_indexed_nonpositive": 2,
+          "keep_indexed_unflagged": 18
+        },
+        "sent_structured_reads": 2,
+        "settled_correct": 10,
+        "settled_n": 12,
+        "third_counted": 0,
+        "third_disagreements": 0,
+        "third_sent": 0,
+        "trials_with_extra_read": 2,
+        "trials_with_native_callback": 0
+      }
+    },
+    "language": {
+      "en": {
+        "anchored": {
+          "both_in_pair_correct": 0,
+          "correct": 4,
+          "count": 12,
+          "counted_input_tokens": 127377,
+          "host_calc": 0,
+          "max_counted_input": 6160,
+          "median_ms": 3718.077,
+          "missing_correct": 0,
+          "missing_n": 6,
+          "missing_nonnull": 4,
+          "native_callbacks": 0,
+          "native_requests": 0,
+          "native_visible_prompt_tokens": 0,
+          "outcomes": {
+            "correct_settled": 4,
+            "error": 2,
+            "false_nonnull": 4,
+            "held": 2
+          },
+          "p95_ms": 82063.506,
+          "requests": 70,
+          "routes": {
+            "fresh_held": 2,
+            "fresh_set": 8,
+            "indexed_error": 2
+          },
+          "sent_structured_reads": 10,
+          "settled_correct": 4,
+          "settled_n": 6,
+          "third_counted": 0,
+          "third_disagreements": 0,
+          "third_sent": 0,
+          "trials_with_extra_read": 10,
+          "trials_with_native_callback": 0
+        },
+        "arbitrate": {
+          "both_in_pair_correct": 0,
+          "correct": 4,
+          "count": 12,
+          "counted_input_tokens": 128986,
+          "host_calc": 0,
+          "max_counted_input": 6160,
+          "median_ms": 3702.169,
+          "missing_correct": 0,
+          "missing_n": 6,
+          "missing_nonnull": 4,
+          "native_callbacks": 0,
+          "native_requests": 0,
+          "native_visible_prompt_tokens": 0,
+          "outcomes": {
+            "correct_settled": 4,
+            "error": 2,
+            "false_nonnull": 4,
+            "held": 2
+          },
+          "p95_ms": 83211.745,
+          "requests": 72,
+          "routes": {
+            "agree_value": 8,
+            "indexed_error": 2,
+            "packet_held": 2
+          },
+          "sent_structured_reads": 12,
+          "settled_correct": 4,
+          "settled_n": 6,
+          "third_counted": 0,
+          "third_disagreements": 0,
+          "third_sent": 0,
+          "trials_with_extra_read": 12,
+          "trials_with_native_callback": 0
+        },
+        "checked": {
+          "both_in_pair_correct": 1,
+          "correct": 5,
+          "count": 12,
+          "counted_input_tokens": 154207,
+          "host_calc": 0,
+          "max_counted_input": 6160,
+          "median_ms": 16825.755,
+          "missing_correct": 3,
+          "missing_n": 6,
+          "missing_nonnull": 1,
+          "native_callbacks": 0,
+          "native_requests": 0,
+          "native_visible_prompt_tokens": 0,
+          "outcomes": {
+            "correct_null": 3,
+            "correct_settled": 2,
+            "error": 4,
+            "false_nonnull": 1,
+            "missed_settled": 2
+          },
+          "p95_ms": 82522.072,
+          "requests": 55,
+          "routes": {
+            "published-checked": 12
+          },
+          "sent_structured_reads": 0,
+          "settled_correct": 2,
+          "settled_n": 6,
+          "third_counted": 0,
+          "third_disagreements": 0,
+          "third_sent": 0,
+          "trials_with_extra_read": 0,
+          "trials_with_native_callback": 0
+        },
+        "independent": {
+          "both_in_pair_correct": 0,
+          "correct": 4,
+          "count": 12,
+          "counted_input_tokens": 128986,
+          "host_calc": 0,
+          "max_counted_input": 6160,
+          "median_ms": 3706.72,
+          "missing_correct": 0,
+          "missing_n": 6,
+          "missing_nonnull": 4,
+          "native_callbacks": 0,
+          "native_requests": 0,
+          "native_visible_prompt_tokens": 0,
+          "outcomes": {
+            "correct_settled": 4,
+            "error": 2,
+            "false_nonnull": 4,
+            "held": 2
+          },
+          "p95_ms": 83175.295,
+          "requests": 72,
+          "routes": {
+            "agree_value": 8,
+            "indexed_error": 2,
+            "packet_held": 2
+          },
+          "sent_structured_reads": 12,
+          "settled_correct": 4,
+          "settled_n": 6,
+          "third_counted": 0,
+          "third_disagreements": 0,
+          "third_sent": 0,
+          "trials_with_extra_read": 12,
+          "trials_with_native_callback": 0
+        },
+        "indexed": {
+          "both_in_pair_correct": 0,
+          "correct": 5,
+          "count": 12,
+          "counted_input_tokens": 119191,
+          "host_calc": 0,
+          "max_counted_input": 6160,
+          "median_ms": 2721.416,
+          "missing_correct": 1,
+          "missing_n": 6,
+          "missing_nonnull": 4,
+          "native_callbacks": 0,
+          "native_requests": 0,
+          "native_visible_prompt_tokens": 0,
+          "outcomes": {
+            "correct_null": 1,
+            "correct_settled": 4,
+            "error": 2,
+            "false_nonnull": 4,
+            "missed_settled": 1
+          },
+          "p95_ms": 82164.671,
+          "requests": 60,
+          "routes": {
+            "indexed": 12
+          },
+          "sent_structured_reads": 0,
+          "settled_correct": 4,
+          "settled_n": 6,
+          "third_counted": 0,
+          "third_disagreements": 0,
+          "third_sent": 0,
+          "trials_with_extra_read": 0,
+          "trials_with_native_callback": 0
+        },
+        "packet": {
+          "both_in_pair_correct": 0,
+          "correct": 4,
+          "count": 12,
+          "counted_input_tokens": 9795,
+          "host_calc": 0,
+          "max_counted_input": 854,
+          "median_ms": 929.805,
+          "missing_correct": 0,
+          "missing_n": 6,
+          "missing_nonnull": 4,
+          "native_callbacks": 0,
+          "native_requests": 0,
+          "native_visible_prompt_tokens": 0,
+          "outcomes": {
+            "correct_settled": 4,
+            "false_nonnull": 4,
+            "held": 4
+          },
+          "p95_ms": 1097.854,
+          "requests": 12,
+          "routes": {
+            "fresh_held": 4,
+            "fresh_set": 8
+          },
+          "sent_structured_reads": 12,
+          "settled_correct": 4,
+          "settled_n": 6,
+          "third_counted": 0,
+          "third_disagreements": 0,
+          "third_sent": 0,
+          "trials_with_extra_read": 12,
+          "trials_with_native_callback": 0
+        },
+        "selective": {
+          "both_in_pair_correct": 0,
+          "correct": 5,
+          "count": 12,
+          "counted_input_tokens": 120894,
+          "host_calc": 0,
+          "max_counted_input": 6160,
+          "median_ms": 3235.582,
+          "missing_correct": 1,
+          "missing_n": 6,
+          "missing_nonnull": 4,
+          "native_callbacks": 0,
+          "native_requests": 0,
+          "native_visible_prompt_tokens": 0,
+          "outcomes": {
+            "correct_null": 1,
+            "correct_settled": 4,
+            "error": 2,
+            "false_nonnull": 4,
+            "missed_settled": 1
+          },
+          "p95_ms": 82029.043,
+          "requests": 62,
+          "routes": {
+            "indexed_error": 2,
+            "keep_indexed_after_check": 2,
+            "keep_indexed_nonpositive": 2,
+            "keep_indexed_unflagged": 6
+          },
+          "sent_structured_reads": 2,
+          "settled_correct": 4,
+          "settled_n": 6,
+          "third_counted": 0,
+          "third_disagreements": 0,
+          "third_sent": 0,
+          "trials_with_extra_read": 2,
+          "trials_with_native_callback": 0
+        }
+      },
+      "ja": {
+        "anchored": {
+          "both_in_pair_correct": 0,
+          "correct": 5,
+          "count": 12,
+          "counted_input_tokens": 59753,
+          "host_calc": 0,
+          "max_counted_input": 1709,
+          "median_ms": 3703.936,
+          "missing_correct": 0,
+          "missing_n": 6,
+          "missing_nonnull": 5,
+          "native_callbacks": 0,
+          "native_requests": 0,
+          "native_visible_prompt_tokens": 0,
+          "outcomes": {
+            "correct_settled": 5,
+            "false_nonnull": 5,
+            "held": 2
+          },
+          "p95_ms": 4224.74,
+          "requests": 60,
+          "routes": {
+            "fresh_held": 2,
+            "fresh_set": 10
+          },
+          "sent_structured_reads": 12,
+          "settled_correct": 5,
+          "settled_n": 6,
+          "third_counted": 0,
+          "third_disagreements": 0,
+          "third_sent": 0,
+          "trials_with_extra_read": 12,
+          "trials_with_native_callback": 0
+        },
+        "arbitrate": {
+          "both_in_pair_correct": 0,
+          "correct": 5,
+          "count": 12,
+          "counted_input_tokens": 59928,
+          "host_calc": 0,
+          "max_counted_input": 1709,
+          "median_ms": 3658.344,
+          "missing_correct": 0,
+          "missing_n": 6,
+          "missing_nonnull": 5,
+          "native_callbacks": 0,
+          "native_requests": 0,
+          "native_visible_prompt_tokens": 0,
+          "outcomes": {
+            "correct_settled": 5,
+            "false_nonnull": 5,
+            "held": 2
+          },
+          "p95_ms": 4066.208,
+          "requests": 61,
+          "routes": {
+            "agree_value": 9,
+            "arbiter_set": 1,
+            "packet_held": 2
+          },
+          "sent_structured_reads": 13,
+          "settled_correct": 5,
+          "settled_n": 6,
+          "third_counted": 1,
+          "third_disagreements": 1,
+          "third_sent": 1,
+          "trials_with_extra_read": 12,
+          "trials_with_native_callback": 0
+        },
+        "checked": {
+          "both_in_pair_correct": 2,
+          "correct": 7,
+          "count": 12,
+          "counted_input_tokens": 273891,
+          "host_calc": 0,
+          "max_counted_input": 6160,
+          "median_ms": 28703.024,
+          "missing_correct": 4,
+          "missing_n": 6,
+          "missing_nonnull": 1,
+          "native_callbacks": 0,
+          "native_requests": 0,
+          "native_visible_prompt_tokens": 0,
+          "outcomes": {
+            "correct_null": 4,
+            "correct_settled": 3,
+            "false_nonnull": 1,
+            "held": 2,
+            "missed_settled": 2
+          },
+          "p95_ms": 71571.415,
+          "requests": 79,
+          "routes": {
+            "published-checked": 12
+          },
+          "sent_structured_reads": 0,
+          "settled_correct": 3,
+          "settled_n": 6,
+          "third_counted": 0,
+          "third_disagreements": 0,
+          "third_sent": 0,
+          "trials_with_extra_read": 0,
+          "trials_with_native_callback": 0
+        },
+        "independent": {
+          "both_in_pair_correct": 0,
+          "correct": 5,
+          "count": 12,
+          "counted_input_tokens": 59661,
+          "host_calc": 0,
+          "max_counted_input": 1709,
+          "median_ms": 3585.171,
+          "missing_correct": 0,
+          "missing_n": 6,
+          "missing_nonnull": 4,
+          "native_callbacks": 0,
+          "native_requests": 0,
+          "native_visible_prompt_tokens": 0,
+          "outcomes": {
+            "correct_settled": 5,
+            "false_nonnull": 4,
+            "held": 3
+          },
+          "p95_ms": 4214.267,
+          "requests": 60,
+          "routes": {
+            "agree_value": 9,
+            "different_values": 1,
+            "packet_held": 2
+          },
+          "sent_structured_reads": 12,
+          "settled_correct": 5,
+          "settled_n": 6,
+          "third_counted": 0,
+          "third_disagreements": 0,
+          "third_sent": 0,
+          "trials_with_extra_read": 12,
+          "trials_with_native_callback": 0
+        },
+        "indexed": {
+          "both_in_pair_correct": 0,
+          "correct": 6,
+          "count": 12,
+          "counted_input_tokens": 49208,
+          "host_calc": 0,
+          "max_counted_input": 1709,
+          "median_ms": 2643.367,
+          "missing_correct": 0,
+          "missing_n": 6,
+          "missing_nonnull": 6,
+          "native_callbacks": 0,
+          "native_requests": 0,
+          "native_visible_prompt_tokens": 0,
+          "outcomes": {
+            "correct_settled": 6,
+            "false_nonnull": 6
+          },
+          "p95_ms": 2932.133,
+          "requests": 48,
+          "routes": {
+            "indexed": 12
+          },
+          "sent_structured_reads": 0,
+          "settled_correct": 6,
+          "settled_n": 6,
+          "third_counted": 0,
+          "third_disagreements": 0,
+          "third_sent": 0,
+          "trials_with_extra_read": 0,
+          "trials_with_native_callback": 0
+        },
+        "packet": {
+          "both_in_pair_correct": 0,
+          "correct": 5,
+          "count": 12,
+          "counted_input_tokens": 10453,
+          "host_calc": 0,
+          "max_counted_input": 907,
+          "median_ms": 987.067,
+          "missing_correct": 0,
+          "missing_n": 6,
+          "missing_nonnull": 5,
+          "native_callbacks": 0,
+          "native_requests": 0,
+          "native_visible_prompt_tokens": 0,
+          "outcomes": {
+            "correct_settled": 5,
+            "false_nonnull": 5,
+            "held": 2
+          },
+          "p95_ms": 1114.477,
+          "requests": 12,
+          "routes": {
+            "fresh_held": 2,
+            "fresh_set": 10
+          },
+          "sent_structured_reads": 12,
+          "settled_correct": 5,
+          "settled_n": 6,
+          "third_counted": 0,
+          "third_disagreements": 0,
+          "third_sent": 0,
+          "trials_with_extra_read": 12,
+          "trials_with_native_callback": 0
+        },
+        "selective": {
+          "both_in_pair_correct": 0,
+          "correct": 6,
+          "count": 12,
+          "counted_input_tokens": 49208,
+          "host_calc": 0,
+          "max_counted_input": 1709,
+          "median_ms": 2624.311,
+          "missing_correct": 0,
+          "missing_n": 6,
+          "missing_nonnull": 6,
+          "native_callbacks": 0,
+          "native_requests": 0,
+          "native_visible_prompt_tokens": 0,
+          "outcomes": {
+            "correct_settled": 6,
+            "false_nonnull": 6
+          },
+          "p95_ms": 3099.679,
+          "requests": 48,
+          "routes": {
+            "keep_indexed_unflagged": 12
+          },
+          "sent_structured_reads": 0,
+          "settled_correct": 6,
+          "settled_n": 6,
+          "third_counted": 0,
+          "third_disagreements": 0,
+          "third_sent": 0,
+          "trials_with_extra_read": 0,
+          "trials_with_native_callback": 0
+        }
+      }
+    },
+    "paired": {
+      "anchored_vs_indexed": {
+        "introduced_nonnull": [],
+        "losses": [
+          "qa-meridian-m",
+          "qa-wrack-p"
+        ],
+        "prevented_nonnull": [
+          "qa-lantern-m"
+        ],
+        "wins": []
+      },
+      "anchored_vs_packet": {
+        "introduced_nonnull": [
+          "qa-oven-m"
+        ],
+        "losses": [
+          "qa-wrack-p"
+        ],
+        "prevented_nonnull": [
+          "qa-lantern-m"
+        ],
+        "wins": [
+          "qa-oven-p"
+        ]
+      },
+      "arbitrate_vs_independent": {
+        "introduced_nonnull": [
+          "qa-wrack-m"
+        ],
+        "losses": [],
+        "prevented_nonnull": [],
+        "wins": []
+      },
+      "arbitrate_vs_indexed": {
+        "introduced_nonnull": [],
+        "losses": [
+          "qa-meridian-m",
+          "qa-oven-p"
+        ],
+        "prevented_nonnull": [
+          "qa-oven-m"
+        ],
+        "wins": []
+      },
+      "checked_vs_indexed": {
+        "introduced_nonnull": [],
+        "losses": [
+          "qa-fan-p",
+          "qa-indigo-p",
+          "qa-oven-p",
+          "qa-quince-p",
+          "qa-wren-p"
+        ],
+        "prevented_nonnull": [
+          "qa-fan-m",
+          "qa-fern-m",
+          "qa-indigo-m",
+          "qa-lantern-m",
+          "qa-oven-m",
+          "qa-quince-m",
+          "qa-wrack-m",
+          "qa-wren-m"
+        ],
+        "wins": [
+          "qa-fan-m",
+          "qa-fern-m",
+          "qa-indigo-m",
+          "qa-lantern-m",
+          "qa-wrack-m",
+          "qa-wren-m"
+        ]
+      },
+      "independent_vs_indexed": {
+        "introduced_nonnull": [],
+        "losses": [
+          "qa-meridian-m",
+          "qa-oven-p"
+        ],
+        "prevented_nonnull": [
+          "qa-oven-m",
+          "qa-wrack-m"
+        ],
+        "wins": []
+      },
+      "packet_vs_indexed": {
+        "introduced_nonnull": [],
+        "losses": [
+          "qa-meridian-m",
+          "qa-oven-p"
+        ],
+        "prevented_nonnull": [
+          "qa-oven-m"
+        ],
+        "wins": []
+      },
+      "selective_vs_anchored": {
+        "introduced_nonnull": [
+          "qa-lantern-m"
+        ],
+        "losses": [],
+        "prevented_nonnull": [],
+        "wins": [
+          "qa-meridian-m",
+          "qa-wrack-p"
+        ]
+      },
+      "selective_vs_indexed": {
+        "introduced_nonnull": [],
+        "losses": [],
+        "prevented_nonnull": [],
+        "wins": []
+      }
+    },
+    "tier": {
+      "16k": {
+        "anchored": {
+          "both_in_pair_correct": 0,
+          "correct": 5,
+          "count": 12,
+          "counted_input_tokens": 93480,
+          "host_calc": 0,
+          "max_counted_input": 6160,
+          "median_ms": 3747.684,
+          "missing_correct": 0,
+          "missing_n": 6,
+          "missing_nonnull": 5,
+          "native_callbacks": 0,
+          "native_requests": 0,
+          "native_visible_prompt_tokens": 0,
+          "outcomes": {
+            "correct_settled": 5,
+            "error": 2,
+            "false_nonnull": 5
+          },
+          "p95_ms": 82063.506,
+          "requests": 62,
+          "routes": {
+            "fresh_set": 10,
+            "indexed_error": 2
+          },
+          "sent_structured_reads": 10,
+          "settled_correct": 5,
+          "settled_n": 6,
+          "third_counted": 0,
+          "third_disagreements": 0,
+          "third_sent": 0,
+          "trials_with_extra_read": 10,
+          "trials_with_native_callback": 0
+        },
+        "arbitrate": {
+          "both_in_pair_correct": 0,
+          "correct": 4,
+          "count": 12,
+          "counted_input_tokens": 95051,
+          "host_calc": 0,
+          "max_counted_input": 6160,
+          "median_ms": 3695.666,
+          "missing_correct": 0,
+          "missing_n": 6,
+          "missing_nonnull": 4,
+          "native_callbacks": 0,
+          "native_requests": 0,
+          "native_visible_prompt_tokens": 0,
+          "outcomes": {
+            "correct_settled": 4,
+            "error": 2,
+            "false_nonnull": 4,
+            "held": 2
+          },
+          "p95_ms": 83211.745,
+          "requests": 64,
+          "routes": {
+            "agree_value": 8,
+            "indexed_error": 2,
+            "packet_held": 2
+          },
+          "sent_structured_reads": 12,
+          "settled_correct": 4,
+          "settled_n": 6,
+          "third_counted": 0,
+          "third_disagreements": 0,
+          "third_sent": 0,
+          "trials_with_extra_read": 12,
+          "trials_with_native_callback": 0
+        },
+        "checked": {
+          "both_in_pair_correct": 0,
+          "correct": 3,
+          "count": 12,
+          "counted_input_tokens": 260918,
+          "host_calc": 0,
+          "max_counted_input": 6160,
+          "median_ms": 47647.862,
+          "missing_correct": 2,
+          "missing_n": 6,
+          "missing_nonnull": 1,
+          "native_callbacks": 0,
+          "native_requests": 0,
+          "native_visible_prompt_tokens": 0,
+          "outcomes": {
+            "correct_null": 2,
+            "correct_settled": 1,
+            "error": 4,
+            "false_nonnull": 1,
+            "held": 2,
+            "missed_settled": 2
+          },
+          "p95_ms": 82522.072,
+          "requests": 69,
+          "routes": {
+            "published-checked": 12
+          },
+          "sent_structured_reads": 0,
+          "settled_correct": 1,
+          "settled_n": 6,
+          "third_counted": 0,
+          "third_disagreements": 0,
+          "third_sent": 0,
+          "trials_with_extra_read": 0,
+          "trials_with_native_callback": 0
+        },
+        "independent": {
+          "both_in_pair_correct": 0,
+          "correct": 4,
+          "count": 12,
+          "counted_input_tokens": 95051,
+          "host_calc": 0,
+          "max_counted_input": 6160,
+          "median_ms": 3693.8,
+          "missing_correct": 0,
+          "missing_n": 6,
+          "missing_nonnull": 4,
+          "native_callbacks": 0,
+          "native_requests": 0,
+          "native_visible_prompt_tokens": 0,
+          "outcomes": {
+            "correct_settled": 4,
+            "error": 2,
+            "false_nonnull": 4,
+            "held": 2
+          },
+          "p95_ms": 83175.295,
+          "requests": 64,
+          "routes": {
+            "agree_value": 8,
+            "indexed_error": 2,
+            "packet_held": 2
+          },
+          "sent_structured_reads": 12,
+          "settled_correct": 4,
+          "settled_n": 6,
+          "third_counted": 0,
+          "third_disagreements": 0,
+          "third_sent": 0,
+          "trials_with_extra_read": 12,
+          "trials_with_native_callback": 0
+        },
+        "indexed": {
+          "both_in_pair_correct": 0,
+          "correct": 5,
+          "count": 12,
+          "counted_input_tokens": 84835,
+          "host_calc": 0,
+          "max_counted_input": 6160,
+          "median_ms": 2732.823,
+          "missing_correct": 0,
+          "missing_n": 6,
+          "missing_nonnull": 5,
+          "native_callbacks": 0,
+          "native_requests": 0,
+          "native_visible_prompt_tokens": 0,
+          "outcomes": {
+            "correct_settled": 5,
+            "error": 2,
+            "false_nonnull": 5
+          },
+          "p95_ms": 82164.671,
+          "requests": 52,
+          "routes": {
+            "indexed": 12
+          },
+          "sent_structured_reads": 0,
+          "settled_correct": 5,
+          "settled_n": 6,
+          "third_counted": 0,
+          "third_disagreements": 0,
+          "third_sent": 0,
+          "trials_with_extra_read": 0,
+          "trials_with_native_callback": 0
+        },
+        "packet": {
+          "both_in_pair_correct": 0,
+          "correct": 4,
+          "count": 12,
+          "counted_input_tokens": 10216,
+          "host_calc": 0,
+          "max_counted_input": 907,
+          "median_ms": 1004.291,
+          "missing_correct": 0,
+          "missing_n": 6,
+          "missing_nonnull": 4,
+          "native_callbacks": 0,
+          "native_requests": 0,
+          "native_visible_prompt_tokens": 0,
+          "outcomes": {
+            "correct_settled": 4,
+            "false_nonnull": 4,
+            "held": 4
+          },
+          "p95_ms": 1097.854,
+          "requests": 12,
+          "routes": {
+            "fresh_held": 4,
+            "fresh_set": 8
+          },
+          "sent_structured_reads": 12,
+          "settled_correct": 4,
+          "settled_n": 6,
+          "third_counted": 0,
+          "third_disagreements": 0,
+          "third_sent": 0,
+          "trials_with_extra_read": 12,
+          "trials_with_native_callback": 0
+        },
+        "selective": {
+          "both_in_pair_correct": 0,
+          "correct": 5,
+          "count": 12,
+          "counted_input_tokens": 86538,
+          "host_calc": 0,
+          "max_counted_input": 6160,
+          "median_ms": 2866.427,
+          "missing_correct": 0,
+          "missing_n": 6,
+          "missing_nonnull": 5,
+          "native_callbacks": 0,
+          "native_requests": 0,
+          "native_visible_prompt_tokens": 0,
+          "outcomes": {
+            "correct_settled": 5,
+            "error": 2,
+            "false_nonnull": 5
+          },
+          "p95_ms": 82029.043,
+          "requests": 54,
+          "routes": {
+            "indexed_error": 2,
+            "keep_indexed_after_check": 2,
+            "keep_indexed_unflagged": 8
+          },
+          "sent_structured_reads": 2,
+          "settled_correct": 5,
+          "settled_n": 6,
+          "third_counted": 0,
+          "third_disagreements": 0,
+          "third_sent": 0,
+          "trials_with_extra_read": 2,
+          "trials_with_native_callback": 0
+        }
+      },
+      "8k": {
+        "anchored": {
+          "both_in_pair_correct": 0,
+          "correct": 4,
+          "count": 12,
+          "counted_input_tokens": 93650,
+          "host_calc": 0,
+          "max_counted_input": 6127,
+          "median_ms": 3583.234,
+          "missing_correct": 0,
+          "missing_n": 6,
+          "missing_nonnull": 4,
+          "native_callbacks": 0,
+          "native_requests": 0,
+          "native_visible_prompt_tokens": 0,
+          "outcomes": {
+            "correct_settled": 4,
+            "false_nonnull": 4,
+            "held": 4
+          },
+          "p95_ms": 28876.195,
+          "requests": 68,
+          "routes": {
+            "fresh_held": 4,
+            "fresh_set": 8
+          },
+          "sent_structured_reads": 12,
+          "settled_correct": 4,
+          "settled_n": 6,
+          "third_counted": 0,
+          "third_disagreements": 0,
+          "third_sent": 0,
+          "trials_with_extra_read": 12,
+          "trials_with_native_callback": 0
+        },
+        "arbitrate": {
+          "both_in_pair_correct": 0,
+          "correct": 5,
+          "count": 12,
+          "counted_input_tokens": 93863,
+          "host_calc": 0,
+          "max_counted_input": 6127,
+          "median_ms": 3562.14,
+          "missing_correct": 0,
+          "missing_n": 6,
+          "missing_nonnull": 5,
+          "native_callbacks": 0,
+          "native_requests": 0,
+          "native_visible_prompt_tokens": 0,
+          "outcomes": {
+            "correct_settled": 5,
+            "false_nonnull": 5,
+            "held": 2
+          },
+          "p95_ms": 28740.782,
+          "requests": 69,
+          "routes": {
+            "agree_value": 9,
+            "arbiter_set": 1,
+            "packet_held": 2
+          },
+          "sent_structured_reads": 13,
+          "settled_correct": 5,
+          "settled_n": 6,
+          "third_counted": 1,
+          "third_disagreements": 1,
+          "third_sent": 1,
+          "trials_with_extra_read": 12,
+          "trials_with_native_callback": 0
+        },
+        "checked": {
+          "both_in_pair_correct": 3,
+          "correct": 9,
+          "count": 12,
+          "counted_input_tokens": 167180,
+          "host_calc": 0,
+          "max_counted_input": 6134,
+          "median_ms": 11070.926,
+          "missing_correct": 5,
+          "missing_n": 6,
+          "missing_nonnull": 1,
+          "native_callbacks": 0,
+          "native_requests": 0,
+          "native_visible_prompt_tokens": 0,
+          "outcomes": {
+            "correct_null": 5,
+            "correct_settled": 4,
+            "false_nonnull": 1,
+            "missed_settled": 2
+          },
+          "p95_ms": 46899.298,
+          "requests": 65,
+          "routes": {
+            "published-checked": 12
+          },
+          "sent_structured_reads": 0,
+          "settled_correct": 4,
+          "settled_n": 6,
+          "third_counted": 0,
+          "third_disagreements": 0,
+          "third_sent": 0,
+          "trials_with_extra_read": 0,
+          "trials_with_native_callback": 0
+        },
+        "independent": {
+          "both_in_pair_correct": 0,
+          "correct": 5,
+          "count": 12,
+          "counted_input_tokens": 93596,
+          "host_calc": 0,
+          "max_counted_input": 6127,
+          "median_ms": 3519.68,
+          "missing_correct": 0,
+          "missing_n": 6,
+          "missing_nonnull": 4,
+          "native_callbacks": 0,
+          "native_requests": 0,
+          "native_visible_prompt_tokens": 0,
+          "outcomes": {
+            "correct_settled": 5,
+            "false_nonnull": 4,
+            "held": 3
+          },
+          "p95_ms": 29035.342,
+          "requests": 68,
+          "routes": {
+            "agree_value": 9,
+            "different_values": 1,
+            "packet_held": 2
+          },
+          "sent_structured_reads": 12,
+          "settled_correct": 5,
+          "settled_n": 6,
+          "third_counted": 0,
+          "third_disagreements": 0,
+          "third_sent": 0,
+          "trials_with_extra_read": 12,
+          "trials_with_native_callback": 0
+        },
+        "indexed": {
+          "both_in_pair_correct": 0,
+          "correct": 6,
+          "count": 12,
+          "counted_input_tokens": 83564,
+          "host_calc": 0,
+          "max_counted_input": 6127,
+          "median_ms": 2572.176,
+          "missing_correct": 1,
+          "missing_n": 6,
+          "missing_nonnull": 5,
+          "native_callbacks": 0,
+          "native_requests": 0,
+          "native_visible_prompt_tokens": 0,
+          "outcomes": {
+            "correct_null": 1,
+            "correct_settled": 5,
+            "false_nonnull": 5,
+            "missed_settled": 1
+          },
+          "p95_ms": 28189.26,
+          "requests": 56,
+          "routes": {
+            "indexed": 12
+          },
+          "sent_structured_reads": 0,
+          "settled_correct": 5,
+          "settled_n": 6,
+          "third_counted": 0,
+          "third_disagreements": 0,
+          "third_sent": 0,
+          "trials_with_extra_read": 0,
+          "trials_with_native_callback": 0
+        },
+        "packet": {
+          "both_in_pair_correct": 0,
+          "correct": 5,
+          "count": 12,
+          "counted_input_tokens": 10032,
+          "host_calc": 0,
+          "max_counted_input": 907,
+          "median_ms": 919.154,
+          "missing_correct": 0,
+          "missing_n": 6,
+          "missing_nonnull": 5,
+          "native_callbacks": 0,
+          "native_requests": 0,
+          "native_visible_prompt_tokens": 0,
+          "outcomes": {
+            "correct_settled": 5,
+            "false_nonnull": 5,
+            "held": 2
+          },
+          "p95_ms": 1114.477,
+          "requests": 12,
+          "routes": {
+            "fresh_held": 2,
+            "fresh_set": 10
+          },
+          "sent_structured_reads": 12,
+          "settled_correct": 5,
+          "settled_n": 6,
+          "third_counted": 0,
+          "third_disagreements": 0,
+          "third_sent": 0,
+          "trials_with_extra_read": 12,
+          "trials_with_native_callback": 0
+        },
+        "selective": {
+          "both_in_pair_correct": 0,
+          "correct": 6,
+          "count": 12,
+          "counted_input_tokens": 83564,
+          "host_calc": 0,
+          "max_counted_input": 6127,
+          "median_ms": 2602.015,
+          "missing_correct": 1,
+          "missing_n": 6,
+          "missing_nonnull": 5,
+          "native_callbacks": 0,
+          "native_requests": 0,
+          "native_visible_prompt_tokens": 0,
+          "outcomes": {
+            "correct_null": 1,
+            "correct_settled": 5,
+            "false_nonnull": 5,
+            "missed_settled": 1
+          },
+          "p95_ms": 28023.926,
+          "requests": 56,
+          "routes": {
+            "keep_indexed_nonpositive": 2,
+            "keep_indexed_unflagged": 10
+          },
+          "sent_structured_reads": 0,
+          "settled_correct": 5,
+          "settled_n": 6,
+          "third_counted": 0,
+          "third_disagreements": 0,
+          "third_sent": 0,
+          "trials_with_extra_read": 0,
+          "trials_with_native_callback": 0
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,201 @@
+{
+  "active_ane_counters": null,
+  "binary_sha256": "125458cea9b85902006f508544e6dd1b7ce528781ce40cf927714cb4972c25a8",
+  "cases": [
+    {
+      "afm": true,
+      "id": "index-test-8k-01-p",
+      "language": "ja",
+      "policies": [
+        "cpuOnly",
+        "cpuAndNeuralEngine"
+      ],
+      "source_tokens_from_public_lock": 8224,
+      "tier": "8k"
+    },
+    {
+      "afm": true,
+      "id": "index-test-8k-02-n",
+      "language": "en",
+      "policies": [
+        "cpuAndNeuralEngine",
+        "cpuOnly"
+      ],
+      "source_tokens_from_public_lock": 8272,
+      "tier": "8k"
+    },
+    {
+      "afm": true,
+      "id": "index-test-16k-02-n",
+      "language": "ja",
+      "policies": [
+        "cpuOnly",
+        "cpuAndNeuralEngine"
+      ],
+      "source_tokens_from_public_lock": 16315,
+      "tier": "16k"
+    },
+    {
+      "afm": true,
+      "id": "index-test-16k-01-p",
+      "language": "en",
+      "policies": [
+        "cpuAndNeuralEngine",
+        "cpuOnly"
+      ],
+      "source_tokens_from_public_lock": 16431,
+      "tier": "16k"
+    }
+  ],
+  "chip": "Apple M6",
+  "doctor": {
+    "available": true,
+    "route": "system",
+    "target": "AFM 3 Core Advanced"
+  },
+  "doctor_sha256": "1c39d03e8b3878d144b0cb652a5d9188b1ed88b66cd90317855ed0f30cc3ea64",
+  "engine": "fixed",
+  "index_processes": [
+    {
+      "first_prediction_ns": 510375,
+      "first_request_roundtrip_ns": 731250,
+      "first_scores_sha256": "aa8cefa745015e110a705cde58d7282dbfbd759154e55093a34e30e3e70d3e0f",
+      "id": "index-test-8k-01-p",
+      "launch_to_ready_ns": 7580833,
+      "policy": "cpuOnly",
+      "ready": {
+        "dimension": 1024,
+        "load_ns": 3772750,
+        "policy": "cpuOnly",
+        "queries": 1,
+        "ready": true,
+        "row_count": 271
+      }
+    },
+    {
+      "first_prediction_ns": 479125,
+      "first_request_roundtrip_ns": 669834,
+      "first_scores_sha256": "aa8cefa745015e110a705cde58d7282dbfbd759154e55093a34e30e3e70d3e0f",
+      "id": "index-test-8k-01-p",
+      "launch_to_ready_ns": 10839500,
+      "policy": "cpuAndNeuralEngine",
+      "ready": {
+        "dimension": 1024,
+        "load_ns": 7451083,
+        "policy": "cpuAndNeuralEngine",
+        "queries": 1,
+        "ready": true,
+        "row_count": 271
+      }
+    },
+    {
+      "first_prediction_ns": 476000,
+      "first_request_roundtrip_ns": 675292,
+      "first_scores_sha256": "96a944426168c83cc58134fd50a74f206305e7a7c44c091be36cb36bcd435768",
+      "id": "index-test-8k-02-n",
+      "launch_to_ready_ns": 10755333,
+      "policy": "cpuAndNeuralEngine",
+      "ready": {
+        "dimension": 1024,
+        "load_ns": 7350417,
+        "policy": "cpuAndNeuralEngine",
+        "queries": 1,
+        "ready": true,
+        "row_count": 328
+      }
+    },
+    {
+      "first_prediction_ns": 403417,
+      "first_request_roundtrip_ns": 609292,
+      "first_scores_sha256": "96a944426168c83cc58134fd50a74f206305e7a7c44c091be36cb36bcd435768",
+      "id": "index-test-8k-02-n",
+      "launch_to_ready_ns": 5996042,
+      "policy": "cpuOnly",
+      "ready": {
+        "dimension": 1024,
+        "load_ns": 2936000,
+        "policy": "cpuOnly",
+        "queries": 1,
+        "ready": true,
+        "row_count": 328
+      }
+    },
+    {
+      "first_prediction_ns": 453167,
+      "first_request_roundtrip_ns": 690416,
+      "first_scores_sha256": "f3e367f13b5fe2c91a0c5dea50c86fb3f1365fdb1047d3830812c0f31275b425",
+      "id": "index-test-16k-02-n",
+      "launch_to_ready_ns": 6042959,
+      "policy": "cpuOnly",
+      "ready": {
+        "dimension": 1024,
+        "load_ns": 3002875,
+        "policy": "cpuOnly",
+        "queries": 1,
+        "ready": true,
+        "row_count": 467
+      }
+    },
+    {
+      "first_prediction_ns": 491625,
+      "first_request_roundtrip_ns": 733541,
+      "first_scores_sha256": "f3e367f13b5fe2c91a0c5dea50c86fb3f1365fdb1047d3830812c0f31275b425",
+      "id": "index-test-16k-02-n",
+      "launch_to_ready_ns": 10630125,
+      "policy": "cpuAndNeuralEngine",
+      "ready": {
+        "dimension": 1024,
+        "load_ns": 7280916,
+        "policy": "cpuAndNeuralEngine",
+        "queries": 1,
+        "ready": true,
+        "row_count": 467
+      }
+    },
+    {
+      "first_prediction_ns": 511375,
+      "first_request_roundtrip_ns": 803209,
+      "first_scores_sha256": "54f7d086a64679b7e01fbdbf8ec58e9bc0ba621ea953810428aeddd04681fe5b",
+      "id": "index-test-16k-01-p",
+      "launch_to_ready_ns": 10740791,
+      "policy": "cpuAndNeuralEngine",
+      "ready": {
+        "dimension": 1024,
+        "load_ns": 7357084,
+        "policy": "cpuAndNeuralEngine",
+        "queries": 1,
+        "ready": true,
+        "row_count": 674
+      }
+    },
+    {
+      "first_prediction_ns": 475542,
+      "first_request_roundtrip_ns": 767333,
+      "first_scores_sha256": "54f7d086a64679b7e01fbdbf8ec58e9bc0ba621ea953810428aeddd04681fe5b",
+      "id": "index-test-16k-01-p",
+      "launch_to_ready_ns": 6244458,
+      "policy": "cpuOnly",
+      "ready": {
+        "dimension": 1024,
+        "load_ns": 3009583,
+        "policy": "cpuOnly",
+        "queries": 1,
+        "ready": true,
+        "row_count": 674
+      }
+    }
+  ],
+  "machine": "arm64",
+  "os": "27.2.1",
+  "os_build": "26B131",
+  "placement_observed": false,
+  "source_files": {
+    "Rank.swift": "64bc02975d3090d2d115055de24c67966c5be1e04c76702f6b10a39069381ec0",
+    "backend.py": "20c541ad90e29663f92b0dc2c24a807fba1363f8ad3ec9c2d089dec4e4b7815d",
+    "lock.json": "5bafed6cd3292d0723ca28f3018e8011b29eafcc396e3706eec28acc521783cb",
+    "pipeline_study.py": "0dd47938c655f8956e828fbd2575a259f9c5da74bb6e1ef2d813d26ecbf296dd",
+    "rank_study.py": "27b27d2c8d078888fdf1264588ec80f5976fd2c449f1818ece4253478cb35e07"
+  },
+  "swift": "Apple Swift version 6.4.2 (swiftlang-6.4.2.1.9 clang-2100.4.1.1)\nTarget: arm64-apple-macosx27.2.0",
+  "utc": "2026-11-26T03:49:16.712438+00:00"
+}

@@ -1,0 +1,195 @@
+{
+  "afm_streaming": {
+    "afm": {
+      "completion_ms": {
+        "max": 7411.41,
+        "mean": 7397.89,
+        "median": 7394.64,
+        "n": 3,
+        "p95": 7411.41
+      },
+      "input_tokens": [
+        2648,
+        2648,
+        2648
+      ],
+      "output_sha256": [
+        "11f30f614a7cf0a7b7fb9754e0f3c3083c6042fc7b24e25ae4c55d58585d318f",
+        "11f30f614a7cf0a7b7fb9754e0f3c3083c6042fc7b24e25ae4c55d58585d318f",
+        "11f30f614a7cf0a7b7fb9754e0f3c3083c6042fc7b24e25ae4c55d58585d318f"
+      ],
+      "output_tokens": [
+        390,
+        390,
+        390
+      ],
+      "ttft_ms": {
+        "max": 1612.77,
+        "mean": 1586.33,
+        "median": 1574.94,
+        "n": 3,
+        "p95": 1612.77
+      }
+    },
+    "both": {
+      "completion_ms": {
+        "max": 8365.54,
+        "mean": 8357.18,
+        "median": 8354.05,
+        "n": 3,
+        "p95": 8365.54
+      },
+      "input_tokens": [
+        2648,
+        2648,
+        2648
+      ],
+      "output_sha256": [
+        "11f30f614a7cf0a7b7fb9754e0f3c3083c6042fc7b24e25ae4c55d58585d318f",
+        "11f30f614a7cf0a7b7fb9754e0f3c3083c6042fc7b24e25ae4c55d58585d318f",
+        "11f30f614a7cf0a7b7fb9754e0f3c3083c6042fc7b24e25ae4c55d58585d318f"
+      ],
+      "output_tokens": [
+        390,
+        390,
+        390
+      ],
+      "ttft_ms": {
+        "max": 1804.55,
+        "mean": 1800.22,
+        "median": 1799.82,
+        "n": 3,
+        "p95": 1804.55
+      }
+    }
+  },
+  "phases": {
+    "afm": {
+      "cpu_percent_whole_machine": {
+        "max": 13.62,
+        "mean": 6.93,
+        "median": 6.67,
+        "n": 85,
+        "p95": 11.63
+      },
+      "gpu_percent": {
+        "max": 0,
+        "mean": 0.0,
+        "median": 0,
+        "n": 85,
+        "p95": 0
+      },
+      "round_gpu_medians": [
+        0.0,
+        0,
+        0.0
+      ]
+    },
+    "afm-after-first": {
+      "cpu_percent_whole_machine": {
+        "max": 13.62,
+        "mean": 7.12,
+        "median": 6.71,
+        "n": 66,
+        "p95": 11.63
+      },
+      "gpu_percent": {
+        "max": 0,
+        "mean": 0.0,
+        "median": 0.0,
+        "n": 66,
+        "p95": 0
+      },
+      "round_gpu_medians": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "afm-to-first": {
+      "cpu_percent_whole_machine": {
+        "max": 11.18,
+        "mean": 5.84,
+        "median": 6.11,
+        "n": 16,
+        "p95": 11.18
+      },
+      "gpu_percent": {
+        "max": 0,
+        "mean": 0.0,
+        "median": 0.0,
+        "n": 16,
+        "p95": 0
+      },
+      "round_gpu_medians": [
+        0,
+        0.0,
+        0
+      ]
+    },
+    "both": {
+      "cpu_percent_whole_machine": {
+        "max": 19.32,
+        "mean": 9.52,
+        "median": 9.27,
+        "n": 65,
+        "p95": 13.7
+      },
+      "gpu_percent": {
+        "max": 75,
+        "mean": 73.2,
+        "median": 73,
+        "n": 65,
+        "p95": 75
+      },
+      "round_gpu_medians": [
+        73.0,
+        73,
+        73.0
+      ]
+    },
+    "gpu": {
+      "cpu_percent_whole_machine": {
+        "max": 21.26,
+        "mean": 5.13,
+        "median": 3.97,
+        "n": 69,
+        "p95": 11.26
+      },
+      "gpu_percent": {
+        "max": 77,
+        "mean": 76.17,
+        "median": 76,
+        "n": 69,
+        "p95": 77
+      },
+      "round_gpu_medians": [
+        76,
+        76,
+        76
+      ]
+    },
+    "idle": {
+      "cpu_percent_whole_machine": {
+        "max": 12.71,
+        "mean": 3.69,
+        "median": 2.7,
+        "n": 68,
+        "p95": 9.6
+      },
+      "gpu_percent": {
+        "max": 0,
+        "mean": 0.0,
+        "median": 0.0,
+        "n": 68,
+        "p95": 0
+      },
+      "round_gpu_medians": [
+        0.0,
+        0,
+        0
+      ]
+    }
+  },
+  "positive_control_above_idle_median": true
+}
