@@ -1,0 +1,29 @@
+{
+  "checked": {
+    "correct": 9,
+    "delivered": 10,
+    "input_tokens": 11076,
+    "max_calls": 2,
+    "median_ms": 597.383,
+    "n": 30,
+    "serious": 0,
+    "statuses": {
+      "held": 19,
+      "ok": 10,
+      "refused": 1
+    }
+  },
+  "draft": {
+    "correct": 5,
+    "delivered": 29,
+    "input_tokens": 8591,
+    "max_calls": 1,
+    "median_ms": 545.915,
+    "n": 30,
+    "serious": 21,
+    "statuses": {
+      "refused": 1,
+      "unverified": 29
+    }
+  }
+}

@@ -10,3 +10,4 @@ pub mod job;
 pub mod json;
 pub mod skills;
 pub mod solve;
+pub mod translation;

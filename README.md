@@ -23,6 +23,27 @@ tar -xzf afmcli-v0.4.0-aarch64-apple-darwin.tar.gz
 ./afmcli doctor
 ```
 
+## 優先したい結果に合わせてモードを選ぶ
+
+以下のモードは、このリポジトリの `main` を `cargo build --release --locked` でビルドすると使える。生成には `target/release/afmcli` を使う。[採用基準・モード別の実機記録](eval/modes/README.md)
+
+| 作業 | モード | 選び方 |
+|---|---|---|
+| 資料QA | `answer --mode preview` | 出典を開くための候補がすぐに欲しい。最大1回の生成で、候補は `review`、根拠不足は `held`。撤回済みの値が候補に残ることがある |
+| 資料QA | `answer --mode lookup` | 資料に書かれた正式な値をできるだけ拾いたい。長文は索引から関連箇所を読み、足りなければ検索範囲を広げる |
+| 資料QA | `answer --mode cautious` | 未確定の値を返す損失が大きい。候補と根拠を別のセッションで読み直すため、確定済みの値を見送ることがあり、待ち時間も増える |
+| 日英翻訳 | `translate --mode draft` | 素早く全文の下訳を得て人が読む。生成1回、結果は `unverified` |
+| 日英翻訳 | `translate --mode checked` | 名前、用語、数値と単位を照合してから使う。違反した最初の文だけを最大1回修正し、全文が検査を通らなければ `held` |
+| 文書検索 | `search serve INDEX --mode interactive` / `throughput` / `cpu` | 前景の回答と並行する検索、多数の検索の完了、CPU限定を選ぶ。実際に使った演算先を応答に記録する。[インストールと入力形式](tools/search/README.md) |
+
+```sh
+target/release/afmcli answer --mode cautious '承認済みの会場はどこですか？' -i minutes.txt
+printf '%s\n' '{"source_language":"en","target_language":"ja","sentences":["Pavo records 6.5 kPa."],"names":["Pavo"],"units":["kPa"]}' |
+  target/release/afmcli translate --mode checked
+```
+
+QAで `--mode` を省くと従来の読み方を使う。`run` と `batch` は、各行の `answer` に `"mode":"lookup"` のように指定できる。`translate` では言語・文・用語を `input` にまとめ、同じ階層に `mode` を置く。翻訳の既定は `checked`。人数や単位が合っていても、肯定と否定の取り違えなどは残りうる。`--trace` を明示すると、保留した訳を含むモデルの生応答も出力される。
+
 ## スキルを読み込む
 
 手元の `SKILL.md` を登録すると、`--skill 名前` を付けたタスクの各生成に、その手順が渡る。同梱の2例は、資料から最短の回答を抜く手順と、整数最適化の変数・制約・目的を読む手順。`--decompose` は独立したオプションで、QAでは根拠文を先に選び、数式化では制約を宣言ごとに扱う。[実機での比較](eval/procedures/README.md)・[Agent Skillsの仕様](https://agentskills.io/specification)
@@ -95,7 +116,7 @@ afmcli --compact answer '会議で最終的に決まった会場はどこです�
 
 11月26日の実機試験では、一般40件で直呼び24件、標準ハーネス39件、タスク別の短い指示を追加した方式36件が正解した。長文の索引検索は送信入力を31%減らし、正答は22/30件で同じだった。未確定の問で値を返す誤りが2件から4件に増えたため、索引検索は研究用ビルドに収録した。翻訳の局所修正では重大な誤りが減ったが、正しい訳の件数は増えなかった。[用途別の結果・失敗例と再現方法](eval/moe/README.md)
 
-新作の長文48問では、初回の答えを伏せて原文を読み直すと、未確定なのに値を返した件数が旧索引の12/24から3/24に減った。確定値と出典の正答も21/24から12/24に減り、8K・16Kでの合計入力は20.6%増えた。初回の答えを圧縮して次のセッションへ渡すと、未確定の誤答は8/24だった。追加した読解方式は研究用ビルドで試せる。[7方式の全結果と1問からの再現手順](eval/index_status/README.md)
+新作の長文48問では、初回の答えを伏せて原文を読み直すと、未確定なのに値を返した件数が旧索引の12/24から3/24に減った。確定値と出典の正答も21/24から12/24に減り、8K・16Kでの合計入力は20.6%増えた。初回の答えを圧縮して次のセッションへ渡すと、未確定の誤答は8/24だった。現在の通常ビルドでは旧索引を `lookup`、独立再読を `cautious` で選べる。[7方式の全結果と1問からの再現手順](eval/index_status/README.md)
 
 ## 数式から数値を返す
 

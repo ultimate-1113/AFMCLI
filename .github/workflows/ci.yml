@@ -98,5 +98,16 @@ jobs:
           python3 -I -S -B "$hw/placement/replay.py"
           python3 -B "$hw/document_image/study.py" verify --out "$hw/document_image/results"
           python3 -B "$hw/document_image/vision_activity.py" verify --raw "$hw/document_image/results/vision-activity.json" --summary "$hw/document_image/results/vision-activity-summary.json"
+          for track in qa translation; do
+            python3 -B eval/modes/check.py replay --track "$track" > "$RUNNER_TEMP/modes-$track.json"
+            cmp "$RUNNER_TEMP/modes-$track.json" "eval/modes/$track-summary.json"
+            python3 -B eval/modes/check.py decide --track "$track"
+          done
           python3 -B tools/test_png_audit.py
           python3 -B tools/privacy_audit.py --tracked
+      - name: Check the optional native search companion
+        if: runner.os == 'macOS'
+        run: |
+          xcrun swiftc -O -swift-version 5 -parse-as-library -target "$(uname -m)-apple-macos14.4" tools/search/*.swift -o "$RUNNER_TEMP/afm-search"
+          python3 -B tools/search/test_search.py --binary "$RUNNER_TEMP/afm-search"
+          PATH="$RUNNER_TEMP:$PATH" target/debug/afmcli search --help

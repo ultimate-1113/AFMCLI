@@ -145,15 +145,10 @@ fn pack_blocks<'a>(source: &'a str, lines: &[Segment<'_>], limit: usize) -> Opti
 }
 
 pub(super) fn reader(mode: Option<ContextMode>, question: &str, context: &Value) -> Request {
-    #[cfg(feature = "experimental-index")]
     if mode.is_some_and(ContextMode::checks_decisions) {
         return super::checked::reader(question, context);
     }
-    #[cfg(not(feature = "experimental-index"))]
-    let _ = mode;
-    let instruction = if cfg!(feature = "experimental-index")
-        && context.get("indexed_excerpts").is_some()
-    {
+    let instruction = if context.get("indexed_excerpts").is_some() {
         "Read the original excerpts in document order. They have gaps. Track the subject, attribute and time of the question, including corrections, withdrawals and notices for a different subject. Copy only the shortest exact value from the applicable excerpt. If these excerpts do not establish the answer, return an empty string."
     } else if context.get("log").is_some() {
         "Read log in order. Strings are original notices. An object encodes consecutive rows: insert the space-separated digit strings of each row between the successive literal parts, preserving leading zeroes. Answer only with the shortest exact name, date, quantity or identifier asked for. Apply amendments only to the requested subject and attribute. If no applicable value is established return an empty string."
@@ -176,15 +171,14 @@ pub(super) fn read(
     context: &Value,
     parts: &[(usize, &str)],
     r: Request,
-    _original: &str,
+    original: &str,
 ) -> Run<Output> {
-    #[cfg(feature = "experimental-index")]
     if engine
         .policy
         .compact
         .is_some_and(ContextMode::checks_decisions)
     {
-        return super::checked::read(engine, question, parts, r, false, _original)
+        return super::checked::read(engine, question, parts, r, false, original)
             .map(|f| f.output());
     }
     let evidence = engine.structured(r, |v| {
@@ -293,15 +287,12 @@ pub(super) fn answer(
     lines: &[Segment<'_>],
 ) -> Run<Option<Output>> {
     let indexed = match engine.policy.compact {
+        Some(ContextMode::Indexed | ContextMode::IndexChecked) => true,
         #[cfg(feature = "experimental-index")]
         Some(ContextMode::IndexOnce) => true,
         #[cfg(feature = "experimental-index")]
         Some(
-            ContextMode::Indexed
-            | ContextMode::IndexGuard
-            | ContextMode::IndexChecked
-            | ContextMode::IndexHandoff
-            | ContextMode::IndexHandoffReview,
+            ContextMode::IndexGuard | ContextMode::IndexHandoff | ContextMode::IndexHandoffReview,
         ) => true,
         #[cfg(feature = "experimental-index")]
         Some(ContextMode::IndexStaged) => false,
@@ -318,7 +309,6 @@ pub(super) fn answer(
         source_segments: lines.len(),
         retained_segments: lines.len(),
         selection_windows: 0,
-        #[cfg(feature = "experimental-index")]
         retrieval: None,
     };
     let byte_limit = engine.policy.input_budget.saturating_mul(12);
@@ -358,7 +348,6 @@ pub(super) fn answer(
     usage.method = "evidence_windows";
     usage.retained_segments = 0;
     engine.metrics.context = Some(usage);
-    #[cfg(feature = "experimental-index")]
     if indexed && let Some(output) = super::indexed::answer(engine, source, question, lines)? {
         return Ok(Some(output));
     }

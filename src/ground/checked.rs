@@ -1,9 +1,13 @@
 //! Two separately generated readings of the same original evidence.
-use super::{arbiter, compact, excerpt, indexed, window};
+#[cfg(feature = "experimental-index")]
+use super::arbiter;
+use super::{compact, excerpt, indexed, window};
+#[cfg(feature = "experimental-index")]
+use crate::engine::ContextMode;
 use crate::{
     contract,
     document::{self, Evidence, Segment, Span},
-    engine::{AnswerCheck, ContextMode, Engine, Output, Run, request},
+    engine::{AnswerCheck, Engine, Output, Run, request},
     fm::Request,
     json as wire,
 };
@@ -555,7 +559,7 @@ fn checked(
     d: Draft,
     whole: bool,
     extra: &[Span],
-    original: &str,
+    _original: &str,
 ) -> Run<Finding> {
     let mut log = AnswerCheck {
         first_state: d.finding.state,
@@ -571,10 +575,13 @@ fn checked(
         return Ok(Finding::missing());
     }
     let handoff = capsule(&d, question, parts);
+    #[cfg(feature = "experimental-index")]
     let may_send = matches!(
         engine.policy.compact,
         Some(ContextMode::IndexHandoff | ContextMode::IndexHandoffReview)
     );
+    #[cfg(not(feature = "experimental-index"))]
+    let may_send = false;
     let cap = engine.policy.input_budget;
     // Use the very same original ranges in the blinded and handoff arms, including at the cap.
     let mut offered = parts.to_vec();
@@ -629,6 +636,7 @@ fn checked(
     }
     log.resolution = reason;
     let mut answer = Finding::missing();
+    #[cfg(feature = "experimental-index")]
     if !matches!(reason, "agreement" | "source_spelling_agreement")
         && engine.policy.compact == Some(ContextMode::IndexHandoffReview)
     {
@@ -643,7 +651,7 @@ fn checked(
             log.review_triggered = true;
             let spans: Vec<_> = d.finding.spans.union(&second.spans).cloned().collect();
             let calls = engine.metrics.calls;
-            let reviewed = arbiter::decide(engine, question, &[(0, original)], &spans);
+            let reviewed = arbiter::decide(engine, question, &[(0, _original)], &spans);
             log.review_sent = engine.metrics.calls > calls;
             match reviewed {
                 Ok(Some(third)) => {

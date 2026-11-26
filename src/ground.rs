@@ -10,14 +10,13 @@ use std::collections::{BTreeMap, BTreeSet};
 
 #[cfg(feature = "experimental-index")]
 mod arbiter;
-#[cfg(feature = "experimental-index")]
 mod checked;
 mod compact;
-#[cfg(feature = "experimental-index")]
 mod indexed;
 mod numbered;
 #[cfg(feature = "experimental-index")]
 mod postcheck;
+pub(crate) mod preview;
 mod review;
 #[cfg(feature = "experimental-index")]
 mod staged;
@@ -241,7 +240,6 @@ fn extract(
         return engine.raw(make(source));
     }
     let lines = document::segments(source);
-    #[cfg(feature = "experimental-index")]
     if engine
         .policy
         .compact

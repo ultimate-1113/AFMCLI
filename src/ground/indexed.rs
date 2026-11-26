@@ -373,10 +373,10 @@ pub(super) fn answer(
     ) else {
         return fallback(engine, "no_selective_query_terms");
     };
-    let limit = if engine.policy.compact != Some(ContextMode::IndexOnce) {
-        2
-    } else {
-        1
+    let limit = match engine.policy.compact {
+        #[cfg(feature = "experimental-index")]
+        Some(ContextMode::IndexOnce) => 1,
+        _ => 2,
     };
     let mut candidate = None;
     let mut last_reason = "insufficient_evidence";

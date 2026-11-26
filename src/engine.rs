@@ -23,9 +23,7 @@ pub enum ContextMode {
     Review,
     #[cfg(feature = "experimental-index")]
     IndexOnce,
-    #[cfg(feature = "experimental-index")]
     Indexed,
-    #[cfg(feature = "experimental-index")]
     IndexChecked,
     #[cfg(feature = "experimental-index")]
     IndexHandoff,
@@ -36,14 +34,28 @@ pub enum ContextMode {
     #[cfg(feature = "experimental-index")]
     IndexGuard,
 }
-#[cfg(feature = "experimental-index")]
 impl ContextMode {
     pub(crate) fn checks_decisions(self) -> bool {
-        matches!(
-            self,
-            Self::IndexChecked | Self::IndexHandoff | Self::IndexHandoffReview
-        )
+        match self {
+            Self::IndexChecked => true,
+            #[cfg(feature = "experimental-index")]
+            Self::IndexHandoff | Self::IndexHandoffReview => true,
+            _ => false,
+        }
     }
+}
+
+#[derive(Clone, Copy, Debug, PartialEq, Eq, clap::ValueEnum, serde::Deserialize, Serialize)]
+#[serde(rename_all = "snake_case")]
+pub enum AnswerMode {
+    /// Use the normal answer policy.
+    Standard,
+    /// Return a quoted candidate in at most one generation; a candidate needs review.
+    Preview,
+    /// Retrieve likely source passages and expand the search when evidence is insufficient.
+    Lookup,
+    /// Independently reread decisions to reduce unsupported current values.
+    Cautious,
 }
 
 #[derive(Clone, Copy)]
@@ -84,6 +96,10 @@ pub enum Fail {
 pub type Run<T> = Result<T, Fail>;
 #[derive(Default, Serialize)]
 pub struct Metrics {
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub answer_mode: Option<AnswerMode>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub translation_mode: Option<crate::translation::TranslationMode>,
     pub calls: usize,
     pub repairs: usize,
     pub token_checks: usize,
@@ -91,12 +107,10 @@ pub struct Metrics {
     pub sent_input_tokens: usize,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub context: Option<ContextUsage>,
-    #[cfg(feature = "experimental-index")]
     #[serde(skip_serializing_if = "Vec::is_empty")]
     pub answer_checks: Vec<AnswerCheck>,
     pub elapsed_ms: u128,
 }
-#[cfg(feature = "experimental-index")]
 #[derive(Default, Serialize)]
 pub struct AnswerCheck {
     pub first_state: &'static str,
@@ -124,23 +138,19 @@ pub struct ContextUsage {
     pub source_segments: usize,
     pub retained_segments: usize,
     pub selection_windows: usize,
-    #[cfg(feature = "experimental-index")]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub retrieval: Option<RetrievalUsage>,
 }
-#[cfg(feature = "experimental-index")]
 #[derive(Default, Serialize)]
 pub struct RetrievalUsage {
     pub rounds: Vec<RetrievalRound>,
     pub fallback: Option<&'static str>,
 }
-#[cfg(feature = "experimental-index")]
 #[derive(Serialize)]
 pub struct RetrievalRound {
     pub sent: bool,
     pub ranges: Vec<SourceRange>,
 }
-#[cfg(feature = "experimental-index")]
 #[derive(Clone, Copy, PartialEq, Eq, Serialize)]
 pub struct SourceRange {
     pub document_id: usize,
@@ -187,6 +197,27 @@ pub fn request(instruction: &str, payload: Value, schema: Option<Value>) -> Requ
         schema,
     }
 }
+pub(crate) fn rewrite_request(
+    instruction: &str,
+    source: &str,
+    keep_numbers: bool,
+    max_chars: Option<usize>,
+    require_change: bool,
+    direct: bool,
+) -> Request {
+    if direct {
+        return request(
+            "Rewrite the source. Return just the finished text. When keep_numbers is true, retain every numeric token exactly, including repetitions and signs. max_chars counts Unicode scalar values.",
+            json!({"task":instruction,"source":source,"keep_numbers":keep_numbers,"max_chars":max_chars,"require_change":require_change}),
+            None,
+        );
+    }
+    Request {
+        instructions: format!("{DIRECTIVE}\nUser's rewriting instruction: {instruction}\nReturn only the finished text. Numeric tokens must be preserved exactly if keep_numbers=true. If require_change=true rephrase the source."),
+        prompt: json!({"source":source,"keep_numbers":keep_numbers,"max_chars":max_chars,"require_change":require_change}).to_string(),
+        schema: None,
+    }
+}
 fn numbers(text: &str) -> Vec<&str> {
     let mut v: Vec<_> = NUMBER.find_iter(text).map(|m| m.as_str()).collect();
     v.sort_unstable();
@@ -220,12 +251,23 @@ impl<'a> Engine<'a> {
             last_count: None,
         }
     }
-    pub fn execute(mut self, job: &Job) -> Record {
+    pub fn execute(self, job: &Job) -> Record {
+        self.execute_with_answer_mode(job, None)
+    }
+    /// Apply the same optional per-job QA policy as the CLI and JSONL interface.
+    pub fn execute_with_answer_mode(mut self, job: &Job, mode: Option<AnswerMode>) -> Record {
         let start = Instant::now();
+        self.metrics.answer_mode = mode;
+        if let Job::Translate { mode, .. } = job {
+            self.metrics.translation_mode = Some(*mode);
+        }
         let res = job
             .validate(self.policy.has_image)
             .map_err(Fail::Invalid)
-            .and_then(|_| self.task(job));
+            .and_then(|_| match mode {
+                Some(mode) => self.profiled_answer(job, mode),
+                None => self.task(job),
+            });
         let mut o = match res {
             Ok(v) => v,
             Err(e) => {
@@ -257,6 +299,31 @@ impl<'a> Engine<'a> {
             attempts: self.trace,
         }
     }
+    fn profiled_answer(&mut self, job: &Job, mode: AnswerMode) -> Run<Output> {
+        let Job::Answer { source, question } = job else {
+            return Err(Fail::Invalid(
+                "an answer mode requires an answer job".into(),
+            ));
+        };
+        if mode != AnswerMode::Standard
+            && (self.policy.direct
+                || self.policy.decompose
+                || self.policy.compact.is_some()
+                || !self.policy.check_support)
+        {
+            return Err(Fail::Invalid(
+                "choose either an answer mode or --compact, --direct, --decompose, --fast-answer"
+                    .into(),
+            ));
+        }
+        match mode {
+            AnswerMode::Standard => {}
+            AnswerMode::Preview => return ground::preview::answer(self, source, question),
+            AnswerMode::Lookup => self.policy.compact = Some(ContextMode::Indexed),
+            AnswerMode::Cautious => self.policy.compact = Some(ContextMode::IndexChecked),
+        }
+        self.task(job)
+    }
     pub fn count(&mut self, r: &Request) -> Run<usize> {
         if let Some((last, n)) = &self.last_count
             && last == r
@@ -268,7 +335,7 @@ impl<'a> Engine<'a> {
         self.last_count = Some((r.clone(), n));
         Ok(n)
     }
-    fn generate(&mut self, r: &Request) -> Run<String> {
+    pub(crate) fn generate(&mut self, r: &Request) -> Run<String> {
         if self.metrics.calls >= self.policy.max_calls {
             return Err(Fail::Held(
                 "generation budget exhausted before the whole task could be checked".into(),
@@ -407,6 +474,19 @@ impl<'a> Engine<'a> {
             Job::Solve { problem, source } => {
                 crate::solve::run(self, problem.as_ref(), source.as_deref())
             }
+            Job::Translate { input, mode } => {
+                if self.policy.direct
+                    || self.policy.decompose
+                    || self.policy.compact.is_some()
+                    || !self.policy.check_support
+                {
+                    return Err(Fail::Invalid(
+                        "choose a translation mode instead of a QA or direct generation flag"
+                            .into(),
+                    ));
+                }
+                crate::translation::run(self, input, *mode)
+            }
             Job::Answer { .. } | Job::Extract { .. } | Job::Summarize { .. } => {
                 ground::execute(self, job)
             }
@@ -432,19 +512,17 @@ impl<'a> Engine<'a> {
                 max_chars,
                 require_change,
             } => {
-                let r = request(
-                    "Rewrite the source. Return just the finished text. When keep_numbers is true, retain every numeric token exactly, including repetitions and signs. max_chars counts Unicode scalar values.",
-                    json!({"task":instruction,"source":source,"keep_numbers":keep_numbers,"max_chars":max_chars,"require_change":require_change}),
-                    None,
+                let r = rewrite_request(
+                    instruction,
+                    source,
+                    *keep_numbers,
+                    *max_chars,
+                    *require_change,
+                    self.policy.direct,
                 );
                 if self.policy.direct {
                     return self.raw(r);
                 }
-                let mut r = r;
-                r.instructions = format!(
-                    "{DIRECTIVE}\nUser's rewriting instruction: {instruction}\nReturn only the finished text. Numeric tokens must be preserved exactly if keep_numbers=true. If require_change=true rephrase the source."
-                );
-                r.prompt=serde_json::json!({"source":source,"keep_numbers":keep_numbers,"max_chars":max_chars,"require_change":require_change}).to_string();
                 let text = self.checked(r, |s| {
                     if *require_change && s.trim() == source.trim() {
                         return Err("the requested rewrite leaves the source identical".into());

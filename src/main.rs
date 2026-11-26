@@ -1,7 +1,7 @@
 use afmcli::{
-    engine::{ContextMode, Engine, Policy, Record},
+    engine::{AnswerMode, ContextMode, Engine, Policy, Record},
     fm::{ADVANCED, Apple, Model},
-    job::{Field, Job, Label},
+    job::{Field, Invocation, Job, Label},
     json, skills,
 };
 use clap::{Parser, Subcommand};
@@ -22,7 +22,7 @@ struct Args {
     /// Select supporting source segments for QA or translate an optimization problem by declaration.
     #[arg(long, global = true, conflicts_with = "direct")]
     decompose: bool,
-    /// Compress long QA sources. evidence collects excerpts, records also packs numbered rows, and review independently checks source decisions.
+    /// Compress long QA sources. indexed retrieves original passages; index-checked also independently rereads decisions.
     #[cfg_attr(
         feature = "experimental-index",
         arg(
@@ -101,6 +101,18 @@ enum Action {
     },
     /// Free-form instructions, optionally accompanied by source text or an image.
     Ask { instruction: String },
+    /// Translate a JSON document of English/Japanese sentences with optional names, units and glossary.
+    Translate {
+        /// Return a one-pass draft or check each sentence before returning the translation.
+        #[arg(long, value_enum, default_value = "checked")]
+        mode: afmcli::translation::TranslationMode,
+    },
+    /// Run the native afm-search companion for indexing and interactive or throughput-oriented search.
+    #[command(disable_help_flag = true)]
+    Search {
+        #[arg(trailing_var_arg = true, allow_hyphen_values = true)]
+        args: Vec<std::ffi::OsString>,
+    },
     /// Rewrite or translate source text under optional numeric and length constraints.
     Rewrite {
         instruction: String,
@@ -112,7 +124,12 @@ enum Action {
         max_chars: Option<usize>,
     },
     /// Answer with a verbatim span and its UTF-8 byte offsets.
-    Answer { question: String },
+    Answer {
+        question: String,
+        /// Select the QA trade-off: one-pass candidate, confirmed-value lookup, or cautious rereading.
+        #[arg(long, value_enum)]
+        mode: Option<AnswerMode>,
+    },
     /// Extract caller-defined fields and link their values to source spans.
     Extract {
         #[arg(long, value_name = "NAME[=DESCRIPTION]")]
@@ -186,15 +203,8 @@ fn pair(text: String) -> (String, String) {
         None => (text, String::new()),
     }
 }
-fn unpack(mut data: Value) -> Result<(Option<String>, Job), String> {
-    let o = data.as_object_mut().ok_or("job must be a JSON object")?;
-    let id = o
-        .remove("id")
-        .map(|v| v.as_str().map(str::to_owned).ok_or("id must be a string"))
-        .transpose()?;
-    Ok((id, serde_json::from_value(data).map_err(|e| e.to_string())?))
-}
-fn one(command: Action, s: String) -> Result<(Option<String>, Job), String> {
+fn one(command: Action, s: String) -> Result<Invocation, String> {
+    let mut answer_mode = None;
     let job = match command {
         Action::Calc {
             from_text,
@@ -239,6 +249,10 @@ fn one(command: Action, s: String) -> Result<(Option<String>, Job), String> {
             instruction,
             source: s,
         },
+        Action::Translate { mode } => Job::Translate {
+            input: serde_json::from_value(json::parse(&s)?).map_err(|e| e.to_string())?,
+            mode,
+        },
         Action::Rewrite {
             instruction,
             keep_numbers,
@@ -251,10 +265,13 @@ fn one(command: Action, s: String) -> Result<(Option<String>, Job), String> {
             require_change,
             max_chars,
         },
-        Action::Answer { question } => Job::Answer {
-            question,
-            source: s,
-        },
+        Action::Answer { question, mode } => {
+            answer_mode = mode;
+            Job::Answer {
+                question,
+                source: s,
+            }
+        }
         Action::Extract { field, many } => Job::Extract {
             source: s,
             fields: field
@@ -301,12 +318,16 @@ fn one(command: Action, s: String) -> Result<(Option<String>, Job), String> {
                 return Err("for a task object use run".into());
             }
             obj.insert("task".into(), "edit".into());
-            return unpack(d);
+            return Invocation::from_value(d);
         }
-        Action::Run => return unpack(json::parse(&s)?),
+        Action::Run => return Invocation::from_value(json::parse(&s)?),
         _ => unreachable!(),
     };
-    Ok((None, job))
+    Ok(Invocation {
+        id: None,
+        job,
+        answer_mode,
+    })
 }
 fn emit(out: &mut impl Write, value: &Value) -> Result<(), String> {
     serde_json::to_writer(&mut *out, value).map_err(|e| e.to_string())?;
@@ -367,11 +388,12 @@ fn batch(
         let job = std::str::from_utf8(&line)
             .map_err(|e| e.to_string())
             .and_then(json::parse)
-            .and_then(unpack);
+            .and_then(Invocation::from_value);
         match job {
-            Ok((id, job)) => {
-                let rec = Engine::new(model, policy).execute(&job);
-                let c = output(out, rec, id, false)?;
+            Ok(item) => {
+                let rec = Engine::new(model, policy)
+                    .execute_with_answer_mode(&item.job, item.answer_mode);
+                let c = output(out, rec, item.id, false)?;
                 errors |= c == 2;
                 held |= c == 3;
             }
@@ -394,6 +416,9 @@ fn batch(
 }
 fn run() -> Result<u8, String> {
     let args = Args::parse();
+    if let Action::Search { args } = &args.command {
+        return search(args);
+    }
     let mut out = io::stdout().lock();
     if let Action::Skills { action } = &args.command {
         let dir = skills::directory()?;
@@ -455,13 +480,41 @@ fn run() -> Result<u8, String> {
     if matches!(args.command, Action::Batch) {
         return batch(args.input.as_deref(), &mut model, policy, &mut out);
     }
-    let (id, job) = one(args.command, read(args.input.as_deref())?)?;
+    let item = one(args.command, read(args.input.as_deref())?)?;
     output(
         &mut out,
-        Engine::new(&mut model, policy).execute(&job),
-        id,
+        Engine::new(&mut model, policy).execute_with_answer_mode(&item.job, item.answer_mode),
+        item.id,
         args.text,
     )
+}
+fn search(args: &[std::ffi::OsString]) -> Result<u8, String> {
+    let sibling = std::env::current_exe()
+        .map_err(|e| e.to_string())?
+        .with_file_name("afm-search");
+    let mut child = std::process::Command::new(if sibling.is_file() {
+        sibling
+    } else {
+        PathBuf::from("afm-search")
+    });
+    child.args(args);
+    let start_error = |e: std::io::Error| {
+        format!(
+            "could not start the afm-search companion ({e}); install it beside afmcli or on PATH (see tools/search/README.md)"
+        )
+    };
+    #[cfg(unix)]
+    {
+        use std::os::unix::process::CommandExt;
+        Err(start_error(child.exec()))
+    }
+    #[cfg(not(unix))]
+    {
+        child
+            .status()
+            .map(|s| s.code().and_then(|n| u8::try_from(n).ok()).unwrap_or(1))
+            .map_err(start_error)
+    }
 }
 fn main() -> ExitCode {
     match run() {
@@ -478,6 +531,36 @@ mod tests {
     use super::*;
 
     #[test]
+    fn cli_and_json_preserve_the_mode_on_each_job() {
+        let question = "担当は？";
+        let args =
+            Args::try_parse_from(["afmcli", "answer", "--mode", "preview", question]).unwrap();
+        let direct = one(args.command, "原文".into()).unwrap();
+        assert_eq!(direct.answer_mode, Some(AnswerMode::Preview));
+        let from_line = Invocation::from_value(json!({"id":"j1","task":"answer","source":"原文","question":question,"mode":"cautious"})).unwrap();
+        assert_eq!(from_line.id.as_deref(), Some("j1"));
+        assert_eq!(from_line.answer_mode, Some(AnswerMode::Cautious));
+        let default =
+            Invocation::from_value(json!({"task":"answer","source":"原文","question":question}))
+                .unwrap();
+        assert_eq!(default.answer_mode, None);
+        for mode in [json!("typo"), Value::Null] {
+            assert!(
+                Invocation::from_value(
+                    json!({"task":"answer","source":"原文","question":question,"mode":mode})
+                )
+                .is_err()
+            );
+        }
+        assert!(
+            Invocation::from_value(
+                json!({"task":"edit","document":{},"changes":[],"mode":"preview"})
+            )
+            .is_err()
+        );
+    }
+
+    #[test]
     fn compact_options_follow_build_features() {
         let experimental = cfg!(feature = "experimental-index");
         for (value, allowed) in [
@@ -485,9 +568,9 @@ mod tests {
             ("evidence", true),
             ("records", true),
             ("review", true),
-            ("indexed", experimental),
+            ("indexed", true),
             ("index-once", experimental),
-            ("index-checked", experimental),
+            ("index-checked", true),
             ("index-handoff", experimental),
             ("index-handoff-review", experimental),
             ("index-staged", experimental),

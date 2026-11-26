@@ -1,0 +1,47 @@
+{
+  "cautious": {
+    "correct": 5,
+    "correct_null": 3,
+    "false_nonnull": 1,
+    "input_tokens": 126709,
+    "max_calls": 7,
+    "median_ms": 22328.317,
+    "n": 8,
+    "settled": 4,
+    "settled_correct": 2,
+    "statuses": {
+      "abstained": 5,
+      "ok": 3
+    }
+  },
+  "lookup": {
+    "correct": 4,
+    "correct_null": 1,
+    "false_nonnull": 3,
+    "input_tokens": 70224,
+    "max_calls": 8,
+    "median_ms": 2699.101,
+    "n": 8,
+    "settled": 4,
+    "settled_correct": 3,
+    "statuses": {
+      "abstained": 2,
+      "ok": 6
+    }
+  },
+  "preview": {
+    "correct": 8,
+    "correct_null": 0,
+    "false_nonnull": 10,
+    "input_tokens": 13451,
+    "max_calls": 1,
+    "median_ms": 727.469,
+    "n": 24,
+    "settled": 12,
+    "settled_correct": 8,
+    "statuses": {
+      "held": 6,
+      "review": 18
+    }
+  }
+}

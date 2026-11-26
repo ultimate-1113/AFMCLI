@@ -1,0 +1,188 @@
+{
+  "calibration": {
+    "cpu": {},
+    "interactive": {
+      "single": {
+        "choice": "metal",
+        "score_ms": {
+          "cpu": [
+            20.271208,
+            19.279708,
+            19.089375
+          ],
+          "metal": [
+            10.648625,
+            8.669167,
+            10.741917
+          ]
+        }
+      }
+    },
+    "throughput": {
+      "pair": {
+        "choice": "split",
+        "score_ms": {
+          "cpu": [
+            39.266208,
+            37.97275,
+            37.857458
+          ],
+          "metal": [
+            18.85075,
+            14.891667,
+            19.064292
+          ],
+          "split": [
+            7.673,
+            7.091375,
+            10.884625
+          ]
+        }
+      },
+      "single": {
+        "choice": "metal",
+        "score_ms": {
+          "cpu": [
+            20.3915,
+            18.511542,
+            19.31125
+          ],
+          "metal": [
+            10.601083,
+            7.866834,
+            10.513792
+          ]
+        }
+      }
+    }
+  },
+  "checked_scores_per_mode": 8392704,
+  "chip": "Apple M6",
+  "index_sha256": "de2de26d319e9fb380509c4b3ee7143256ad18cc3eb6df4ea5235e6b91e8e7d2",
+  "macos": "27.2.1",
+  "ordered_score_and_hit_hashes": [
+    "02b478f2213ec3c3ec8aef47745a2fe1516dbb069ac2addebe57edd303a97075",
+    "49003d46c959c3905c297842ff6636e231c44a606607381e16531565b47fde90",
+    "1632e74e99b8ec1431f096f77a634c0ca25458e0f9dae43205c3715dae434367"
+  ],
+  "routes": {
+    "cpu_prepared": {
+      "coreml_ane_preferred": 0,
+      "cpu": 2049,
+      "metal": 0
+    },
+    "interactive_prepared": {
+      "coreml_ane_preferred": 0,
+      "cpu": 1,
+      "metal": 2048
+    },
+    "interactive_without_model": {
+      "coreml_ane_preferred": 0,
+      "cpu": 1,
+      "metal": 2048
+    },
+    "repaired_coreml_index": [
+      "metal",
+      "coreml_ane_preferred"
+    ],
+    "throughput_prepared": {
+      "coreml_ane_preferred": 1024,
+      "cpu": 1,
+      "metal": 1024
+    },
+    "throughput_without_model": {
+      "coreml_ane_preferred": 0,
+      "cpu": 1,
+      "metal": 2048
+    },
+    "unreadable_coreml_index": {
+      "fallbacks": [
+        "coreml_bundle_unverified"
+      ],
+      "routes": {
+        "coreml_ane_preferred": 0,
+        "cpu": 0,
+        "metal": 1024
+      }
+    }
+  },
+  "source_commit": "d10fa71fc71cf1b1d2618bfab8e4a90f37a8fe92",
+  "source_documents": 4096,
+  "timed_queries": 2049,
+  "timed_top_k": 3,
+  "unique_queries": 3073,
+  "warm_request_rounds": [
+    {
+      "ms": {
+        "cpu": 82.147792,
+        "interactive": 63.484209,
+        "throughput": 52.619833
+      },
+      "order": [
+        "cpu",
+        "interactive",
+        "throughput"
+      ]
+    },
+    {
+      "ms": {
+        "cpu": 91.689208,
+        "interactive": 61.630875,
+        "throughput": 52.669125
+      },
+      "order": [
+        "interactive",
+        "throughput",
+        "cpu"
+      ]
+    },
+    {
+      "ms": {
+        "cpu": 82.876917,
+        "interactive": 62.649125,
+        "throughput": 53.120208
+      },
+      "order": [
+        "throughput",
+        "cpu",
+        "interactive"
+      ]
+    },
+    {
+      "ms": {
+        "cpu": 83.134916,
+        "interactive": 62.598542,
+        "throughput": 53.234416
+      },
+      "order": [
+        "throughput",
+        "interactive",
+        "cpu"
+      ]
+    },
+    {
+      "ms": {
+        "cpu": 80.876916,
+        "interactive": 61.756208,
+        "throughput": 52.358125
+      },
+      "order": [
+        "cpu",
+        "throughput",
+        "interactive"
+      ]
+    },
+    {
+      "ms": {
+        "cpu": 82.227208,
+        "interactive": 70.549625,
+        "throughput": 53.460333
+      },
+      "order": [
+        "interactive",
+        "cpu",
+        "throughput"
+      ]
+    }
+  ]
+}

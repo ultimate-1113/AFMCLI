@@ -1,0 +1,143 @@
+{
+  "binary_sha256": "5ddb4f93ef8bf71744e04cd0e751ed7b250882c60e2e0332098ca1358503a8d3",
+  "chip": "Apple M6",
+  "index_prepared": true,
+  "index_sha256": "de2de26d319e9fb380509c4b3ee7143256ad18cc3eb6df4ea5235e6b91e8e7d2",
+  "macos": "27.2.1",
+  "new_process_per_request": true,
+  "ordered_hits_sha256": "fdda691d181904ea019176fb8e2df7c2bcc3dce5245f161bda74562b9b40cc76",
+  "rounds": [
+    {
+      "observations": {
+        "cpu": {
+          "ms": 93.08075,
+          "routes": {
+            "coreml_ane_preferred": 0,
+            "cpu": 2049,
+            "metal": 0
+          },
+          "warmup": []
+        },
+        "interactive": {
+          "ms": 220.836667,
+          "routes": {
+            "coreml_ane_preferred": 0,
+            "cpu": 1025,
+            "metal": 1024
+          },
+          "warmup": [
+            "metal"
+          ]
+        },
+        "throughput": {
+          "ms": 453.575042,
+          "routes": {
+            "coreml_ane_preferred": 0,
+            "cpu": 1025,
+            "metal": 1024
+          },
+          "warmup": [
+            "metal",
+            "coreml_ane_preferred"
+          ]
+        }
+      },
+      "order": [
+        "cpu",
+        "interactive",
+        "throughput"
+      ]
+    },
+    {
+      "observations": {
+        "cpu": {
+          "ms": 92.704041,
+          "routes": {
+            "coreml_ane_preferred": 0,
+            "cpu": 2049,
+            "metal": 0
+          },
+          "warmup": []
+        },
+        "interactive": {
+          "ms": 218.118417,
+          "routes": {
+            "coreml_ane_preferred": 0,
+            "cpu": 1025,
+            "metal": 1024
+          },
+          "warmup": [
+            "metal"
+          ]
+        },
+        "throughput": {
+          "ms": 257.951375,
+          "routes": {
+            "coreml_ane_preferred": 0,
+            "cpu": 1025,
+            "metal": 1024
+          },
+          "warmup": [
+            "metal",
+            "coreml_ane_preferred"
+          ]
+        }
+      },
+      "order": [
+        "interactive",
+        "throughput",
+        "cpu"
+      ]
+    },
+    {
+      "observations": {
+        "cpu": {
+          "ms": 93.23875,
+          "routes": {
+            "coreml_ane_preferred": 0,
+            "cpu": 2049,
+            "metal": 0
+          },
+          "warmup": []
+        },
+        "interactive": {
+          "ms": 219.351542,
+          "routes": {
+            "coreml_ane_preferred": 0,
+            "cpu": 1025,
+            "metal": 1024
+          },
+          "warmup": [
+            "metal"
+          ]
+        },
+        "throughput": {
+          "ms": 257.182167,
+          "routes": {
+            "coreml_ane_preferred": 0,
+            "cpu": 1025,
+            "metal": 1024
+          },
+          "warmup": [
+            "metal",
+            "coreml_ane_preferred"
+          ]
+        }
+      },
+      "order": [
+        "throughput",
+        "cpu",
+        "interactive"
+      ]
+    }
+  ],
+  "source_commit": "d10fa71fc71cf1b1d2618bfab8e4a90f37a8fe92",
+  "source_documents": 4096,
+  "swift_sha256": {
+    "Devices.swift": "2ef94f17be978f8dfbc06b6ab60cfb23af276bd972cbc4772db71d5afda97415",
+    "Index.swift": "e6359c4ea6fd77779c3198b3205249b88355171c5ed0daa34eba7aab9b361363",
+    "Search.swift": "023aa57e56f41a75969811e7533061b0704cdff33c5ee08e18b3e72eb569d5c8"
+  },
+  "timed_queries": 2049,
+  "timed_top_k": 3
+}

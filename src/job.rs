@@ -3,6 +3,36 @@ use serde::{Deserialize, Serialize};
 use serde_json::Value;
 use std::collections::BTreeSet;
 
+/// One CLI or JSONL request. An answer policy belongs to this item, including in a mixed batch.
+pub struct Invocation {
+    pub id: Option<String>,
+    pub job: Job,
+    pub answer_mode: Option<crate::engine::AnswerMode>,
+}
+impl Invocation {
+    pub fn from_value(mut data: Value) -> Result<Self, String> {
+        let obj = data.as_object_mut().ok_or("job must be a JSON object")?;
+        let id = obj
+            .remove("id")
+            .map(|v| v.as_str().map(str::to_owned).ok_or("id must be a string"))
+            .transpose()?;
+        let answer_mode = if obj.get("task").and_then(Value::as_str) == Some("answer") {
+            obj.remove("mode")
+                .map(serde_json::from_value)
+                .transpose()
+                .map_err(|e| e.to_string())?
+        } else {
+            None
+        };
+        let job = serde_json::from_value(data).map_err(|e| e.to_string())?;
+        Ok(Self {
+            id,
+            job,
+            answer_mode,
+        })
+    }
+}
+
 #[derive(Clone, Debug, Deserialize, Serialize)]
 #[serde(deny_unknown_fields)]
 pub struct Field {
@@ -42,6 +72,11 @@ pub enum Job {
         require_change: bool,
         #[serde(default)]
         max_chars: Option<usize>,
+    },
+    Translate {
+        input: crate::translation::Translation,
+        #[serde(default)]
+        mode: crate::translation::TranslationMode,
     },
     Answer {
         question: String,
@@ -94,6 +129,7 @@ impl Job {
             Self::Auto { .. } => "auto",
             Self::Ask { .. } => "ask",
             Self::Rewrite { .. } => "rewrite",
+            Self::Translate { .. } => "translate",
             Self::Answer { .. } => "answer",
             Self::Extract { .. } => "extract",
             Self::Classify { .. } => "classify",
@@ -119,6 +155,7 @@ impl Job {
         let mut source = None;
         let mut instruction = None;
         match self {
+            Self::Translate { input, .. } => input.validate()?,
             Self::Calculate {
                 expression,
                 source: s,

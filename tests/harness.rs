@@ -1,4 +1,4 @@
-use afmcli::engine::{ContextMode, Engine, Policy, Record};
+use afmcli::engine::{AnswerMode, ContextMode, Engine, Policy, Record};
 use afmcli::fm::{Model, Request};
 use afmcli::{contract, document, edit, fm, job::Job, json};
 use serde_json::{Value, json};
@@ -40,6 +40,131 @@ fn eval(j: Value, p: Policy, answers: impl FnMut(&Request) -> Result<String, Str
 fn stream(values: &[Value]) -> impl FnMut(&Request) -> Result<String, String> {
     let mut queue: VecDeque<_> = values.iter().map(Value::to_string).collect();
     move |_| Ok(queue.pop_front().expect("unexpected extra model call"))
+}
+
+#[test]
+fn stable_lookup_and_cautious_send_the_measured_requests() {
+    let text = "The signed notice assigns the river desk to Elm Hall.";
+    let question = "Which hall is assigned to the river desk?";
+    let job = Job::Answer {
+        question: question.into(),
+        source: text.into(),
+    };
+    for (mode, context) in [
+        (AnswerMode::Lookup, ContextMode::Indexed),
+        (AnswerMode::Cautious, ContextMode::IndexChecked),
+    ] {
+        let call = |named: bool| {
+            let mut requests = Vec::new();
+            let mut model = Fake {
+                requests: 0,
+                counts: 0,
+                answers: |r: &Request| {
+                    requests.push(r.clone());
+                    let fields = &r.schema.as_ref().unwrap()["properties"];
+                    let answer = if fields.get("subject").is_some() {
+                        json!({"state":"set","clause":text,"value":"Elm Hall","subject":"river desk","field":"hall","old":"","change":"assigned"})
+                    } else if fields.get("state").is_some() {
+                        assert!(!r.prompt.contains("\"handoff\""));
+                        json!({"state":"set","clause":text,"value":"Elm Hall"})
+                    } else if fields.get("supported").is_some() {
+                        json!({"supported":true})
+                    } else {
+                        json!({"answerable":true,"answer":"Elm Hall"})
+                    };
+                    Ok(answer.to_string())
+                },
+            };
+            let policy = Policy {
+                compact: (!named).then_some(context),
+                ..Policy::default()
+            };
+            let rec = Engine::new(&mut model, policy)
+                .execute_with_answer_mode(&job, named.then_some(mode));
+            (rec, requests)
+        };
+        let (legacy, expected) = call(false);
+        let (named, observed) = call(true);
+        assert_eq!(named.status, "ok");
+        assert_eq!(named.result["answer"]["value"], "Elm Hall");
+        assert_eq!(named.result, legacy.result);
+        assert_eq!(named.metrics.answer_mode, Some(mode));
+        assert_eq!(observed, expected);
+        assert_eq!(observed.len(), 2);
+    }
+}
+
+#[test]
+fn named_answer_modes_reject_conflicting_legacy_flags_before_generation() {
+    let job = Job::Answer {
+        question: "Where?".into(),
+        source: "The gate.".into(),
+    };
+    for mode in [
+        AnswerMode::Preview,
+        AnswerMode::Lookup,
+        AnswerMode::Cautious,
+    ] {
+        for p in [
+            Policy {
+                direct: true,
+                ..Policy::default()
+            },
+            Policy {
+                decompose: true,
+                ..Policy::default()
+            },
+            Policy {
+                compact: Some(ContextMode::Records),
+                ..Policy::default()
+            },
+            fast(),
+        ] {
+            let mut model = Fake {
+                answers: stream(&[]),
+                requests: 0,
+                counts: 0,
+            };
+            let rec = Engine::new(&mut model, p).execute_with_answer_mode(&job, Some(mode));
+            assert_eq!(rec.status, "error");
+            assert_eq!((model.requests, model.counts), (0, 0));
+        }
+    }
+}
+
+#[test]
+fn a_mode_conflict_in_one_batch_item_preserves_the_next_item() {
+    let mut child = Command::new(env!("CARGO_BIN_EXE_afmcli"))
+        .args(["--fast-answer", "batch"])
+        .stdin(Stdio::piped())
+        .stdout(Stdio::piped())
+        .spawn()
+        .unwrap();
+    {
+        let mut input = child.stdin.take().unwrap();
+        writeln!(input, "{}", json!({"id":"a","task":"answer","mode":"cautious","question":"When?","source":"At noon."})).unwrap();
+        writeln!(
+            input,
+            "{}",
+            json!({"id":"b","task":"calc","expression":"2^3"})
+        )
+        .unwrap();
+    }
+    let output = child.wait_with_output().unwrap();
+    assert_eq!(output.status.code(), Some(2));
+    let records: Vec<Value> = String::from_utf8(output.stdout)
+        .unwrap()
+        .lines()
+        .map(|s| serde_json::from_str(s).unwrap())
+        .collect();
+    assert_eq!(records.len(), 2);
+    assert_eq!(records[0]["metrics"]["answer_mode"], "cautious");
+    assert_eq!(records[0]["status"], "error");
+    assert_eq!(records[0]["id"], "a");
+    assert_eq!(records[1]["id"], "b");
+    assert_eq!(records[1]["result"]["value"], "8");
+    assert_eq!(records[1]["metrics"]["calls"], 0);
+    assert!(records[1]["metrics"].get("answer_mode").is_none());
 }
 #[test]
 fn refuse_missing_variant_or_incomplete_transcript() {

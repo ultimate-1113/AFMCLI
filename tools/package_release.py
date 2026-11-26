@@ -107,6 +107,7 @@ def main():
     p.add_argument("metadata", type=Path, help="cargo metadata --locked --format-version 1 --filter-platform aarch64-apple-darwin")
     p.add_argument("rust_docs", type=Path, help="installed Rust share/doc/rust directory")
     p.add_argument("--rust-license-dir", type=Path, help="Rust distribution directory containing LICENSE-MIT and LICENSE-APACHE")
+    p.add_argument("--search-binary", type=Path, help="Tested macOS afm-search companion to include alongside afmcli")
     p.add_argument("archive", type=Path)
     a = p.parse_args()
     binary = a.binary.read_bytes()
@@ -117,12 +118,20 @@ def main():
     members = [*PROJECT_FILES, *("examples/file_tasks/sample/" + name for name in SAMPLE_FILES)]
     files = {name: (ROOT / name).read_bytes() for name in members}
     files["afmcli"] = binary
+    if a.search_binary:
+        helper = a.search_binary.read_bytes()
+        if LOCAL_BINARY_PATH.search(helper):
+            p.error("search executable contains an absolute local filesystem path")
+        files["afm-search"] = helper
+        for source in sorted((ROOT / "tools/search").iterdir()):
+            if source.is_file() and source.suffix in (".swift", ".py", ".md", ".json"):
+                files[source.relative_to(ROOT).as_posix()] = source.read_bytes()
     files["START.txt"] = START.encode()
     files["eval/calculator/native/README.md"] = SWIFT_GUIDE.replace(
         "{source}", f"{PROJECT}/blob/{ref}/eval/calculator/native/README.md").encode()
     files["examples/file_tasks/README.md"] = files["examples/file_tasks/README.md"].replace(
         b"--binary ./target/release/afmcli", b"--binary ./afmcli")
-    for name in PROJECT_FILES:
+    for name in list(files):
         if name.endswith(".md"):
             files[name] = release_links(name, files[name], files, ref)
     for crate in packages:
@@ -144,7 +153,7 @@ def main():
         for name, data in sorted(files.items()):
             info = tarfile.TarInfo(name)
             info.size = len(data)
-            info.mode = 0o755 if name == "afmcli" else 0o644
+            info.mode = 0o755 if name in ("afmcli", "afm-search") else 0o644
             tar.addfile(info, io.BytesIO(data))
     checksum = hashlib.sha256(a.archive.read_bytes()).hexdigest()
     a.archive.with_suffix(a.archive.suffix + ".sha256").write_text(f"{checksum}  {a.archive.name}\n")
