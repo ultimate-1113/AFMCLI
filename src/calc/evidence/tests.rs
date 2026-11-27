@@ -299,3 +299,63 @@ fn percentage_denominator_belongs_to_the_same_population() {
     assert!(rec.result.is_null());
     assert!(rec.notes[0].contains("total number of valves inspected in the west plant"));
 }
+
+#[test]
+fn a_separate_price_or_percentage_cannot_replace_a_group_members_balance() {
+    assert!(!has("copper wire", &["per "]));
+    assert!(has("seven euros per meter", &["per "]));
+    let source = "The amber purse held 15 euros. The linen purse held 19 euros. Copper wire costs 4 euros per meter and carries a 5% fee. What is the total amount of money in both purses?";
+    let amounts = || {
+        selection(
+            "sum",
+            "s3",
+            "s0",
+            vec![
+                operand("q0", "addend", "euros"),
+                operand("q1", "addend", "euros"),
+            ],
+        )
+    };
+    let rec = checked(source, amounts());
+    assert_eq!(rec.status, "review", "{:?}", rec.notes);
+    assert_eq!(rec.result["value"], "34");
+    let rec = checked(
+        &source.replace("held 19 euros", "weighed 19 ounces"),
+        amounts(),
+    );
+    assert_eq!(rec.status, "held");
+    assert!(rec.result.is_null());
+    assert!(
+        rec.notes[0]
+            .to_lowercase()
+            .contains("amount of money in the linen purse")
+    );
+}
+
+#[test]
+fn recovers_only_a_single_explicit_movement_and_reports_its_origin() {
+    let source = "開始時の人数は44人。この施設で6人が退館した。現在の人数は？";
+    let rec = checked(
+        source,
+        selection("balance", "s2", "s1", vec![operand("q1", "subtract", "人")]),
+    );
+    assert_eq!(rec.status, "review", "{:?}", rec.notes);
+    assert_eq!(rec.result["value"], "38");
+    assert_eq!(
+        rec.result["operands"][0]["selection"],
+        "unique_explicit_source_role"
+    );
+    let rec = checked(
+        "Tables cost 9 dollars per table. There are 2 lights. What is the total cost of the tables?",
+        selection(
+            "price_times_count",
+            "s2",
+            "s0",
+            vec![
+                operand("q0", "unit_price", "dollars"),
+                operand("q1", "count", "lights"),
+            ],
+        ),
+    );
+    assert!(rec.result.is_null() && rec.notes[0].contains("missing_count"));
+}

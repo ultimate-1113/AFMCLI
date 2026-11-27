@@ -121,14 +121,55 @@ const WHOLE: &[&str] = &[
     "対象者",
 ];
 static WORD: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"[a-z]+").unwrap());
+static SCOPE: LazyLock<Regex> = LazyLock::new(|| {
+    Regex::new(r"\b(?:in|at|from)\s+(?:(?:the|a|an)\s+)?([a-z]+)\s+([a-z]+)\b").unwrap()
+});
+static PER_UNIT: LazyLock<Regex> =
+    LazyLock::new(|| Regex::new(r"\b(?:per|each)\s+([a-z]+)\b").unwrap());
+static MEASURE_SUBJECT: LazyLock<Regex> = LazyLock::new(|| {
+    Regex::new(r"(?i)^(.+?)\s+(?:weigh(?:s|ed)?|measure(?:s|d)?|was|were|is|are|has|had)\b")
+        .unwrap()
+});
 static OF_GROUP: LazyLock<Regex> = LazyLock::new(|| {
     Regex::new(r"(?i)(?:percent(?:age)?|proportion|share)\s+of\s+(?:the\s+)?(.+?)\s+(?:are|were|is|was|have|has|did|do|does|who|that)\s+(.+?)[?.!]*$").unwrap()
 });
 
 fn scope_match(line: &str, goal: &str) -> bool {
-    !FOREIGN
-        .iter()
-        .any(|w| line.contains(w) && !goal.contains(w))
+    let distinct = FOREIGN.iter().any(|w| has(line, &[w]) && !has(goal, &[w]));
+    if distinct {
+        return false;
+    }
+    // Explicit incompatible modifiers on the same location distinguish
+    // two populations even when neither is described as "other".
+    for wanted in SCOPE.captures_iter(goal) {
+        for observed in SCOPE.captures_iter(line) {
+            if wanted[2] == observed[2]
+                && wanted[1] != observed[1]
+                && ![
+                    "this", "that", "our", "same", "its", "each", "both", "two", "all",
+                ]
+                .contains(&&observed[1])
+                && ![
+                    "this", "that", "our", "same", "its", "each", "both", "two", "all",
+                ]
+                .contains(&&wanted[1])
+            {
+                return false;
+            }
+        }
+    }
+    true
+}
+pub(super) fn rate_unit_matches(line: &str, count: Option<&Unit>) -> bool {
+    PER_UNIT.captures_iter(line).all(|m| {
+        let noun = &m[1];
+        [
+            "unit", "item", "one", "a", "of", "is", "was", "cost", "costs", "at", "for", "sold",
+            "priced", "would",
+        ]
+        .contains(&noun)
+            || Unit::parse(noun).as_ref() == count
+    })
 }
 fn words(text: &str) -> Vec<String> {
     WORD.find_iter(text)
@@ -228,7 +269,7 @@ fn money_goal(ask: &str) -> bool {
     has(
         ask,
         &[
-            "how much money",
+            "money",
             "cost",
             "price",
             "paid",
@@ -305,6 +346,18 @@ impl Plan {
             )
         {
             return None;
+        }
+        // A sum of specified balances stays a sum when the source also
+        // mentions a price, rate, or percentage for a different subject.
+        let purchasing = has(
+            &ask,
+            &[
+                "price", "cost", "paid", "pay", "spend", "spent", "purchase", "buy", "sale",
+                "代金", "料金", "支払", "購入", "売上", "費用",
+            ],
+        );
+        if money_goal(&ask) && has(&ask, SUM) && !purchasing {
+            return Some(Self::sum_money(l, &ask));
         }
         if l.quantities
             .iter()
@@ -439,6 +492,12 @@ impl Plan {
                 countable(q)
                     && !bases.contains(i)
                     && scope_match(&folded(q.neighborhood), ask)
+                    && rates.iter().any(|id| {
+                        rate_unit_matches(
+                            &folded(l.spans[l.quantities[*id].span].text),
+                            q.unit.as_ref().map(|(unit, _)| unit),
+                        )
+                    })
                     && (bases.is_empty()
                         || bases.iter().any(|j| {
                             l.quantities[*j].unit.as_ref().map(|(u, _)| u)
@@ -542,6 +601,17 @@ impl Plan {
             .filter(|i| topical(&folded(l.quantities[*i].neighborhood), &topic))
             .collect();
         let money = if marked.is_empty() { all } else { marked };
+        let specified = l
+            .quantities
+            .iter()
+            .filter(|q| q.span == l.requested)
+            .find(|q| {
+                q.unit
+                    .as_ref()
+                    .is_some_and(|(u, _)| matches!(u,Unit::Count(kind) if topical(kind,&topic)))
+            })
+            .and_then(|q| q.literal.parse::<usize>().ok())
+            .filter(|n| (2..=64).contains(n));
         let miss = l.quantities.iter().find(|q| {
             relevant(q)
                 && !currency(q)
@@ -550,8 +620,11 @@ impl Plan {
                     .as_ref()
                     .is_some_and(|(u, _)| matches!(u, Unit::Measure(_)))
         });
-        let absent=miss.map_or_else(||"missing_addend: a contributing monetary amount for one of the named subjects is missing.".into(),
-            |q|format!("missing_amount: the monetary amount for the subject of «{}» is missing; {} is a measurement, not its amount of money.",l.spans[q.span].text,q.text));
+        let absent=miss.map_or_else(||"missing_addend: a contributing monetary amount for one of the named subjects is missing.".into(), |q|{
+            let line=l.spans[q.span].text;
+            let subject=MEASURE_SUBJECT.captures(line).and_then(|m|m.get(1)).map_or(line,|m|m.as_str());
+            format!("missing_amount: the amount of money in {subject} is missing. The source states «{line}».")
+        });
         Self {
             op: "sum",
             relation: "sum the separate money amounts belonging to the named subjects",
@@ -559,7 +632,7 @@ impl Plan {
                 key: "money_amounts",
                 role: "addend",
                 candidates: money,
-                minimum: 2,
+                minimum: specified.unwrap_or(2),
                 many: true,
                 absent,
             }],
@@ -594,10 +667,15 @@ impl Plan {
             "Read the source. Identify the final question and cite the statement showing its arithmetic relationship. This question asks for {}. For each named field choose its source number ID, with the same item, location and unit as the final question. For multiple quantities include each relevant ID once. Select missing only when there is no applicable quantity. Do not calculate.",
             self.relation
         );
-        let evidence = engine.structured(
-            request(&prompt, l.payload(), Some(contract::object(fields))),
-            |v| Ok(v.clone()),
-        )?;
+        let mut payload = l.payload();
+        payload["question_candidate"] =
+            json!({"id":format!("s{}",l.requested),"text":l.spans[l.requested].text});
+        let evidence = engine
+            .structured(
+                request(&prompt, payload, Some(contract::object(fields))),
+                |v| Ok(v.clone()),
+            )
+            .map_err(extraction_error)?;
         let mut selection = Selection {
             requested_quantity: evidence["requested_quantity"].as_str().unwrap().into(),
             relation_span: evidence["relation_span"].as_str().unwrap().into(),
@@ -621,6 +699,23 @@ impl Plan {
             };
             ids.sort_unstable();
             ids.dedup();
+            let mut recovered = false;
+            if ids.is_empty()
+                && self.op == "balance"
+                && let [only] = slot.candidates.as_slice()
+            {
+                let q = &l.quantities[*only];
+                let cue = match slot.role {
+                    "start" => OPEN,
+                    "add" => IN,
+                    "subtract" => OUT,
+                    _ => &[],
+                };
+                if countable(q) && has(&folded(q.neighborhood), cue) {
+                    ids.push(*only);
+                    recovered = true;
+                }
+            }
             if ids.len() < slot.minimum {
                 return Err(missing(l, &selection, &slot.absent));
             }
@@ -630,6 +725,7 @@ impl Plan {
                     number: format!("q{id}"),
                     role: slot.role.into(),
                     unit: q.unit.as_ref().map_or(String::new(), |(_, s)| s.clone()),
+                    recovered,
                 });
             }
         }

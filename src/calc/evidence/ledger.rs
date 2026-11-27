@@ -11,13 +11,90 @@ pub(super) fn folded(s: &str) -> String {
 
 static NUMBER: LazyLock<Regex> = LazyLock::new(|| {
     Regex::new(
-    r"(?ix)[+＋\-−－]?(?:[0-9０-９]{1,3}(?:[,，][0-9０-９]{3})+|[0-9０-９]+)(?:[.．][0-9０-９]+)?(?:[eE][+\-]?[0-9]+)?|\b(?:zero|one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve)\b"
+    r"(?ix)[+＋\-−－]?(?:(?:[0-9０-９]+(?:[,，][0-9０-９]+)*)(?:[.．][0-9０-９]+)?|[.．][0-9０-９]+)(?:[eEｅＥ][+＋\-−－]?[0-9０-９]+)?[十百千万億兆]?|\b(?:zero|one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve)\b"
 ).unwrap()
 });
+const UNSUPPORTED: &str = "unsupported or ambiguous numeric notation in calculation source; write the full quantity as a decimal with a unit";
+static UNSUPPORTED_WORDS: LazyLock<Regex> = LazyLock::new(|| {
+    Regex::new(
+    r"(?ix)\b(?:thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen|twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety|hundreds?|thousands?|millions?|billions?|trillions?|dozens?)\b|[一二三四五六七八九零〇]+[十百千万億兆]|[十百千][万億兆]"
+).unwrap()
+});
+static FRACTION_SUFFIX: LazyLock<Regex> = LazyLock::new(|| {
+    Regex::new(
+    r"(?ix)^\s*(?:(?:and\s+)?(?:a|one)\s+|[-‐‑–\s]+)(?:half|halves|quarters?|thirds?|fourths?|fifths?|sixths?|sevenths?|eighths?|ninths?|tenths?)\b|^[kmb]\s*(?:dollars?|euros?|yen|usd|eur|jpy|gbp)\b"
+).unwrap()
+});
+const SCALES: [char; 6] = ['十', '百', '千', '万', '億', '兆'];
 const CARDINALS: [&str; 13] = [
     "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten",
     "eleven", "twelve",
 ];
+
+fn decimal_source(raw: &str, before: &str, after: &str) -> Result<String, &'static str> {
+    let norm = folded(raw).replace('−', "-");
+    let left = folded(before);
+    let right = folded(after);
+    if left.trim_end().ends_with(SCALES)
+        || right.starts_with(SCALES)
+        || FRACTION_SUFFIX.is_match(&right)
+    {
+        return Err(UNSUPPORTED);
+    }
+    if let Some(n) = CARDINALS.iter().position(|word| *word == norm) {
+        return Ok(n.to_string());
+    }
+    let (body, scale) = norm
+        .char_indices()
+        .last()
+        .and_then(|(i, c)| {
+            SCALES.iter().position(|ch| *ch == c).map(|power| {
+                (
+                    &norm[..i],
+                    [10, 100, 1000, 10000, 100000000, 1000000000000i128][power],
+                )
+            })
+        })
+        .unwrap_or((&norm, 1));
+    if scale != 1
+        && right
+            .trim_start()
+            .starts_with(|c: char| c.is_ascii_digit() || c == '.')
+    {
+        // A full stop is punctuation. A dot followed by digits continues the number.
+        let next = right.trim_start();
+        if !next.starts_with('.') || next[1..].starts_with(|c: char| c.is_ascii_digit()) {
+            return Err(UNSUPPORTED);
+        }
+    }
+    let neg = body.starts_with('-');
+    let magnitude = body.trim_start_matches(['+', '-']);
+    let mantissa = magnitude.split(['e', 'E']).next().unwrap_or(magnitude);
+    let whole = mantissa.split('.').next().unwrap_or(mantissa);
+    if whole.contains(',') {
+        let mut groups = whole.split(',');
+        let first = groups.next().unwrap_or("");
+        if !(1..=3).contains(&first.len()) || groups.any(|g| g.len() != 3) {
+            return Err(UNSUPPORTED);
+        }
+    }
+    // Do not split a malformed grouped or decimal literal into plausible operands.
+    if (right.starts_with(['.', ',']) && right[1..].starts_with(|c: char| c.is_ascii_digit()))
+        || (magnitude.starts_with('.') && left.ends_with(|c: char| c.is_ascii_digit()))
+    {
+        return Err(UNSUPPORTED);
+    }
+    let mut magnitude = magnitude.replace(',', "");
+    if magnitude.starts_with('.') {
+        magnitude.insert(0, '0');
+    }
+    if scale == 1 {
+        return Ok(format!("{}{magnitude}", if neg { "-" } else { "" }));
+    }
+    let exact =
+        super::super::Ratio::decimal(&magnitude)?.multiply(super::super::Ratio::integer(scale))?;
+    Ok(if neg { exact.neg() } else { exact }.display())
+}
 static UNIT: LazyLock<Regex> = LazyLock::new(|| {
     Regex::new(
     r"(?ix)^(\%|パーセント|percent(?:age)?\b|円|ドル|ユーロ|ポンド|米ドル|usd\b|jpy\b|eur\b|gbp\b|dollars?\b|yen\b|euros?\b|pounds?\b|キログラム|グラム|キロメートル|メートル|センチメートル|ミリメートル|ミリリットル|リットル|kg\b|g\b|mm\b|cm\b|km\b|m\b|ml\b|l\b|kilograms?\b|grams?\b|kilometers?\b|meters?\b|liters?\b|hours?\b|minutes?\b|seconds?\b|days?\b|時間|分間|秒間|分|秒|ヶ月|か月|年間|年|日間|日|枚|個|本|台|冊|箱|袋|人|名|件|票|席|組|束|着|点|匹|頭|羽|軒|棟|回|杯|皿|足|粒|パック|セット|ケース|ロット|[a-z]+(?:-[a-z]+)?)"
@@ -234,12 +311,26 @@ impl<'a> Ledger<'a> {
             .unwrap_or(spans.len() - 1);
         let mut quantities = Vec::new();
         for (si, span) in spans.iter().enumerate() {
+            if UNSUPPORTED_WORDS.is_match(span.text) {
+                return Err(UNSUPPORTED);
+            }
             let numbers: Vec<_> = NUMBER.find_iter(span.text).collect();
             for (i, found) in numbers.iter().enumerate() {
                 let left = numbers.get(i.wrapping_sub(1)).map_or(0, |m| m.end());
                 let right = numbers.get(i + 1).map_or(span.text.len(), |m| m.start());
                 let before = &span.text[left..found.start()];
                 let after = &span.text[found.end()..right];
+                let whole_before = &span.text[..found.start()];
+                let whole_after = &span.text[found.end()..];
+                // A digit inside an identifier is not a source quantity.
+                if whole_before.ends_with(|c: char| c.is_ascii_alphabetic() || c == '_')
+                    && !["usd", "jpy", "eur", "gbp"]
+                        .iter()
+                        .any(|name| folded(whole_before).ends_with(name))
+                {
+                    continue;
+                }
+                let literal = decimal_source(found.as_str(), whole_before, whole_after)?;
                 let left = before.rfind([',', '、', '，']).map_or(left, |p| {
                     let delimiter = before[p..].chars().next().unwrap();
                     left + p + delimiter.len_utf8()
@@ -247,11 +338,6 @@ impl<'a> Ledger<'a> {
                 let right = after
                     .find([',', '、', '，'])
                     .map_or(right, |p| found.end() + p);
-                let normalized = folded(found.as_str());
-                let literal = match CARDINALS.iter().position(|word| *word == normalized) {
-                    Some(n) => n.to_string(),
-                    None => normalized.replace(',', "").replace('−', "-"),
-                };
                 quantities.push(Quantity {
                     span: si,
                     range: span.start + found.start()..span.start + found.end(),
@@ -291,5 +377,60 @@ impl<'a> Ledger<'a> {
             })
             .collect();
         json!({"source_spans":spans, "source_quantities":quantities})
+    }
+}
+
+#[cfg(test)]
+mod number_tests {
+    use super::*;
+
+    #[test]
+    fn decimals_and_scales_keep_the_entire_source_amount() {
+        for (source, original, value, unit) in [
+            ("差額は.5円。", ".5", "0.5", "円"),
+            ("差額は−.5円。", "−.5", "-0.5", "円"),
+            ("差額は＋．５円。", "＋．５", "0.5", "円"),
+            ("支払額は1万円。", "1万", "10000", "円"),
+            (
+                "予算は１，２５０．５万円。",
+                "１，２５０．５万",
+                "12505000",
+                "円",
+            ),
+            ("評価額は-.25億円。", "-.25億", "-25000000", "円"),
+            ("Balance: USD.5.", ".5", "0.5", "usd"),
+        ] {
+            let ledger = Ledger::new(source).unwrap();
+            assert_eq!(ledger.quantities.len(), 1, "{source}");
+            let q = &ledger.quantities[0];
+            assert_eq!(
+                (&source[q.range.clone()], q.literal.as_str()),
+                (original, value),
+                "{source}"
+            );
+            assert_eq!(q.unit.as_ref().unwrap().1, unit);
+        }
+    }
+
+    #[test]
+    fn rejects_compound_or_malformed_notation_without_using_a_partial_amount() {
+        for source in [
+            "It cost two hundred dollars.",
+            "It cost twenty-one dollars.",
+            "It cost seven million dollars.",
+            "The batch weighed one and a half kilograms.",
+            "支払額は1万2500円。",
+            "評価額は2億3千万円。",
+            "予算は一万3000円。",
+            "The amount is 1,23 euros.",
+            "The label says 3.2.4 kg.",
+            "It cost 2.5k dollars.",
+        ] {
+            assert!(matches!(Ledger::new(source), Err(UNSUPPORTED)), "{source}");
+        }
+        let source = "The V12 series sold twelve units.";
+        let ledger = Ledger::new(source).unwrap();
+        assert_eq!(ledger.quantities.len(), 1);
+        assert_eq!(ledger.quantities[0].text, "twelve");
     }
 }

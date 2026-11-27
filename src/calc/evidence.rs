@@ -50,6 +50,8 @@ struct Operand {
     number: String,
     role: String,
     unit: String,
+    #[serde(default)]
+    recovered: bool,
 }
 
 fn id_choices(len: usize, prefix: char) -> Vec<String> {
@@ -95,7 +97,15 @@ fn index(id: &str, prefix: char) -> Option<usize> {
     id.strip_prefix(prefix)?.parse().ok()
 }
 fn has(s: &str, words: &[&str]) -> bool {
-    words.iter().any(|word| s.contains(word))
+    words.iter().any(|word| {
+        if !word.starts_with(|c: char| c.is_ascii_alphabetic()) {
+            return s.contains(word);
+        }
+        // English cues may be stems, but must begin a word. A rate marker
+        // such as "per " cannot start inside a subject noun.
+        s.match_indices(word)
+            .any(|(i, _)| i == 0 || !s.as_bytes()[i - 1].is_ascii_alphanumeric())
+    })
 }
 
 const PROFIT: &[&str] = &[
@@ -332,6 +342,7 @@ struct Fact<'a> {
     role: &'a str,
     unit: Option<Unit>,
     display: String,
+    recovered: bool,
 }
 
 fn checked_unit(q: &Quantity<'_>, claimed: &str) -> Result<(Option<Unit>, String), &'static str> {
@@ -407,6 +418,7 @@ fn facts<'a>(ledger: &'a Ledger<'a>, selection: &'a Selection) -> Run<Vec<Fact<'
             role: &operand.role,
             unit,
             display,
+            recovered: operand.recovered,
         });
     }
     Ok(out)
@@ -419,6 +431,9 @@ fn price_basis(ledger: &Ledger<'_>, price: &Fact<'_>, count: &Fact<'_>) -> bool 
             && count.unit.as_ref() == basis.unit.as_ref().map(|(unit, _)| unit);
     }
     let line = folded(ledger.spans[price.q.span].text);
+    if !profile::rate_unit_matches(&line, count.unit.as_ref()) {
+        return false;
+    }
     let near = folded(price.q.neighborhood);
     if has(
         &near,
@@ -464,9 +479,21 @@ fn calculate(ledger: &Ledger<'_>, s: &Selection, angle: Angle) -> Run<Output> {
             "requested_quantity: the selected statement does not identify the final question.",
         ));
     }
-    let relation = index(&s.relation_span, 's')
+    let selected_relation = index(&s.relation_span, 's')
         .and_then(|i| ledger.spans.get(i))
         .ok_or_else(|| fail(required_for(&ask)))?;
+    // A request for a total or percentage may itself be the explicit
+    // relationship even when the selected fact states just one operand.
+    let marker = match s.operation.as_str() {
+        "sum" => SUM,
+        "percent_share" => PERCENT_ASK,
+        _ => &[],
+    };
+    let relation = if has(&ask, marker) && !has(&folded(selected_relation.text), marker) {
+        ask_span
+    } else {
+        selected_relation
+    };
     let evidence = folded(relation.text);
     let facts = facts(ledger, s)?;
     let one = |role: &str, obligation: &str| -> Run<&Fact<'_>> {
@@ -646,6 +673,15 @@ fn calculate(ledger: &Ledger<'_>, s: &Selection, angle: Angle) -> Run<Output> {
                     "zero_denominator: the reference whole is zero, so its percentage is undefined.",
                 ));
             }
+            if let (Ok(n), Ok(d)) = (
+                super::Ratio::decimal(&part.q.literal),
+                super::Ratio::decimal(&whole.q.literal),
+            ) && (n.num < 0 || d.num < 0 || n.add(d.neg()).is_ok_and(|delta| delta.num > 0))
+            {
+                return Err(fail(
+                    "part_whole_roles: the counted subset must lie between zero and its population size.",
+                ));
+            }
             (
                 format!("{} / {} * 100", part.q.literal, whole.q.literal),
                 Some(Unit::Percent),
@@ -667,6 +703,42 @@ fn calculate(ledger: &Ledger<'_>, s: &Selection, angle: Angle) -> Run<Output> {
             {
                 return Err(fail(
                     "percentage_rate_and_base: use a source percentage and its matching base amount.",
+                ));
+            }
+            let asks_final = has(
+                &ask,
+                &[
+                    "final price",
+                    "final amount",
+                    "after",
+                    "including",
+                    "discounted price",
+                    "割引後",
+                    "値引き後",
+                    "税込",
+                    "支払額",
+                    "増額後",
+                ],
+            );
+            let asks_change = has(
+                &ask,
+                &[
+                    "amount of the discount",
+                    "discount amount",
+                    "amount saved",
+                    "tax amount",
+                    "割引額",
+                    "値引額",
+                    "税額",
+                    "増加額",
+                    "減少額",
+                ],
+            );
+            if (asks_final && s.operation == "percent_of")
+                || (asks_change && s.operation != "percent_of")
+            {
+                return Err(fail(
+                    "requested_percentage_amount: distinguish the amount of the adjustment from the final adjusted total.",
                 ));
             }
             let modifier = match s.operation.as_str() {
@@ -750,6 +822,7 @@ fn calculate(ledger: &Ledger<'_>, s: &Selection, angle: Angle) -> Run<Output> {
     value["relation_evidence"] = json!(relation.text);
     value["operands"] = json!(facts.iter().map(|f|json!({
         "role":f.role,"source":f.q.text,"value":f.q.literal,"unit":f.display,
+        "selection":if f.recovered {"unique_explicit_source_role"}else{"model_selected_source_id"},
         "start_byte":f.q.range.start,"end_byte":f.q.range.end,"evidence":ledger.spans[f.q.span].text
     })).collect::<Vec<_>>());
     Ok(Output {
@@ -769,8 +842,19 @@ pub(super) fn run(engine: &mut Engine<'_>, source: &str, angle: Angle) -> Run<Ou
         return calculate(&ledger, &selection, angle);
     }
     let req = request(INSTRUCTION, ledger.payload(), Some(schema(&ledger)));
-    let selection = engine.structured(req, |v| {
-        serde_json::from_value(v.clone()).map_err(|e| format!("calculation extraction: {e}"))
-    })?;
+    let selection = engine
+        .structured(req, |v| {
+            serde_json::from_value(v.clone()).map_err(|e| format!("calculation extraction: {e}"))
+        })
+        .map_err(extraction_error)?;
     calculate(&ledger, &selection, angle)
+}
+
+fn extraction_error(fail: Fail) -> Fail {
+    match fail {
+        Fail::Held(message) => {
+            Fail::Backend(format!("calculation evidence extraction failed: {message}"))
+        }
+        other => other,
+    }
 }
