@@ -9,6 +9,8 @@ use std::{
 };
 use unicode_normalization::UnicodeNormalization;
 
+mod trial;
+
 static NUMBER: LazyLock<Regex> =
     LazyLock::new(|| Regex::new(r"[-+]?(?:\d{1,3}(?:,\d{3})+|\d+)(?:\.\d+)?").unwrap());
 static JAPANESE: LazyLock<Regex> =
@@ -352,6 +354,23 @@ fn held(reason: String) -> Output {
 
 pub fn run(engine: &mut Engine<'_>, input: &Translation, mode: TranslationMode) -> Run<Output> {
     input.validate().map_err(Fail::Invalid)?;
+    let (ids, protection) = match mode {
+        TranslationMode::Draft => (
+            cfg!(feature = "trial-draft-ids"),
+            cfg!(feature = "trial-draft-protection"),
+        ),
+        TranslationMode::Checked => (
+            cfg!(feature = "trial-checked-ids"),
+            cfg!(feature = "trial-checked-protection"),
+        ),
+    };
+    if ids || protection {
+        return trial::run(engine, input, mode, ids, protection);
+    }
+    baseline(engine, input, mode)
+}
+
+fn baseline(engine: &mut Engine<'_>, input: &Translation, mode: TranslationMode) -> Run<Output> {
     let draft_mode = mode == TranslationMode::Draft;
     let first = rewrite_request(
         &input.instructions(),
@@ -485,7 +504,7 @@ mod tests {
             ..Fake::default()
         };
         let mut engine = Engine::new(&mut fake, policy);
-        let result = run(&mut engine, input, mode).unwrap();
+        let result = baseline(&mut engine, input, mode).unwrap();
         let repairs = engine.metrics.repairs;
         let calls = engine.metrics.calls;
         assert_eq!(calls, fake.sent.len());
