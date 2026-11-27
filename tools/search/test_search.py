@@ -286,6 +286,14 @@ def hardware(binary, directory, python, commit):
         repaired = server.call(request(first, False))
         assert repaired["warmup"] == ["metal", "coreml_ane_preferred"] and not repaired["fallbacks"]
     traces["repaired_coreml_index"] = repaired["warmup"]
+    alternate = directory.parent / "alternate"
+    alternate.mkdir()
+    linked_index = alternate / "documents"
+    linked_index.symlink_to(directory.resolve(), target_is_directory=True)
+    with Server(binary, linked_index, "throughput") as server:
+        via_link = server.call(request(first, False))
+        assert via_link["warmup"] == repaired["warmup"] and not via_link["fallbacks"]
+    traces["index_via_parent_alias"] = via_link["warmup"]
     return {"source_commit": commit, "source_documents": len(docs), "unique_queries": len(first) + len(new),
             "timed_queries": len(new), "timed_top_k": 3, "chip": subprocess.check_output(
                 ["/usr/sbin/sysctl", "-n", "machdep.cpu.brand_string"]).decode().strip(),

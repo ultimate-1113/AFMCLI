@@ -89,14 +89,16 @@ final class CompiledSearch {
             let receipt = try JSONDecoder().decode(Receipt.self, from: boundedRead(receiptFile, limit: 1 << 20))
             guard receipt.version == 1, receipt.index_sha256 == index.fingerprint,
                   (1...1024).contains(receipt.files.count),
-                  let walker = FileManager.default.enumerator(at: url, includingPropertiesForKeys: Array(keys))
+                  let walker = FileManager.default.enumerator(atPath: url.path)
             else { return false }
             var checked = 0, remaining = 256 << 20
-            for case let file as URL in walker {
+            // A URL enumerator can expand the system temporary directory's alias.
+            // A path enumerator supplies the bundle-relative name used in the receipt.
+            for case let path as String in walker {
+                let file = url.appendingPathComponent(path)
                 let info = try file.resourceValues(forKeys: keys)
                 if info.isSymbolicLink == true { return false }
                 if info.isDirectory == true { continue }
-                let path = file.pathComponents.dropFirst(url.pathComponents.count).joined(separator: "/")
                 if path == receiptName { continue }
                 guard info.isRegularFile == true, let size = info.fileSize, size <= remaining,
                       let expected = receipt.files[path] else { return false }

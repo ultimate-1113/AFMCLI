@@ -68,6 +68,8 @@ afmcli search serve ./my-index --mode throughput
 
 ## 検証
 
+11月27日の再試験では、macOSの一時フォルダを別名経由で開くと、正常なCore ML索引でも整合性検査に失敗する事例を再現した。索引からの相対パスで各ファイルのハッシュを照合するよう修正した。通常の一時フォルダと追加の別名経由の両方でGPU・ANE優先のCore MLが利用でき、8,392,704スコアと順位が前回と一致した。常駐6巡の中央値はCPUが81.988 ms、interactiveが62.377 ms、throughputが52.799 ms。単発3巡は各モード96.9～97.9 msだった。[常駐と整合性検査の結果](../../eval/mode_improvements/results/search/warm.json)・[単発の結果](../../eval/mode_improvements/results/search/cold.json)
+
 次の小規模試験は、2言語の参照スコア、順位、同点、索引の入れ替え、不正入力、常駐プロセスの動作を公開コマンド経由で照合する。
 
 ```sh
