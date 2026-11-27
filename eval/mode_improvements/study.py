@@ -185,8 +185,18 @@ def run(args, lock, path):
         for mode in args.modes:
             require(choices["modes"][mode]["binary_sha256"]==bins["candidate"][1],"candidate differs from pre-test selection")
         require(choices["base_sha256"]==bins["base"][1],"wrong baseline")
+    names=list(bins)
+    if args.prefill_base:
+        require(args.split=="dev" and names==["base"],"early baseline sampling is development-only")
+        names=["base","ids","protection","both"] if args.track=="translation" else ["base","candidate"]
     args.out.mkdir(parents=True,exist_ok=True)
-    for cid,c,mode,stage,arm in schedule(args.track,args.split,args.modes,list(bins)):
+    previous_group=None
+    for cid,c,mode,stage,arm in schedule(args.track,args.split,args.modes,names):
+        group=(cid,mode,stage)
+        is_first=group!=previous_group
+        previous_group=group
+        if args.prefill_base and (arm!="base" or not is_first):
+            continue
         binary,fingerprint=bins[arm]; job=exp_job(c,args.track,mode)
         with system_lock():
             rows=load_rows(path)
@@ -234,6 +244,7 @@ def main():
     p.add_argument("--out",type=Path,default=HERE/"results"/"test")
     p.add_argument("--arm",action="append",default=[])
     p.add_argument("--modes",nargs="+")
+    p.add_argument("--prefill-base",action="store_true",help="dev only: run just the cases assigned a baseline-first order")
     args=p.parse_args()
     if args.action=="freeze":
         data=freeze_data()
