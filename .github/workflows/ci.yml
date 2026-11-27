@@ -111,6 +111,7 @@ jobs:
           python3 -B eval/mode_improvements/retry_errors.py verify
           python3 -B eval/handoff/test_handoff.py
           python3 -B eval/handoff/handoff.py verify
+          python3 -B eval/handoff/null_guard.py verify
           python3 -B tools/test_png_audit.py
           python3 -B tools/privacy_audit.py --tracked
       - name: Check the optional native search companion

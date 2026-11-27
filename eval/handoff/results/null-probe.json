@@ -1,0 +1,330 @@
+[
+  {
+    "arm": "reopen",
+    "correct": true,
+    "elapsed_ms": 4187.335,
+    "events": [
+      {
+        "elapsed_ms": 1819.126,
+        "kind": "read",
+        "raw": {
+          "confirmed_user_sha256": "3772d6a13589c2e40fe09ee016df4fb0a2a8ff0d2c2e07433e7e9a6005ad5a15",
+          "finish": "contentCompleted",
+          "input_tokens": 1261,
+          "limit": 6200,
+          "model": "system",
+          "raw_output": "{\"memo\":\"浜浦の帆縫い教室では、受講者用見本帆の上縁の折り返しを並縫いで押さえることになっていた。講師が旧手引きの該当箇所を指し示した。残り3区間のタスクを整理し、最終的に目的に答える。原文IDはE005。\",\"refs\":[\"E005\",\"E005\",\"E005\"]}",
+          "sent": true,
+          "status": "ok"
+        },
+        "request_sha256": "6235fb5127b4c58dac6c124b2d2bb863493b37873d9d2d5646be484a1db28c8a"
+      },
+      {
+        "elapsed_ms": 1551.926,
+        "kind": "read",
+        "raw": {
+          "confirmed_user_sha256": "ffba8faf1e55978aec9187360e1cd533035598d8df70134c0d18c329bc0eb577",
+          "finish": "contentCompleted",
+          "input_tokens": 1473,
+          "limit": 6200,
+          "model": "system",
+          "raw_output": "{\"memo\":\"浜浦の帆縫い教室での見本帆の上縁の折り返しは、「二重返し縫い」で押さえることに変更された。講師が手引きの該当箇所を指し示し、現行の縫い方とは異なる方法が採用された。残りの2区間のタスクを整理し、最終的に目的に答える。原文IDはE042。\",\"refs\":[\"E042\"]}",
+          "sent": true,
+          "status": "ok"
+        },
+        "request_sha256": "26e9c963dc9735517402c77485790fe6be7163485ecafcf17edd5ec22766bfbb"
+      },
+      {
+        "elapsed_ms": 816.283,
+        "kind": "read",
+        "raw": {
+          "confirmed_user_sha256": "7f06daa654f7edf83628b285a64749b5c1fc84cda41736a93949bcadaf663506",
+          "finish": "contentCompleted",
+          "input_tokens": 1454,
+          "limit": 6200,
+          "model": "system",
+          "raw_output": "{\"evidence_id\":\"E042\",\"state\":\"確定\",\"value\":\"二重返し縫い\"}",
+          "sent": true,
+          "status": "ok"
+        },
+        "request_sha256": "b56aea41d40a75a0d9c7e0a98a9ef1074a3e4535a58f389f89e0a08a02aec8df"
+      }
+    ],
+    "evidence_correct": true,
+    "final": {
+      "evidence_id": "E042",
+      "state": "確定",
+      "value": "二重返し縫い"
+    },
+    "generations": 3,
+    "id": "notice-x-s01",
+    "memos": [
+      {
+        "memo": "浜浦の帆縫い教室では、受講者用見本帆の上縁の折り返しを並縫いで押さえることになっていた。講師が旧手引きの該当箇所を指し示した。残り3区間のタスクを整理し、最終的に目的に答える。原文IDはE005。",
+        "refs": [
+          "E005"
+        ]
+      },
+      {
+        "memo": "浜浦の帆縫い教室での見本帆の上縁の折り返しは、「二重返し縫い」で押さえることに変更された。講師が手引きの該当箇所を指し示し、現行の縫い方とは異なる方法が採用された。残りの2区間のタスクを整理し、最終的に目的に答える。原文IDはE042。",
+        "refs": [
+          "E042"
+        ]
+      }
+    ],
+    "peak_sent": 1473,
+    "sent_tokens": 4188,
+    "size": "short",
+    "status": "completed",
+    "unsupported": false,
+    "value_correct": true
+  },
+  {
+    "arm": "reopen",
+    "correct": false,
+    "elapsed_ms": 5184.963,
+    "events": [
+      {
+        "elapsed_ms": 2440.416,
+        "kind": "read",
+        "raw": {
+          "confirmed_user_sha256": "9043f3b6169f0ed4a768588e8376c5d9f0cb7ddb8069f417d61a180fc2932c54",
+          "finish": "contentCompleted",
+          "input_tokens": 1262,
+          "limit": 6200,
+          "model": "system",
+          "raw_output": "{\"memo\":\"目的：梢町夏市の白い紙提灯の胴に合う指定の収納籠の名前を知る。現行値：該当なし。対象・条件：梢町夏市の紙提灯、胴の形で収納籠を分ける。変更理由：E007で「丸胴に使う籠の名前は『藤浅籠』で、白い提灯も同じ扱いとする」と明記されているため、この名称が正解。未確定の理由：他の提灯の種類や収納方法の詳細は記載されていないが、胴用として『藤浅籠』が指定されている。古い候補：該当なし（E007が唯一の明示情報）。\",\"refs\":[\"E007\",\"E017\",\"E023\"]}",
+          "sent": true,
+          "status": "ok"
+        },
+        "request_sha256": "6f645ab76841c8c16e81b2dd5bedfa9c52e6c2071dd62385f322d0ed3c462da7"
+      },
+      {
+        "elapsed_ms": 1768.465,
+        "kind": "read",
+        "raw": {
+          "confirmed_user_sha256": "f75ea2530ff5ca52a0b6ee604f713154e046b264eb4250fb56fa61b08580089c",
+          "finish": "contentCompleted",
+          "input_tokens": 1606,
+          "limit": 6200,
+          "model": "system",
+          "raw_output": "{\"memo\":\"目的：梢町夏市の白い紙提灯の胴に合う指定の収納籠の名前を知る。現行値：該当なし。対象・条件：梢町夏市の紙提灯、胴の形で収納籠を分ける。変更理由：E035で「角胴の紙提灯を『竹深籠』にしまう」と明記されており、これが正解。未確定の理由：他の提灯の種類や収納方法の詳細は記載されていないが、\",\"refs\":[\"E035\",\"E007\",\"E026\"]}",
+          "sent": true,
+          "status": "ok"
+        },
+        "request_sha256": "5c32e8992394b865268e5cd11bb983b3ec9176f9a8fcd23f46b15c16c2f7bd89"
+      },
+      {
+        "elapsed_ms": 976.082,
+        "kind": "read",
+        "raw": {
+          "confirmed_user_sha256": "a9d4957bd482a133006596f54ec83b85982acde4d1c070c0f210a9895795787e",
+          "finish": "contentCompleted",
+          "input_tokens": 1552,
+          "limit": 6200,
+          "model": "system",
+          "raw_output": "{\"evidence_id\":\"E062\",\"state\":\"未確定\",\"value\":\"丸胴か角胴か特定できず、収納籠を選べない\"}",
+          "sent": true,
+          "status": "ok"
+        },
+        "request_sha256": "a57a1f06c25806e51366ecc0cfcacc905283e60f80b5f747ec2e377a3f2d08e3"
+      }
+    ],
+    "evidence_correct": true,
+    "final": {
+      "evidence_id": "E062",
+      "state": "未確定",
+      "value": "丸胴か角胴か特定できず、収納籠を選べない"
+    },
+    "generations": 3,
+    "id": "notice-x-s02",
+    "memos": [
+      {
+        "memo": "目的：梢町夏市の白い紙提灯の胴に合う指定の収納籠の名前を知る。現行値：該当なし。対象・条件：梢町夏市の紙提灯、胴の形で収納籠を分ける。変更理由：E007で「丸胴に使う籠の名前は『藤浅籠』で、白い提灯も同じ扱いとする」と明記されているため、この名称が正解。未確定の理由：他の提灯の種類や収納方法の詳細は記載されていないが、",
+        "refs": [
+          "E007",
+          "E017",
+          "E023"
+        ]
+      },
+      {
+        "memo": "目的：梢町夏市の白い紙提灯の胴に合う指定の収納籠の名前を知る。現行値：該当なし。対象・条件：梢町夏市の紙提灯、胴の形で収納籠を分ける。変更理由：E035で「角胴の紙提灯を『竹深籠』にしまう」と明記されており、これが正解。未確定の理由：他の提灯の種類や収納方法の詳細は記載されていないが、",
+        "refs": [
+          "E035",
+          "E007",
+          "E026"
+        ]
+      }
+    ],
+    "peak_sent": 1606,
+    "sent_tokens": 4420,
+    "size": "short",
+    "status": "completed",
+    "unsupported": true,
+    "value_correct": false
+  },
+  {
+    "arm": "reopen",
+    "correct": false,
+    "elapsed_ms": 9109.328,
+    "events": [
+      {
+        "elapsed_ms": 3798.994,
+        "kind": "read",
+        "raw": {
+          "confirmed_user_sha256": "6151e96c9e1d91712cd3bf5503e8e5cfdfd92b9cef3e448128142b85882f36a7",
+          "finish": "contentCompleted",
+          "input_tokens": 3058,
+          "limit": 6200,
+          "model": "system",
+          "raw_output": "{\"memo\":\"- 現行値：焙じ茶入門回で使う湯冷まし器の指定器名が「三角片口」と記載されている。  - 対象・条件：泉端茶房の試飲会における器具帳の主催者印。  - 変更・未確定の理由：原文に直接の変更指示はなく、指定器名が主催者印として明示されているが、他の区間の変更履歴との整合性確認が必要。  - 撤回・訂正の理由：以前の候補（例：別の名称）は現時点で存在しないため、新規指定が確定。  - 備考：試飲会に関連する器具の管理と記録の整合性が重要。\",\"refs\":[\"E013\",\"E043\",\"E059\"]}",
+          "sent": true,
+          "status": "ok"
+        },
+        "request_sha256": "048b3a3d7cdfd879823d07f52bc330a3acb363745b4132d17f7399712ab88768"
+      },
+      {
+        "elapsed_ms": 3602.024,
+        "kind": "read",
+        "raw": {
+          "confirmed_user_sha256": "487ca58c3c8c073610edcdc183a6aa197286fb47cfa7d5b0a147621e628f1487",
+          "finish": "contentCompleted",
+          "input_tokens": 3456,
+          "limit": 6200,
+          "model": "system",
+          "raw_output": "{\"memo\":\"- 現行値：焙じ茶入門回で使う湯冷まし器の指定器名が「三角片口」と記載されている。 - 対象・条件：泉端茶房の試飲会における器具帳の主催者印。 - 変更・未確定の理由：主催者印に「三角片口」と明示されているが、直前の更新で「主催者は焙じ茶入門回の湯冷まし器から三角片口の指定を取り消した」と記載され、代わりの器は決まっていない。 - 撤回・訂正の理由：以前の候補（例：別）は現時点での変更履歴に反映されていないため、現在の事実に基づき再確認が必要。\",\"refs\":[\"E013\",\"E066\",\"E086\"]}",
+          "sent": true,
+          "status": "ok"
+        },
+        "request_sha256": "0db86c16cbd838a60fd0bd1e9c79e9c231926aebc9b3bef02498f733860f44db"
+      },
+      {
+        "elapsed_ms": 1708.31,
+        "kind": "read",
+        "raw": {
+          "confirmed_user_sha256": "d7ed5c1461c01c5df78029545df9713f01dc880841e62670dd89928d26295a1b",
+          "finish": "contentCompleted",
+          "input_tokens": 3397,
+          "limit": 6200,
+          "model": "system",
+          "raw_output": "{\"evidence_id\":\"E013\",\"state\":\"確定\",\"value\":\"三角片口\"}",
+          "sent": true,
+          "status": "ok"
+        },
+        "request_sha256": "e6e87d6db12d89d35953acfa647fe307f1b870804a3c5a2adf39835f1580be71"
+      }
+    ],
+    "evidence_correct": false,
+    "final": {
+      "evidence_id": "E013",
+      "state": "確定",
+      "value": "三角片口"
+    },
+    "generations": 3,
+    "id": "notice-x-l01",
+    "memos": [
+      {
+        "memo": "- 現行値：焙じ茶入門回で使う湯冷まし器の指定器名が「三角片口」と記載されている。 - 対象・条件：泉端茶房の試飲会における器具帳の主催者印。 - 変更・未確定の理由：原文に直接の変更指示はなく、指定器名が主催者印として明示されているが、他の区間の変更履歴との整合性確認が必要。 - 撤回・訂正の理由：以前の候補（例：別",
+        "refs": [
+          "E013",
+          "E043",
+          "E059"
+        ]
+      },
+      {
+        "memo": "- 現行値：焙じ茶入門回で使う湯冷まし器の指定器名が「三角片口」と記載されている。 - 対象・条件：泉端茶房の試飲会における器具帳の主催者印。 - 変更・未確定の理由：主催者印に「三角片口」と明示されているが、直前の更新で「主催者は焙じ茶入門回の湯冷まし器から三角片口の指定を取り消した」と記載され、代わりの器は決まって",
+        "refs": [
+          "E013",
+          "E066",
+          "E086"
+        ]
+      }
+    ],
+    "peak_sent": 3456,
+    "sent_tokens": 9911,
+    "size": "long",
+    "status": "completed",
+    "unsupported": true,
+    "value_correct": false
+  },
+  {
+    "arm": "reopen",
+    "correct": true,
+    "elapsed_ms": 5800.331,
+    "events": [
+      {
+        "elapsed_ms": 2033.232,
+        "kind": "read",
+        "raw": {
+          "confirmed_user_sha256": "2f132e9b35b3b849bda2e9b045ecc3594c285e0494dca67c40faefac2b0c2243",
+          "finish": "contentCompleted",
+          "input_tokens": 3094,
+          "limit": 6200,
+          "model": "system",
+          "raw_output": "{\"memo\":\"楡湖渡船の南桟橋では、車いす利用者が押す乗船用呼び鈴の音色名を「三連木琴」とする。桟橋主任が受信器の設定票に署名した。\",\"refs\":[\"E011\",\"E011\",\"E011\"]}",
+          "sent": true,
+          "status": "ok"
+        },
+        "request_sha256": "5f48b9dce93e4f63c39fc0431907864239751365d75570e16c8aafef9edd373f"
+      },
+      {
+        "elapsed_ms": 2079.422,
+        "kind": "read",
+        "raw": {
+          "confirmed_user_sha256": "b4ca34820aa9c9c6284d83e3142796afb4a9f64cebb6168ddce8975784574975",
+          "finish": "contentCompleted",
+          "input_tokens": 3293,
+          "limit": 6200,
+          "model": "system",
+          "raw_output": "{\"memo\":\"楡湖渡船の南桟橋では、車いす利用者が押す乗船用呼び鈴の音色名を「三連木琴」とする。桟橋主任が受信器の設定票に署名した。\",\"refs\":[\"E011\"]}",
+          "sent": true,
+          "status": "ok"
+        },
+        "request_sha256": "12bd07e0a4ae82df2a363949c90f5d55fb5cf6cd94119c46440363cab6340b5b"
+      },
+      {
+        "elapsed_ms": 1687.677,
+        "kind": "read",
+        "raw": {
+          "confirmed_user_sha256": "0e0f43b9999e2819c000bcb82e54b214a93761adf650952919ce7f6c0856ceb9",
+          "finish": "contentCompleted",
+          "input_tokens": 3299,
+          "limit": 6200,
+          "model": "system",
+          "raw_output": "{\"evidence_id\":\"E151\",\"state\":\"確定\",\"value\":\"三連木琴\"}",
+          "sent": true,
+          "status": "ok"
+        },
+        "request_sha256": "0ccc52f7acf8ff15fdeff71de55b40ea3403dc5e7218275e74bf95ad6ccd6f87"
+      }
+    ],
+    "evidence_correct": true,
+    "final": {
+      "evidence_id": "E151",
+      "state": "確定",
+      "value": "三連木琴"
+    },
+    "generations": 3,
+    "id": "notice-x-l02",
+    "memos": [
+      {
+        "memo": "楡湖渡船の南桟橋では、車いす利用者が押す乗船用呼び鈴の音色名を「三連木琴」とする。桟橋主任が受信器の設定票に署名した。",
+        "refs": [
+          "E011"
+        ]
+      },
+      {
+        "memo": "楡湖渡船の南桟橋では、車いす利用者が押す乗船用呼び鈴の音色名を「三連木琴」とする。桟橋主任が受信器の設定票に署名した。",
+        "refs": [
+          "E011"
+        ]
+      }
+    ],
+    "peak_sent": 3299,
+    "sent_tokens": 9686,
+    "size": "long",
+    "status": "completed",
+    "unsupported": false,
+    "value_correct": true
+  }
+]

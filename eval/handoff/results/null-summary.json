@@ -1,0 +1,97 @@
+{
+  "exploratory": {
+    "history": {
+      "changed_values": 1,
+      "changes": [
+        {
+          "earned_strict_credit": true,
+          "id": "notice-s03",
+          "value_as_generated": "山側と谷側のどちらで運用したかは特定できず、展張位置を確定できない。"
+        }
+      ],
+      "completed": 4,
+      "false_unresolved_with_a_known_answer": 0,
+      "n": 8,
+      "nonempty_on_unresolved_after": 1,
+      "nonempty_on_unresolved_before": 2,
+      "projected_strict": 3,
+      "raw_strict": 2
+    },
+    "previous": {
+      "changed_values": 3,
+      "changes": [
+        {
+          "earned_strict_credit": true,
+          "id": "notice-s03",
+          "value_as_generated": "展張位置を確定できない"
+        },
+        {
+          "earned_strict_credit": false,
+          "id": "notice-l02",
+          "value_as_generated": "二十一時"
+        },
+        {
+          "earned_strict_credit": true,
+          "id": "notice-l04",
+          "value_as_generated": "未確定"
+        }
+      ],
+      "completed": 8,
+      "false_unresolved_with_a_known_answer": 0,
+      "n": 8,
+      "nonempty_on_unresolved_after": 1,
+      "nonempty_on_unresolved_before": 4,
+      "projected_strict": 4,
+      "raw_strict": 2
+    },
+    "reopen": {
+      "changed_values": 4,
+      "changes": [
+        {
+          "earned_strict_credit": true,
+          "id": "notice-s01",
+          "value_as_generated": "灯具受付"
+        },
+        {
+          "earned_strict_credit": true,
+          "id": "notice-s03",
+          "value_as_generated": "山側と谷側のどちらで運用したかは特定できず、展張位置を確定できない。"
+        },
+        {
+          "earned_strict_credit": false,
+          "id": "notice-l02",
+          "value_as_generated": "なし"
+        },
+        {
+          "earned_strict_credit": true,
+          "id": "notice-l04",
+          "value_as_generated": "前輪チューブの品番は未確定である"
+        }
+      ],
+      "completed": 8,
+      "false_unresolved_with_a_known_answer": 0,
+      "n": 8,
+      "nonempty_on_unresolved_after": 0,
+      "nonempty_on_unresolved_before": 4,
+      "projected_strict": 6,
+      "raw_strict": 3
+    }
+  },
+  "fresh_reopen": {
+    "changed_values": 1,
+    "changes": [
+      {
+        "earned_strict_credit": true,
+        "id": "notice-x-s02",
+        "value_as_generated": "丸胴か角胴か特定できず、収納籠を選べない"
+      }
+    ],
+    "completed": 4,
+    "false_unresolved_with_a_known_answer": 0,
+    "n": 4,
+    "nonempty_on_unresolved_after": 1,
+    "nonempty_on_unresolved_before": 2,
+    "projected_strict": 3,
+    "raw_strict": 2
+  }
+}

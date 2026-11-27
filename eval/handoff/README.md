@@ -26,12 +26,22 @@
 
 模型の銘板を問う以前の合成QAに、巡回時期を指定する補足を与えた。原文に行IDを付けた入力は18,118トークン。6段階に分けると、直前出力だけで17.60秒、原文再読付きで22.93秒で、ともに正式な「浜風」と出典L324を返した。1生成の最大送信入力はそれぞれ3,421と3,610トークンだった。この1問では履歴の分割と圧縮で正答まで回復した。単一のプロンプトだけで計数・生成上限を超える失敗に対しては、そのプロンプト自体を分割する必要がある。[以前の同一入力のエラー再現](../mode_improvements/results/retry-diagnostics)・[6段階のメモと最終回答](results/observations.json)
 
+## 「未確定」の値欄を通常コードで空にする
+
+原文再読付きの新規8件では、4件で状態を「未確定」としたまま、値欄に説明や候補を入れた。アプリが `state == "未確定"` のときだけ値を空にし、根拠IDは保持する処理を保存済みの出力に適用した。元の8件の値・根拠正答は3→6/8件。これは失敗を見た後の再採点である。
+
+そこで同じ処理を先に固定し、別の短い資料2件・長い資料2件で確かめた。原文再読方式は4件とも完了し、値と根拠の正答は整形前2/4件、整形後3/4件。改善した1件は「丸胴か角胴か特定できず、収納籠を選べない」という説明を値欄から取り除いたものだった。残る1件は、取り消された器「三角片口」を古い承認行E013で再び「確定」とした。アプリ側の整形が直せるのは出力形式の矛盾で、どの決定が現在有効かを取り違える誤りは残る。[追加4件と事前条件](null-protocol.md)・[整形前後の件数・変更された値](results/null-summary.json)・[4件の中間メモと根拠](results/null-probe.json)
+
+今回の規模では、長文の段階処理には「目的・残りタスク・直前の短い出力」を使い、出典を返す仕事では直前の出力に原文IDを含める方法が候補になる。原文の保管はアプリ側で行い、次の段階が必要とする行だけを渡せる。文書は日本語の合成通知12件であり、一般の業務や長い自由対話への効果は未測定である。
+
 ## 再現
 
 ```sh
 python3 -B eval/handoff/test_handoff.py
 python3 -B eval/handoff/handoff.py verify
+python3 -B eval/handoff/null_guard.py verify
 python3 -B eval/handoff/handoff.py run --doctor target/release/afmcli --out ../afm-handoff-rerun
+python3 -B eval/handoff/null_guard.py run --doctor target/release/afmcli --pilot-results ../afm-handoff-rerun --out ../afm-handoff-rerun
 ```
 
 `verify` は保存済みの各生成から段階ごとの入力を再構成し、指紋と採点を照合する。`run` はCore Advancedが利用可能なMacで実行する。中断後は同じ出力先を指定すると、完了したケース・方式から続行する。[各段階の生出力と入力トークン](results/observations.json)・[完了・正答・送信量・時間](results/summary.json)
