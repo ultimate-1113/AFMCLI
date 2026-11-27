@@ -86,6 +86,9 @@ def main():
         if track=="qa":
             by_id={c["id"]:c for c in study.cases(track,"test")}
             differences["qa_evidence_on_misses"]=diagnose.qa(observed.values(),by_id,study.panel(track))
+            differences["qa_by_language_and_length"]=diagnose.qa_groups(observed.values(),by_id)
+        if track=="translation":
+            differences["translation_by_direction_and_error"]=diagnose.translation_errors(observed.values())
         counts[track]=[len(study.load_rows(dev)),len(observed)]
     save_or_verify(root/"differences.json",differences,args.write_summaries)
     save_or_verify(root/"decisions.json",final_decisions,args.write_summaries)

@@ -25,6 +25,8 @@ def main():
     mode=args.mode or ("cautious" if args.followup else study.MODES[args.track][0])
     if mode not in study.MODES[args.track]:
         p.error("unknown mode for this track")
+    if args.followup and mode!="cautious":
+        p.error("follow-up observations use the cautious mode")
     if args.show=="input":
         obj=study.exp_job(case,args.track,mode)
     elif args.show=="gold":
