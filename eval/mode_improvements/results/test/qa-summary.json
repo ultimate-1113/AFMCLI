@@ -1,0 +1,207 @@
+{
+  "base": {
+    "cautious": {
+      "asked_then_answered": 0,
+      "by_direction": {
+        "en": 5,
+        "ja": 10
+      },
+      "correct": 23,
+      "correct_null": 15,
+      "correct_positive": 8,
+      "correct_question": 0,
+      "delivered": 15,
+      "followup_correct": 3,
+      "followup_n": 12,
+      "input_tokens": 656615,
+      "max_calls": 9,
+      "median_ms": 9459.129,
+      "n": 48,
+      "need_correct": 0,
+      "positive": 24,
+      "retrieval": {
+        "decisive_passage_sent": 28,
+        "unobserved": 16,
+        "unobserved_fallback": 4
+      },
+      "serious": 7,
+      "status": {
+        "abstained": 24,
+        "error": 8,
+        "held": 1,
+        "ok": 15
+      },
+      "total_calls": 184,
+      "unnecessary_question": 0,
+      "unsupported": 4
+    },
+    "lookup": {
+      "asked_then_answered": 0,
+      "by_direction": {
+        "en": 14,
+        "ja": 18
+      },
+      "correct": 21,
+      "correct_null": 8,
+      "correct_positive": 13,
+      "correct_question": 0,
+      "delivered": 32,
+      "followup_correct": 0,
+      "followup_n": 0,
+      "input_tokens": 570050,
+      "max_calls": 11,
+      "median_ms": 3906.0924999999997,
+      "n": 48,
+      "need_correct": 0,
+      "positive": 24,
+      "retrieval": {
+        "decisive_passage_not_in_recorded_ranges": 1,
+        "decisive_passage_sent": 28,
+        "unobserved": 16,
+        "unobserved_fallback": 3
+      },
+      "serious": 19,
+      "status": {
+        "abstained": 8,
+        "error": 4,
+        "held": 3,
+        "ok": 32,
+        "refused": 1
+      },
+      "total_calls": 206,
+      "unnecessary_question": 0,
+      "unsupported": 11
+    },
+    "preview": {
+      "asked_then_answered": 0,
+      "by_direction": {
+        "en": 16,
+        "ja": 21
+      },
+      "correct": 13,
+      "correct_null": 0,
+      "correct_positive": 13,
+      "correct_question": 0,
+      "delivered": 37,
+      "followup_correct": 0,
+      "followup_n": 0,
+      "input_tokens": 27096,
+      "max_calls": 1,
+      "median_ms": 724.316,
+      "n": 48,
+      "need_correct": 0,
+      "positive": 24,
+      "retrieval": {
+        "unobserved": 48
+      },
+      "serious": 24,
+      "status": {
+        "held": 11,
+        "review": 37
+      },
+      "total_calls": 48,
+      "unnecessary_question": 0,
+      "unsupported": 17
+    }
+  },
+  "candidate": {
+    "cautious": {
+      "asked_then_answered": 0,
+      "by_direction": {
+        "en": 9,
+        "ja": 14
+      },
+      "correct": 30,
+      "correct_null": 16,
+      "correct_positive": 14,
+      "correct_question": 0,
+      "delivered": 23,
+      "followup_correct": 9,
+      "followup_n": 12,
+      "input_tokens": 83930,
+      "max_calls": 2,
+      "median_ms": 1795.196,
+      "n": 48,
+      "need_correct": 0,
+      "positive": 24,
+      "retrieval": {
+        "decisive_passage_not_in_recorded_ranges": 27,
+        "decisive_passage_sent": 21
+      },
+      "serious": 9,
+      "status": {
+        "abstained": 24,
+        "error": 1,
+        "ok": 23
+      },
+      "total_calls": 95,
+      "unnecessary_question": 0,
+      "unsupported": 8
+    },
+    "lookup": {
+      "asked_then_answered": 0,
+      "by_direction": {
+        "en": 9,
+        "ja": 17
+      },
+      "correct": 28,
+      "correct_null": 15,
+      "correct_positive": 13,
+      "correct_question": 0,
+      "delivered": 26,
+      "followup_correct": 0,
+      "followup_n": 0,
+      "input_tokens": 62939,
+      "max_calls": 2,
+      "median_ms": 1151.5245,
+      "n": 48,
+      "need_correct": 0,
+      "positive": 24,
+      "retrieval": {
+        "decisive_passage_not_in_recorded_ranges": 27,
+        "decisive_passage_sent": 21
+      },
+      "serious": 13,
+      "status": {
+        "abstained": 21,
+        "error": 1,
+        "ok": 26
+      },
+      "total_calls": 83,
+      "unnecessary_question": 0,
+      "unsupported": 8
+    },
+    "preview": {
+      "asked_then_answered": 0,
+      "by_direction": {
+        "en": 11,
+        "ja": 17
+      },
+      "correct": 11,
+      "correct_null": 0,
+      "correct_positive": 11,
+      "correct_question": 0,
+      "delivered": 28,
+      "followup_correct": 0,
+      "followup_n": 0,
+      "input_tokens": 28469,
+      "max_calls": 1,
+      "median_ms": 737.2405,
+      "n": 48,
+      "need_correct": 0,
+      "positive": 24,
+      "retrieval": {
+        "decisive_passage_not_in_recorded_ranges": 29,
+        "decisive_passage_sent": 19
+      },
+      "serious": 17,
+      "status": {
+        "held": 20,
+        "review": 28
+      },
+      "total_calls": 48,
+      "unnecessary_question": 0,
+      "unsupported": 10
+    }
+  }
+}

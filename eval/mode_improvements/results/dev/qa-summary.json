@@ -1,0 +1,204 @@
+{
+  "base": {
+    "cautious": {
+      "asked_then_answered": 0,
+      "by_direction": {
+        "en": 1,
+        "ja": 1
+      },
+      "correct": 4,
+      "correct_null": 3,
+      "correct_positive": 1,
+      "correct_question": 0,
+      "delivered": 2,
+      "followup_correct": 1,
+      "followup_n": 3,
+      "input_tokens": 172592,
+      "max_calls": 8,
+      "median_ms": 8990.3225,
+      "n": 12,
+      "need_correct": 0,
+      "positive": 6,
+      "retrieval": {
+        "decisive_passage_not_in_recorded_ranges": 1,
+        "decisive_passage_sent": 6,
+        "unobserved": 4,
+        "unobserved_fallback": 1
+      },
+      "serious": 1,
+      "status": {
+        "abstained": 6,
+        "held": 3,
+        "ok": 2,
+        "refused": 1
+      },
+      "total_calls": 49,
+      "unnecessary_question": 0,
+      "unsupported": 1
+    },
+    "lookup": {
+      "asked_then_answered": 0,
+      "by_direction": {
+        "en": 4,
+        "ja": 6
+      },
+      "correct": 3,
+      "correct_null": 0,
+      "correct_positive": 3,
+      "correct_question": 0,
+      "delivered": 10,
+      "followup_correct": 0,
+      "followup_n": 0,
+      "input_tokens": 27351,
+      "max_calls": 3,
+      "median_ms": 1217.5115,
+      "n": 12,
+      "need_correct": 0,
+      "positive": 6,
+      "retrieval": {
+        "decisive_passage_not_in_recorded_ranges": 2,
+        "decisive_passage_sent": 6,
+        "unobserved": 4
+      },
+      "serious": 7,
+      "status": {
+        "ok": 10,
+        "refused": 2
+      },
+      "total_calls": 25,
+      "unnecessary_question": 0,
+      "unsupported": 5
+    },
+    "preview": {
+      "asked_then_answered": 0,
+      "by_direction": {
+        "en": 5,
+        "ja": 2
+      },
+      "correct": 1,
+      "correct_null": 0,
+      "correct_positive": 1,
+      "correct_question": 0,
+      "delivered": 7,
+      "followup_correct": 0,
+      "followup_n": 0,
+      "input_tokens": 6618,
+      "max_calls": 1,
+      "median_ms": 713.4784999999999,
+      "n": 12,
+      "need_correct": 0,
+      "positive": 6,
+      "retrieval": {
+        "unobserved": 12
+      },
+      "serious": 6,
+      "status": {
+        "held": 5,
+        "review": 7
+      },
+      "total_calls": 12,
+      "unnecessary_question": 0,
+      "unsupported": 3
+    }
+  },
+  "candidate": {
+    "cautious": {
+      "asked_then_answered": 2,
+      "by_direction": {
+        "en": 2,
+        "ja": 3
+      },
+      "correct": 10,
+      "correct_null": 5,
+      "correct_positive": 5,
+      "correct_question": 3,
+      "delivered": 5,
+      "followup_correct": 2,
+      "followup_n": 3,
+      "input_tokens": 17422,
+      "max_calls": 2,
+      "median_ms": 1649.6055,
+      "n": 12,
+      "need_correct": 0,
+      "positive": 6,
+      "retrieval": {
+        "decisive_passage_not_in_recorded_ranges": 5,
+        "decisive_passage_sent": 7
+      },
+      "serious": 0,
+      "status": {
+        "abstained": 6,
+        "error": 1,
+        "ok": 5
+      },
+      "total_calls": 21,
+      "unnecessary_question": 0,
+      "unsupported": 0
+    },
+    "lookup": {
+      "asked_then_answered": 0,
+      "by_direction": {
+        "en": 3,
+        "ja": 2
+      },
+      "correct": 11,
+      "correct_null": 6,
+      "correct_positive": 5,
+      "correct_question": 0,
+      "delivered": 5,
+      "followup_correct": 0,
+      "followup_n": 0,
+      "input_tokens": 12615,
+      "max_calls": 2,
+      "median_ms": 815.947,
+      "n": 12,
+      "need_correct": 0,
+      "positive": 6,
+      "retrieval": {
+        "decisive_passage_not_in_recorded_ranges": 5,
+        "decisive_passage_sent": 7
+      },
+      "serious": 0,
+      "status": {
+        "abstained": 6,
+        "ok": 5,
+        "refused": 1
+      },
+      "total_calls": 18,
+      "unnecessary_question": 0,
+      "unsupported": 0
+    },
+    "preview": {
+      "asked_then_answered": 0,
+      "by_direction": {
+        "en": 3,
+        "ja": 3
+      },
+      "correct": 6,
+      "correct_null": 0,
+      "correct_positive": 6,
+      "correct_question": 0,
+      "delivered": 6,
+      "followup_correct": 0,
+      "followup_n": 0,
+      "input_tokens": 6654,
+      "max_calls": 1,
+      "median_ms": 697.6890000000001,
+      "n": 12,
+      "need_correct": 0,
+      "positive": 6,
+      "retrieval": {
+        "decisive_passage_not_in_recorded_ranges": 5,
+        "decisive_passage_sent": 7
+      },
+      "serious": 0,
+      "status": {
+        "held": 6,
+        "review": 6
+      },
+      "total_calls": 12,
+      "unnecessary_question": 0,
+      "unsupported": 0
+    }
+  }
+}

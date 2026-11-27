@@ -9,6 +9,7 @@ repository = "https://github.com/ultimate-1113/AFMCLI"
 include = ["src/**", "tests/**", "skills/*/SKILL.md", "tools/search/**", "Cargo.toml", "Cargo.lock", "LICENSE", "README.md", "NOTICES.md"]
 
 [features]
+default = ["trial-qa-lookup"]
 experimental-index = []
 trial-qa-preview = []
 trial-qa-lookup = []

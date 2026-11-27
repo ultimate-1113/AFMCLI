@@ -1,0 +1,248 @@
+{
+  "base": {
+    "checked": {
+      "asked_then_answered": 0,
+      "by_direction": {
+        "en": 4,
+        "ja": 4
+      },
+      "correct": 4,
+      "correct_null": 0,
+      "correct_positive": 4,
+      "correct_question": 0,
+      "delivered": 8,
+      "followup_correct": 0,
+      "followup_n": 0,
+      "input_tokens": 3667,
+      "max_calls": 2,
+      "median_ms": 590.605,
+      "n": 12,
+      "need_correct": 0,
+      "positive": 12,
+      "retrieval": {},
+      "serious": 1,
+      "status": {
+        "held": 3,
+        "ok": 8,
+        "refused": 1
+      },
+      "total_calls": 13,
+      "unnecessary_question": 0,
+      "unsupported": 0
+    },
+    "draft": {
+      "asked_then_answered": 0,
+      "by_direction": {
+        "en": 5,
+        "ja": 6
+      },
+      "correct": 0,
+      "correct_null": 0,
+      "correct_positive": 0,
+      "correct_question": 0,
+      "delivered": 11,
+      "followup_correct": 0,
+      "followup_n": 0,
+      "input_tokens": 3583,
+      "max_calls": 1,
+      "median_ms": 615.48,
+      "n": 12,
+      "need_correct": 0,
+      "positive": 12,
+      "retrieval": {},
+      "serious": 5,
+      "status": {
+        "refused": 1,
+        "unverified": 11
+      },
+      "total_calls": 12,
+      "unnecessary_question": 0,
+      "unsupported": 0
+    }
+  },
+  "both": {
+    "checked": {
+      "asked_then_answered": 0,
+      "by_direction": {
+        "en": 3,
+        "ja": 5
+      },
+      "correct": 6,
+      "correct_null": 0,
+      "correct_positive": 6,
+      "correct_question": 0,
+      "delivered": 8,
+      "followup_correct": 0,
+      "followup_n": 0,
+      "input_tokens": 5666,
+      "max_calls": 2,
+      "median_ms": 735.1569999999999,
+      "n": 12,
+      "need_correct": 0,
+      "positive": 12,
+      "retrieval": {},
+      "serious": 0,
+      "status": {
+        "held": 3,
+        "ok": 8,
+        "refused": 1
+      },
+      "total_calls": 15,
+      "unnecessary_question": 0,
+      "unsupported": 0
+    },
+    "draft": {
+      "asked_then_answered": 0,
+      "by_direction": {
+        "en": 4,
+        "ja": 5
+      },
+      "correct": 6,
+      "correct_null": 0,
+      "correct_positive": 6,
+      "correct_question": 0,
+      "delivered": 9,
+      "followup_correct": 0,
+      "followup_n": 0,
+      "input_tokens": 4544,
+      "max_calls": 1,
+      "median_ms": 727.7265,
+      "n": 12,
+      "need_correct": 0,
+      "positive": 12,
+      "retrieval": {},
+      "serious": 1,
+      "status": {
+        "held": 2,
+        "refused": 1,
+        "unverified": 9
+      },
+      "total_calls": 12,
+      "unnecessary_question": 0,
+      "unsupported": 0
+    }
+  },
+  "ids": {
+    "checked": {
+      "asked_then_answered": 0,
+      "by_direction": {
+        "en": 2,
+        "ja": 4
+      },
+      "correct": 6,
+      "correct_null": 0,
+      "correct_positive": 6,
+      "correct_question": 0,
+      "delivered": 6,
+      "followup_correct": 0,
+      "followup_n": 0,
+      "input_tokens": 6357,
+      "max_calls": 2,
+      "median_ms": 945.8625,
+      "n": 12,
+      "need_correct": 0,
+      "positive": 12,
+      "retrieval": {},
+      "serious": 0,
+      "status": {
+        "held": 5,
+        "ok": 6,
+        "refused": 1
+      },
+      "total_calls": 18,
+      "unnecessary_question": 0,
+      "unsupported": 0
+    },
+    "draft": {
+      "asked_then_answered": 0,
+      "by_direction": {
+        "en": 5,
+        "ja": 6
+      },
+      "correct": 5,
+      "correct_null": 0,
+      "correct_positive": 5,
+      "correct_question": 0,
+      "delivered": 11,
+      "followup_correct": 0,
+      "followup_n": 0,
+      "input_tokens": 4206,
+      "max_calls": 1,
+      "median_ms": 711.5740000000001,
+      "n": 12,
+      "need_correct": 0,
+      "positive": 12,
+      "retrieval": {},
+      "serious": 6,
+      "status": {
+        "refused": 1,
+        "unverified": 11
+      },
+      "total_calls": 12,
+      "unnecessary_question": 0,
+      "unsupported": 0
+    }
+  },
+  "protection": {
+    "checked": {
+      "asked_then_answered": 0,
+      "by_direction": {
+        "en": 1,
+        "ja": 5
+      },
+      "correct": 5,
+      "correct_null": 0,
+      "correct_positive": 5,
+      "correct_question": 0,
+      "delivered": 6,
+      "followup_correct": 0,
+      "followup_n": 0,
+      "input_tokens": 6712,
+      "max_calls": 2,
+      "median_ms": 1022.9365,
+      "n": 12,
+      "need_correct": 0,
+      "positive": 12,
+      "retrieval": {},
+      "serious": 0,
+      "status": {
+        "held": 5,
+        "ok": 6,
+        "refused": 1
+      },
+      "total_calls": 20,
+      "unnecessary_question": 0,
+      "unsupported": 0
+    },
+    "draft": {
+      "asked_then_answered": 0,
+      "by_direction": {
+        "en": 2,
+        "ja": 3
+      },
+      "correct": 3,
+      "correct_null": 0,
+      "correct_positive": 3,
+      "correct_question": 0,
+      "delivered": 5,
+      "followup_correct": 0,
+      "followup_n": 0,
+      "input_tokens": 3842,
+      "max_calls": 1,
+      "median_ms": 657.2185,
+      "n": 12,
+      "need_correct": 0,
+      "positive": 12,
+      "retrieval": {},
+      "serious": 1,
+      "status": {
+        "held": 6,
+        "refused": 1,
+        "unverified": 5
+      },
+      "total_calls": 12,
+      "unnecessary_question": 0,
+      "unsupported": 0
+    }
+  }
+}

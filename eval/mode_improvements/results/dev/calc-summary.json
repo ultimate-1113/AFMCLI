@@ -1,0 +1,63 @@
+{
+  "base": {
+    "formula": {
+      "asked_then_answered": 0,
+      "by_direction": {
+        "en": 4,
+        "ja": 4
+      },
+      "correct": 2,
+      "correct_null": 0,
+      "correct_positive": 2,
+      "correct_question": 0,
+      "delivered": 8,
+      "followup_correct": 0,
+      "followup_n": 0,
+      "input_tokens": 2443,
+      "max_calls": 1,
+      "median_ms": 418.53700000000003,
+      "n": 8,
+      "need_correct": 0,
+      "positive": 4,
+      "retrieval": {},
+      "serious": 6,
+      "status": {
+        "review": 8
+      },
+      "total_calls": 8,
+      "unnecessary_question": 0,
+      "unsupported": 4
+    }
+  },
+  "candidate": {
+    "formula": {
+      "asked_then_answered": 0,
+      "by_direction": {
+        "en": 2,
+        "ja": 2
+      },
+      "correct": 8,
+      "correct_null": 4,
+      "correct_positive": 4,
+      "correct_question": 0,
+      "delivered": 4,
+      "followup_correct": 0,
+      "followup_n": 0,
+      "input_tokens": 4360,
+      "max_calls": 1,
+      "median_ms": 597.9055000000001,
+      "n": 8,
+      "need_correct": 4,
+      "positive": 4,
+      "retrieval": {},
+      "serious": 0,
+      "status": {
+        "held": 4,
+        "review": 4
+      },
+      "total_calls": 8,
+      "unnecessary_question": 0,
+      "unsupported": 0
+    }
+  }
+}

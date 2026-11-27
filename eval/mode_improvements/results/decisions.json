@@ -1,0 +1,56 @@
+{
+  "cautious": {
+    "adopt": false,
+    "criteria": {
+      "confirmed_plus_two": true,
+      "latency": true,
+      "unnecessary_questions": true,
+      "unsupported": false,
+      "useful_questions": false
+    }
+  },
+  "checked": {
+    "adopt": false,
+    "criteria": {
+      "bounded_calls": true,
+      "delivery": false,
+      "each_direction": false,
+      "precision": false,
+      "serious": true
+    }
+  },
+  "draft": {
+    "adopt": false,
+    "criteria": {
+      "at_most_one_call": true,
+      "delivery": false,
+      "serious_halved": true
+    }
+  },
+  "formula": {
+    "adopt": false,
+    "criteria": {
+      "confirmed": false,
+      "named_missing": false,
+      "unsupported": false
+    }
+  },
+  "lookup": {
+    "adopt": true,
+    "criteria": {
+      "confirmed_preserved": true,
+      "latency": true,
+      "unsupported_reduced": true
+    }
+  },
+  "preview": {
+    "adopt": false,
+    "criteria": {
+      "at_most_one_call": true,
+      "confirmed_within_one": false,
+      "latency": true,
+      "token_budget": false,
+      "unsupported_halved": false
+    }
+  }
+}

@@ -1,0 +1,124 @@
+{
+  "base": {
+    "checked": {
+      "asked_then_answered": 0,
+      "by_direction": {
+        "en": 6,
+        "ja": 18
+      },
+      "correct": 14,
+      "correct_null": 0,
+      "correct_positive": 14,
+      "correct_question": 0,
+      "delivered": 24,
+      "followup_correct": 0,
+      "followup_n": 0,
+      "input_tokens": 13665,
+      "max_calls": 2,
+      "median_ms": 638.7485,
+      "n": 40,
+      "need_correct": 0,
+      "positive": 40,
+      "retrieval": {},
+      "serious": 7,
+      "status": {
+        "held": 16,
+        "ok": 24
+      },
+      "total_calls": 49,
+      "unnecessary_question": 0,
+      "unsupported": 0
+    },
+    "draft": {
+      "asked_then_answered": 0,
+      "by_direction": {
+        "en": 20,
+        "ja": 19
+      },
+      "correct": 5,
+      "correct_null": 0,
+      "correct_positive": 5,
+      "correct_question": 0,
+      "delivered": 39,
+      "followup_correct": 0,
+      "followup_n": 0,
+      "input_tokens": 12111,
+      "max_calls": 1,
+      "median_ms": 618.7815,
+      "n": 40,
+      "need_correct": 0,
+      "positive": 40,
+      "retrieval": {},
+      "serious": 19,
+      "status": {
+        "refused": 1,
+        "unverified": 39
+      },
+      "total_calls": 40,
+      "unnecessary_question": 0,
+      "unsupported": 0
+    }
+  },
+  "candidate": {
+    "checked": {
+      "asked_then_answered": 0,
+      "by_direction": {
+        "en": 8,
+        "ja": 11
+      },
+      "correct": 16,
+      "correct_null": 0,
+      "correct_positive": 16,
+      "correct_question": 0,
+      "delivered": 19,
+      "followup_correct": 0,
+      "followup_n": 0,
+      "input_tokens": 23133,
+      "max_calls": 2,
+      "median_ms": 1125.782,
+      "n": 40,
+      "need_correct": 0,
+      "positive": 40,
+      "retrieval": {},
+      "serious": 0,
+      "status": {
+        "held": 20,
+        "ok": 19,
+        "refused": 1
+      },
+      "total_calls": 62,
+      "unnecessary_question": 0,
+      "unsupported": 0
+    },
+    "draft": {
+      "asked_then_answered": 0,
+      "by_direction": {
+        "en": 16,
+        "ja": 14
+      },
+      "correct": 19,
+      "correct_null": 0,
+      "correct_positive": 19,
+      "correct_question": 0,
+      "delivered": 30,
+      "followup_correct": 0,
+      "followup_n": 0,
+      "input_tokens": 15086,
+      "max_calls": 1,
+      "median_ms": 744.2195,
+      "n": 40,
+      "need_correct": 0,
+      "positive": 40,
+      "retrieval": {},
+      "serious": 7,
+      "status": {
+        "held": 9,
+        "refused": 1,
+        "unverified": 30
+      },
+      "total_calls": 40,
+      "unnecessary_question": 0,
+      "unsupported": 0
+    }
+  }
+}
