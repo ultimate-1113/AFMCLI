@@ -1,0 +1,47 @@
+{
+  "base_sha256": "183499118d637a2b0ea86493898a1b9bb4aac706c8cd7b05b00bd506278912af",
+  "baseline_commit": "beeb6944946471e12c5de43834f87a84c32ca9f4",
+  "candidate_commit": "6005d46f54546e8069e0e3601b628e1e01a1e0d6",
+  "cargo_features": [
+    "trial-qa-preview",
+    "trial-qa-lookup",
+    "trial-qa-cautious",
+    "trial-calculation",
+    "trial-draft-ids",
+    "trial-draft-protection",
+    "trial-checked-ids",
+    "trial-checked-protection"
+  ],
+  "development_sha256": {
+    "calc": "3db092b8f1b9ff1b2febc30570de50840f7ebb7ede50516dba285629672d5835",
+    "qa": "5361086c1bcfc702f0911a2d4531609fc57089bfd83928a1149c1414fd4a3914",
+    "translation": "4a28f876fbaed2181cf78a7fb57f202b2c0b16ead8d629c0eb728946fc422169"
+  },
+  "lock": "aa96ba905390be92dd1584696c346041d30b269a15cb7d4bd7f0fda25e9c8a32",
+  "modes": {
+    "cautious": {
+      "binary_sha256": "bc50551946e403e9652f4ab968c19859f88350cd3a0b599aa206756ea2c948e3",
+      "variant": "candidate"
+    },
+    "checked": {
+      "binary_sha256": "bc50551946e403e9652f4ab968c19859f88350cd3a0b599aa206756ea2c948e3",
+      "variant": "both"
+    },
+    "draft": {
+      "binary_sha256": "bc50551946e403e9652f4ab968c19859f88350cd3a0b599aa206756ea2c948e3",
+      "variant": "both"
+    },
+    "formula": {
+      "binary_sha256": "bc50551946e403e9652f4ab968c19859f88350cd3a0b599aa206756ea2c948e3",
+      "variant": "candidate"
+    },
+    "lookup": {
+      "binary_sha256": "bc50551946e403e9652f4ab968c19859f88350cd3a0b599aa206756ea2c948e3",
+      "variant": "candidate"
+    },
+    "preview": {
+      "binary_sha256": "bc50551946e403e9652f4ab968c19859f88350cd3a0b599aa206756ea2c948e3",
+      "variant": "candidate"
+    }
+  }
+}
