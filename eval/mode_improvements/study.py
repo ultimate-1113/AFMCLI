@@ -148,14 +148,18 @@ def save_rows(path, rows):
 
 
 def schedule(track, split, modes, arms):
+    per_stratum={}
     for i,c in enumerate(cases(track,split)):
         shift=i%len(modes)
-        for j,mode in enumerate(modes[shift:]+modes[:shift]):
+        stratum=(c["language"],c.get("tier",""),c.get("positive",True))
+        offset=per_stratum.get(stratum,0) + int(sha(encode(stratum))[:8],16)
+        per_stratum[stratum]=per_stratum.get(stratum,0)+1
+        for mode in modes[shift:]+modes[:shift]:
             stages=[("initial",c)]
             if mode=="cautious" and c.get("askable"):
                 stages.append(("followup",panel(track).followup(c)))
             for si,(stage,current) in enumerate(stages):
-                n=(i+j+si)%len(arms)
+                n=(offset+MODES[track].index(mode)+si)%len(arms)
                 for arm in arms[n:]+arms[:n]:
                     yield c["id"], current, mode, stage, arm
 
