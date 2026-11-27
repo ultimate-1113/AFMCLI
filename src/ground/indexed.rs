@@ -123,6 +123,14 @@ pub(super) struct Scope {
     speaker: Option<usize>,
 }
 impl Scope {
+    #[cfg(any(
+        feature = "trial-qa-preview",
+        feature = "trial-qa-lookup",
+        feature = "trial-qa-cautious"
+    ))]
+    pub(super) fn document(self) -> usize {
+        self.doc + 1
+    }
     pub(super) fn headers(self) -> impl Iterator<Item = usize> {
         [
             self.title,

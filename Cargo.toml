@@ -10,6 +10,14 @@ include = ["src/**", "tests/**", "skills/*/SKILL.md", "tools/search/**", "Cargo.
 
 [features]
 experimental-index = []
+trial-qa-preview = []
+trial-qa-lookup = []
+trial-qa-cautious = []
+trial-draft-ids = []
+trial-draft-protection = []
+trial-checked-ids = []
+trial-checked-protection = []
+trial-calculation = []
 
 [dependencies]
 clap = { version = "4.5", features = ["derive"] }

@@ -47,7 +47,7 @@ impl Finding {
     }
 }
 
-static STATUS: LazyLock<Regex> = LazyLock::new(|| {
+pub(super) static STATUS: LazyLock<Regex> = LazyLock::new(|| {
     Regex::new(r"(?ix)
     \b(pending|tentative(?:ly)?|propos(?:al|ed)|suggested|withdraw\w*|withdrew|retract\w*|revok\w*|
     cancell?ed|unconfirmed|undecided|unassigned|unspecified|unapproved|awaiting|unknown|
@@ -147,7 +147,7 @@ pub(super) fn field_conflict(question: &str, clause: &str, value: &str) -> bool 
 
 // Reject an explicit different named entity in the same grammatical role. Leave
 // pronouns, omitted subjects, and clauses mentioning multiple entities to the readers.
-fn subject_conflict(question: &str, clause: &str, value: &str) -> bool {
+pub(super) fn subject_conflict(question: &str, clause: &str, value: &str) -> bool {
     static NAMED: LazyLock<Vec<Regex>> = LazyLock::new(|| {
         [
             r"\b([A-Z][A-Za-z0-9-]*)\s+(team|group|division|department)\b",

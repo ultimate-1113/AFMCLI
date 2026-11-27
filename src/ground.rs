@@ -12,8 +12,16 @@ use std::collections::{BTreeMap, BTreeSet};
 mod arbiter;
 mod checked;
 mod compact;
+#[cfg(any(feature = "trial-qa-lookup", feature = "trial-qa-cautious"))]
+mod decision;
 mod indexed;
 mod numbered;
+#[cfg(any(
+    feature = "trial-qa-preview",
+    feature = "trial-qa-lookup",
+    feature = "trial-qa-cautious"
+))]
+mod passages;
 #[cfg(feature = "experimental-index")]
 mod postcheck;
 pub(crate) mod preview;
@@ -443,6 +451,19 @@ fn summarize(engine: &mut Engine<'_>, source: &str, n: usize, focus: &str) -> Ru
     }
 }
 pub fn execute(engine: &mut Engine<'_>, job: &Job) -> Run<Output> {
+    #[cfg(any(feature = "trial-qa-lookup", feature = "trial-qa-cautious"))]
+    if let Job::Answer { question, source } = job {
+        let trial = match engine.metrics.answer_mode {
+            #[cfg(feature = "trial-qa-lookup")]
+            Some(crate::engine::AnswerMode::Lookup) => true,
+            #[cfg(feature = "trial-qa-cautious")]
+            Some(crate::engine::AnswerMode::Cautious) => true,
+            _ => false,
+        };
+        if trial && let Some(result) = decision::answer(engine, source, question)? {
+            return Ok(result);
+        }
+    }
     #[cfg(feature = "experimental-index")]
     if engine.policy.compact == Some(ContextMode::IndexGuard) {
         engine.policy.compact = Some(ContextMode::Indexed);

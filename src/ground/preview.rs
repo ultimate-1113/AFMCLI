@@ -142,7 +142,108 @@ fn candidate(source: &str, parts: &[(usize, &str)], v: &Value) -> Result<Option<
     }))
 }
 
+#[cfg(feature = "trial-qa-preview")]
+fn scoped_answer(engine: &mut Engine<'_>, source: &str, question: &str) -> Run<Output> {
+    use super::passages::{self, Corpus};
+    let lines = document::segments(source);
+    passages::init_trace(engine, "packet_preview", lines.len());
+    if lines.is_empty()
+        || source.len() > passages::BYTE_LIMIT
+        || lines.len() > passages::ROW_LIMIT
+        || question.len() > 4096
+    {
+        return Err(Fail::Held(
+            "source or question exceeds the local excerpt index limit".into(),
+        ));
+    }
+    let corpus = Corpus::new(lines, question);
+    let selected = corpus.select(MAX_PASSAGES, MAX_BYTES);
+    let (parts, ranges) = if source.len() <= MAX_BYTES && corpus.rows.len() <= MAX_PASSAGES {
+        let mut ranges = Vec::<crate::engine::SourceRange>::new();
+        for i in 0..corpus.rows.len() {
+            let mut row = corpus.range(i);
+            if let Some(last) = ranges
+                .last_mut()
+                .filter(|last| last.document_id == row.document_id)
+            {
+                last.last_segment_id = row.last_segment_id;
+            } else {
+                if let Some(last) = ranges.last_mut() {
+                    last.end_byte = row.start_byte;
+                } else {
+                    row.start_byte = 0;
+                }
+                ranges.push(row);
+            }
+        }
+        ranges.last_mut().unwrap().end_byte = source.len();
+        (vec![(0, source)], ranges)
+    } else {
+        (
+            selected
+                .iter()
+                .map(|&i| (corpus.rows[i].start, corpus.rows[i].text))
+                .collect(),
+            selected.iter().map(|&i| corpus.range(i)).collect(),
+        )
+    };
+    let rows: Vec<_> = parts
+        .iter()
+        .enumerate()
+        .map(|(i, (_, s))| json!([i + 1, s]))
+        .collect();
+    let req = request(
+        "Identify the matching entity and record at the time asked, then read the property requested from that record. A date, edition, target or condition that selects a record is not its property value. Use all pertinent passages; an applicable cancellation removes an earlier decision and a reinstatement restores it. A plan or example applies only to its stated case. Copy the shortest exact property value, its verbatim supporting clause (quote) and passage number. Without an applicable value use missing, 0 and two empty strings.",
+        json!({"question":question,"requested_field":corpus.field,"passages":rows}),
+        Some(contract::object([
+            (
+                "state".into(),
+                json!({"type":"string","enum":["set","missing"]}),
+            ),
+            ("passage".into(), json!({"type":"integer"})),
+            ("quote".into(), json!({"type":"string"})),
+            ("value".into(), json!({"type":"string"})),
+        ])),
+    );
+    let before = engine.metrics.calls;
+    let repairs = std::mem::replace(&mut engine.policy.repairs, 0);
+    let result = engine.structured(req, |v| {
+        let Some(mut ev) = candidate(source, &parts, v)? else {
+            return Ok(None);
+        };
+        let Some(i) = ev.spans.first().and_then(|s| corpus.containing(s)) else {
+            return Ok(None);
+        };
+        if let Some((_, property)) = corpus.selected_property(question, &selected, i, &ev.value) {
+            return Ok(Some(property));
+        }
+        if !corpus.supports(question, i, &ev.value) {
+            return Ok(None);
+        }
+        let latest = corpus.decisive(question, &selected, i, &ev.value);
+        if latest != i {
+            let row = corpus.rows[latest];
+            ev.spans = document::locate(row.text, row.start, &ev.value)?;
+        }
+        Ok(Some(ev))
+    });
+    engine.policy.repairs = repairs;
+    passages::record(engine, ranges, before);
+    let evidence = result?.ok_or_else(|| {
+        Fail::Held("the selected excerpts did not establish an applicable answer".into())
+    })?;
+    let mut output = Output::new("review", json!({"answer":evidence}));
+    output
+        .notes
+        .push("Candidate from one reading of the selected source passages.".into());
+    Ok(output)
+}
+
 pub(crate) fn answer(engine: &mut Engine<'_>, source: &str, question: &str) -> Run<Output> {
+    #[cfg(feature = "trial-qa-preview")]
+    if engine.metrics.answer_mode == Some(crate::engine::AnswerMode::Preview) {
+        return scoped_answer(engine, source, question);
+    }
     let rows = document::segments(source);
     engine.metrics.context = Some(ContextUsage {
         method: "packet_preview",
@@ -279,7 +380,16 @@ mod tests {
         let context = out.metrics.context.unwrap();
         assert_eq!(context.retained_segments, context.source_segments);
         assert_eq!(context.selection_windows, 0);
+        #[cfg(not(feature = "trial-qa-preview"))]
         assert!(context.retrieval.is_none());
+        #[cfg(feature = "trial-qa-preview")]
+        {
+            let rounds = context.retrieval.unwrap().rounds;
+            assert_eq!(rounds.len(), 1);
+            assert!(rounds[0].sent);
+            assert_eq!(rounds[0].ranges[0].start_byte, 0);
+            assert_eq!(rounds[0].ranges[0].end_byte, source.len());
+        }
     }
 
     #[test]

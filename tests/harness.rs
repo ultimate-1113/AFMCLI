@@ -54,6 +54,12 @@ fn stable_lookup_and_cautious_send_the_measured_requests() {
         (AnswerMode::Lookup, ContextMode::Indexed),
         (AnswerMode::Cautious, ContextMode::IndexChecked),
     ] {
+        // Byte-identical compatibility applies to each mode whose trial is disabled.
+        if (mode == AnswerMode::Lookup && cfg!(feature = "trial-qa-lookup"))
+            || (mode == AnswerMode::Cautious && cfg!(feature = "trial-qa-cautious"))
+        {
+            continue;
+        }
         let call = |named: bool| {
             let mut requests = Vec::new();
             let mut model = Fake {
