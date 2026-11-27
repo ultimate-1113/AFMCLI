@@ -100,12 +100,19 @@ def retrieval(case, record):
 
 def observe(binary, job):
     start = perf_counter()
+    def failed(message):
+        return dict(task=job["task"],status="error",result=None,notes=[message],metrics={})
     try:
         proc = subprocess.run([str(binary),"--timeout","45","run"],input=encode(job),capture_output=True,timeout=360)
-        require(proc.returncode in (0,2,3) and proc.stdout, "missing CLI JSON")
-        record = json.loads(proc.stdout)
+        if proc.returncode not in (0,2,3) or not proc.stdout:
+            record=failed("missing CLI response (exit "+str(proc.returncode)+")")
+        else:
+            value=json.loads(proc.stdout)
+            record=value if isinstance(value,dict) and {"task","status","result","metrics"}<=value.keys() else failed("invalid CLI record")
     except subprocess.TimeoutExpired:
-        record = dict(task=job["task"],status="error",result=None,notes=["study wall-time limit"],metrics={})
+        record=failed("study wall-time limit")
+    except (OSError,UnicodeError,json.JSONDecodeError):
+        record=failed("could not start CLI or decode its response")
     return record, round((perf_counter()-start)*1000,3)
 
 
