@@ -1,25 +1,11 @@
 """Independent Japanese change notices for the confirmatory four-document probe (Python 3.9)."""
 from collections import Counter
-from importlib import import_module, util
-from pathlib import Path
 
+if __package__:
+    from . import panel as _BASE
+else:
+    import panel as _BASE
 
-def _load_assembly():
-    # The published panel uses eval/handoff/panel.py. In the authoring checkout
-    # both stand-alone panel files are in target/ and can also be loaded directly.
-    try:
-        return import_module("eval.handoff.panel")
-    except ModuleNotFoundError as exc:
-        if exc.name not in {"eval", "eval.handoff", "eval.handoff.panel"}:
-            raise
-    path = Path(__file__).with_name("handoff_panel.py")
-    spec = util.spec_from_file_location("_locked_notice_panel", path)
-    module = util.module_from_spec(spec)
-    spec.loader.exec_module(module)
-    return module
-
-
-_BASE = _load_assembly()
 SPECS = [
     {
         "id": "notice-x-s01", "size": "short", "kind": "superseded_and_replaced",
