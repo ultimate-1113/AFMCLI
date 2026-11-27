@@ -222,7 +222,7 @@ def replay(track,split,modes,lock,path,arms):
     rows=load_rows(path)
     require(bool(rows),"no saved trials")
     fingerprints={}
-    expected=set()
+    expected=[]
     selection = json.loads((path.parent.parent/"selection.json").read_text()) if split=="test" else None
     if selection:
         require(selection["lock"]==lock and arms==["base","candidate"],"unexpected test selection")
@@ -235,8 +235,10 @@ def replay(track,split,modes,lock,path,arms):
             fixed = selection["base_sha256"] if arm=="base" else selection["modes"][mode]["binary_sha256"]
             require(stable==fixed, "replay used a different binary from the frozen selection")
         validate(r,c,exp_job(c,track,mode),track,split,stable,lock)
-        expected.add(k)
-    require(set(rows)==expected,"unplanned extra trials")
+        expected.append(k)
+    require(set(rows)==set(expected),"unplanned extra trials")
+    if split=="test":
+        require(list(rows)==expected,"heldout trial order differs from its counterbalanced schedule")
     return criteria.summary(rows.values())
 
 

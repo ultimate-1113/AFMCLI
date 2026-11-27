@@ -4,6 +4,7 @@ import json
 from pathlib import Path
 
 import criteria
+import diagnose
 import study
 
 
@@ -28,6 +29,7 @@ def main():
     selection=read(root/"selection.json")
     final_decisions={}
     counts={}
+    differences={}
     for track,modes in study.MODES.items():
         dev=root/"dev"/(track+".jsonl")
         test=root/"test"/(track+".jsonl")
@@ -41,7 +43,13 @@ def main():
         save_or_verify(root/"dev"/(track+"-summary.json"),d,args.write_summaries)
         save_or_verify(root/"test"/(track+"-summary.json"),m,args.write_summaries)
         final_decisions.update(criteria.decisions(m))
-        counts[track]=[len(study.load_rows(f)) for f in (dev,test)]
+        observed=study.load_rows(test)
+        differences[track]=diagnose.paired(observed.values())
+        if track=="qa":
+            by_id={c["id"]:c for c in study.cases(track,"test")}
+            differences["qa_evidence_on_misses"]=diagnose.qa(observed.values(),by_id,study.panel(track))
+        counts[track]=[len(study.load_rows(dev)),len(observed)]
+    save_or_verify(root/"differences.json",differences,args.write_summaries)
     save_or_verify(root/"decisions.json",final_decisions,args.write_summaries)
     warm=read(root/"search"/"warm.json")
     cold=read(root/"search"/"cold.json")

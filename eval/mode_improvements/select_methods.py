@@ -7,12 +7,22 @@ import criteria
 import study
 
 
+def flags(variants):
+    selected=["trial-qa-preview","trial-qa-lookup","trial-qa-cautious","trial-calculation"]
+    for mode,arm in variants.items():
+        for variant in ("ids","protection"):
+            if arm in (variant,"both"):
+                selected.append(f"trial-{mode}-{variant}")
+    return selected
+
+
 def main():
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument("--results",type=Path,required=True,help="directory containing the dev subdirectory")
     p.add_argument("--base",type=Path)
     p.add_argument("--candidate",type=Path)
     p.add_argument("--source",help="tested candidate commit")
+    p.add_argument("--cargo-features",action="store_true",help="print the selected features for compiling the test binary")
     args=p.parse_args()
     lock=study.lock_check()
     arms=["base","ids","protection","both"]
@@ -20,7 +30,7 @@ def main():
                       args.results/"dev"/"translation.jsonl",arms)
     variants=criteria.choose_translation(data)
     if not args.candidate:
-        print(json.dumps(variants, sort_keys=True))
+        print(",".join(flags(variants)) if args.cargo_features else json.dumps(variants, sort_keys=True))
         return
     if not args.base or not args.source or len(args.source)!=40:
         p.error("locking requires both binaries and the tested source commit")
@@ -30,7 +40,7 @@ def main():
     methods = {m: {"variant":variants.get(m,"candidate"), "binary_sha256":sourcesha}
                for modes in study.MODES.values() for m in modes}
     record=dict(lock=lock,baseline_commit=study.BASE,base_sha256=study.sha(args.base.read_bytes()),
-                candidate_commit=args.source,modes=methods,
+                candidate_commit=args.source,cargo_features=flags(variants),modes=methods,
                 development_sha256={t:study.sha((args.results/"dev"/(t+".jsonl")).read_bytes()) for t in study.MODES})
     for t in study.MODES:
         rows=study.load_rows(args.results/"dev"/(t+".jsonl"))

@@ -1,0 +1,16 @@
+{
+  "available": true,
+  "chip": "Apple M6",
+  "context_tokens": 8192,
+  "decoding": "greedy",
+  "internal_ssd_nominal_gb": 256,
+  "machine": "Mac mini",
+  "memory_bytes": 34359738368,
+  "model": "AFM 3 Core Advanced",
+  "model_storage": "internal SSD",
+  "os": "Version 27.2.1 (Build 26B131)",
+  "parallel_generations": 1,
+  "per_generation_input_budget": 6200,
+  "route": "system",
+  "study_storage": "external SSD"
+}
