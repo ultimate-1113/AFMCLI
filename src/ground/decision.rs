@@ -1,6 +1,6 @@
 //! Named QA trials. Each independent reading receives only the question and original passages.
 use super::{
-    checked, indexed,
+    checked, choice, indexed,
     passages::{self, Corpus},
 };
 use crate::{
@@ -85,7 +85,7 @@ fn reader(q: &str, c: &Corpus<'_>, ids: &[usize], cautious: bool, independent: b
     ];
     if cautious {
         instructions.push_str(" Only if the user must supply a date, intended target or condition to select among source rules, set state to date/target/condition. Copy a short selector from its passage into value, and a second source selector into alternative if present. Write ONE specific clarification question in the user's language. Pending approval or absent evidence is not a clarification. For all other states leave alternative and clarification empty.");
-        if independent && gap(c, ids).is_some() {
+        if independent && ids.iter().any(|&i| choice::axis(c.rows[i].text).is_some()) {
             instructions.push_str(" The records mention an unspecified selection criterion. Check whether the question or a later record supplies it. If two branches give different properties and neither applies uniquely, ask which branch the user means. Cite the passage that contains the first branch selector.");
         }
         fields.extend([
@@ -98,85 +98,6 @@ fn reader(q: &str, c: &Corpus<'_>, ids: &[usize], cautious: bool, independent: b
         json!({"question":q,"requested_field":c.field,"passages":rows}),
         Some(contract::object(fields)),
     )
-}
-
-fn gap<'a>(c: &'a Corpus<'_>, ids: &[usize]) -> Option<(usize, &'a str, &'static str)> {
-    static GAP: LazyLock<Regex> = LazyLock::new(|| {
-        Regex::new(r"(?ix)\b(?:missing|unknown|unspecified|unstated|unclear|unrecorded|unmarked|either|not\s+(?:specified|recorded|stated|indicated)|does\s+not\s+(?:say|specify)|cannot\s+(?:tell|determine))\b|不明|未記入|書かれていない|記されていない|特定でき|区別でき|分から|わから|どちら(?:か|なのか)").unwrap()
-    });
-    static AXES: LazyLock<Vec<(&str, Regex)>> = LazyLock::new(|| {
-        [
-        ("date",r"(?i)\b(?:season|issue date|effective date|date|period|year|month|edition|release)\b|発行日|時期|日付|季節|年度|何月"),
-        ("condition",r"(?i)\b(?:condition|scenario|setting|configuration|operating mode|status of|circumstance|weather)\b|条件|運用状況|設定|天候|稼働状態"),
-        ("target",r"(?i)\b(?:target|subject|recipient|which (?:one|item|site|office|branch|recipient)|identity|destination)\b|対象|どの拠点|宛先|どの個体|目的地"),
-    ].into_iter().map(|(k,r)|(k,Regex::new(r).unwrap())).collect()
-    });
-    ids.iter().rev().find_map(|&i| {
-        let t = c.rows[i].text;
-        if !GAP.is_match(t) {
-            return None;
-        }
-        AXES.iter()
-            .find_map(|(kind, r)| r.find(t).map(|m| (i, m.as_str(), *kind)))
-    })
-}
-
-// Two records can agree on the printed options while explicitly leaving the user's
-// date open. Require an actual gap, and two different dated mappings for the requested field.
-fn open_period(c: &Corpus<'_>, q: &str, ids: &[usize]) -> Option<Reading> {
-    let (at, label, "date") = gap(c, ids)? else {
-        return None;
-    };
-    if c.pending(q, ids) {
-        return None;
-    }
-    static PERIOD: LazyLock<Regex> = LazyLock::new(|| {
-        Regex::new(r"(?ix)\b(?:spring|summer|autumn|fall|winter|monday|tuesday|wednesday|thursday|friday|saturday|sunday|weekdays?|weekends?|\d{4}[-/]\d{1,2}[-/]\d{1,2}|(?:january|february|march|april|may|june|july|august|september|october|november|december)\s+\d{1,2}|\d{1,2}\s+(?:january|february|march|april|may|june|july|august|september|october|november|december))\b|(?:春|夏|秋|冬)(?:号|版|期)|[0-9０-９]+月[0-9０-９]+日|平日|休日|週末").unwrap()
-    });
-    let mut branches = Vec::<String>::new();
-    for &i in ids {
-        if let Some(context) = c.branch_context(i) {
-            let mut periods = PERIOD.find_iter(&context);
-            if let Some(p) = periods.next()
-                && periods.next().is_none()
-                && !branches.iter().any(|b| b.eq_ignore_ascii_case(p.as_str()))
-            {
-                branches.push(p.as_str().to_owned());
-            }
-        }
-    }
-    let [a, b] = branches.as_slice() else {
-        return None;
-    };
-    let mentions = |s: &str| {
-        let l = s.to_lowercase();
-        [a, b].iter().any(|p| l.contains(&p.to_lowercase()))
-    };
-    if mentions(q)
-        || ids
-            .iter()
-            .any(|&i| i > at && passages::identifies(c.rows[i].text) && mentions(c.rows[i].text))
-    {
-        return None;
-    }
-    let question = if q.chars().any(|ch| matches!(ch as u32, 0x3040..=0x30ff)) {
-        format!("資料の{label}について、今回当てはまるのは「{a}」と「{b}」のどちらですか？")
-    } else if english_question(q) {
-        format!("Which {label} applies to your record, “{a}” or “{b}”?")
-    } else {
-        return None;
-    };
-    Some(Reading::Clarify {
-        kind: "date".into(),
-        question,
-    })
-}
-
-fn english_question(q: &str) -> bool {
-    static EN: LazyLock<Regex> = LazyLock::new(|| {
-        Regex::new(r"(?i)\b(?:what|which|where|when|how|whose|who|does|did|please|tell me|can you|could you)\b").unwrap()
-    });
-    EN.is_match(q)
 }
 
 fn clarification(v: &Value, q: &str, c: &Corpus<'_>, ids: &[usize], i: usize) -> Option<Reading> {
@@ -216,7 +137,7 @@ fn clarification(v: &Value, q: &str, c: &Corpus<'_>, ids: &[usize], i: usize) ->
         _ => return None,
     }
     let japanese = q.chars().any(|ch| matches!(ch as u32, 0x3040..=0x30ff));
-    let english = english_question(q);
+    let english = choice::english_question(q);
     let raw = v["clarification"].as_str().unwrap_or("").trim();
     let valid_single = raw.chars().count() <= 180
         && raw.ends_with(['?', '？'])
@@ -369,7 +290,11 @@ fn read(
 }
 
 fn resolve(a: Reading, b: Reading, c: &Corpus<'_>, q: &str) -> (Reading, &'static str) {
-    let strong = |i: usize| passages::affirmed(c.rows[i].text) || BINDING.is_match(c.rows[i].text);
+    let strong = |i: usize| {
+        passages::affirmed(c.rows[i].text)
+            || BINDING.is_match(c.rows[i].text)
+            || Corpus::firsthand(c.rows[i].text)
+    };
     let later = |set: usize, unset: usize| {
         set > unset
             && passages::affirmed(c.rows[set].text)
@@ -398,7 +323,9 @@ fn resolve(a: Reading, b: Reading, c: &Corpus<'_>, q: &str) -> (Reading, &'stati
             if i != j && !passages::historical_or_hypothetical(q) =>
         {
             let newer = (*i).max(*j);
-            if passages::revision(c.rows[newer].text) && strong(newer) {
+            if (passages::revision(c.rows[newer].text) || Corpus::firsthand(c.rows[newer].text))
+                && strong(newer)
+            {
                 (if i > j { a } else { b }, "scoped_later_assignment")
             } else {
                 (Reading::Missing, "conflicting_values")
@@ -410,10 +337,14 @@ fn resolve(a: Reading, b: Reading, c: &Corpus<'_>, q: &str) -> (Reading, &'stati
         (Reading::Unset(i), Reading::Set { row: j, .. }) if later(*j, *i) => {
             (b, "scoped_reinstatement")
         }
-        (Reading::Missing, Reading::Set { row, .. }) if strong(*row) => {
+        (Reading::Missing, Reading::Set { row, evidence })
+            if strong(*row) || c.bound_value(q, *row, &evidence.value) =>
+        {
             (b, "independent_source_assignment")
         }
-        (Reading::Set { row, .. }, Reading::Missing) if strong(*row) => {
+        (Reading::Set { row, evidence }, Reading::Missing)
+            if strong(*row) || c.bound_value(q, *row, &evidence.value) =>
+        {
             (a, "grounded_source_assignment")
         }
         (Reading::Clarify { kind: x, .. }, Reading::Clarify { kind: y, .. }) if x == y => {
@@ -450,6 +381,21 @@ pub(super) fn answer(engine: &mut Engine<'_>, source: &str, q: &str) -> Run<Opti
         ..Default::default()
     };
     let incomplete = initial.len() < c.rows.len();
+    if let Some((kind, question)) = choice::question(&c, q, &initial) {
+        check.resolution = "explicit_open_selector";
+        engine.metrics.answer_checks.push(check);
+        return Ok(Some(
+            if cautious {
+                Reading::Clarify {
+                    kind: kind.into(),
+                    question,
+                }
+            } else {
+                Reading::Missing
+            }
+            .output(),
+        ));
+    }
     let need = cautious
         || match &first {
             Reading::Set { .. } => c.conflict_in(q, &initial),
@@ -471,8 +417,24 @@ pub(super) fn answer(engine: &mut Engine<'_>, source: &str, q: &str) -> Run<Opti
     check.second_input_tokens = engine.metrics.sent_input_tokens - before;
     check.second_state = Some(second.state());
     check.second_value = second.reported();
-    let (result, resolution) = if cautious && let Some(clarify) = open_period(&c, q, &final_ids) {
-        (clarify, "open_period_in_source")
+    let (result, resolution) = if let Some((kind, question)) = choice::question(&c, q, &final_ids) {
+        (
+            if cautious {
+                Reading::Clarify {
+                    kind: kind.into(),
+                    question,
+                }
+            } else {
+                Reading::Missing
+            },
+            "explicit_open_selector",
+        )
+    } else if matches!(first, Reading::Missing)
+        && matches!(second, Reading::Missing)
+        && let Some((row, evidence)) = c.witness(q, &final_ids)
+        && !c.pending(q, &final_ids)
+    {
+        (Reading::Set { row, evidence }, "single_explicit_witness")
     } else {
         resolve(first, second, &c, q)
     };

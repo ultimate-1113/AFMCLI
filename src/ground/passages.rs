@@ -1,5 +1,5 @@
 //! A local, bounded selector for the named QA readers. Ranges always refer to original bytes.
-use super::{checked, indexed};
+use super::{checked, choice, indexed};
 #[cfg(feature = "trial-qa-preview")]
 use crate::document::Span;
 use crate::{
@@ -21,7 +21,7 @@ static POSITIVE: LazyLock<Regex> = LazyLock::new(|| {
         r"(?ix)
     \b(?:approv\w*|assign\w*|reassign\w*|reinstat\w*|restor\w*|reconfirm\w*|confirm\w*|
     authori[sz]\w*|adopt\w*|issu(?:e|ed)|ratif\w*|designat\w*|select\w*|chosen|chose|
-    sign(?:ed|off)|certif\w*|now\s+valid|back\s+in\s+(?:force|effect))\b|
+    sign(?:ed|off)|certif\w*|sanction(?:s|ed)?|now\s+valid|back\s+in\s+(?:force|effect))\b|
     正式|承認|決裁|採用|確定|決定|指定|付与|発行|選定|再開|復活|差し戻しを解除|有効と|認めた",
     )
     .unwrap()
@@ -37,7 +37,7 @@ static CLOSED: LazyLock<Regex> = LazyLock::new(|| {
 });
 static NEGATED: LazyLock<Regex> = LazyLock::new(|| {
     Regex::new(r"(?ix)
-    \b(?:not|never|no)\s+(?:[\w-]+\s+){0,5}?(?:approved|assigned|confirmed|issued|authorized|signed|adopted|replacement)\b|
+    \b(?:not|never|no)\s+(?:[\w-]+\s+){0,5}?(?:approved|assigned|confirmed|issued|authorized|signed|sanctioned|adopted|replacement)\b|
     未(?:承認|確定|決定|指定|発行)|(?:承認|確定|決定|指定|発行)(?:していない|されていない|されなかった|されず|には至らず)|
     (?:承認|決定|指定)された[^。；;]{0,12}(?:まだない|なかった)").unwrap()
 });
@@ -169,6 +169,7 @@ struct Row {
     decision: bool,
     closed: bool,
     qualified: bool,
+    open_axis: bool,
 }
 
 // Preserve the noun phrase the question explicitly requests, separately from its setup.
@@ -177,12 +178,16 @@ fn requested_field(q: &str) -> Option<String> {
         Regex::new(r"(?i)\b(?:what|which|whose)\s+((?:[a-z][a-z-]*\s+){0,3}[a-z][a-z-]*)\s+(?:was|were|is|are|did|does|do|has|had|will|applies|should|would)\b").unwrap()
     });
     static JA: LazyLock<Regex> = LazyLock::new(|| {
-        Regex::new(r"([\p{Han}\p{Katakana}]{1,8}(?:の名(?:称|前)?|番号|符号|会場|期限|識別色))(?:を|は|が)").unwrap()
+        Regex::new(r"([\p{Han}\p{Katakana}]{1,8}(?:の名(?:称|前)?|名|番号|符号|会場|期限|識別色))(?:を|は|が)").unwrap()
+    });
+    static IMPERATIVE: LazyLock<Regex> = LazyLock::new(|| {
+        Regex::new(r"(?i)\b(?:name|identify|give|state)\s+(?:the\s+)?([a-z-]+(?:\s+[a-z-]+){0,2}?)\s+(?:currently|formerly|listed|recorded|used|on|in|for)\b").unwrap()
     });
     let f = EN
         .captures_iter(q)
         .last()
-        .or_else(|| JA.captures_iter(q).last())?;
+        .or_else(|| JA.captures_iter(q).last())
+        .or_else(|| IMPERATIVE.captures(q))?;
     let f = f.get(1)?.as_str();
     (!f.split_whitespace().any(|s| {
         matches!(
@@ -247,6 +252,7 @@ impl<'a> Corpus<'a> {
                     || indexed::REVISION.is_match(line.text),
                 closed,
                 qualified,
+                open_axis: choice::axis(line.text).is_some(),
             });
             hits.push(matched);
         }
@@ -356,6 +362,36 @@ impl<'a> Corpus<'a> {
             }
         };
         for &i in self.ranked.iter().take(2) {
+            add(&mut centers, i);
+        }
+        // Missing selectors and authoritative source records may use different
+        // words from either branch. Reserve space before adding ordinary neighbors.
+        for &i in self
+            .ranked
+            .iter()
+            .filter(|&&i| self.info[i].open_axis)
+            .take(2)
+        {
+            add(&mut centers, i);
+        }
+        let gaps: Vec<_> = self
+            .info
+            .iter()
+            .enumerate()
+            .filter_map(|(i, r)| r.open_axis.then_some(i))
+            .take(3)
+            .collect();
+        if gaps.len() <= 2 {
+            for i in gaps {
+                add(&mut centers, i);
+            }
+        }
+        for &i in self
+            .ranked
+            .iter()
+            .filter(|&&i| Self::firsthand(self.rows[i].text))
+            .take(3)
+        {
             add(&mut centers, i);
         }
         for kind in 0..3 {
@@ -483,7 +519,6 @@ impl<'a> Corpus<'a> {
         })
     }
 
-    #[cfg(any(feature = "trial-qa-lookup", feature = "trial-qa-cautious"))]
     pub fn pending(&self, q: &str, ids: &[usize]) -> bool {
         ids.iter()
             .rev()
@@ -586,7 +621,6 @@ impl<'a> Corpus<'a> {
         ))
     }
 
-    #[cfg(any(feature = "trial-qa-lookup", feature = "trial-qa-cautious"))]
     pub fn branch_context(&self, i: usize) -> Option<String> {
         let field = self.field.as_deref()?;
         let line = self.rows[i].text;
@@ -594,10 +628,91 @@ impl<'a> Corpus<'a> {
         Some(line.replace(value, " "))
     }
 
+    pub fn firsthand(s: &str) -> bool {
+        static WITNESS: LazyLock<Regex> = LazyLock::new(|| {
+            Regex::new(r"(?ix)\b(?:now\s+(?:records?|shows?|lists?|sanctions?|requires?)|signed\s+(?:the\s+)?(?:new|final|actual)|actually\s+(?:used|recorded)|records?\s+that|recorded\s+on\s+(?:arrival|return)|in\s+force)\b|
+        実物|現物|受取(?:帳|簿)|当時の(?:原本|控え)|と読める|だったとある|原本による|の写しで|と明記").unwrap()
+        });
+        WITNESS.is_match(s)
+    }
+
+    pub fn maps_property(&self, q: &str, i: usize) -> bool {
+        let row = self.rows[i].text;
+        self.field.as_ref().is_some_and(|f| {
+            row.to_ascii_lowercase()
+                .contains(&f.trim_end_matches("の名").to_ascii_lowercase())
+        }) && !self.different(q, i, "")
+    }
+
+    /// Recover an explicit quoted value from one firsthand source only. Require
+    /// multiple query terms outside the quote, and discard multiple possible bindings.
+    pub fn witness(&self, q: &str, ids: &[usize]) -> Option<(usize, Evidence)> {
+        static QUOTED: LazyLock<Regex> =
+            LazyLock::new(|| Regex::new(r#"[「『“"]([^」』”"\r\n]{1,64})[」』”"]"#).unwrap());
+        let tokens = indexed::tokens(q);
+        let mut found = ids.iter().filter_map(|&i| {
+            let l = self.rows[i];
+            if !Self::firsthand(l.text)
+                || checked::STATUS.is_match(l.text)
+                || CONDITIONAL.is_match(l.text)
+                || !self.maps_property(q, i)
+                || (REFERENCE_ONLY.is_match(l.text) && !historical_or_hypothetical(q))
+            {
+                return None;
+            }
+            let mut quotes = QUOTED.captures_iter(l.text);
+            let cap = quotes.next()?;
+            if quotes.next().is_some() {
+                return None;
+            }
+            let v = cap.get(1)?.as_str();
+            if !self.supports(q, i, v)
+                || indexed::tokens(&l.text.replace(v, " "))
+                    .intersection(&tokens)
+                    .take(2)
+                    .count()
+                    != 2
+            {
+                return None;
+            }
+            Some((
+                i,
+                Evidence {
+                    value: v.into(),
+                    spans: document::locate(l.text, l.start, v).ok()?,
+                },
+            ))
+        });
+        let one = found.next()?;
+        found.next().is_none().then_some(one)
+    }
+
+    pub fn bound_value(&self, q: &str, i: usize, value: &str) -> bool {
+        let row = self.rows[i].text;
+        if self.different(q, i, value) || !self.supports(q, i, value) {
+            return false;
+        }
+        Self::firsthand(row)
+            || affirmed(row)
+            || self.maps_property(q, i)
+                && (checked::literal_name(row, value) || self.branch_context(i).is_some())
+            || checked::literal_name(row, value)
+                && (row.contains("は「") || row.contains("が「") || row.contains("に「"))
+    }
+
     /// Veto only linked source statements. A literal name or an unrelated proposal is not a change.
     pub fn supports(&self, q: &str, i: usize, value: &str) -> bool {
         let line = self.rows[i].text;
         if self.different(q, i, value) {
+            return false;
+        }
+        // A title or field label repeated from the question is not its value.
+        let label = q.replace(['の', ' ', '　'], "").to_lowercase();
+        if label.contains(&value.replace(['の', ' ', '　'], "").to_lowercase())
+            && !checked::literal_name(line, value)
+            && !affirmed(line)
+            && !Self::firsthand(line)
+        {
             return false;
         }
         if historical_or_hypothetical(q) {

@@ -143,6 +143,52 @@ fn candidate(source: &str, parts: &[(usize, &str)], v: &Value) -> Result<Option<
 }
 
 #[cfg(feature = "trial-qa-preview")]
+fn recover_passage(
+    c: &super::passages::Corpus<'_>,
+    q: &str,
+    ids: &[usize],
+    parts: &[(usize, &str)],
+    v: &Value,
+) -> Option<Evidence> {
+    if v["state"] != "set" {
+        return None;
+    }
+    let id = v["passage"].as_u64()?.checked_sub(1)?;
+    let &(base, part) = parts.get(usize::try_from(id).ok()?)?;
+    let raw = v["value"].as_str()?.trim();
+    let value = raw.trim_matches(['「', '」', '『', '』', '“', '”', '"']);
+    if value.is_empty() {
+        return None;
+    }
+    // A malformed quotation cannot override a different, well-formed source citation.
+    let quote = v["quote"].as_str()?.trim();
+    if quote != value
+        && !quote.is_empty()
+        && document::locate_parts(parts, quote).is_ok()
+        && !part.contains(quote)
+    {
+        return None;
+    }
+    let spans = document::locate(part, base, value).ok().or_else(|| {
+        let hits = document::locate_parts(parts, value).ok()?;
+        (hits.len() == 1).then_some(hits)
+    })?;
+    let mut matches = spans
+        .iter()
+        .filter_map(|s| c.containing(s))
+        .filter(|i| ids.contains(i) && c.bound_value(q, *i, value));
+    let i = matches.next()?;
+    if matches.next().is_some() {
+        return None;
+    }
+    let row = c.rows[i];
+    Some(Evidence {
+        value: value.into(),
+        spans: document::locate(row.text, row.start, value).ok()?,
+    })
+}
+
+#[cfg(feature = "trial-qa-preview")]
 fn scoped_answer(engine: &mut Engine<'_>, source: &str, question: &str) -> Run<Output> {
     use super::passages::{self, Corpus};
     let lines = document::segments(source);
@@ -208,7 +254,25 @@ fn scoped_answer(engine: &mut Engine<'_>, source: &str, question: &str) -> Run<O
     let before = engine.metrics.calls;
     let repairs = std::mem::replace(&mut engine.policy.repairs, 0);
     let result = engine.structured(req, |v| {
-        let Some(mut ev) = candidate(source, &parts, v)? else {
+        if super::choice::question(&corpus, question, &selected).is_some() {
+            return Ok(None);
+        }
+        let strict = candidate(source, &parts, v);
+        let mut found = match strict {
+            Ok(e) => e,
+            Err(err) if v["state"] == "set" => Some(
+                recover_passage(&corpus, question, &selected, &parts, v)
+                    .or_else(|| corpus.witness(question, &selected).map(|(_, e)| e))
+                    .ok_or(err)?,
+            ),
+            Err(err) => return Err(err),
+        };
+        if found.is_none()
+            && let Some((_, w)) = corpus.witness(question, &selected)
+        {
+            found = Some(w);
+        }
+        let Some(mut ev) = found else {
             return Ok(None);
         };
         let Some(i) = ev.spans.first().and_then(|s| corpus.containing(s)) else {

@@ -11,6 +11,12 @@ use std::collections::{BTreeMap, BTreeSet};
 #[cfg(feature = "experimental-index")]
 mod arbiter;
 mod checked;
+#[cfg(any(
+    feature = "trial-qa-preview",
+    feature = "trial-qa-lookup",
+    feature = "trial-qa-cautious"
+))]
+mod choice;
 mod compact;
 #[cfg(any(feature = "trial-qa-lookup", feature = "trial-qa-cautious"))]
 mod decision;

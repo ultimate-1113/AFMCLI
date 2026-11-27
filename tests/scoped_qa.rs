@@ -328,3 +328,91 @@ fn an_identified_selector_joins_the_requested_property_and_an_open_selector_asks
     assert_eq!(out.status, "ok");
     assert_eq!(out.result["answer"]["value"], "Cedar Station");
 }
+
+#[test]
+fn distant_target_and_prerequisite_branches_are_not_resolved_by_picking_a_value() {
+    let modes = [
+        #[cfg(feature = "trial-qa-cautious")]
+        AnswerMode::Cautious,
+        #[cfg(feature = "trial-qa-lookup")]
+        AnswerMode::Lookup,
+        #[cfg(feature = "trial-qa-preview")]
+        AnswerMode::Preview,
+    ];
+    for (q, first, pivot, second, answer, a, b, reply) in [
+        (
+            "Which desk is assigned to my registration?",
+            "The north office registration desk is Atlas Gate.",
+            "The office for this registration is unspecified.",
+            "The south office registration desk is Pearl Gate.",
+            "Atlas Gate",
+            "north office",
+            "south office",
+            "The registration is for the north office.",
+        ),
+        (
+            "Which container does my return require?",
+            "With the latch fitted, the return requires the Silver Bin container.",
+            "The return receipt does not say whether the latch was fitted or removed.",
+            "If the latch is missing on return, use the Quartz Box container.",
+            "Silver Bin",
+            "fitted",
+            "removed",
+            "The latch was fitted.",
+        ),
+    ] {
+        let mut lines: Vec<_> = (0..150)
+            .map(|i| {
+                format!("Book {i} contains a monochrome drawing of the doorframe and spare rings.")
+            })
+            .collect();
+        lines[10] = first.into();
+        lines[81] = pivot.into();
+        lines[138] = second.into();
+        let s = lines.join("\n");
+        for m in modes {
+            let answer_from = |_: usize, r: &Request| {
+                let p: Value = serde_json::from_str(r.prompt.split_once('\n').unwrap().1).unwrap();
+                let rows = p["passages"].as_array().unwrap();
+                for expected in [first, pivot, second] {
+                    assert!(
+                        rows.iter().any(|row| row[1] == expected),
+                        "{m:?} omitted: {expected}"
+                    );
+                }
+                let id = rows.iter().find(|r| r[1] == first).unwrap()[0]
+                    .as_u64()
+                    .unwrap();
+                let mut v = json!({"state":"set","passage":id,"value":answer});
+                let fields = &r.schema.as_ref().unwrap()["properties"];
+                if fields.get("quote").is_some() {
+                    v["quote"] = json!(first);
+                }
+                if fields.get("clarification").is_some() {
+                    v["alternative"] = json!("");
+                    v["clarification"] = json!("");
+                }
+                v
+            };
+            let (out, _) = run(q, &s, m, answer_from);
+            if m == AnswerMode::Preview {
+                assert_eq!(out.status, "held");
+            } else {
+                assert_eq!(out.status, "abstained");
+            }
+            if m == AnswerMode::Cautious {
+                let ask = out.result["clarification"].as_str().unwrap();
+                assert!(ask.contains(a) && ask.contains(b), "{ask}");
+                assert_eq!(ask.matches(['?', '？']).count(), 1);
+            } else {
+                assert!(out.result.get("clarification").is_none());
+            }
+            let (resolved, _) = run(&format!("{q} {reply}"), &s, m, answer_from);
+            assert_eq!(
+                resolved.result["answer"]["value"], answer,
+                "{m:?} {:?}",
+                resolved.notes
+            );
+        }
+    }
+}
