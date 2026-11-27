@@ -2,10 +2,12 @@
 import argparse
 import json
 from pathlib import Path
+import re
 
 import criteria
 import diagnose
 import study
+import select_methods
 
 
 def read(path):
@@ -19,13 +21,49 @@ def save_or_verify(path, value, write):
         study.require(read(path)==value,"published summary differs: "+path.name)
 
 
+def archive(root, lock):
+    folder=root/"development-round1"
+    manifest=read(folder/"manifest.json")
+    study.require(manifest["baseline"]==study.BASE,"incorrect development baseline")
+    for track,modes in study.MODES.items():
+        panel=manifest["panels"][track]
+        path=folder/(track+".jsonl")
+        arms=["base","ids","protection","both"] if track=="translation" else ["base","candidate"]
+        study.replay(track,"dev",list(modes),lock,path,arms)
+        rows=study.load_rows(path)
+        study.require(len(rows)==panel["n"] and all(
+            row["binary_sha256"]==panel["binary"][row["arm"]] for row in rows.values()
+        ),"archived development fingerprint differs: "+track)
+
+
+def check_defaults(selection, decisions):
+    flags=[]
+    for mode,decision in decisions.items():
+        if not decision["adopt"]:
+            continue
+        if mode in ("draft","checked"):
+            flags.extend(f for f in select_methods.flags({mode:selection["modes"][mode]["variant"]})
+                         if f.startswith("trial-"+mode+"-"))
+        elif mode=="formula":
+            flags.append("trial-calculation")
+        else:
+            flags.append("trial-qa-"+mode)
+    text=(study.HERE.parents[1]/"Cargo.toml").read_text()
+    match=re.search(r"^default\s*=\s*(\[[^\]]*\])",text,re.MULTILINE)
+    default=json.loads(match.group(1)) if match else []
+    study.require(sorted(flags)==sorted(f for f in default if f.startswith("trial-")),
+                  "shipping trial features differ from held-out decisions")
+
+
 def main():
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument("--results",type=Path,default=study.HERE/"results")
     p.add_argument("--write-summaries",action="store_true")
+    p.add_argument("--check-defaults",action="store_true",help="match the production features to the bundled trial")
     args=p.parse_args()
     root=args.results
     lock=study.lock_check()
+    archive(root,lock)
     selection=read(root/"selection.json")
     final_decisions={}
     counts={}
@@ -51,6 +89,8 @@ def main():
         counts[track]=[len(study.load_rows(dev)),len(observed)]
     save_or_verify(root/"differences.json",differences,args.write_summaries)
     save_or_verify(root/"decisions.json",final_decisions,args.write_summaries)
+    if args.check_defaults:
+        check_defaults(selection,final_decisions)
     warm=read(root/"search"/"warm.json")
     cold=read(root/"search"/"cold.json")
     previous=read(study.HERE.parents[1]/"tools"/"search"/"verification-final.json")

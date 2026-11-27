@@ -1,0 +1,31 @@
+{
+  "baseline": "beeb6944946471e12c5de43834f87a84c32ca9f4",
+  "panels": {
+    "calc": {
+      "binary": {
+        "base": "183499118d637a2b0ea86493898a1b9bb4aac706c8cd7b05b00bd506278912af",
+        "candidate": "e4dac9635f28773dd5bc769845b7bf718516434b199c97adddb6ccac5f24d2d7"
+      },
+      "n": 16,
+      "source": "a7e7b2154d3606ebf5e6c1ea1478da2f9463955e"
+    },
+    "qa": {
+      "binary": {
+        "base": "183499118d637a2b0ea86493898a1b9bb4aac706c8cd7b05b00bd506278912af",
+        "candidate": "ae1b3362a3bf5034eed841a569ed6f9794d45cc280b64fa70440efd6c1cbed15"
+      },
+      "n": 78,
+      "source": "9686ecbe0f7cada459a0d1972419303aaabeced4"
+    },
+    "translation": {
+      "binary": {
+        "base": "183499118d637a2b0ea86493898a1b9bb4aac706c8cd7b05b00bd506278912af",
+        "both": "076b7d04ab14e399a688b08dee1e6cefdb5c55688874dd8865d4b4ef73b20e2f",
+        "ids": "3300a7f4728fac9e59cdddca36df7cdf5d1f8f6523a8d3d799dfa238eb75fe76",
+        "protection": "8151d138161ba7494c6aa798c2891e440d1c78071e930fd673f164eec96a9752"
+      },
+      "n": 96,
+      "source": "1b2e982f0c0bd7901aa32558559848029fc3603d"
+    }
+  }
+}
