@@ -1,0 +1,14 @@
+{
+  "cases": {
+    "notice-x-l01": "ebfd54124f345e8c9c5a9a254ed02d48312a0a0cb814d4f60a7693c88aa71fe0",
+    "notice-x-l02": "8d6a03abfdab2288da01718ad26f4901b2c16de2f5dc50e7b877d53961b9aa24",
+    "notice-x-s01": "09d488ecf9a5b5be1d8c58b4613718bdb417dae5e6b0b5bec34e02628f0cdc62",
+    "notice-x-s02": "8662b20db7e23152459f9d01ad4bd1f68fb8e6707083fbdc8ef8ed9864d62f76"
+  },
+  "files": {
+    "extra.py": "163f12b0078aa8a8e63832b51b20c4fc43c3018e22c83315653f227363b3425c",
+    "lock.json": "9d1e6e74e45e56e652ebe7b2af4133aed457d9090800101a86b7fbc7c7f9dbbc",
+    "null-protocol.md": "472e73305c7e225caa514465145cba5441810d0302e8ca54a0fa194237a6689b",
+    "null_guard.py": "01bd6741b7351967a21cfc64c3296fded00cde712b5ca72c7e521c9ee903a457"
+  }
+}
