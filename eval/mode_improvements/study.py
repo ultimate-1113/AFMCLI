@@ -98,12 +98,13 @@ def retrieval(case, record):
     return "unobserved_fallback" if evidence.get("fallback") else "decisive_passage_not_in_recorded_ranges"
 
 
-def observe(binary, job):
+def observe(binary, job, timeout_seconds=45):
     start = perf_counter()
     def failed(message):
         return dict(task=job["task"],status="error",result=None,notes=[message],metrics={})
     try:
-        proc = subprocess.run([str(binary),"--timeout","45","run"],input=encode(job),capture_output=True,timeout=360)
+        proc = subprocess.run([str(binary),"--timeout",str(timeout_seconds),"run"],input=encode(job),
+                              capture_output=True,timeout=360)
         if proc.returncode not in (0,2,3) or not proc.stdout:
             record=failed("missing CLI response (exit "+str(proc.returncode)+")")
         else:

@@ -80,6 +80,8 @@ def run(workspace):
     for track in study.MODES:
         measure(track,"test",[("base",base),("candidate",test)])
         command([*exp,"decide","--track",track,"--out",results/"test"])
+    command([sys.executable,"-B",study.HERE/"retry_errors.py","run","--results",results,
+             "--base",base,"--candidate",test])
 
 
 if __name__=="__main__":
