@@ -26,6 +26,9 @@ static FRACTION_SUFFIX: LazyLock<Regex> = LazyLock::new(|| {
 ).unwrap()
 });
 const SCALES: [char; 6] = ['十', '百', '千', '万', '億', '兆'];
+static FRACTION_LITERAL: LazyLock<Regex> = LazyLock::new(|| {
+    Regex::new(r"[0-9０-９]\s*[/／⁄]\s*[0-9０-９]|[\u{00bc}-\u{00be}\u{2150}-\u{215e}]").unwrap()
+});
 const CARDINALS: [&str; 13] = [
     "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten",
     "eleven", "twelve",
@@ -311,7 +314,7 @@ impl<'a> Ledger<'a> {
             .unwrap_or(spans.len() - 1);
         let mut quantities = Vec::new();
         for (si, span) in spans.iter().enumerate() {
-            if UNSUPPORTED_WORDS.is_match(span.text) {
+            if UNSUPPORTED_WORDS.is_match(span.text) || FRACTION_LITERAL.is_match(span.text) {
                 return Err(UNSUPPORTED);
             }
             let numbers: Vec<_> = NUMBER.find_iter(span.text).collect();
@@ -425,6 +428,9 @@ mod number_tests {
             "The amount is 1,23 euros.",
             "The label says 3.2.4 kg.",
             "It cost 2.5k dollars.",
+            "It cost 1/2 dollar.",
+            "The bag weighed ３ ／ ４ kg.",
+            "It cost 1½ dollars.",
         ] {
             assert!(matches!(Ledger::new(source), Err(UNSUPPORTED)), "{source}");
         }
