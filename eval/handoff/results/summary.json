@@ -1,0 +1,223 @@
+{
+  "known": {
+    "history": {
+      "completed": 0,
+      "median_ms": 4182.243,
+      "n": 1,
+      "peak_sent": 3141,
+      "statuses": {
+        "over_budget": 1
+      },
+      "strict": 0,
+      "total_generations": 1,
+      "total_tokens": 3141,
+      "unsupported": 0,
+      "values": 0
+    },
+    "previous": {
+      "completed": 1,
+      "median_ms": 17603.96,
+      "n": 1,
+      "peak_sent": 3421,
+      "statuses": {
+        "completed": 1
+      },
+      "strict": 1,
+      "total_generations": 6,
+      "total_tokens": 20154,
+      "unsupported": 0,
+      "values": 1
+    },
+    "reopen": {
+      "completed": 1,
+      "median_ms": 22925.596,
+      "n": 1,
+      "peak_sent": 3610,
+      "statuses": {
+        "completed": 1
+      },
+      "strict": 1,
+      "total_generations": 6,
+      "total_tokens": 20733,
+      "unsupported": 0,
+      "values": 1
+    }
+  },
+  "long": {
+    "history": {
+      "completed": 0,
+      "median_ms": 8759.501,
+      "n": 4,
+      "peak_sent": 6110,
+      "statuses": {
+        "over_budget": 4
+      },
+      "strict": 0,
+      "total_generations": 8,
+      "total_tokens": 36253,
+      "unsupported": 0,
+      "values": 0
+    },
+    "previous": {
+      "completed": 4,
+      "median_ms": 7835.63,
+      "n": 4,
+      "peak_sent": 3269,
+      "statuses": {
+        "completed": 4
+      },
+      "strict": 1,
+      "total_generations": 12,
+      "total_tokens": 37828,
+      "unsupported": 2,
+      "values": 1
+    },
+    "reopen": {
+      "completed": 4,
+      "median_ms": 7733.9,
+      "n": 4,
+      "peak_sent": 3410,
+      "statuses": {
+        "completed": 4
+      },
+      "strict": 1,
+      "total_generations": 12,
+      "total_tokens": 38704,
+      "unsupported": 2,
+      "values": 1
+    }
+  },
+  "new": {
+    "history": {
+      "completed": 4,
+      "median_ms": 7862.5265,
+      "n": 8,
+      "peak_sent": 6110,
+      "statuses": {
+        "completed": 4,
+        "over_budget": 4
+      },
+      "strict": 2,
+      "total_generations": 20,
+      "total_tokens": 65454,
+      "unsupported": 2,
+      "values": 2
+    },
+    "previous": {
+      "completed": 8,
+      "median_ms": 6254.089,
+      "n": 8,
+      "peak_sent": 3269,
+      "statuses": {
+        "completed": 8
+      },
+      "strict": 2,
+      "total_generations": 24,
+      "total_tokens": 54053,
+      "unsupported": 4,
+      "values": 3
+    },
+    "reopen": {
+      "completed": 8,
+      "median_ms": 6446.6,
+      "n": 8,
+      "peak_sent": 3410,
+      "statuses": {
+        "completed": 8
+      },
+      "strict": 3,
+      "total_generations": 24,
+      "total_tokens": 55824,
+      "unsupported": 4,
+      "values": 3
+    }
+  },
+  "new_common_completions": {
+    "history": {
+      "completed": 4,
+      "median_ms": 6643.313,
+      "n": 4,
+      "peak_sent": 3698,
+      "statuses": {
+        "completed": 4
+      },
+      "strict": 2,
+      "total_generations": 12,
+      "total_tokens": 29201,
+      "unsupported": 2,
+      "values": 2
+    },
+    "previous": {
+      "completed": 4,
+      "median_ms": 4355.2345000000005,
+      "n": 4,
+      "peak_sent": 1449,
+      "statuses": {
+        "completed": 4
+      },
+      "strict": 1,
+      "total_generations": 12,
+      "total_tokens": 16225,
+      "unsupported": 2,
+      "values": 2
+    },
+    "reopen": {
+      "completed": 4,
+      "median_ms": 4972.368,
+      "n": 4,
+      "peak_sent": 1593,
+      "statuses": {
+        "completed": 4
+      },
+      "strict": 2,
+      "total_generations": 12,
+      "total_tokens": 17120,
+      "unsupported": 2,
+      "values": 2
+    }
+  },
+  "short": {
+    "history": {
+      "completed": 4,
+      "median_ms": 6643.313,
+      "n": 4,
+      "peak_sent": 3698,
+      "statuses": {
+        "completed": 4
+      },
+      "strict": 2,
+      "total_generations": 12,
+      "total_tokens": 29201,
+      "unsupported": 2,
+      "values": 2
+    },
+    "previous": {
+      "completed": 4,
+      "median_ms": 4355.2345000000005,
+      "n": 4,
+      "peak_sent": 1449,
+      "statuses": {
+        "completed": 4
+      },
+      "strict": 1,
+      "total_generations": 12,
+      "total_tokens": 16225,
+      "unsupported": 2,
+      "values": 2
+    },
+    "reopen": {
+      "completed": 4,
+      "median_ms": 4972.368,
+      "n": 4,
+      "peak_sent": 1593,
+      "statuses": {
+        "completed": 4
+      },
+      "strict": 2,
+      "total_generations": 12,
+      "total_tokens": 17120,
+      "unsupported": 2,
+      "values": 2
+    }
+  }
+}

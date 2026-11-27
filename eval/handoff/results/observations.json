@@ -1,0 +1,2308 @@
+[
+  {
+    "arm": "history",
+    "correct": false,
+    "elapsed_ms": 6112.207,
+    "events": [
+      {
+        "elapsed_ms": 1920.15,
+        "kind": "read",
+        "raw": {
+          "confirmed_user_sha256": "791df6006a830e73b0ac00fc26d9201e344840dfa2c7885fae874e367d787660",
+          "finish": "contentCompleted",
+          "input_tokens": 1230,
+          "limit": 6200,
+          "model": "system",
+          "raw_output": "{\"memo\":\"夕映劇場の平日夜公演で、字幕受信機を終演後に「南預かり口」で受け取ることにした。現行の値：受付先は「南預かり口」。対象・条件：夕映劇場の平日夜公演。変更理由：新しい指示に基づく変更。未確定の理由：該当する変更の詳細はまだ確認中。\",\"refs\":[\"E003\",\"E018\",\"E022\"]}",
+          "sent": true,
+          "status": "ok"
+        },
+        "request_sha256": "dbdc1c7960a0dcc6c996fafc33d1a61c1ed8fcb90abd046dae42d0a048df7e23"
+      },
+      {
+        "elapsed_ms": 2389.706,
+        "kind": "read",
+        "raw": {
+          "confirmed_user_sha256": "8e9aecc3420a01fbeface7628ad13930c01e7b59b784da704957a7bac95b1755",
+          "finish": "contentCompleted",
+          "input_tokens": 2399,
+          "limit": 6200,
+          "model": "system",
+          "raw_output": "{\"memo\":\"夕映劇場の平日夜公演で、字幕受信機の返却先が「南預かり口」から「灯具受付」へ変更された。現行の値：灯具受付。対象・条件：平日夜公演。変更理由：支配人の指示による指定取り消し。未確定の理由：後任の窓口がまだ決定されていない。\",\"refs\":[\"E030\",\"E040\",\"E023\"]}",
+          "sent": true,
+          "status": "ok"
+        },
+        "request_sha256": "d58b1d6a4c65cf04870b4e1c16e4e09a82897863fbc7d8e07d78c0a328913b2c"
+      },
+      {
+        "elapsed_ms": 1802.351,
+        "kind": "read",
+        "raw": {
+          "confirmed_user_sha256": "6e18c02f525d633721bfac40de6cf3f22a5104ed4803c07206d8eca0f0f9698b",
+          "finish": "contentCompleted",
+          "input_tokens": 3503,
+          "limit": 6200,
+          "model": "system",
+          "raw_output": "{\"evidence_id\":\"E003\",\"state\":\"確定\",\"value\":\"南預かり口\"}",
+          "sent": true,
+          "status": "ok"
+        },
+        "request_sha256": "a3c14cc87efe061c0782a29186f5c3be6001e8700b05230366c89da90bb60510"
+      }
+    ],
+    "evidence_correct": false,
+    "final": {
+      "evidence_id": "E003",
+      "state": "確定",
+      "value": "南預かり口"
+    },
+    "generations": 3,
+    "id": "notice-s01",
+    "memos": [
+      {
+        "memo": "夕映劇場の平日夜公演で、字幕受信機を終演後に「南預かり口」で受け取ることにした。現行の値：受付先は「南預かり口」。対象・条件：夕映劇場の平日夜公演。変更理由：新しい指示に基づく変更。未確定の理由：該当する変更の詳細はまだ確認中。",
+        "refs": [
+          "E003",
+          "E018",
+          "E022"
+        ]
+      },
+      {
+        "memo": "夕映劇場の平日夜公演で、字幕受信機の返却先が「南預かり口」から「灯具受付」へ変更された。現行の値：灯具受付。対象・条件：平日夜公演。変更理由：支配人の指示による指定取り消し。未確定の理由：後任の窓口がまだ決定されていない。",
+        "refs": [
+          "E030",
+          "E040",
+          "E023"
+        ]
+      }
+    ],
+    "peak_sent": 3503,
+    "sent_tokens": 7132,
+    "size": "short",
+    "status": "completed",
+    "unsupported": true,
+    "value_correct": false
+  },
+  {
+    "arm": "previous",
+    "correct": false,
+    "elapsed_ms": 4039.121,
+    "events": [
+      {
+        "elapsed_ms": 1554.727,
+        "kind": "read",
+        "raw": {
+          "confirmed_user_sha256": "791df6006a830e73b0ac00fc26d9201e344840dfa2c7885fae874e367d787660",
+          "finish": "contentCompleted",
+          "input_tokens": 1230,
+          "limit": 6200,
+          "model": "system",
+          "raw_output": "{\"memo\":\"夕映劇場の平日夜公演で、字幕受信機を終演後に「南預かり口」で受け取ることにした。現行の値：受付先は「南預かり口」。対象・条件：夕映劇場の平日夜公演。変更理由：新しい指示に基づく変更。未確定の理由：該当する変更の詳細はまだ確認中。\",\"refs\":[\"E003\",\"E018\",\"E022\"]}",
+          "sent": true,
+          "status": "ok"
+        },
+        "request_sha256": "dbdc1c7960a0dcc6c996fafc33d1a61c1ed8fcb90abd046dae42d0a048df7e23"
+      },
+      {
+        "elapsed_ms": 1665.419,
+        "kind": "read",
+        "raw": {
+          "confirmed_user_sha256": "de4ff0096192b67a3d2624862f06daef39d542bd270125bde1c7e5699146ca07",
+          "finish": "contentCompleted",
+          "input_tokens": 1393,
+          "limit": 6200,
+          "model": "system",
+          "raw_output": "{\"memo\":\"夕映劇場の平日夜公演で、字幕受信機の返却先に指定されている窓口は「灯具受付」に変更された。現行の値：南預かり口（変更理由：支配人による指定取り消し、後任の窓口は未定）。対象・条件：平日夜公演。変更理由：新しい指示に基づく変更。未確定の理由：該当する変更の詳細はまだ確認中。\",\"refs\":[\"E040\",\"E026\",\"E030\"]}",
+          "sent": true,
+          "status": "ok"
+        },
+        "request_sha256": "d2dc7ae14e32a010674c04bf1d2de624f72fc1b7563c940ea92a426a54ff1dfc"
+      },
+      {
+        "elapsed_ms": 818.975,
+        "kind": "read",
+        "raw": {
+          "confirmed_user_sha256": "524a99a81f6f353072cb064cfc031f39a7f52ac0d5a04a911f347addc7c3fbf0",
+          "finish": "contentCompleted",
+          "input_tokens": 1354,
+          "limit": 6200,
+          "model": "system",
+          "raw_output": "{\"evidence_id\":\"E066\",\"state\":\"確定\",\"value\":\"東クローク\"}",
+          "sent": true,
+          "status": "ok"
+        },
+        "request_sha256": "f75e436035de1774ce22e20a6d56ccb8e9c90264fdd7a73fd3aa7a05fa007f7a"
+      }
+    ],
+    "evidence_correct": false,
+    "final": {
+      "evidence_id": "E066",
+      "state": "確定",
+      "value": "東クローク"
+    },
+    "generations": 3,
+    "id": "notice-s01",
+    "memos": [
+      {
+        "memo": "夕映劇場の平日夜公演で、字幕受信機を終演後に「南預かり口」で受け取ることにした。現行の値：受付先は「南預かり口」。対象・条件：夕映劇場の平日夜公演。変更理由：新しい指示に基づく変更。未確定の理由：該当する変更の詳細はまだ確認中。",
+        "refs": [
+          "E003",
+          "E018",
+          "E022"
+        ]
+      },
+      {
+        "memo": "夕映劇場の平日夜公演で、字幕受信機の返却先に指定されている窓口は「灯具受付」に変更された。現行の値：南預かり口（変更理由：支配人による指定取り消し、後任の窓口は未定）。対象・条件：平日夜公演。変更理由：新しい指示に基づく変更。未確定の理由：該当する変更の詳細はまだ確認中。",
+        "refs": [
+          "E040",
+          "E026",
+          "E030"
+        ]
+      }
+    ],
+    "peak_sent": 1393,
+    "sent_tokens": 3977,
+    "size": "short",
+    "status": "completed",
+    "unsupported": true,
+    "value_correct": false
+  },
+  {
+    "arm": "reopen",
+    "correct": false,
+    "elapsed_ms": 4035.016,
+    "events": [
+      {
+        "elapsed_ms": 1558.877,
+        "kind": "read",
+        "raw": {
+          "confirmed_user_sha256": "791df6006a830e73b0ac00fc26d9201e344840dfa2c7885fae874e367d787660",
+          "finish": "contentCompleted",
+          "input_tokens": 1230,
+          "limit": 6200,
+          "model": "system",
+          "raw_output": "{\"memo\":\"夕映劇場の平日夜公演で、字幕受信機を終演後に「南預かり口」で受け取ることにした。現行の値：受付先は「南預かり口」。対象・条件：夕映劇場の平日夜公演。変更理由：新しい指示に基づく変更。未確定の理由：該当する変更の詳細はまだ確認中。\",\"refs\":[\"E003\",\"E018\",\"E022\"]}",
+          "sent": true,
+          "status": "ok"
+        },
+        "request_sha256": "dbdc1c7960a0dcc6c996fafc33d1a61c1ed8fcb90abd046dae42d0a048df7e23"
+      },
+      {
+        "elapsed_ms": 1590.884,
+        "kind": "read",
+        "raw": {
+          "confirmed_user_sha256": "2031f6354372702fa89955fbbb1a2e0d5eb0943a0933d05e528c6dec150b5447",
+          "finish": "contentCompleted",
+          "input_tokens": 1513,
+          "limit": 6200,
+          "model": "system",
+          "raw_output": "{\"memo\":\"夕映劇場の平日夜公演で、字幕受信機の返却先が「南預かり口」から「灯具受付」に変更された。現行の値：灯具受付。対象・条件：平日夜公演。変更理由：支配人の指示による変更。未確定の理由：後任の窓口がまだ決定されていない。\",\"refs\":[\"E030\",\"E040\",\"E041\"]}",
+          "sent": true,
+          "status": "ok"
+        },
+        "request_sha256": "09e0b8457345bfb56e32fc7f4f8613db6c65f159ddc4017f20089c6daf81983d"
+      },
+      {
+        "elapsed_ms": 885.255,
+        "kind": "read",
+        "raw": {
+          "confirmed_user_sha256": "ef03a855dddb08206c8c23ca1c06447acc743a48a197737feb0f28a9a5bbbaaf",
+          "finish": "contentCompleted",
+          "input_tokens": 1476,
+          "limit": 6200,
+          "model": "system",
+          "raw_output": "{\"evidence_id\":\"E040\",\"state\":\"未確定\",\"value\":\"灯具受付\"}",
+          "sent": true,
+          "status": "ok"
+        },
+        "request_sha256": "ef402fbc6d3f0f43d7a96daa6426b98786135b045516f5ec74bca59695a06293"
+      }
+    ],
+    "evidence_correct": true,
+    "final": {
+      "evidence_id": "E040",
+      "state": "未確定",
+      "value": "灯具受付"
+    },
+    "generations": 3,
+    "id": "notice-s01",
+    "memos": [
+      {
+        "memo": "夕映劇場の平日夜公演で、字幕受信機を終演後に「南預かり口」で受け取ることにした。現行の値：受付先は「南預かり口」。対象・条件：夕映劇場の平日夜公演。変更理由：新しい指示に基づく変更。未確定の理由：該当する変更の詳細はまだ確認中。",
+        "refs": [
+          "E003",
+          "E018",
+          "E022"
+        ]
+      },
+      {
+        "memo": "夕映劇場の平日夜公演で、字幕受信機の返却先が「南預かり口」から「灯具受付」に変更された。現行の値：灯具受付。対象・条件：平日夜公演。変更理由：支配人の指示による変更。未確定の理由：後任の窓口がまだ決定されていない。",
+        "refs": [
+          "E030",
+          "E040",
+          "E041"
+        ]
+      }
+    ],
+    "peak_sent": 1513,
+    "sent_tokens": 4219,
+    "size": "short",
+    "status": "completed",
+    "unsupported": true,
+    "value_correct": false
+  },
+  {
+    "arm": "previous",
+    "correct": false,
+    "elapsed_ms": 4096.488,
+    "events": [
+      {
+        "elapsed_ms": 1748.748,
+        "kind": "read",
+        "raw": {
+          "confirmed_user_sha256": "3838aad3d1816a693ff3bdad0e50235dc5f5acf630238d6b7c5268accc4b0396",
+          "finish": "contentCompleted",
+          "input_tokens": 1287,
+          "limit": 6200,
+          "model": "system",
+          "raw_output": "{\"memo\":\"目的：公開温室のニオイヒバ鉢の表土材の発注名を確認。現行の値として「粗目軽石」が記入されている。対象は公開温室のニオイヒバ鉢、条件は園芸主任の仕様書に記載されている。変更や未確定の理由は、発注名が既に確定しているため、変更なし。古い候補は存在しない。\",\"refs\":[\"E012\",\"E012\",\"E012\"]}",
+          "sent": true,
+          "status": "ok"
+        },
+        "request_sha256": "a2d88e833b6c09bf5afbaeb3a15e645dec6997eef647bc74a622726f81e41d14"
+      },
+      {
+        "elapsed_ms": 1502.017,
+        "kind": "read",
+        "raw": {
+          "confirmed_user_sha256": "116dd8f07673b7842049f6c94145945b7a02bbc607fb0400b03b8095787b74c6",
+          "finish": "contentCompleted",
+          "input_tokens": 1411,
+          "limit": 6200,
+          "model": "system",
+          "raw_output": "{\"memo\":\"目的：公開温室のニオイヒバ鉢の表土材の発注名を確認。現行の値として「粗目軽石」が記入されている。対象は公開温室のニオイヒバ鉢、条件は園芸主任の仕様書に記載されている。変更や未確定の理由は、発注名が既に確定しているため、変更なし。古い候補は存在しない。\",\"refs\":[\"E012\",\"E029\"]}",
+          "sent": true,
+          "status": "ok"
+        },
+        "request_sha256": "e57ff54f57ada2b571575fdc84b7e628082cfcbeaa2753e69258cf2fc459290f"
+      },
+      {
+        "elapsed_ms": 845.723,
+        "kind": "read",
+        "raw": {
+          "confirmed_user_sha256": "8f08cdc85d3f75df60db5f64af4f3449f23708786b43a9d0e15aa0de5662a4e7",
+          "finish": "contentCompleted",
+          "input_tokens": 1412,
+          "limit": 6200,
+          "model": "system",
+          "raw_output": "{\"evidence_id\":\"E059\",\"state\":\"確定\",\"value\":\"粗目軽石\"}",
+          "sent": true,
+          "status": "ok"
+        },
+        "request_sha256": "de6a975827b2a91996f1cc9a2390e0d886aae8598ae33f307e22480852aefc83"
+      }
+    ],
+    "evidence_correct": false,
+    "final": {
+      "evidence_id": "E059",
+      "state": "確定",
+      "value": "粗目軽石"
+    },
+    "generations": 3,
+    "id": "notice-s02",
+    "memos": [
+      {
+        "memo": "目的：公開温室のニオイヒバ鉢の表土材の発注名を確認。現行の値として「粗目軽石」が記入されている。対象は公開温室のニオイヒバ鉢、条件は園芸主任の仕様書に記載されている。変更や未確定の理由は、発注名が既に確定しているため、変更なし。古い候補は存在しない。",
+        "refs": [
+          "E012"
+        ]
+      },
+      {
+        "memo": "目的：公開温室のニオイヒバ鉢の表土材の発注名を確認。現行の値として「粗目軽石」が記入されている。対象は公開温室のニオイヒバ鉢、条件は園芸主任の仕様書に記載されている。変更や未確定の理由は、発注名が既に確定しているため、変更なし。古い候補は存在しない。",
+        "refs": [
+          "E012",
+          "E029"
+        ]
+      }
+    ],
+    "peak_sent": 1412,
+    "sent_tokens": 4110,
+    "size": "short",
+    "status": "completed",
+    "unsupported": false,
+    "value_correct": true
+  },
+  {
+    "arm": "reopen",
+    "correct": true,
+    "elapsed_ms": 5621.15,
+    "events": [
+      {
+        "elapsed_ms": 1757.344,
+        "kind": "read",
+        "raw": {
+          "confirmed_user_sha256": "3838aad3d1816a693ff3bdad0e50235dc5f5acf630238d6b7c5268accc4b0396",
+          "finish": "contentCompleted",
+          "input_tokens": 1287,
+          "limit": 6200,
+          "model": "system",
+          "raw_output": "{\"memo\":\"目的：公開温室のニオイヒバ鉢の表土材の発注名を確認。現行の値として「粗目軽石」が記入されている。対象は公開温室のニオイヒバ鉢、条件は園芸主任の仕様書に記載されている。変更や未確定の理由は、発注名が既に確定しているため、変更なし。古い候補は存在しない。\",\"refs\":[\"E012\",\"E012\",\"E012\"]}",
+          "sent": true,
+          "status": "ok"
+        },
+        "request_sha256": "a2d88e833b6c09bf5afbaeb3a15e645dec6997eef647bc74a622726f81e41d14"
+      },
+      {
+        "elapsed_ms": 3005.194,
+        "kind": "read",
+        "raw": {
+          "confirmed_user_sha256": "b79c367c5463dd1ea7be2761c83faefdc71bbd1883df27484c4a9e154dc4aa04",
+          "finish": "contentCompleted",
+          "input_tokens": 1464,
+          "limit": 6200,
+          "model": "system",
+          "raw_output": "{\"memo\":\"目的：公開温室のニオイヒバ鉢の表土材の発注名を確認。現行の値として「粗目軽石」が記入されている。対象は公開温室のニオイヒバ鉢、条件は園芸主任の仕様書に記載されている。変更や未確定の理由は、発注名が既に確定しているため、変更なし。古い候補は存在しない。  \\n今回の出力は、直前の出力（E012）に基づく。E024～E047は他のタスクに関連する内容であるため、本タスクには影響しない。  \\n  \\n**現行の値**：粗目軽石  \\n**対象**：公開温室のニオイヒバ鉢  \\n**条件**：園芸主任の仕様書に記載されている  \\n**変更・未確定の理由**：発注名が確定済みのため、変更なし。古い候補なし。\\n  \\n**撤回・訂正の有無**：なし。すべての情報は現在の状態に基づき反映。\",\"refs\":[\"E012\"]}",
+          "sent": true,
+          "status": "ok"
+        },
+        "request_sha256": "e8d273d70684f3c1caea39745c87b14862b1ea4987f7a4390da978aed494c4a0"
+      },
+      {
+        "elapsed_ms": 858.612,
+        "kind": "read",
+        "raw": {
+          "confirmed_user_sha256": "5859a5f265fd6b5d084a8256a6a4584c5e2ff8801d31a1c32ccc5893c2d998c8",
+          "finish": "contentCompleted",
+          "input_tokens": 1487,
+          "limit": 6200,
+          "model": "system",
+          "raw_output": "{\"evidence_id\":\"E012\",\"state\":\"確定\",\"value\":\"粗目軽石\"}",
+          "sent": true,
+          "status": "ok"
+        },
+        "request_sha256": "cdf2a4a8d4ea0fdb7c1dbf2253c7b0c4d379ebcd256b609179f24e322a2664ed"
+      }
+    ],
+    "evidence_correct": true,
+    "final": {
+      "evidence_id": "E012",
+      "state": "確定",
+      "value": "粗目軽石"
+    },
+    "generations": 3,
+    "id": "notice-s02",
+    "memos": [
+      {
+        "memo": "目的：公開温室のニオイヒバ鉢の表土材の発注名を確認。現行の値として「粗目軽石」が記入されている。対象は公開温室のニオイヒバ鉢、条件は園芸主任の仕様書に記載されている。変更や未確定の理由は、発注名が既に確定しているため、変更なし。古い候補は存在しない。",
+        "refs": [
+          "E012"
+        ]
+      },
+      {
+        "memo": "目的：公開温室のニオイヒバ鉢の表土材の発注名を確認。現行の値として「粗目軽石」が記入されている。対象は公開温室のニオイヒバ鉢、条件は園芸主任の仕様書に記載されている。変更や未確定の理由は、発注名が既に確定しているため、変更なし。古い候補は存在しない。 今回の出力は、直前の出力（E012）に基づく。E024～E047は他",
+        "refs": [
+          "E012"
+        ]
+      }
+    ],
+    "peak_sent": 1487,
+    "sent_tokens": 4238,
+    "size": "short",
+    "status": "completed",
+    "unsupported": false,
+    "value_correct": true
+  },
+  {
+    "arm": "history",
+    "correct": true,
+    "elapsed_ms": 6829.156,
+    "events": [
+      {
+        "elapsed_ms": 1771.094,
+        "kind": "read",
+        "raw": {
+          "confirmed_user_sha256": "3838aad3d1816a693ff3bdad0e50235dc5f5acf630238d6b7c5268accc4b0396",
+          "finish": "contentCompleted",
+          "input_tokens": 1287,
+          "limit": 6200,
+          "model": "system",
+          "raw_output": "{\"memo\":\"目的：公開温室のニオイヒバ鉢の表土材の発注名を確認。現行の値として「粗目軽石」が記入されている。対象は公開温室のニオイヒバ鉢、条件は園芸主任の仕様書に記載されている。変更や未確定の理由は、発注名が既に確定しているため、変更なし。古い候補は存在しない。\",\"refs\":[\"E012\",\"E012\",\"E012\"]}",
+          "sent": true,
+          "status": "ok"
+        },
+        "request_sha256": "a2d88e833b6c09bf5afbaeb3a15e645dec6997eef647bc74a622726f81e41d14"
+      },
+      {
+        "elapsed_ms": 3112.365,
+        "kind": "read",
+        "raw": {
+          "confirmed_user_sha256": "44a7687aaa060dbea30d986f033b7c55c2bce220d22b783867fb6957070885f4",
+          "finish": "contentCompleted",
+          "input_tokens": 2486,
+          "limit": 6200,
+          "model": "system",
+          "raw_output": "{\"memo\":\"目的：公開温室のニオイヒバ鉢の表土材の発注名を確認。現行の値として「粗目軽石」が記入されている。対象は公開温室のニオイヒバ鉢、条件は園芸主任の仕様書に記載されている。変更や未確定の理由は、発注名が既に確定しているため、変更なし。古い候補は存在しない。今回の変更点として、E043の「コノテガシワ」への砕いた杉皮の使用が温室主任の仕様書とは別に扱われるが、これは現行の仕様に基づく試行であり、発注名には影響しないため、現行値が維持される。\",\"refs\":[\"E012\",\"E043\"]}",
+          "sent": true,
+          "status": "ok"
+        },
+        "request_sha256": "76ba4be55f26788de2aecf6148071b475de63643578eb651fd1d4fdb43ee7ab9"
+      },
+      {
+        "elapsed_ms": 1945.697,
+        "kind": "read",
+        "raw": {
+          "confirmed_user_sha256": "aedfc2e56e1540bbd8731d03debfc863439533d52cd3e9ac9af951ad3cb3bbb4",
+          "finish": "contentCompleted",
+          "input_tokens": 3698,
+          "limit": 6200,
+          "model": "system",
+          "raw_output": "{\"evidence_id\":\"E012\",\"state\":\"確定\",\"value\":\"粗目軽石\"}",
+          "sent": true,
+          "status": "ok"
+        },
+        "request_sha256": "96b5d87b126a6834d804bd927328878184047dc5cc26832d2f403ab172bd24fa"
+      }
+    ],
+    "evidence_correct": true,
+    "final": {
+      "evidence_id": "E012",
+      "state": "確定",
+      "value": "粗目軽石"
+    },
+    "generations": 3,
+    "id": "notice-s02",
+    "memos": [
+      {
+        "memo": "目的：公開温室のニオイヒバ鉢の表土材の発注名を確認。現行の値として「粗目軽石」が記入されている。対象は公開温室のニオイヒバ鉢、条件は園芸主任の仕様書に記載されている。変更や未確定の理由は、発注名が既に確定しているため、変更なし。古い候補は存在しない。",
+        "refs": [
+          "E012"
+        ]
+      },
+      {
+        "memo": "目的：公開温室のニオイヒバ鉢の表土材の発注名を確認。現行の値として「粗目軽石」が記入されている。対象は公開温室のニオイヒバ鉢、条件は園芸主任の仕様書に記載されている。変更や未確定の理由は、発注名が既に確定しているため、変更なし。古い候補は存在しない。今回の変更点として、E043の「コノテガシワ」への砕いた杉皮の使用が温",
+        "refs": [
+          "E012",
+          "E043"
+        ]
+      }
+    ],
+    "peak_sent": 3698,
+    "sent_tokens": 7471,
+    "size": "short",
+    "status": "completed",
+    "unsupported": false,
+    "value_correct": true
+  },
+  {
+    "arm": "reopen",
+    "correct": false,
+    "elapsed_ms": 5605.213,
+    "events": [
+      {
+        "elapsed_ms": 2030.147,
+        "kind": "read",
+        "raw": {
+          "confirmed_user_sha256": "a437e460cbec4194fc2540c41d405961cb7b5c7b4238676ec9fd9be82940789e",
+          "finish": "contentCompleted",
+          "input_tokens": 1265,
+          "limit": 6200,
+          "model": "system",
+          "raw_output": "{\"memo\":\"目的：峠の録音会で使った巡回録音車について、指定が当てはまった防風幕の展張位置を知る。現行値：防風幕は「荷室右側」に張る（音響主任が運用表に押印）。対象・条件：山側から風が吹く場合。変更・未確定の理由：原文E006に明示されており、運用上の決定事項として確定済み。古い候補なし（E002以降の記述は別課題）。\",\"refs\":[\"E006\",\"E017\",\"E022\"]}",
+          "sent": true,
+          "status": "ok"
+        },
+        "request_sha256": "6d6abb597e99625b3b9104a8d1e0ef9c61d3ae6dc1fafb1e5870754481ab3498"
+      },
+      {
+        "elapsed_ms": 2476.008,
+        "kind": "read",
+        "raw": {
+          "confirmed_user_sha256": "d353ccbe8cb85baefa887a2206a9f845073abcbe331d5e63e55aef260ff6b658",
+          "finish": "contentCompleted",
+          "input_tokens": 1593,
+          "limit": 6200,
+          "model": "system",
+          "raw_output": "{\"memo\":\"目的：峠の録音車で指定が当てはまる防風幕の展張位置を知る。現行値：防風幕は「荷室右側」に張る（音響主任が運用表に押印）。対象・条件：山側から風が吹く場合。変更・未確定の理由：原文E027により「谷側から風が入る場合は『運転席後方』に防風幕を張る」と明示され、条件が山側 vs 谷側という新たな分岐に。E006の運用上の決定が継続される一方、E027が新たな指定として追加された。古い候補なし（E002以降の記述は別課題）。\",\"refs\":[\"E006\",\"E027\",\"E022\"]}",
+          "sent": true,
+          "status": "ok"
+        },
+        "request_sha256": "dc297d6f787eba57c571cc074e0132a34ecb7fa9ed28cc3914f166de4c708af3"
+      },
+      {
+        "elapsed_ms": 1099.058,
+        "kind": "read",
+        "raw": {
+          "confirmed_user_sha256": "8c7e0f6bd8424cdb6ac620cb1e1fad2125cdaff944e5855c9a4dea0b9368edf1",
+          "finish": "contentCompleted",
+          "input_tokens": 1568,
+          "limit": 6200,
+          "model": "system",
+          "raw_output": "{\"evidence_id\":\"E067\",\"state\":\"未確定\",\"value\":\"山側と谷側のどちらで運用したかは特定できず、展張位置を確定できない。\"}",
+          "sent": true,
+          "status": "ok"
+        },
+        "request_sha256": "180323d5710857ef116a705881be2fd1294780ae29ce09d8f4e5b0f4200ccb04"
+      }
+    ],
+    "evidence_correct": true,
+    "final": {
+      "evidence_id": "E067",
+      "state": "未確定",
+      "value": "山側と谷側のどちらで運用したかは特定できず、展張位置を確定できない。"
+    },
+    "generations": 3,
+    "id": "notice-s03",
+    "memos": [
+      {
+        "memo": "目的：峠の録音会で使った巡回録音車について、指定が当てはまった防風幕の展張位置を知る。現行値：防風幕は「荷室右側」に張る（音響主任が運用表に押印）。対象・条件：山側から風が吹く場合。変更・未確定の理由：原文E006に明示されており、運用上の決定事項として確定済み。古い候補なし（E002以降の記述は別課題）。",
+        "refs": [
+          "E006",
+          "E017",
+          "E022"
+        ]
+      },
+      {
+        "memo": "目的：峠の録音車で指定が当てはまる防風幕の展張位置を知る。現行値：防風幕は「荷室右側」に張る（音響主任が運用表に押印）。対象・条件：山側から風が吹く場合。変更・未確定の理由：原文E027により「谷側から風が入る場合は『運転席後方』に防風幕を張る」と明示され、条件が山側 vs 谷側という新たな分岐に。E006の運用上の決",
+        "refs": [
+          "E006",
+          "E027",
+          "E022"
+        ]
+      }
+    ],
+    "peak_sent": 1593,
+    "sent_tokens": 4426,
+    "size": "short",
+    "status": "completed",
+    "unsupported": true,
+    "value_correct": false
+  },
+  {
+    "arm": "history",
+    "correct": false,
+    "elapsed_ms": 7398.392,
+    "events": [
+      {
+        "elapsed_ms": 2046.24,
+        "kind": "read",
+        "raw": {
+          "confirmed_user_sha256": "a437e460cbec4194fc2540c41d405961cb7b5c7b4238676ec9fd9be82940789e",
+          "finish": "contentCompleted",
+          "input_tokens": 1265,
+          "limit": 6200,
+          "model": "system",
+          "raw_output": "{\"memo\":\"目的：峠の録音会で使った巡回録音車について、指定が当てはまった防風幕の展張位置を知る。現行値：防風幕は「荷室右側」に張る（音響主任が運用表に押印）。対象・条件：山側から風が吹く場合。変更・未確定の理由：原文E006に明示されており、運用上の決定事項として確定済み。古い候補なし（E002以降の記述は別課題）。\",\"refs\":[\"E006\",\"E017\",\"E022\"]}",
+          "sent": true,
+          "status": "ok"
+        },
+        "request_sha256": "6d6abb597e99625b3b9104a8d1e0ef9c61d3ae6dc1fafb1e5870754481ab3498"
+      },
+      {
+        "elapsed_ms": 3215.823,
+        "kind": "read",
+        "raw": {
+          "confirmed_user_sha256": "ffbd21775801c1b6fc01f4a70d763eed3591e8f3daca8cdcd11f96b52edf8d62",
+          "finish": "contentCompleted",
+          "input_tokens": 2490,
+          "limit": 6200,
+          "model": "system",
+          "raw_output": "{\"memo\":\"目的：峠の録音車について、指定が当てはまった防風幕の展張位置を知る。現行値：山側から風が吹く場合は「荷室右側」に張る（E006）。新たに「谷側から風が入る場合は『運転席後方』に張る」と明記された（E027）。対象・条件：風の方向に基づく展張位置の変更。変更・未確定の理由：E027で新しい条件が追加され、運用上の拡張として扱われる。古い候補なし（E006が基本設定）。\",\"refs\":[\"E006\",\"E027\",\"E017\"]}",
+          "sent": true,
+          "status": "ok"
+        },
+        "request_sha256": "b8247d74d25d6b6f5a9ae6c7d1aa5cfc8eba0144672c79bfece4a6b76a6e8b0b"
+      },
+      {
+        "elapsed_ms": 2136.329,
+        "kind": "read",
+        "raw": {
+          "confirmed_user_sha256": "0f46fc42d53a1784bb0f231a425a5ca578cdb9e1756ecc540eec4a7596d14342",
+          "finish": "contentCompleted",
+          "input_tokens": 3668,
+          "limit": 6200,
+          "model": "system",
+          "raw_output": "{\"evidence_id\":\"E067\",\"state\":\"未確定\",\"value\":\"山側と谷側のどちらで運用したかは特定できず、展張位置を確定できない。\"}",
+          "sent": true,
+          "status": "ok"
+        },
+        "request_sha256": "02bad70d8ec18ee1c6c34c63239ad9e8a9944385727586ef6bfa4e76afa42eab"
+      }
+    ],
+    "evidence_correct": true,
+    "final": {
+      "evidence_id": "E067",
+      "state": "未確定",
+      "value": "山側と谷側のどちらで運用したかは特定できず、展張位置を確定できない。"
+    },
+    "generations": 3,
+    "id": "notice-s03",
+    "memos": [
+      {
+        "memo": "目的：峠の録音会で使った巡回録音車について、指定が当てはまった防風幕の展張位置を知る。現行値：防風幕は「荷室右側」に張る（音響主任が運用表に押印）。対象・条件：山側から風が吹く場合。変更・未確定の理由：原文E006に明示されており、運用上の決定事項として確定済み。古い候補なし（E002以降の記述は別課題）。",
+        "refs": [
+          "E006",
+          "E017",
+          "E022"
+        ]
+      },
+      {
+        "memo": "目的：峠の録音車について、指定が当てはまった防風幕の展張位置を知る。現行値：山側から風が吹く場合は「荷室右側」に張る（E006）。新たに「谷側から風が入る場合は『運転席後方』に張る」と明記された（E027）。対象・条件：風の方向に基づく展張位置の変更。変更・未確定の理由：E027で新しい条件が追加され、運用上の拡張とし",
+        "refs": [
+          "E006",
+          "E027",
+          "E017"
+        ]
+      }
+    ],
+    "peak_sent": 3668,
+    "sent_tokens": 7423,
+    "size": "short",
+    "status": "completed",
+    "unsupported": true,
+    "value_correct": false
+  },
+  {
+    "arm": "previous",
+    "correct": false,
+    "elapsed_ms": 4982.054,
+    "events": [
+      {
+        "elapsed_ms": 2023.549,
+        "kind": "read",
+        "raw": {
+          "confirmed_user_sha256": "a437e460cbec4194fc2540c41d405961cb7b5c7b4238676ec9fd9be82940789e",
+          "finish": "contentCompleted",
+          "input_tokens": 1265,
+          "limit": 6200,
+          "model": "system",
+          "raw_output": "{\"memo\":\"目的：峠の録音会で使った巡回録音車について、指定が当てはまった防風幕の展張位置を知る。現行値：防風幕は「荷室右側」に張る（音響主任が運用表に押印）。対象・条件：山側から風が吹く場合。変更・未確定の理由：原文E006に明示されており、運用上の決定事項として確定済み。古い候補なし（E002以降の記述は別課題）。\",\"refs\":[\"E006\",\"E017\",\"E022\"]}",
+          "sent": true,
+          "status": "ok"
+        },
+        "request_sha256": "6d6abb597e99625b3b9104a8d1e0ef9c61d3ae6dc1fafb1e5870754481ab3498"
+      },
+      {
+        "elapsed_ms": 2034.487,
+        "kind": "read",
+        "raw": {
+          "confirmed_user_sha256": "68cc3457e4aa91c1f754412b04fdbfc125ed840ef321e46b20daf9ffb4d610c8",
+          "finish": "contentCompleted",
+          "input_tokens": 1449,
+          "limit": 6200,
+          "model": "system",
+          "raw_output": "{\"memo\":\"目的：峠の録音会で使った巡回録音車について、指定が当てはまった防風幕の展張位置を知る。現行値：防風幕は「荷室右側」に張る（音響主任が運用表に押印）。対象・条件：山側から風が吹く場合。変更・未確定の理由：E027により「谷側から風が入る場合は『運転席後方』に防風幕を張る」と明示され、山側からの風の指定が変更された。古い候補なし（E002以降の記述は別課題）。\",\"refs\":[\"E027\",\"E006\",\"E017\"]}",
+          "sent": true,
+          "status": "ok"
+        },
+        "request_sha256": "76311c0795d0c90b877113146cf13cc1b2145a3a4f0f82ceef21396977733696"
+      },
+      {
+        "elapsed_ms": 924.018,
+        "kind": "read",
+        "raw": {
+          "confirmed_user_sha256": "04c25438a37f1e04a5fed933d62325ac0a084bef533c575ee567ae8f49309fd6",
+          "finish": "contentCompleted",
+          "input_tokens": 1424,
+          "limit": 6200,
+          "model": "system",
+          "raw_output": "{\"evidence_id\":\"E067\",\"state\":\"未確定\",\"value\":\"展張位置を確定できない\"}",
+          "sent": true,
+          "status": "ok"
+        },
+        "request_sha256": "80671ae79d9c09ccec3cb85e92f780b6a294e6eafb9e184d64988330d52bdf5f"
+      }
+    ],
+    "evidence_correct": true,
+    "final": {
+      "evidence_id": "E067",
+      "state": "未確定",
+      "value": "展張位置を確定できない"
+    },
+    "generations": 3,
+    "id": "notice-s03",
+    "memos": [
+      {
+        "memo": "目的：峠の録音会で使った巡回録音車について、指定が当てはまった防風幕の展張位置を知る。現行値：防風幕は「荷室右側」に張る（音響主任が運用表に押印）。対象・条件：山側から風が吹く場合。変更・未確定の理由：原文E006に明示されており、運用上の決定事項として確定済み。古い候補なし（E002以降の記述は別課題）。",
+        "refs": [
+          "E006",
+          "E017",
+          "E022"
+        ]
+      },
+      {
+        "memo": "目的：峠の録音会で使った巡回録音車について、指定が当てはまった防風幕の展張位置を知る。現行値：防風幕は「荷室右側」に張る（音響主任が運用表に押印）。対象・条件：山側から風が吹く場合。変更・未確定の理由：E027により「谷側から風が入る場合は『運転席後方』に防風幕を張る」と明示され、山側からの風の指定が変更された。古い候",
+        "refs": [
+          "E027",
+          "E006",
+          "E017"
+        ]
+      }
+    ],
+    "peak_sent": 1449,
+    "sent_tokens": 4138,
+    "size": "short",
+    "status": "completed",
+    "unsupported": true,
+    "value_correct": false
+  },
+  {
+    "arm": "history",
+    "correct": true,
+    "elapsed_ms": 6457.47,
+    "events": [
+      {
+        "elapsed_ms": 1740.803,
+        "kind": "read",
+        "raw": {
+          "confirmed_user_sha256": "6613fe2bddc11f054a9ce572e2c97d1a1b60e070ec8b58a24b5331f02caa4d2f",
+          "finish": "contentCompleted",
+          "input_tokens": 1204,
+          "limit": 6200,
+          "model": "system",
+          "raw_output": "{\"memo\":\"白炉窯の本焼き当番が使う排煙口の清掃ブラシの正式な種類は馬毛刷毛。現行ではE005で明記されている。対象は白炉窯の本焼き当番、条件は排煙口の清掃用ブラシとして使用されること。変更や未確定の理由は、正式な名称がE005に記載されているが、他の資料では明記されていないため、確認が必要。\",\"refs\":[\"E005\",\"E018\",\"E021\"]}",
+          "sent": true,
+          "status": "ok"
+        },
+        "request_sha256": "1e2328cf67ab8cf5a2e069c04324cded9b4b77b05b8014b406354d4c334b65da"
+      },
+      {
+        "elapsed_ms": 2812.649,
+        "kind": "read",
+        "raw": {
+          "confirmed_user_sha256": "f93c4d181bf499340e752d86147d480639786655c22abfe5edd415adb51c21b1",
+          "finish": "contentCompleted",
+          "input_tokens": 2411,
+          "limit": 6200,
+          "model": "system",
+          "raw_output": "{\"memo\":\"白炉窯の本焼き当番が使う排煙口の清掃ブラシの正式な種類は馬毛刷毛（E005で明記）。対象は白炉窯の本焼き当番、条件は排煙口の清掃用ブラシとして使用されること。変更や未確定の理由は、E026以降の作業で「三種類の刷毛を比較」する記述があり、正式な名称がE005にのみ記載されており、他の資料で明記されていないため、正式名称の確認が必要。現行の運用では試用順のみが記録されている。\",\"refs\":[\"E005\",\"E026\",\"E036\"]}",
+          "sent": true,
+          "status": "ok"
+        },
+        "request_sha256": "a78823945413f0ccca770d755678e4ac2bec72e666c41ebff463b220daded80e"
+      },
+      {
+        "elapsed_ms": 1904.018,
+        "kind": "read",
+        "raw": {
+          "confirmed_user_sha256": "94347ca46d07caf6009de893f0f359366a096a2e768accecaeeb6c7df781afb5",
+          "finish": "contentCompleted",
+          "input_tokens": 3560,
+          "limit": 6200,
+          "model": "system",
+          "raw_output": "{\"evidence_id\":\"E053\",\"state\":\"確定\",\"value\":\"真鍮刷毛\"}",
+          "sent": true,
+          "status": "ok"
+        },
+        "request_sha256": "cb80ceaa51269af9488ee5158520923aad854bc2f328282fde52812fe7f70a5c"
+      }
+    ],
+    "evidence_correct": true,
+    "final": {
+      "evidence_id": "E053",
+      "state": "確定",
+      "value": "真鍮刷毛"
+    },
+    "generations": 3,
+    "id": "notice-s04",
+    "memos": [
+      {
+        "memo": "白炉窯の本焼き当番が使う排煙口の清掃ブラシの正式な種類は馬毛刷毛。現行ではE005で明記されている。対象は白炉窯の本焼き当番、条件は排煙口の清掃用ブラシとして使用されること。変更や未確定の理由は、正式な名称がE005に記載されているが、他の資料では明記されていないため、確認が必要。",
+        "refs": [
+          "E005",
+          "E018",
+          "E021"
+        ]
+      },
+      {
+        "memo": "白炉窯の本焼き当番が使う排煙口の清掃ブラシの正式な種類は馬毛刷毛（E005で明記）。対象は白炉窯の本焼き当番、条件は排煙口の清掃用ブラシとして使用されること。変更や未確定の理由は、E026以降の作業で「三種類の刷毛を比較」する記述があり、正式な名称がE005にのみ記載されており、他の資料で明記されていないため、正式名称",
+        "refs": [
+          "E005",
+          "E026",
+          "E036"
+        ]
+      }
+    ],
+    "peak_sent": 3560,
+    "sent_tokens": 7175,
+    "size": "short",
+    "status": "completed",
+    "unsupported": false,
+    "value_correct": true
+  },
+  {
+    "arm": "previous",
+    "correct": true,
+    "elapsed_ms": 4613.981,
+    "events": [
+      {
+        "elapsed_ms": 1766.034,
+        "kind": "read",
+        "raw": {
+          "confirmed_user_sha256": "6613fe2bddc11f054a9ce572e2c97d1a1b60e070ec8b58a24b5331f02caa4d2f",
+          "finish": "contentCompleted",
+          "input_tokens": 1204,
+          "limit": 6200,
+          "model": "system",
+          "raw_output": "{\"memo\":\"白炉窯の本焼き当番が使う排煙口の清掃ブラシの正式な種類は馬毛刷毛。現行ではE005で明記されている。対象は白炉窯の本焼き当番、条件は排煙口の清掃用ブラシとして使用されること。変更や未確定の理由は、正式な名称がE005に記載されているが、他の資料では明記されていないため、確認が必要。\",\"refs\":[\"E005\",\"E018\",\"E021\"]}",
+          "sent": true,
+          "status": "ok"
+        },
+        "request_sha256": "1e2328cf67ab8cf5a2e069c04324cded9b4b77b05b8014b406354d4c334b65da"
+      },
+      {
+        "elapsed_ms": 1949.276,
+        "kind": "read",
+        "raw": {
+          "confirmed_user_sha256": "53823e7833b70a338e295185acf3b56b3dceb92314541f4aafa85c2e315f6e41",
+          "finish": "contentCompleted",
+          "input_tokens": 1422,
+          "limit": 6200,
+          "model": "system",
+          "raw_output": "{\"memo\":\"白炉窯の本焼き当番が使う排煙口の清掃ブラシの正式な種類は馬毛刷毛。現行ではE005で明記されている。対象は白炉窯の本焼き当番、条件は排煙口の清掃用ブラシとして使用されること。変更や未確定の理由は、正式な名称がE005に記載されているが、他の資料では明記されていないため、確認が必要。今回の原文では三種類の刷毛を比較したとあり、正式な種類がE005であるかどうかの検証が継続されている。\",\"refs\":[\"E005\",\"E026\",\"E027\"]}",
+          "sent": true,
+          "status": "ok"
+        },
+        "request_sha256": "b4631cbaa9602a3969271d00745581deb2a1a80325d9f1698ad75a8cb1390139"
+      },
+      {
+        "elapsed_ms": 898.671,
+        "kind": "read",
+        "raw": {
+          "confirmed_user_sha256": "8095415bb7e0ea8b06b987c4490a7e484201087078726a2dd8a0274c283ac4c7",
+          "finish": "contentCompleted",
+          "input_tokens": 1374,
+          "limit": 6200,
+          "model": "system",
+          "raw_output": "{\"evidence_id\":\"E053\",\"state\":\"確定\",\"value\":\"真鍮刷毛\"}",
+          "sent": true,
+          "status": "ok"
+        },
+        "request_sha256": "c7451adc4e5a24f8fa71e470384cbf2f14bbb6b35c73c737ed598fed68ddf330"
+      }
+    ],
+    "evidence_correct": true,
+    "final": {
+      "evidence_id": "E053",
+      "state": "確定",
+      "value": "真鍮刷毛"
+    },
+    "generations": 3,
+    "id": "notice-s04",
+    "memos": [
+      {
+        "memo": "白炉窯の本焼き当番が使う排煙口の清掃ブラシの正式な種類は馬毛刷毛。現行ではE005で明記されている。対象は白炉窯の本焼き当番、条件は排煙口の清掃用ブラシとして使用されること。変更や未確定の理由は、正式な名称がE005に記載されているが、他の資料では明記されていないため、確認が必要。",
+        "refs": [
+          "E005",
+          "E018",
+          "E021"
+        ]
+      },
+      {
+        "memo": "白炉窯の本焼き当番が使う排煙口の清掃ブラシの正式な種類は馬毛刷毛。現行ではE005で明記されている。対象は白炉窯の本焼き当番、条件は排煙口の清掃用ブラシとして使用されること。変更や未確定の理由は、正式な名称がE005に記載されているが、他の資料では明記されていないため、確認が必要。今回の原文では三種類の刷毛を比較したと",
+        "refs": [
+          "E005",
+          "E026",
+          "E027"
+        ]
+      }
+    ],
+    "peak_sent": 1422,
+    "sent_tokens": 4000,
+    "size": "short",
+    "status": "completed",
+    "unsupported": false,
+    "value_correct": true
+  },
+  {
+    "arm": "reopen",
+    "correct": true,
+    "elapsed_ms": 4339.523,
+    "events": [
+      {
+        "elapsed_ms": 1755.818,
+        "kind": "read",
+        "raw": {
+          "confirmed_user_sha256": "6613fe2bddc11f054a9ce572e2c97d1a1b60e070ec8b58a24b5331f02caa4d2f",
+          "finish": "contentCompleted",
+          "input_tokens": 1204,
+          "limit": 6200,
+          "model": "system",
+          "raw_output": "{\"memo\":\"白炉窯の本焼き当番が使う排煙口の清掃ブラシの正式な種類は馬毛刷毛。現行ではE005で明記されている。対象は白炉窯の本焼き当番、条件は排煙口の清掃用ブラシとして使用されること。変更や未確定の理由は、正式な名称がE005に記載されているが、他の資料では明記されていないため、確認が必要。\",\"refs\":[\"E005\",\"E018\",\"E021\"]}",
+          "sent": true,
+          "status": "ok"
+        },
+        "request_sha256": "1e2328cf67ab8cf5a2e069c04324cded9b4b77b05b8014b406354d4c334b65da"
+      },
+      {
+        "elapsed_ms": 1646.155,
+        "kind": "read",
+        "raw": {
+          "confirmed_user_sha256": "0050a1a4311acea7013a964c79f2f1814506953afe78a2bef53f994e9890a033",
+          "finish": "contentCompleted",
+          "input_tokens": 1540,
+          "limit": 6200,
+          "model": "system",
+          "raw_output": "{\"memo\":\"白炉窯の本焼き当番が使う排煙口の清掃ブラシの正式な種類は馬毛刷毛。現行ではE005で明記されている。対象は白炉窯の本焼き当番、条件は排煙口の清掃用ブラシとして使用されること。変更や未確定の理由は、正式な名称がE005に記載されているが、他の資料では明記されていないため、確認が必要。\",\"refs\":[\"E005\",\"E026\",\"E036\"]}",
+          "sent": true,
+          "status": "ok"
+        },
+        "request_sha256": "8fff56a7e43c6026462231a32cb180c9fda6075077250448ae70d61c02bef6cb"
+      },
+      {
+        "elapsed_ms": 937.55,
+        "kind": "read",
+        "raw": {
+          "confirmed_user_sha256": "4b61decd4d44ba88783bf42a1bb7b38e3fe0ea86a0630206abb5e1c5e78b757f",
+          "finish": "contentCompleted",
+          "input_tokens": 1493,
+          "limit": 6200,
+          "model": "system",
+          "raw_output": "{\"evidence_id\":\"E053\",\"state\":\"確定\",\"value\":\"真鍮刷毛\"}",
+          "sent": true,
+          "status": "ok"
+        },
+        "request_sha256": "a2736f55ed125a6b3ab3a9a0a9a5c1655fe7098c4b92a2aa004ccfea2734b99e"
+      }
+    ],
+    "evidence_correct": true,
+    "final": {
+      "evidence_id": "E053",
+      "state": "確定",
+      "value": "真鍮刷毛"
+    },
+    "generations": 3,
+    "id": "notice-s04",
+    "memos": [
+      {
+        "memo": "白炉窯の本焼き当番が使う排煙口の清掃ブラシの正式な種類は馬毛刷毛。現行ではE005で明記されている。対象は白炉窯の本焼き当番、条件は排煙口の清掃用ブラシとして使用されること。変更や未確定の理由は、正式な名称がE005に記載されているが、他の資料では明記されていないため、確認が必要。",
+        "refs": [
+          "E005",
+          "E018",
+          "E021"
+        ]
+      },
+      {
+        "memo": "白炉窯の本焼き当番が使う排煙口の清掃ブラシの正式な種類は馬毛刷毛。現行ではE005で明記されている。対象は白炉窯の本焼き当番、条件は排煙口の清掃用ブラシとして使用されること。変更や未確定の理由は、正式な名称がE005に記載されているが、他の資料では明記されていないため、確認が必要。",
+        "refs": [
+          "E005",
+          "E026",
+          "E036"
+        ]
+      }
+    ],
+    "peak_sent": 1540,
+    "sent_tokens": 4237,
+    "size": "short",
+    "status": "completed",
+    "unsupported": false,
+    "value_correct": true
+  },
+  {
+    "arm": "previous",
+    "correct": false,
+    "elapsed_ms": 7797.357,
+    "events": [
+      {
+        "elapsed_ms": 3036.149,
+        "kind": "read",
+        "raw": {
+          "confirmed_user_sha256": "b5c3c21b550c7e8ef66ecb5aeb9b58d4effadfe484dbf1a0d4e6a93a1b6f72f9",
+          "finish": "contentCompleted",
+          "input_tokens": 3008,
+          "limit": 6200,
+          "model": "system",
+          "raw_output": "{\"memo\":\"目的：共同浴場のヒノキ槽を夜間循環するとき、補助配管の継ぎ目に使う封止材の品名は耐熱ゴム板です。現行の値：耐熱ゴム板。対象・条件：ヒノキ槽の補助配管の継ぎ目。変更や未確定の理由：旧仕様の写しが当直に渡されたが、現在の仕様は明記されていない。撤回・訂正：古い候補（他の封止材）は含まない。\",\"refs\":[\"E011\",\"E051\",\"E052\"]}",
+          "sent": true,
+          "status": "ok"
+        },
+        "request_sha256": "a1f5617e7afcb8381b974636fe4c8fd9fdc518be1a200c87f4d3b8cd875d1d52"
+      },
+      {
+        "elapsed_ms": 2995.495,
+        "kind": "read",
+        "raw": {
+          "confirmed_user_sha256": "b232b1d80b3ae1bf7098bbd9d14ce22e2e0468f7b2b8d3d95acacdc1c6a00f5f",
+          "finish": "contentCompleted",
+          "input_tokens": 3231,
+          "limit": 6200,
+          "model": "system",
+          "raw_output": "{\"memo\":\"目的：共同浴場のヒノキ槽の夜間循環用補助配管の継ぎ目の封止材は「膨張黒鉛板」と決定。旧仕様を廃止する。現行の値：膨張黒鉛板。対象・条件：ヒノキ槽の補助配管の継ぎ目。変更や未確定の理由：旧仕様の写しが当直に渡されたが、現在の仕様は明記されていない。撤回・訂正：古い候補（耐熱ゴム板）は含まない。\",\"refs\":[\"E095\",\"E110\",\"E111\"]}",
+          "sent": true,
+          "status": "ok"
+        },
+        "request_sha256": "f79e28b2b474395aec3907a9d3f8c41c32241cbaad874e6ef398dfac121903f5"
+      },
+      {
+        "elapsed_ms": 1765.713,
+        "kind": "read",
+        "raw": {
+          "confirmed_user_sha256": "a5e83dc862a4365c982da4238ec3c038257ab205f7d1d9202c3c03b4cc33e0b2",
+          "finish": "contentCompleted",
+          "input_tokens": 3198,
+          "limit": 6200,
+          "model": "system",
+          "raw_output": "{\"evidence_id\":\"E165\",\"state\":\"確定\",\"value\":\"耐熱ゴム板\"}",
+          "sent": true,
+          "status": "ok"
+        },
+        "request_sha256": "df1ae47bdc63919cca8082e6e7b1207f7d85d3789653cd6f2f8c53ed1d43576d"
+      }
+    ],
+    "evidence_correct": false,
+    "final": {
+      "evidence_id": "E165",
+      "state": "確定",
+      "value": "耐熱ゴム板"
+    },
+    "generations": 3,
+    "id": "notice-l01",
+    "memos": [
+      {
+        "memo": "目的：共同浴場のヒノキ槽を夜間循環するとき、補助配管の継ぎ目に使う封止材の品名は耐熱ゴム板です。現行の値：耐熱ゴム板。対象・条件：ヒノキ槽の補助配管の継ぎ目。変更や未確定の理由：旧仕様の写しが当直に渡されたが、現在の仕様は明記されていない。撤回・訂正：古い候補（他の封止材）は含まない。",
+        "refs": [
+          "E011",
+          "E051",
+          "E052"
+        ]
+      },
+      {
+        "memo": "目的：共同浴場のヒノキ槽の夜間循環用補助配管の継ぎ目の封止材は「膨張黒鉛板」と決定。旧仕様を廃止する。現行の値：膨張黒鉛板。対象・条件：ヒノキ槽の補助配管の継ぎ目。変更や未確定の理由：旧仕様の写しが当直に渡されたが、現在の仕様は明記されていない。撤回・訂正：古い候補（耐熱ゴム板）は含まない。",
+        "refs": [
+          "E095",
+          "E110",
+          "E111"
+        ]
+      }
+    ],
+    "peak_sent": 3231,
+    "sent_tokens": 9437,
+    "size": "long",
+    "status": "completed",
+    "unsupported": false,
+    "value_correct": false
+  },
+  {
+    "arm": "reopen",
+    "correct": false,
+    "elapsed_ms": 7793.992,
+    "events": [
+      {
+        "elapsed_ms": 3033.413,
+        "kind": "read",
+        "raw": {
+          "confirmed_user_sha256": "b5c3c21b550c7e8ef66ecb5aeb9b58d4effadfe484dbf1a0d4e6a93a1b6f72f9",
+          "finish": "contentCompleted",
+          "input_tokens": 3008,
+          "limit": 6200,
+          "model": "system",
+          "raw_output": "{\"memo\":\"目的：共同浴場のヒノキ槽を夜間循環するとき、補助配管の継ぎ目に使う封止材の品名は耐熱ゴム板です。現行の値：耐熱ゴム板。対象・条件：ヒノキ槽の補助配管の継ぎ目。変更や未確定の理由：旧仕様の写しが当直に渡されたが、現在の仕様は明記されていない。撤回・訂正：古い候補（他の封止材）は含まない。\",\"refs\":[\"E011\",\"E051\",\"E052\"]}",
+          "sent": true,
+          "status": "ok"
+        },
+        "request_sha256": "a1f5617e7afcb8381b974636fe4c8fd9fdc518be1a200c87f4d3b8cd875d1d52"
+      },
+      {
+        "elapsed_ms": 2922.67,
+        "kind": "read",
+        "raw": {
+          "confirmed_user_sha256": "c294d10de662b4adce7c46e0eec5ce7ab5302069ede9b8499d205ecf4f152806",
+          "finish": "contentCompleted",
+          "input_tokens": 3372,
+          "limit": 6200,
+          "model": "system",
+          "raw_output": "{\"memo\":\"目的：共同浴場のヒノキ槽を夜間循環するとき、補助配管の継ぎ目に使う封止材の品名は「膨張黒鉛板」です。現行の値：膨張黒鉛板。対象・条件：ヒノキ槽の補助配管の継ぎ目。変更や未確定の理由：旧仕様を廃止する決定がなされた。撤回・訂正：古い候補（耐熱ゴム板）は含まない。\",\"refs\":[\"E011\",\"E051\",\"E095\"]}",
+          "sent": true,
+          "status": "ok"
+        },
+        "request_sha256": "a9f8f80d9b4f795c6b68ff1e5af42f224c1da6b54b0672348c305ff21d93daf8"
+      },
+      {
+        "elapsed_ms": 1837.909,
+        "kind": "read",
+        "raw": {
+          "confirmed_user_sha256": "03479c8d2c1e846f289378cb7a23cb02e607ff3a141a7cda413c5c7f39b431ce",
+          "finish": "contentCompleted",
+          "input_tokens": 3330,
+          "limit": 6200,
+          "model": "system",
+          "raw_output": "{\"evidence_id\":\"E146\",\"state\":\"確定\",\"value\":\"耐熱ゴム板\"}",
+          "sent": true,
+          "status": "ok"
+        },
+        "request_sha256": "2eb1acdcc51194987054cbac0e97a90f4cdaea825b313dc7e4ddbc9504f59280"
+      }
+    ],
+    "evidence_correct": false,
+    "final": {
+      "evidence_id": "E146",
+      "state": "確定",
+      "value": "耐熱ゴム板"
+    },
+    "generations": 3,
+    "id": "notice-l01",
+    "memos": [
+      {
+        "memo": "目的：共同浴場のヒノキ槽を夜間循環するとき、補助配管の継ぎ目に使う封止材の品名は耐熱ゴム板です。現行の値：耐熱ゴム板。対象・条件：ヒノキ槽の補助配管の継ぎ目。変更や未確定の理由：旧仕様の写しが当直に渡されたが、現在の仕様は明記されていない。撤回・訂正：古い候補（他の封止材）は含まない。",
+        "refs": [
+          "E011",
+          "E051",
+          "E052"
+        ]
+      },
+      {
+        "memo": "目的：共同浴場のヒノキ槽を夜間循環するとき、補助配管の継ぎ目に使う封止材の品名は「膨張黒鉛板」です。現行の値：膨張黒鉛板。対象・条件：ヒノキ槽の補助配管の継ぎ目。変更や未確定の理由：旧仕様を廃止する決定がなされた。撤回・訂正：古い候補（耐熱ゴム板）は含まない。",
+        "refs": [
+          "E011",
+          "E051",
+          "E095"
+        ]
+      }
+    ],
+    "peak_sent": 3372,
+    "sent_tokens": 9710,
+    "size": "long",
+    "status": "completed",
+    "unsupported": false,
+    "value_correct": false
+  },
+  {
+    "arm": "history",
+    "correct": false,
+    "elapsed_ms": 9024.252,
+    "events": [
+      {
+        "elapsed_ms": 3032.75,
+        "kind": "read",
+        "raw": {
+          "confirmed_user_sha256": "b5c3c21b550c7e8ef66ecb5aeb9b58d4effadfe484dbf1a0d4e6a93a1b6f72f9",
+          "finish": "contentCompleted",
+          "input_tokens": 3008,
+          "limit": 6200,
+          "model": "system",
+          "raw_output": "{\"memo\":\"目的：共同浴場のヒノキ槽を夜間循環するとき、補助配管の継ぎ目に使う封止材の品名は耐熱ゴム板です。現行の値：耐熱ゴム板。対象・条件：ヒノキ槽の補助配管の継ぎ目。変更や未確定の理由：旧仕様の写しが当直に渡されたが、現在の仕様は明記されていない。撤回・訂正：古い候補（他の封止材）は含まない。\",\"refs\":[\"E011\",\"E051\",\"E052\"]}",
+          "sent": true,
+          "status": "ok"
+        },
+        "request_sha256": "a1f5617e7afcb8381b974636fe4c8fd9fdc518be1a200c87f4d3b8cd875d1d52"
+      },
+      {
+        "elapsed_ms": 5955.857,
+        "kind": "read",
+        "raw": {
+          "confirmed_user_sha256": "b266a86838f2bd8a185137789eb8a90dbd3bbb465bd15497f571253076d8c467",
+          "finish": "contentCompleted",
+          "input_tokens": 6018,
+          "limit": 6200,
+          "model": "system",
+          "raw_output": "{\"memo\":\"目的：共同浴場のヒノキ槽の夜間循環用補助配管の継ぎ目の封止材は「膨張黒鉛板」と決定された。現行の値：膨張黒鉛板（旧仕様の廃止）。対象・条件：ヒノキ槽の補助配管の継ぎ目。変更や未確定の理由：旧仕様の写しが当直に渡されたが、現在の仕様は明記されていない。撤回・訂正：古い候補（耐熱ゴム板）は含まない。\",\"refs\":[\"E095\",\"E118\",\"E126\"]}",
+          "sent": true,
+          "status": "ok"
+        },
+        "request_sha256": "b2d8844ff273ed197e433e9059db32266759caff81d9ffc514ab7babaaa02ffc"
+      },
+      {
+        "elapsed_ms": 35.645,
+        "kind": "read",
+        "raw": {
+          "input_tokens": 8981,
+          "limit": 6200,
+          "sent": false,
+          "status": "over_budget"
+        },
+        "request_sha256": "3eb23d593be95c1e9e06af4df33db2ec57140955ae96cd6e3e2e1288700d2f1f"
+      }
+    ],
+    "evidence_correct": false,
+    "final": null,
+    "generations": 2,
+    "id": "notice-l01",
+    "memos": [
+      {
+        "memo": "目的：共同浴場のヒノキ槽を夜間循環するとき、補助配管の継ぎ目に使う封止材の品名は耐熱ゴム板です。現行の値：耐熱ゴム板。対象・条件：ヒノキ槽の補助配管の継ぎ目。変更や未確定の理由：旧仕様の写しが当直に渡されたが、現在の仕様は明記されていない。撤回・訂正：古い候補（他の封止材）は含まない。",
+        "refs": [
+          "E011",
+          "E051",
+          "E052"
+        ]
+      },
+      {
+        "memo": "目的：共同浴場のヒノキ槽の夜間循環用補助配管の継ぎ目の封止材は「膨張黒鉛板」と決定された。現行の値：膨張黒鉛板（旧仕様の廃止）。対象・条件：ヒノキ槽の補助配管の継ぎ目。変更や未確定の理由：旧仕様の写しが当直に渡されたが、現在の仕様は明記されていない。撤回・訂正：古い候補（耐熱ゴム板）は含まない。",
+        "refs": [
+          "E095",
+          "E118",
+          "E126"
+        ]
+      }
+    ],
+    "peak_sent": 6018,
+    "sent_tokens": 9026,
+    "size": "long",
+    "status": "over_budget",
+    "unsupported": false,
+    "value_correct": false
+  },
+  {
+    "arm": "reopen",
+    "correct": false,
+    "elapsed_ms": 8216.652,
+    "events": [
+      {
+        "elapsed_ms": 3303.303,
+        "kind": "read",
+        "raw": {
+          "confirmed_user_sha256": "b7c96659d0f847c10a89450b4d6083e020f7ca2f515f404c7398c45851b02fbb",
+          "finish": "contentCompleted",
+          "input_tokens": 3060,
+          "limit": 6200,
+          "model": "system",
+          "raw_output": "{\"memo\":\"目的：月灯天文台の子ども観望会で、第二観測台の最終組が入場できる締切時刻を特定する。現行の計画では十九時四十分までとされていたが、手すりの補修が夜まで延びるため、台長が入場締切を撤回し、代わりの時刻は定められていない。変更の理由として、作業の遅延と安全確保の観点から計画の見直しが行われた。未確定の要素として、新しい入場時刻の決定が保留されている。\",\"refs\":[\"E012\",\"E047\",\"E049\"]}",
+          "sent": true,
+          "status": "ok"
+        },
+        "request_sha256": "a48716df4804e5486249ea51680e4b9246510261816aacba08ff87fdb92afcce"
+      },
+      {
+        "elapsed_ms": 3099.24,
+        "kind": "read",
+        "raw": {
+          "confirmed_user_sha256": "14ac4f7a3365bbe440b50e665b5865eb80a8c4ad3669db5c21d0c4359199b1e2",
+          "finish": "contentCompleted",
+          "input_tokens": 3410,
+          "limit": 6200,
+          "model": "system",
+          "raw_output": "{\"memo\":\"目的：月灯天文台の子ども観望会で、第二観測台の最終組が入場できる締切時刻を特定する。現行の計画では十九時四十分までとされていたが、手すりの補修が夜まで延びるため、台長は入場締切を撤回し、代わりの時刻は定めなかった。変更の理由として、作業の遅延と安全確保の観点から計画の見直しが行われた。未確定の要素として、新しい入場時刻の決定がなされていない。\",\"refs\":[\"E047\",\"E064\",\"E084\"]}",
+          "sent": true,
+          "status": "ok"
+        },
+        "request_sha256": "6303924a911addc53fdf00c01839342b4f6e6a5cc5b31cf7b4a89ff7540f3076"
+      },
+      {
+        "elapsed_ms": 1814.109,
+        "kind": "read",
+        "raw": {
+          "confirmed_user_sha256": "2184203e93e2a3ace3023237e51d07148f21e3d79f5948eec391ec2a00ad4167",
+          "finish": "contentCompleted",
+          "input_tokens": 3319,
+          "limit": 6200,
+          "model": "system",
+          "raw_output": "{\"evidence_id\":\"E135\",\"state\":\"未確定\",\"value\":\"なし\"}",
+          "sent": true,
+          "status": "ok"
+        },
+        "request_sha256": "227cb8a733a3f36ef91215d3598c49dc4b7ea9963da0008138984cb769d084a5"
+      }
+    ],
+    "evidence_correct": false,
+    "final": {
+      "evidence_id": "E135",
+      "state": "未確定",
+      "value": "なし"
+    },
+    "generations": 3,
+    "id": "notice-l02",
+    "memos": [
+      {
+        "memo": "目的：月灯天文台の子ども観望会で、第二観測台の最終組が入場できる締切時刻を特定する。現行の計画では十九時四十分までとされていたが、手すりの補修が夜まで延びるため、台長が入場締切を撤回し、代わりの時刻は定められていない。変更の理由として、作業の遅延と安全確保の観点から計画の見直しが行われた。未確定の要素として、新しい入場",
+        "refs": [
+          "E012",
+          "E047",
+          "E049"
+        ]
+      },
+      {
+        "memo": "目的：月灯天文台の子ども観望会で、第二観測台の最終組が入場できる締切時刻を特定する。現行の計画では十九時四十分までとされていたが、手すりの補修が夜まで延びるため、台長は入場締切を撤回し、代わりの時刻は定めなかった。変更の理由として、作業の遅延と安全確保の観点から計画の見直しが行われた。未確定の要素として、新しい入場時刻",
+        "refs": [
+          "E047",
+          "E064",
+          "E084"
+        ]
+      }
+    ],
+    "peak_sent": 3410,
+    "sent_tokens": 9789,
+    "size": "long",
+    "status": "completed",
+    "unsupported": true,
+    "value_correct": false
+  },
+  {
+    "arm": "history",
+    "correct": false,
+    "elapsed_ms": 9046.978,
+    "events": [
+      {
+        "elapsed_ms": 3292.352,
+        "kind": "read",
+        "raw": {
+          "confirmed_user_sha256": "b7c96659d0f847c10a89450b4d6083e020f7ca2f515f404c7398c45851b02fbb",
+          "finish": "contentCompleted",
+          "input_tokens": 3060,
+          "limit": 6200,
+          "model": "system",
+          "raw_output": "{\"memo\":\"目的：月灯天文台の子ども観望会で、第二観測台の最終組が入場できる締切時刻を特定する。現行の計画では十九時四十分までとされていたが、手すりの補修が夜まで延びるため、台長が入場締切を撤回し、代わりの時刻は定められていない。変更の理由として、作業の遅延と安全確保の観点から計画の見直しが行われた。未確定の要素として、新しい入場時刻の決定が保留されている。\",\"refs\":[\"E012\",\"E047\",\"E049\"]}",
+          "sent": true,
+          "status": "ok"
+        },
+        "request_sha256": "a48716df4804e5486249ea51680e4b9246510261816aacba08ff87fdb92afcce"
+      },
+      {
+        "elapsed_ms": 5719.268,
+        "kind": "read",
+        "raw": {
+          "confirmed_user_sha256": "40bdd41eb7234a399eb269b51b58cd6fd1998bc4fe1826bd05f3f79430ded2fa",
+          "finish": "contentCompleted",
+          "input_tokens": 6110,
+          "limit": 6200,
+          "model": "system",
+          "raw_output": "{\"memo\":\"目的：月灯天文台の子ども観望会で、第二観測台の最終組が入場できる締切時刻を特定する。現行の計画では十九時四十分までとされていたが、手すりの補修が夜まで延びるため、台長が入場締切を撤回し、代わりの時刻は定められていない。変更の理由として、作業の遅延と安全確保の観点から計画の見直しが行われた。未確定の要素として、新しい入場時刻の決定がなされていない。\",\"refs\":[\"E012\",\"E047\",\"E049\"]}",
+          "sent": true,
+          "status": "ok"
+        },
+        "request_sha256": "eeb032a84d0328c137454501214e85cd4ebaae8bfb81ce474efc0be1231a7203"
+      },
+      {
+        "elapsed_ms": 35.358,
+        "kind": "read",
+        "raw": {
+          "input_tokens": 9059,
+          "limit": 6200,
+          "sent": false,
+          "status": "over_budget"
+        },
+        "request_sha256": "90c9e4e3dc061c4e5741495bfe1bfdcff1ce2ff76f1125e911d96e9473f1048e"
+      }
+    ],
+    "evidence_correct": false,
+    "final": null,
+    "generations": 2,
+    "id": "notice-l02",
+    "memos": [
+      {
+        "memo": "目的：月灯天文台の子ども観望会で、第二観測台の最終組が入場できる締切時刻を特定する。現行の計画では十九時四十分までとされていたが、手すりの補修が夜まで延びるため、台長が入場締切を撤回し、代わりの時刻は定められていない。変更の理由として、作業の遅延と安全確保の観点から計画の見直しが行われた。未確定の要素として、新しい入場",
+        "refs": [
+          "E012",
+          "E047",
+          "E049"
+        ]
+      },
+      {
+        "memo": "目的：月灯天文台の子ども観望会で、第二観測台の最終組が入場できる締切時刻を特定する。現行の計画では十九時四十分までとされていたが、手すりの補修が夜まで延びるため、台長が入場締切を撤回し、代わりの時刻は定められていない。変更の理由として、作業の遅延と安全確保の観点から計画の見直しが行われた。未確定の要素として、新しい入場",
+        "refs": [
+          "E012",
+          "E047",
+          "E049"
+        ]
+      }
+    ],
+    "peak_sent": 6110,
+    "sent_tokens": 9170,
+    "size": "long",
+    "status": "over_budget",
+    "unsupported": false,
+    "value_correct": false
+  },
+  {
+    "arm": "previous",
+    "correct": false,
+    "elapsed_ms": 8037.88,
+    "events": [
+      {
+        "elapsed_ms": 3294.317,
+        "kind": "read",
+        "raw": {
+          "confirmed_user_sha256": "b7c96659d0f847c10a89450b4d6083e020f7ca2f515f404c7398c45851b02fbb",
+          "finish": "contentCompleted",
+          "input_tokens": 3060,
+          "limit": 6200,
+          "model": "system",
+          "raw_output": "{\"memo\":\"目的：月灯天文台の子ども観望会で、第二観測台の最終組が入場できる締切時刻を特定する。現行の計画では十九時四十分までとされていたが、手すりの補修が夜まで延びるため、台長が入場締切を撤回し、代わりの時刻は定められていない。変更の理由として、作業の遅延と安全確保の観点から計画の見直しが行われた。未確定の要素として、新しい入場時刻の決定が保留されている。\",\"refs\":[\"E012\",\"E047\",\"E049\"]}",
+          "sent": true,
+          "status": "ok"
+        },
+        "request_sha256": "a48716df4804e5486249ea51680e4b9246510261816aacba08ff87fdb92afcce"
+      },
+      {
+        "elapsed_ms": 2977.548,
+        "kind": "read",
+        "raw": {
+          "confirmed_user_sha256": "8ab2106c0c87e3ea3c37fed3f0bfd9fadb180abdceca6d17d667753dcac52010",
+          "finish": "contentCompleted",
+          "input_tokens": 3269,
+          "limit": 6200,
+          "model": "system",
+          "raw_output": "{\"memo\":\"目的：月灯天文台の子ども観望会で、第二観測台の最終組が入場できる締切時刻を特定する。現行の計画では十九時四十分までとされていたが、手すりの補修が夜まで延びるため、台長が入場締切を撤回し、代わりの時刻は定められていない。変更の理由として、作業の遅延と安全確保の観点から計画の見直しが行われた。未確定の要素として、新しい入場時刻の決定が保留されている。\",\"refs\":[\"E012\",\"E047\",\"E049\"]}",
+          "sent": true,
+          "status": "ok"
+        },
+        "request_sha256": "241dc2d0760fbc4f1eae6ea95fdb1fe12e35ee2a6b87725a88120b32c8536f6c"
+      },
+      {
+        "elapsed_ms": 1766.015,
+        "kind": "read",
+        "raw": {
+          "confirmed_user_sha256": "197d7706143c2cf68919e1420ab295cb59bcedbd7da05cc4988d021393c40def",
+          "finish": "contentCompleted",
+          "input_tokens": 3182,
+          "limit": 6200,
+          "model": "system",
+          "raw_output": "{\"evidence_id\":\"E143\",\"state\":\"未確定\",\"value\":\"二十一時\"}",
+          "sent": true,
+          "status": "ok"
+        },
+        "request_sha256": "e417db9e7c29b1c79629f58c8d98514227306437a170d104368f4650f4909002"
+      }
+    ],
+    "evidence_correct": false,
+    "final": {
+      "evidence_id": "E143",
+      "state": "未確定",
+      "value": "二十一時"
+    },
+    "generations": 3,
+    "id": "notice-l02",
+    "memos": [
+      {
+        "memo": "目的：月灯天文台の子ども観望会で、第二観測台の最終組が入場できる締切時刻を特定する。現行の計画では十九時四十分までとされていたが、手すりの補修が夜まで延びるため、台長が入場締切を撤回し、代わりの時刻は定められていない。変更の理由として、作業の遅延と安全確保の観点から計画の見直しが行われた。未確定の要素として、新しい入場",
+        "refs": [
+          "E012",
+          "E047",
+          "E049"
+        ]
+      },
+      {
+        "memo": "目的：月灯天文台の子ども観望会で、第二観測台の最終組が入場できる締切時刻を特定する。現行の計画では十九時四十分までとされていたが、手すりの補修が夜まで延びるため、台長が入場締切を撤回し、代わりの時刻は定められていない。変更の理由として、作業の遅延と安全確保の観点から計画の見直しが行われた。未確定の要素として、新しい入場",
+        "refs": [
+          "E012",
+          "E047",
+          "E049"
+        ]
+      }
+    ],
+    "peak_sent": 3269,
+    "sent_tokens": 9511,
+    "size": "long",
+    "status": "completed",
+    "unsupported": true,
+    "value_correct": false
+  },
+  {
+    "arm": "history",
+    "correct": false,
+    "elapsed_ms": 8326.661,
+    "events": [
+      {
+        "elapsed_ms": 2829.966,
+        "kind": "read",
+        "raw": {
+          "confirmed_user_sha256": "944367b7b130e22a3c002ed2148c3471118516815f3cfc5649eb103cdd9bdd21",
+          "finish": "contentCompleted",
+          "input_tokens": 3002,
+          "limit": 6200,
+          "model": "system",
+          "raw_output": "{\"memo\":\"目的：霧ノ駅の旧待合室の木製長椅子の座面に正式な仕上げ材を指定する。現行値：蜜蝋艶消し剤。対象・条件：保存主任の指示に基づく。変更理由：指定された仕上げ材が座面に適切に適用されるようにするため。未確定の理由：実際の適用状況の確認が必要。\",\"refs\":[\"E020\",\"E054\",\"E060\"]}",
+          "sent": true,
+          "status": "ok"
+        },
+        "request_sha256": "41c7b395431afa9906090608de60794d538bbef44bb3740489069043bc4cd520"
+      },
+      {
+        "elapsed_ms": 5461.693,
+        "kind": "read",
+        "raw": {
+          "confirmed_user_sha256": "9119c154778435328ce25813a2aee2379fc585733bfd42c34d502eec4a4808f2",
+          "finish": "contentCompleted",
+          "input_tokens": 6022,
+          "limit": 6200,
+          "model": "system",
+          "raw_output": "{\"memo\":\"目的：霧ノ駅の旧待合室の木製長椅子の座面に正式な仕上げ材を指定する。現行値：亜麻仁油仕上げ。対象・条件：保存主任の指示に基づく。変更理由：試料を展示用合板で試すことだけを認めたため、実際の仕上げ材の決定が未確定。未確定の理由：新材料の試作品の評価が必要。\",\"refs\":[\"E020\",\"E054\",\"E113\"]}",
+          "sent": true,
+          "status": "ok"
+        },
+        "request_sha256": "8e9d2bd43de5f87825830b16dff551e8f3d3de64cf4bf9d7ff4337497a614591"
+      },
+      {
+        "elapsed_ms": 35.002,
+        "kind": "read",
+        "raw": {
+          "input_tokens": 8995,
+          "limit": 6200,
+          "sent": false,
+          "status": "over_budget"
+        },
+        "request_sha256": "bf9c46cf2f27e63c109c7d4847ae0ed0494b8a23645aba6dfe95e03a385b63b8"
+      }
+    ],
+    "evidence_correct": false,
+    "final": null,
+    "generations": 2,
+    "id": "notice-l03",
+    "memos": [
+      {
+        "memo": "目的：霧ノ駅の旧待合室の木製長椅子の座面に正式な仕上げ材を指定する。現行値：蜜蝋艶消し剤。対象・条件：保存主任の指示に基づく。変更理由：指定された仕上げ材が座面に適切に適用されるようにするため。未確定の理由：実際の適用状況の確認が必要。",
+        "refs": [
+          "E020",
+          "E054",
+          "E060"
+        ]
+      },
+      {
+        "memo": "目的：霧ノ駅の旧待合室の木製長椅子の座面に正式な仕上げ材を指定する。現行値：亜麻仁油仕上げ。対象・条件：保存主任の指示に基づく。変更理由：試料を展示用合板で試すことだけを認めたため、実際の仕上げ材の決定が未確定。未確定の理由：新材料の試作品の評価が必要。",
+        "refs": [
+          "E020",
+          "E054",
+          "E113"
+        ]
+      }
+    ],
+    "peak_sent": 6022,
+    "sent_tokens": 9024,
+    "size": "long",
+    "status": "over_budget",
+    "unsupported": false,
+    "value_correct": false
+  },
+  {
+    "arm": "previous",
+    "correct": true,
+    "elapsed_ms": 7873.903,
+    "events": [
+      {
+        "elapsed_ms": 2815.974,
+        "kind": "read",
+        "raw": {
+          "confirmed_user_sha256": "944367b7b130e22a3c002ed2148c3471118516815f3cfc5649eb103cdd9bdd21",
+          "finish": "contentCompleted",
+          "input_tokens": 3002,
+          "limit": 6200,
+          "model": "system",
+          "raw_output": "{\"memo\":\"目的：霧ノ駅の旧待合室の木製長椅子の座面に正式な仕上げ材を指定する。現行値：蜜蝋艶消し剤。対象・条件：保存主任の指示に基づく。変更理由：指定された仕上げ材が座面に適切に適用されるようにするため。未確定の理由：実際の適用状況の確認が必要。\",\"refs\":[\"E020\",\"E054\",\"E060\"]}",
+          "sent": true,
+          "status": "ok"
+        },
+        "request_sha256": "41c7b395431afa9906090608de60794d538bbef44bb3740489069043bc4cd520"
+      },
+      {
+        "elapsed_ms": 3259.93,
+        "kind": "read",
+        "raw": {
+          "confirmed_user_sha256": "a120e055bffad9453ae3750404717b55bcd1aeb5553f8065b5035bb53cc54b7e",
+          "finish": "contentCompleted",
+          "input_tokens": 3241,
+          "limit": 6200,
+          "model": "system",
+          "raw_output": "{\"memo\":\"目的：霧ノ駅の旧待合室の木製長椅子の座面に正式な仕上げ材を指定する。現行値：蜜蝋艶消し剤。対象・条件：保存主任の指示に基づく。変更理由：修繕係が修復のために亜麻仁油仕上げを提案したが、試料の展示用合板での試用のみを許可されたため、正式な仕上げ材の指定が未確定。未確定の理由：実際の適用状況の確認と、正式な仕上げ材の選定プロセスが継続中。\",\"refs\":[\"E063\",\"E083\",\"E113\"]}",
+          "sent": true,
+          "status": "ok"
+        },
+        "request_sha256": "0b4e557b7ac0120f4a78a2851c229f911c10a639f2e4f94eb30448aaa6b4b4c0"
+      },
+      {
+        "elapsed_ms": 1797.999,
+        "kind": "read",
+        "raw": {
+          "confirmed_user_sha256": "321026ed6db7273526d7a1fb88815e11a270785d2d8834ad041753d6dd8e8a5b",
+          "finish": "contentCompleted",
+          "input_tokens": 3231,
+          "limit": 6200,
+          "model": "system",
+          "raw_output": "{\"evidence_id\":\"E156\",\"state\":\"確定\",\"value\":\"蜜蝋艶消し剤\"}",
+          "sent": true,
+          "status": "ok"
+        },
+        "request_sha256": "d31a531e7d30e6995a47f7a5db99041a0a833d3acc8cd2dd4f914b9ad5b6d3a0"
+      }
+    ],
+    "evidence_correct": true,
+    "final": {
+      "evidence_id": "E156",
+      "state": "確定",
+      "value": "蜜蝋艶消し剤"
+    },
+    "generations": 3,
+    "id": "notice-l03",
+    "memos": [
+      {
+        "memo": "目的：霧ノ駅の旧待合室の木製長椅子の座面に正式な仕上げ材を指定する。現行値：蜜蝋艶消し剤。対象・条件：保存主任の指示に基づく。変更理由：指定された仕上げ材が座面に適切に適用されるようにするため。未確定の理由：実際の適用状況の確認が必要。",
+        "refs": [
+          "E020",
+          "E054",
+          "E060"
+        ]
+      },
+      {
+        "memo": "目的：霧ノ駅の旧待合室の木製長椅子の座面に正式な仕上げ材を指定する。現行値：蜜蝋艶消し剤。対象・条件：保存主任の指示に基づく。変更理由：修繕係が修復のために亜麻仁油仕上げを提案したが、試料の展示用合板での試用のみを許可されたため、正式な仕上げ材の指定が未確定。未確定の理由：実際の適用状況の確認と、正式な仕上げ材の選定プ",
+        "refs": [
+          "E063",
+          "E083",
+          "E113"
+        ]
+      }
+    ],
+    "peak_sent": 3241,
+    "sent_tokens": 9474,
+    "size": "long",
+    "status": "completed",
+    "unsupported": false,
+    "value_correct": true
+  },
+  {
+    "arm": "reopen",
+    "correct": true,
+    "elapsed_ms": 7272.05,
+    "events": [
+      {
+        "elapsed_ms": 2808.541,
+        "kind": "read",
+        "raw": {
+          "confirmed_user_sha256": "944367b7b130e22a3c002ed2148c3471118516815f3cfc5649eb103cdd9bdd21",
+          "finish": "contentCompleted",
+          "input_tokens": 3002,
+          "limit": 6200,
+          "model": "system",
+          "raw_output": "{\"memo\":\"目的：霧ノ駅の旧待合室の木製長椅子の座面に正式な仕上げ材を指定する。現行値：蜜蝋艶消し剤。対象・条件：保存主任の指示に基づく。変更理由：指定された仕上げ材が座面に適切に適用されるようにするため。未確定の理由：実際の適用状況の確認が必要。\",\"refs\":[\"E020\",\"E054\",\"E060\"]}",
+          "sent": true,
+          "status": "ok"
+        },
+        "request_sha256": "41c7b395431afa9906090608de60794d538bbef44bb3740489069043bc4cd520"
+      },
+      {
+        "elapsed_ms": 2603.836,
+        "kind": "read",
+        "raw": {
+          "confirmed_user_sha256": "dd985f6573a9f3633d86de65765f4e722a075aacc7f8210bc10304a2b418c9d7",
+          "finish": "contentCompleted",
+          "input_tokens": 3366,
+          "limit": 6200,
+          "model": "system",
+          "raw_output": "{\"memo\":\"目的：霧ノ駅の旧待合室の木製長椅子の座面に正式な仕上げ材を指定する。現行値：蜜蝋艶消し剤。対象・条件：保存主任の指示に基づく。変更理由：指定された仕上げ材が座面に適切に適用されるようにするため。未確定の理由：実際の適用状況の確認が必要。\",\"refs\":[\"E020\",\"E063\",\"E083\"]}",
+          "sent": true,
+          "status": "ok"
+        },
+        "request_sha256": "6f3874e2c92459d93f5f5a910a02ab54d3c665194b1882278ac4674df401bc99"
+      },
+      {
+        "elapsed_ms": 1859.673,
+        "kind": "read",
+        "raw": {
+          "confirmed_user_sha256": "b6fed0bdd299ddcc20880dafa7e724e8374a9a1128fbdb174939ecdfb5cde7b8",
+          "finish": "contentCompleted",
+          "input_tokens": 3341,
+          "limit": 6200,
+          "model": "system",
+          "raw_output": "{\"evidence_id\":\"E156\",\"state\":\"確定\",\"value\":\"蜜蝋艶消し剤\"}",
+          "sent": true,
+          "status": "ok"
+        },
+        "request_sha256": "35bfe1424de2e14f20168cbc465f1b7e8d4947812d943ba58c92abe2c41aa451"
+      }
+    ],
+    "evidence_correct": true,
+    "final": {
+      "evidence_id": "E156",
+      "state": "確定",
+      "value": "蜜蝋艶消し剤"
+    },
+    "generations": 3,
+    "id": "notice-l03",
+    "memos": [
+      {
+        "memo": "目的：霧ノ駅の旧待合室の木製長椅子の座面に正式な仕上げ材を指定する。現行値：蜜蝋艶消し剤。対象・条件：保存主任の指示に基づく。変更理由：指定された仕上げ材が座面に適切に適用されるようにするため。未確定の理由：実際の適用状況の確認が必要。",
+        "refs": [
+          "E020",
+          "E054",
+          "E060"
+        ]
+      },
+      {
+        "memo": "目的：霧ノ駅の旧待合室の木製長椅子の座面に正式な仕上げ材を指定する。現行値：蜜蝋艶消し剤。対象・条件：保存主任の指示に基づく。変更理由：指定された仕上げ材が座面に適切に適用されるようにするため。未確定の理由：実際の適用状況の確認が必要。",
+        "refs": [
+          "E020",
+          "E063",
+          "E083"
+        ]
+      }
+    ],
+    "peak_sent": 3366,
+    "sent_tokens": 9709,
+    "size": "long",
+    "status": "completed",
+    "unsupported": false,
+    "value_correct": true
+  },
+  {
+    "arm": "previous",
+    "correct": false,
+    "elapsed_ms": 7526.124,
+    "events": [
+      {
+        "elapsed_ms": 3014.485,
+        "kind": "read",
+        "raw": {
+          "confirmed_user_sha256": "002cff83702d29420eb7923cc7bf3cde7acb60ebe9145a8b6cf629838af0cee4",
+          "finish": "contentCompleted",
+          "input_tokens": 3010,
+          "limit": 6200,
+          "model": "system",
+          "raw_output": "{\"memo\":\"今回新たに届いた原文E015より、川南自転車工房の整備表によると、小径枠を残す貸出車は前輪チューブに品番「CT-42K」を使う。残り3区間の目的は、貸出車に戻った青い貸出車で前輪を直すために指定されるチューブ品番を特定すること。対象は小径枠を残す貸出車、条件は前輪チューブの品番確認、変更や未確定の理由は整備表の情報に基づく。\",\"refs\":[\"E015\",\"E015\",\"E015\"]}",
+          "sent": true,
+          "status": "ok"
+        },
+        "request_sha256": "f0a4dbff92328b4bf118a1ab414108e29776e49cf0ec3b9b2ef8354e6b340389"
+      },
+      {
+        "elapsed_ms": 2776.875,
+        "kind": "read",
+        "raw": {
+          "confirmed_user_sha256": "1bd4a74e7dfb56456a1e9aa792635976df5ba8a1ebf617fc00fb4826f99b6160",
+          "finish": "contentCompleted",
+          "input_tokens": 3231,
+          "limit": 6200,
+          "model": "system",
+          "raw_output": "{\"memo\":\"今回新たに届いた原文E015より、川南自転車工房の整備表によると、小径枠を残す貸出車は前輪チューブに品番「CT-42K」を使う。残り3区間の目的は、貸出車に戻った青い貸出車で前輪を直すために指定されるチューブ品番を特定すること。対象は小径枠を残す貸出車、条件は前輪チューブの品番確認、変更や未確定の理由は整備表の情報に基づく。\",\"refs\":[\"E015\"]}",
+          "sent": true,
+          "status": "ok"
+        },
+        "request_sha256": "e7c7f313c5dc54c7874833dc30331eac26753f025cb282b81639f71020e55a8a"
+      },
+      {
+        "elapsed_ms": 1734.764,
+        "kind": "read",
+        "raw": {
+          "confirmed_user_sha256": "0a300cb9404385825e1368cccbc9140a087c02e7d251c3e22e13c7850ab9bf9b",
+          "finish": "contentCompleted",
+          "input_tokens": 3165,
+          "limit": 6200,
+          "model": "system",
+          "raw_output": "{\"evidence_id\":\"E140\",\"state\":\"未確定\",\"value\":\"未確定\"}",
+          "sent": true,
+          "status": "ok"
+        },
+        "request_sha256": "494f7e35979e6cebb2b33725bed85bd838e18ceec999d935555ad671d118b32d"
+      }
+    ],
+    "evidence_correct": true,
+    "final": {
+      "evidence_id": "E140",
+      "state": "未確定",
+      "value": "未確定"
+    },
+    "generations": 3,
+    "id": "notice-l04",
+    "memos": [
+      {
+        "memo": "今回新たに届いた原文E015より、川南自転車工房の整備表によると、小径枠を残す貸出車は前輪チューブに品番「CT-42K」を使う。残り3区間の目的は、貸出車に戻った青い貸出車で前輪を直すために指定されるチューブ品番を特定すること。対象は小径枠を残す貸出車、条件は前輪チューブの品番確認、変更や未確定の理由は整備表の情報に基",
+        "refs": [
+          "E015"
+        ]
+      },
+      {
+        "memo": "今回新たに届いた原文E015より、川南自転車工房の整備表によると、小径枠を残す貸出車は前輪チューブに品番「CT-42K」を使う。残り3区間の目的は、貸出車に戻った青い貸出車で前輪を直すために指定されるチューブ品番を特定すること。対象は小径枠を残す貸出車、条件は前輪チューブの品番確認、変更や未確定の理由は整備表の情報に基",
+        "refs": [
+          "E015"
+        ]
+      }
+    ],
+    "peak_sent": 3231,
+    "sent_tokens": 9406,
+    "size": "long",
+    "status": "completed",
+    "unsupported": true,
+    "value_correct": false
+  },
+  {
+    "arm": "reopen",
+    "correct": false,
+    "elapsed_ms": 7673.808,
+    "events": [
+      {
+        "elapsed_ms": 3009.335,
+        "kind": "read",
+        "raw": {
+          "confirmed_user_sha256": "002cff83702d29420eb7923cc7bf3cde7acb60ebe9145a8b6cf629838af0cee4",
+          "finish": "contentCompleted",
+          "input_tokens": 3010,
+          "limit": 6200,
+          "model": "system",
+          "raw_output": "{\"memo\":\"今回新たに届いた原文E015より、川南自転車工房の整備表によると、小径枠を残す貸出車は前輪チューブに品番「CT-42K」を使う。残り3区間の目的は、貸出車に戻った青い貸出車で前輪を直すために指定されるチューブ品番を特定すること。対象は小径枠を残す貸出車、条件は前輪チューブの品番確認、変更や未確定の理由は整備表の情報に基づく。\",\"refs\":[\"E015\",\"E015\",\"E015\"]}",
+          "sent": true,
+          "status": "ok"
+        },
+        "request_sha256": "f0a4dbff92328b4bf118a1ab414108e29776e49cf0ec3b9b2ef8354e6b340389"
+      },
+      {
+        "elapsed_ms": 2802.89,
+        "kind": "read",
+        "raw": {
+          "confirmed_user_sha256": "31536c2010c531616c712aeac3cd6f73728bed24c9175aa54880a73f81e70943",
+          "finish": "contentCompleted",
+          "input_tokens": 3276,
+          "limit": 6200,
+          "model": "system",
+          "raw_output": "{\"memo\":\"今回新たに届いた原文E015より、川南自転車工房の整備表によると、小径枠を残す貸出車は前輪チューブに品番「CT-42K」を使う。残り3区間の目的は、貸出車に戻った青い貸出車で前輪を直すために指定されるチューブ品番を特定すること。対象は小径枠を残す貸出車、条件は前輪チューブの品番確認、変更や未確定の理由は整備表の情報に基づく。\",\"refs\":[\"E015\"]}",
+          "sent": true,
+          "status": "ok"
+        },
+        "request_sha256": "76243290023dacb3935fc08d682892582d1bfa12dcf91d76168f34863cfdf80e"
+      },
+      {
+        "elapsed_ms": 1861.583,
+        "kind": "read",
+        "raw": {
+          "confirmed_user_sha256": "64927637b84e01a95f45e7c167df03eefccccbae91d290329b87f5330ab2529a",
+          "finish": "contentCompleted",
+          "input_tokens": 3210,
+          "limit": 6200,
+          "model": "system",
+          "raw_output": "{\"evidence_id\":\"E140\",\"state\":\"未確定\",\"value\":\"前輪チューブの品番は未確定である\"}",
+          "sent": true,
+          "status": "ok"
+        },
+        "request_sha256": "60981509bd8bdddec51b55ea12303ed258a5476c0cbedfaf2a51278e736df94d"
+      }
+    ],
+    "evidence_correct": true,
+    "final": {
+      "evidence_id": "E140",
+      "state": "未確定",
+      "value": "前輪チューブの品番は未確定である"
+    },
+    "generations": 3,
+    "id": "notice-l04",
+    "memos": [
+      {
+        "memo": "今回新たに届いた原文E015より、川南自転車工房の整備表によると、小径枠を残す貸出車は前輪チューブに品番「CT-42K」を使う。残り3区間の目的は、貸出車に戻った青い貸出車で前輪を直すために指定されるチューブ品番を特定すること。対象は小径枠を残す貸出車、条件は前輪チューブの品番確認、変更や未確定の理由は整備表の情報に基",
+        "refs": [
+          "E015"
+        ]
+      },
+      {
+        "memo": "今回新たに届いた原文E015より、川南自転車工房の整備表によると、小径枠を残す貸出車は前輪チューブに品番「CT-42K」を使う。残り3区間の目的は、貸出車に戻った青い貸出車で前輪を直すために指定されるチューブ品番を特定すること。対象は小径枠を残す貸出車、条件は前輪チューブの品番確認、変更や未確定の理由は整備表の情報に基",
+        "refs": [
+          "E015"
+        ]
+      }
+    ],
+    "peak_sent": 3276,
+    "sent_tokens": 9496,
+    "size": "long",
+    "status": "completed",
+    "unsupported": true,
+    "value_correct": false
+  },
+  {
+    "arm": "history",
+    "correct": false,
+    "elapsed_ms": 8494.75,
+    "events": [
+      {
+        "elapsed_ms": 3015.02,
+        "kind": "read",
+        "raw": {
+          "confirmed_user_sha256": "002cff83702d29420eb7923cc7bf3cde7acb60ebe9145a8b6cf629838af0cee4",
+          "finish": "contentCompleted",
+          "input_tokens": 3010,
+          "limit": 6200,
+          "model": "system",
+          "raw_output": "{\"memo\":\"今回新たに届いた原文E015より、川南自転車工房の整備表によると、小径枠を残す貸出車は前輪チューブに品番「CT-42K」を使う。残り3区間の目的は、貸出車に戻った青い貸出車で前輪を直すために指定されるチューブ品番を特定すること。対象は小径枠を残す貸出車、条件は前輪チューブの品番確認、変更や未確定の理由は整備表の情報に基づく。\",\"refs\":[\"E015\",\"E015\",\"E015\"]}",
+          "sent": true,
+          "status": "ok"
+        },
+        "request_sha256": "f0a4dbff92328b4bf118a1ab414108e29776e49cf0ec3b9b2ef8354e6b340389"
+      },
+      {
+        "elapsed_ms": 5444.972,
+        "kind": "read",
+        "raw": {
+          "confirmed_user_sha256": "8c5fa8eb086f583f7b0f1cad18b9fbca57005fa0907d1c52cebf50a82d7efa22",
+          "finish": "contentCompleted",
+          "input_tokens": 6023,
+          "limit": 6200,
+          "model": "system",
+          "raw_output": "{\"memo\":\"今回新たに届いた原文E015より、川南自転車工房の整備表によると、小径枠を残す貸出車は前輪チューブに品番「CT-42K」を使う。残り3区間の目的は、貸出車に戻った青い貸出車で前輪を直すために指定されるチューブ品番を特定すること。対象は小径枠を残す貸出車、条件は前輪チューブの品番確認、変更や未確定の理由は整備表の情報に基。\",\"refs\":[\"E015\"]}",
+          "sent": true,
+          "status": "ok"
+        },
+        "request_sha256": "2bea9a98e838a7ada14d0c4624513b6cb9572c15ccddcb038551cf7bfe2a9a43"
+      },
+      {
+        "elapsed_ms": 34.758,
+        "kind": "read",
+        "raw": {
+          "input_tokens": 8956,
+          "limit": 6200,
+          "sent": false,
+          "status": "over_budget"
+        },
+        "request_sha256": "df758ca31f5bb881fb12d631d2f9ec6dad036963a38263050167cfa58497602a"
+      }
+    ],
+    "evidence_correct": false,
+    "final": null,
+    "generations": 2,
+    "id": "notice-l04",
+    "memos": [
+      {
+        "memo": "今回新たに届いた原文E015より、川南自転車工房の整備表によると、小径枠を残す貸出車は前輪チューブに品番「CT-42K」を使う。残り3区間の目的は、貸出車に戻った青い貸出車で前輪を直すために指定されるチューブ品番を特定すること。対象は小径枠を残す貸出車、条件は前輪チューブの品番確認、変更や未確定の理由は整備表の情報に基",
+        "refs": [
+          "E015"
+        ]
+      },
+      {
+        "memo": "今回新たに届いた原文E015より、川南自転車工房の整備表によると、小径枠を残す貸出車は前輪チューブに品番「CT-42K」を使う。残り3区間の目的は、貸出車に戻った青い貸出車で前輪を直すために指定されるチューブ品番を特定すること。対象は小径枠を残す貸出車、条件は前輪チューブの品番確認、変更や未確定の理由は整備表の情報に基",
+        "refs": [
+          "E015"
+        ]
+      }
+    ],
+    "peak_sent": 6023,
+    "sent_tokens": 9033,
+    "size": "long",
+    "status": "over_budget",
+    "unsupported": false,
+    "value_correct": false
+  },
+  {
+    "arm": "reopen",
+    "correct": true,
+    "elapsed_ms": 22925.596,
+    "events": [
+      {
+        "elapsed_ms": 4139.715,
+        "kind": "read",
+        "raw": {
+          "confirmed_user_sha256": "e8a566228608578b2ab4d9a90e8d321c87399ed3ac979b1ed59b5f947c301999",
+          "finish": "contentCompleted",
+          "input_tokens": 3141,
+          "limit": 6200,
+          "model": "system",
+          "raw_output": "{\"memo\":\"大正十年の巡回出品控えより、「槙橋模型巡回展の銘板」の号は「波切」であった。大正六年の巡回時の号は明記されていないが、原文L047に「大正十年の巡回出品控え。槙橋模型の銘板の号は『波切』だった。」と記載されている。現行値として「波切」が該当。対象は「槙橋模型巡回展の銘板」、条件は「大正十年の巡回出品控え」に基づく。変更や未確定の理由は、大正十年の情報が直接の巡回時の号を明示していないため、推測に基づく。撤回・訂正の際は、大正十年の情報が正確な根拠となるため、大正十年の記録に依拠すべき。\",\"refs\":[\"L047\",\"L047\",\"L047\"]}",
+          "sent": true,
+          "status": "ok"
+        },
+        "request_sha256": "a9c7c7a6d70bdc1a94d58a28db2ff4420cc327efc33dbc366269c7725a1df23a"
+      },
+      {
+        "elapsed_ms": 2450.069,
+        "kind": "read",
+        "raw": {
+          "confirmed_user_sha256": "c28249424e75e39317317df7b0bc1354c505ee89bdbdc2cfa57d8be40cb59026",
+          "finish": "contentCompleted",
+          "input_tokens": 3430,
+          "limit": 6200,
+          "model": "system",
+          "raw_output": "{\"memo\":\"大正六年の巡回時の「槙橋模型巡回展の銘板」の号は明記されていないが、現行値として「波切」が該当。対象は「槙橋模型巡回展の銘板」、条件は「大正十年の巡回出品控え」に基づく。変更なし。\",\"refs\":[\"L047\"]}",
+          "sent": true,
+          "status": "ok"
+        },
+        "request_sha256": "440a9c6a5ae8cd3a1c731e06d41a39c437397c203be5fad508575fa9455fbba1"
+      },
+      {
+        "elapsed_ms": 4086.186,
+        "kind": "read",
+        "raw": {
+          "confirmed_user_sha256": "e0c1301aa731350ff45954655cb8eb1f7016827f46dbec61333b45e13f0dc5f9",
+          "finish": "contentCompleted",
+          "input_tokens": 3404,
+          "limit": 6200,
+          "model": "system",
+          "raw_output": "{\"memo\":\"大正六年の巡回時の「槙橋模型巡回展の銘板」の号は現行値として「波切」とされているが、原文L125に「槙橋模型巡回展の銘板」に添えた扱い書には、乾燥棚で点検した台紙の蝶番の図がある。この図は帳面の修理の際に綴じたもの。現行値は変更なし。対象は「槙橋模型巡回展の銘板」、条件は「大正六年の巡回出品控え」に基づく。ただし、原文L127に「巡回先は両年で同じだった」とあり、大正六年の巡回先が明確でないため、号の特定が困難。変更や未確定の理由は、巡回先の曖昧さと銘板の記述の欠如。\",\"refs\":[\"L125\",\"L127\",\"L047\"]}",
+          "sent": true,
+          "status": "ok"
+        },
+        "request_sha256": "f52c089d75b8048f5bc5adac411d67e8d1fe9a36e19da77e507cffc9959dd24c"
+      },
+      {
+        "elapsed_ms": 3646.558,
+        "kind": "read",
+        "raw": {
+          "confirmed_user_sha256": "1fefe9a5a8d750b0eba5fe64f47a482fc0f4d611849bdf37bca5e20e4d870ec6",
+          "finish": "contentCompleted",
+          "input_tokens": 3571,
+          "limit": 6200,
+          "model": "system",
+          "raw_output": "{\"memo\":\"大正六年の巡回時の「槙橋模型巡回展の銘板」の号は現行値として「波切」とされているが、原文L125に「槙橋模型巡回展の銘板」に添えた扱い書には、乾燥棚で点検した台紙の蝶番の図がある。この図は帳面の修理の際に綴じたもの。現行値は変更なし。対象は「槙橋模型巡回展の銘板」、条件は「大正六年の巡回出品控え」に基づく。ただし、原文L047に「大正十年の巡回出品控え。槙橋模型の銘板の号は『波切』だった。」と記載されている。\",\"refs\":[\"L125\",\"L047\",\"L221\"]}",
+          "sent": true,
+          "status": "ok"
+        },
+        "request_sha256": "4cd6c9eb41565d77e79be70090111fc5bdf3bb7049aa8a8aba5644c1b950a5a5"
+      },
+      {
+        "elapsed_ms": 6689.67,
+        "kind": "read",
+        "raw": {
+          "confirmed_user_sha256": "893b8eb7ff72bf9d39319fdb72b78374f5d76b1d56b1b2444b7865b9df6bae75",
+          "finish": "contentCompleted",
+          "input_tokens": 3577,
+          "limit": 6200,
+          "model": "system",
+          "raw_output": "{\"memo\":\"大正六年の巡回時の「槙橋模型巡回展の銘板」の号は現行値として「波切」とされているが、今回の新資料（L230～L286）には「槙橋模型巡回展の銘板」の点検・撮影に関する詳細が多数記載されており、現行値の変更を示唆する手がかりが含まれる。特にL230以降の資料では、蝶番の図や寸法測定、撮影位置の記録など、銘板の物理的状態や点検プロセスが詳細に記されており、現行値の「波切」が正確に反映されているか、あるいは新たな情報が提示されている可能性がある。対象は「槙橋模型巡回展の銘板」、条件は「大正六年の巡回出品控え」に基づく。現行値は変更なしと判断されるが、新資料の多くが「波切」の記述と一致しているため、現行値の維持が妥当と見なされる。ただし、L230以降の資料は点検・撮影のプロセスを示しており、銘板の正確な状態や号の再確認の可能性を示唆している。撤回・訂正の可能性は低く、現行値の「波切」が正しいと判断されるが、新資料は補足的情報として機能している。古い候補（L047の「波切」が正しいとされたが、現行資料で再確認された）は、L230以降の点検記録と整合性が取れていないため、撤回が推奨される。\",\"refs\":[\"L230\",\"L231\",\"L232\"]}",
+          "sent": true,
+          "status": "ok"
+        },
+        "request_sha256": "7501029b7c3775e72def46a29ca4e897b7a3e4461bfe850491b5b16a8bcbf4b4"
+      },
+      {
+        "elapsed_ms": 1913.398,
+        "kind": "read",
+        "raw": {
+          "confirmed_user_sha256": "a0ef5361a750146d9f42bde43412645e6649a62f9fc740cb033be105a2e13947",
+          "finish": "contentCompleted",
+          "input_tokens": 3610,
+          "limit": 6200,
+          "model": "system",
+          "raw_output": "{\"evidence_id\":\"L324\",\"state\":\"確定\",\"value\":\"浜風\"}",
+          "sent": true,
+          "status": "ok"
+        },
+        "request_sha256": "1faeea9f6dc16f5111a3f2b0a697cdb74e7fa470c957fc35332b8bba4051cc05"
+      }
+    ],
+    "evidence_correct": true,
+    "final": {
+      "evidence_id": "L324",
+      "state": "確定",
+      "value": "浜風"
+    },
+    "generations": 6,
+    "id": "known-qa-18-a-followup",
+    "memos": [
+      {
+        "memo": "大正十年の巡回出品控えより、「槙橋模型巡回展の銘板」の号は「波切」であった。大正六年の巡回時の号は明記されていないが、原文L047に「大正十年の巡回出品控え。槙橋模型の銘板の号は『波切』だった。」と記載されている。現行値として「波切」が該当。対象は「槙橋模型巡回展の銘板」、条件は「大正十年の巡回出品控え」に基づく。変更",
+        "refs": [
+          "L047"
+        ]
+      },
+      {
+        "memo": "大正六年の巡回時の「槙橋模型巡回展の銘板」の号は明記されていないが、現行値として「波切」が該当。対象は「槙橋模型巡回展の銘板」、条件は「大正十年の巡回出品控え」に基づく。変更なし。",
+        "refs": [
+          "L047"
+        ]
+      },
+      {
+        "memo": "大正六年の巡回時の「槙橋模型巡回展の銘板」の号は現行値として「波切」とされているが、原文L125に「槙橋模型巡回展の銘板」に添えた扱い書には、乾燥棚で点検した台紙の蝶番の図がある。この図は帳面の修理の際に綴じたもの。現行値は変更なし。対象は「槙橋模型巡回展の銘板」、条件は「大正六年の巡回出品控え」に基づく。ただし、原文",
+        "refs": [
+          "L125",
+          "L127",
+          "L047"
+        ]
+      },
+      {
+        "memo": "大正六年の巡回時の「槙橋模型巡回展の銘板」の号は現行値として「波切」とされているが、原文L125に「槙橋模型巡回展の銘板」に添えた扱い書には、乾燥棚で点検した台紙の蝶番の図がある。この図は帳面の修理の際に綴じたもの。現行値は変更なし。対象は「槙橋模型巡回展の銘板」、条件は「大正六年の巡回出品控え」に基づく。ただし、原文",
+        "refs": [
+          "L125",
+          "L047",
+          "L221"
+        ]
+      },
+      {
+        "memo": "大正六年の巡回時の「槙橋模型巡回展の銘板」の号は現行値として「波切」とされているが、今回の新資料（L230～L286）には「槙橋模型巡回展の銘板」の点検・撮影に関する詳細が多数記載されており、現行値の変更を示唆する手がかりが含まれる。特にL230以降の資料では、蝶番の図や寸法測定、撮影位置の記録など、銘板の物理的状態や",
+        "refs": [
+          "L230",
+          "L231",
+          "L232"
+        ]
+      }
+    ],
+    "peak_sent": 3610,
+    "sent_tokens": 20733,
+    "size": "known",
+    "status": "completed",
+    "unsupported": false,
+    "value_correct": true
+  },
+  {
+    "arm": "history",
+    "correct": false,
+    "elapsed_ms": 4182.243,
+    "events": [
+      {
+        "elapsed_ms": 4148.146,
+        "kind": "read",
+        "raw": {
+          "confirmed_user_sha256": "e8a566228608578b2ab4d9a90e8d321c87399ed3ac979b1ed59b5f947c301999",
+          "finish": "contentCompleted",
+          "input_tokens": 3141,
+          "limit": 6200,
+          "model": "system",
+          "raw_output": "{\"memo\":\"大正十年の巡回出品控えより、「槙橋模型巡回展の銘板」の号は「波切」であった。大正六年の巡回時の号は明記されていないが、原文L047に「大正十年の巡回出品控え。槙橋模型の銘板の号は『波切』だった。」と記載されている。現行値として「波切」が該当。対象は「槙橋模型巡回展の銘板」、条件は「大正十年の巡回出品控え」に基づく。変更や未確定の理由は、大正十年の情報が直接の巡回時の号を明示していないため、推測に基づく。撤回・訂正の際は、大正十年の情報が正確な根拠となるため、大正十年の記録に依拠すべき。\",\"refs\":[\"L047\",\"L047\",\"L047\"]}",
+          "sent": true,
+          "status": "ok"
+        },
+        "request_sha256": "a9c7c7a6d70bdc1a94d58a28db2ff4420cc327efc33dbc366269c7725a1df23a"
+      },
+      {
+        "elapsed_ms": 34.097,
+        "kind": "read",
+        "raw": {
+          "input_tokens": 6309,
+          "limit": 6200,
+          "sent": false,
+          "status": "over_budget"
+        },
+        "request_sha256": "454609f669fb841463715d45907f2da9c1cebed3d0b445c822798586b0ae999e"
+      }
+    ],
+    "evidence_correct": false,
+    "final": null,
+    "generations": 1,
+    "id": "known-qa-18-a-followup",
+    "memos": [
+      {
+        "memo": "大正十年の巡回出品控えより、「槙橋模型巡回展の銘板」の号は「波切」であった。大正六年の巡回時の号は明記されていないが、原文L047に「大正十年の巡回出品控え。槙橋模型の銘板の号は『波切』だった。」と記載されている。現行値として「波切」が該当。対象は「槙橋模型巡回展の銘板」、条件は「大正十年の巡回出品控え」に基づく。変更",
+        "refs": [
+          "L047"
+        ]
+      }
+    ],
+    "peak_sent": 3141,
+    "sent_tokens": 3141,
+    "size": "known",
+    "status": "over_budget",
+    "unsupported": false,
+    "value_correct": false
+  },
+  {
+    "arm": "previous",
+    "correct": true,
+    "elapsed_ms": 17603.96,
+    "events": [
+      {
+        "elapsed_ms": 4164.721,
+        "kind": "read",
+        "raw": {
+          "confirmed_user_sha256": "e8a566228608578b2ab4d9a90e8d321c87399ed3ac979b1ed59b5f947c301999",
+          "finish": "contentCompleted",
+          "input_tokens": 3141,
+          "limit": 6200,
+          "model": "system",
+          "raw_output": "{\"memo\":\"大正十年の巡回出品控えより、「槙橋模型巡回展の銘板」の号は「波切」であった。大正六年の巡回時の号は明記されていないが、原文L047に「大正十年の巡回出品控え。槙橋模型の銘板の号は『波切』だった。」と記載されている。現行値として「波切」が該当。対象は「槙橋模型巡回展の銘板」、条件は「大正十年の巡回出品控え」に基づく。変更や未確定の理由は、大正十年の情報が直接の巡回時の号を明示していないため、推測に基づく。撤回・訂正の際は、大正十年の情報が正確な根拠となるため、大正十年の記録に依拠すべき。\",\"refs\":[\"L047\",\"L047\",\"L047\"]}",
+          "sent": true,
+          "status": "ok"
+        },
+        "request_sha256": "a9c7c7a6d70bdc1a94d58a28db2ff4420cc327efc33dbc366269c7725a1df23a"
+      },
+      {
+        "elapsed_ms": 2970.61,
+        "kind": "read",
+        "raw": {
+          "confirmed_user_sha256": "a8ddb3254047f6fe490063f5894a1973343921015f9b6198632e655a31593b09",
+          "finish": "contentCompleted",
+          "input_tokens": 3393,
+          "limit": 6200,
+          "model": "system",
+          "raw_output": "{\"memo\":\"大正六年の巡回時の「槙橋模型巡回展の銘板」の号は現行値「波切」と明記されていないが、原文L047に「大正十年の巡回出品控え。槙橋模型の銘板の号は『波切』だった。」と記載されている。対象は「槙橋模型巡回展の銘板」、条件は「大正十年の巡回出品控え」に基づく。現行値はL047の記載に基づく。変更なし。\",\"refs\":[\"L047\"]}",
+          "sent": true,
+          "status": "ok"
+        },
+        "request_sha256": "a3a8bd1d21b52b573b518c71782705c3bba47ec3ad636ea45d3563c7114c63fa"
+      },
+      {
+        "elapsed_ms": 2832.88,
+        "kind": "read",
+        "raw": {
+          "confirmed_user_sha256": "77a7d922e7b67a08bbef402a028ec6a9a017c107efeee57126f7e6cec9ccf3ab",
+          "finish": "contentCompleted",
+          "input_tokens": 3411,
+          "limit": 6200,
+          "model": "system",
+          "raw_output": "{\"memo\":\"大正六年の巡回時、「槙橋模型巡回展の銘板」の号は現行値「波切」と明記されていないが、原文L173に「槙橋模型の銘板の号は『波切』だった。」と記載されている。対象は「槙橋模型巡回展の銘板」、条件は「大正十年の巡回出品控え」に基づく。現行値はL173の記載に基づく。変更なし。\",\"refs\":[\"L173\"]}",
+          "sent": true,
+          "status": "ok"
+        },
+        "request_sha256": "b0f7100aad2a86696971f313705af6ab7714fef8992b85345e2e620bfbe73ca1"
+      },
+      {
+        "elapsed_ms": 2922.168,
+        "kind": "read",
+        "raw": {
+          "confirmed_user_sha256": "1ba876bf9eefc5a1f2cad82e1d22611deabdbb480643986845a22eaf72fedba5",
+          "finish": "contentCompleted",
+          "input_tokens": 3390,
+          "limit": 6200,
+          "model": "system",
+          "raw_output": "{\"memo\":\"大正六年の巡回時、「槙橋模型巡回展の銘板」の号は現行値「波切」と明記されていないが、原文L173に「槙橋模型の銘板の号は『波切』だった。」と記載されている。対象は「槙橋模型巡回展の銘板」、条件は「大正十年の巡回出品控え」に基づく。現行値はL173の記載に基づく。変更なし。\",\"refs\":[\"L173\",\"L173\",\"L201\"]}",
+          "sent": true,
+          "status": "ok"
+        },
+        "request_sha256": "b0b35e3a4f6abde5c07d52df963d43b10515b3a580809cf8460482e119af76ae"
+      },
+      {
+        "elapsed_ms": 2885.302,
+        "kind": "read",
+        "raw": {
+          "confirmed_user_sha256": "93cf8a13461012da5f3e2884ce3833f15315d91bc859e03349fe91441dd72c04",
+          "finish": "contentCompleted",
+          "input_tokens": 3398,
+          "limit": 6200,
+          "model": "system",
+          "raw_output": "{\"memo\":\"大正六年の巡回時、「槙橋模型巡回展の銘板」の号は現行値「波切」と明記されていないが、原文L173に「槙橋模型の銘板の号は『波切』だった。」と記載されている。対象は「槙橋模型巡回展の銘板」、条件は「大正十年の巡回出品控え」に基づく。現行値はL173の記載に基づく。変更なし。\",\"refs\":[\"L173\",\"L230\",\"L241\"]}",
+          "sent": true,
+          "status": "ok"
+        },
+        "request_sha256": "9e3cbe8876e9e0d83331890bbb13a941649aaf094ea0bb76118901f3223011b8"
+      },
+      {
+        "elapsed_ms": 1828.279,
+        "kind": "read",
+        "raw": {
+          "confirmed_user_sha256": "83bf0f606cc4aa5002fcedc59b578a6084937fc3447882dabe1653b4aaceb070",
+          "finish": "contentCompleted",
+          "input_tokens": 3421,
+          "limit": 6200,
+          "model": "system",
+          "raw_output": "{\"evidence_id\":\"L324\",\"state\":\"確定\",\"value\":\"浜風\"}",
+          "sent": true,
+          "status": "ok"
+        },
+        "request_sha256": "50a8ca6ee66c2e29d8525de11d8186a0e91cbe8dbc70c6a25834cf3324b6a882"
+      }
+    ],
+    "evidence_correct": true,
+    "final": {
+      "evidence_id": "L324",
+      "state": "確定",
+      "value": "浜風"
+    },
+    "generations": 6,
+    "id": "known-qa-18-a-followup",
+    "memos": [
+      {
+        "memo": "大正十年の巡回出品控えより、「槙橋模型巡回展の銘板」の号は「波切」であった。大正六年の巡回時の号は明記されていないが、原文L047に「大正十年の巡回出品控え。槙橋模型の銘板の号は『波切』だった。」と記載されている。現行値として「波切」が該当。対象は「槙橋模型巡回展の銘板」、条件は「大正十年の巡回出品控え」に基づく。変更",
+        "refs": [
+          "L047"
+        ]
+      },
+      {
+        "memo": "大正六年の巡回時の「槙橋模型巡回展の銘板」の号は現行値「波切」と明記されていないが、原文L047に「大正十年の巡回出品控え。槙橋模型の銘板の号は『波切』だった。」と記載されている。対象は「槙橋模型巡回展の銘板」、条件は「大正十年の巡回出品控え」に基づく。現行値はL047の記載に基づく。変更なし。",
+        "refs": [
+          "L047"
+        ]
+      },
+      {
+        "memo": "大正六年の巡回時、「槙橋模型巡回展の銘板」の号は現行値「波切」と明記されていないが、原文L173に「槙橋模型の銘板の号は『波切』だった。」と記載されている。対象は「槙橋模型巡回展の銘板」、条件は「大正十年の巡回出品控え」に基づく。現行値はL173の記載に基づく。変更なし。",
+        "refs": []
+      },
+      {
+        "memo": "大正六年の巡回時、「槙橋模型巡回展の銘板」の号は現行値「波切」と明記されていないが、原文L173に「槙橋模型の銘板の号は『波切』だった。」と記載されている。対象は「槙橋模型巡回展の銘板」、条件は「大正十年の巡回出品控え」に基づく。現行値はL173の記載に基づく。変更なし。",
+        "refs": [
+          "L173",
+          "L201"
+        ]
+      },
+      {
+        "memo": "大正六年の巡回時、「槙橋模型巡回展の銘板」の号は現行値「波切」と明記されていないが、原文L173に「槙橋模型の銘板の号は『波切』だった。」と記載されている。対象は「槙橋模型巡回展の銘板」、条件は「大正十年の巡回出品控え」に基づく。現行値はL173の記載に基づく。変更なし。",
+        "refs": [
+          "L173",
+          "L230",
+          "L241"
+        ]
+      }
+    ],
+    "peak_sent": 3421,
+    "sent_tokens": 20154,
+    "size": "known",
+    "status": "completed",
+    "unsupported": false,
+    "value_correct": true
+  }
+]
