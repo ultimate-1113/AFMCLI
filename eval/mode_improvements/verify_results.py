@@ -112,6 +112,18 @@ def main():
                   "search scores, order, or integrity recovery differs")
     study.require(cold["ordered_hits_sha256"]==read(study.HERE.parents[1]/"tools"/"search"/"cold.json")["ordered_hits_sha256"]
                   and len(cold["rounds"])==3 and len(warm["warm_request_rounds"])==6,"search regression incomplete")
+    diagnostics=root/"retry-diagnostics"
+    original=read(diagnostics/"context.json")
+    lower=read(diagnostics/"headroom.json")
+    case=next(c for c in study.cases("qa","test") if c["id"]==lower["id"])
+    case=study.panel("qa").followup(case)
+    job=study.exp_job(case,"qa","cautious")
+    study.require(original["job_sha256"]==lower["job_sha256"]==study.sha(study.encode(job))
+                  and original["base_commit"]==study.BASE and lower["binary_sha256"]==selection["base_sha256"],
+                  "separate context probes differ from the original request")
+    study.require(lower["record"]["metrics"]["peak_sent_tokens"]<=lower["input_budget"]
+                  and study.panel("qa").grade(case,lower["record"],"cautious")==lower["grade"],
+                  "reduced-input probe failed replay")
     print(json.dumps({"dev_and_test_rows":counts,"adopted":[m for m in final_decisions if final_decisions[m]["adopt"]]},
                      ensure_ascii=False))
 

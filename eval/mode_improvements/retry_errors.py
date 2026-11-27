@@ -16,6 +16,8 @@ def reason(record):
     notes=" ".join(record.get("notes",[])).lower()
     if "timed out" in notes or "wall-time limit" in notes:
         return "reported_timeout"
+    if "context window" in notes or "context size" in notes:
+        return "reported_context_exhaustion"
     if "fm returned an error" in notes:
         return "fm_nonzero_exit"
     return "other_execution_error"
@@ -77,6 +79,11 @@ def attempt(root, name, limit, previous, trials, lock, binaries=None):
 def investigate(root, binaries=None):
     lock=study.lock_check()
     trials=primary(root,lock)
+    if binaries is not None:
+        selection=json.loads((root/"selection.json").read_bytes())
+        study.require(binaries["base"][1]==selection["base_sha256"] and all(
+            m["binary_sha256"]==binaries["candidate"][1] for m in selection["modes"].values()
+        ),"retry executables differ from the original selection")
     initial={k:r for k,(r,_) in trials.items()}
     current=initial
     final=dict(initial)

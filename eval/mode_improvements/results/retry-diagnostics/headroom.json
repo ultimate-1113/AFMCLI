@@ -1,0 +1,194 @@
+{
+  "scope": "separate lower input budget probe",
+  "id": "qa-test-18-a",
+  "stage": "followup",
+  "mode": "cautious",
+  "arm": "base",
+  "binary_sha256": "183499118d637a2b0ea86493898a1b9bb4aac706c8cd7b05b00bd506278912af",
+  "job_sha256": "03fcfdae86b0689ea9c8a742c361ee89b2a6f2189cc25dbc0f08814224fae134",
+  "input_budget": 3200,
+  "fm_timeout_seconds": 90,
+  "record": {
+    "metrics": {
+      "answer_checks": [
+        {
+          "draft_attempt": null,
+          "draft_bytes": 242,
+          "first_state": "missing",
+          "first_value": null,
+          "handoff": null,
+          "handoff_bytes": 0,
+          "handoff_sent": false,
+          "resolution": "no_grounded_draft",
+          "review_note": null,
+          "review_sent": false,
+          "review_state": null,
+          "review_triggered": false,
+          "review_value": null,
+          "second_input_tokens": 0,
+          "second_state": null,
+          "second_value": null
+        },
+        {
+          "draft_attempt": null,
+          "draft_bytes": 241,
+          "first_state": "set",
+          "first_value": "浜風",
+          "handoff": null,
+          "handoff_bytes": 0,
+          "handoff_sent": false,
+          "resolution": "disagreement",
+          "review_note": null,
+          "review_sent": false,
+          "review_state": null,
+          "review_triggered": false,
+          "review_value": null,
+          "second_input_tokens": 1512,
+          "second_state": "set",
+          "second_value": "波切"
+        }
+      ],
+      "answer_mode": "cautious",
+      "calls": 10,
+      "context": {
+        "method": "evidence_windows",
+        "retained_segments": 0,
+        "retrieval": {
+          "fallback": "insufficient_evidence",
+          "rounds": [
+            {
+              "ranges": [
+                {
+                  "document_id": 1,
+                  "end_byte": 7811,
+                  "first_segment_id": 92,
+                  "last_segment_id": 95,
+                  "start_byte": 7527
+                },
+                {
+                  "document_id": 1,
+                  "end_byte": 19745,
+                  "first_segment_id": 234,
+                  "last_segment_id": 236,
+                  "start_byte": 19549
+                },
+                {
+                  "document_id": 1,
+                  "end_byte": 55641,
+                  "first_segment_id": 653,
+                  "last_segment_id": 655,
+                  "start_byte": 55366
+                }
+              ],
+              "sent": true
+            },
+            {
+              "ranges": [
+                {
+                  "document_id": 1,
+                  "end_byte": 197,
+                  "first_segment_id": 1,
+                  "last_segment_id": 3,
+                  "start_byte": 0
+                },
+                {
+                  "document_id": 1,
+                  "end_byte": 777,
+                  "first_segment_id": 6,
+                  "last_segment_id": 10,
+                  "start_byte": 358
+                },
+                {
+                  "document_id": 1,
+                  "end_byte": 2976,
+                  "first_segment_id": 32,
+                  "last_segment_id": 36,
+                  "start_byte": 2633
+                },
+                {
+                  "document_id": 1,
+                  "end_byte": 5176,
+                  "first_segment_id": 59,
+                  "last_segment_id": 63,
+                  "start_byte": 4824
+                },
+                {
+                  "document_id": 1,
+                  "end_byte": 7874,
+                  "first_segment_id": 86,
+                  "last_segment_id": 96,
+                  "start_byte": 7096
+                },
+                {
+                  "document_id": 1,
+                  "end_byte": 9917,
+                  "first_segment_id": 115,
+                  "last_segment_id": 119,
+                  "start_byte": 9459
+                },
+                {
+                  "document_id": 1,
+                  "end_byte": 12150,
+                  "first_segment_id": 141,
+                  "last_segment_id": 145,
+                  "start_byte": 11689
+                },
+                {
+                  "document_id": 1,
+                  "end_byte": 14371,
+                  "first_segment_id": 167,
+                  "last_segment_id": 171,
+                  "start_byte": 13949
+                },
+                {
+                  "document_id": 1,
+                  "end_byte": 19833,
+                  "first_segment_id": 233,
+                  "last_segment_id": 237,
+                  "start_byte": 19459
+                },
+                {
+                  "document_id": 1,
+                  "end_byte": 55740,
+                  "first_segment_id": 652,
+                  "last_segment_id": 656,
+                  "start_byte": 55297
+                }
+              ],
+              "sent": true
+            }
+          ]
+        },
+        "selection_windows": 4,
+        "source_segments": 694
+      },
+      "elapsed_ms": 72785,
+      "peak_sent_tokens": 3163,
+      "repairs": 2,
+      "sent_input_tokens": 25806,
+      "token_checks": 61
+    },
+    "notes": [
+      "select distinct IDs from this window, [] for none, or [0] for all"
+    ],
+    "result": null,
+    "status": "held",
+    "task": "answer"
+  },
+  "grade": {
+    "correct": false,
+    "answered": false,
+    "serious": false,
+    "correct_null": false,
+    "false_nonnull": false,
+    "right_question": false,
+    "any_question": false,
+    "wrong_question": false,
+    "unnecessary_question": false,
+    "right_followup": false,
+    "held": true,
+    "error": false,
+    "refused": false
+  },
+  "elapsed_seconds": 72.791
+}

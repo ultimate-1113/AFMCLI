@@ -1,0 +1,14 @@
+{
+  "base_commit": "beeb6944946471e12c5de43834f87a84c32ca9f4",
+  "diagnostic": "diagnostic respond: Error: The session's transcript exceeded the model's context size.",
+  "diagnostic_build": "baseline sources with stderr capture only on process error",
+  "elapsed_seconds": 39.274,
+  "fm_timeout_seconds": 90,
+  "id": "qa-test-18-a",
+  "input_budget": 6200,
+  "job_sha256": "03fcfdae86b0689ea9c8a742c361ee89b2a6f2189cc25dbc0f08814224fae134",
+  "mode": "cautious",
+  "scope": "separate stderr probe on synthetic input",
+  "stage": "followup",
+  "status": "error"
+}
