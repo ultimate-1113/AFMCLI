@@ -1,0 +1,68 @@
+{
+  "qa-dev-01": {
+    "filler_count": 102,
+    "source_sha256": [
+      "104526526850385d3c43c8e5828a6472f36a33a60848e939a5222e5c4261dd42",
+      "a61a3970589f3c68a1b8cdcaef52c3b4d173bfe551bf4e01284c1c96717ad94f"
+    ],
+    "source_tokens": [
+      4097,
+      4104
+    ]
+  },
+  "qa-dev-02": {
+    "filler_count": 80,
+    "source_sha256": [
+      "08fb674dce6235b414cf67174617b4a5f87539f3d8f971e32d6dc1d4eace7cec",
+      "5bad146e5761ba4ae4ba283688518380e90d3e5b0a78942d4eca8a9f1d44a210"
+    ],
+    "source_tokens": [
+      4083,
+      4078
+    ]
+  },
+  "qa-dev-03": {
+    "filler_count": 205,
+    "source_sha256": [
+      "ea3ea61a5d8be823bd2a3d21d6e89dc39e06c51a2b00e1cec5a484fafdf678d2",
+      "976d113381b8a16b3275550ba90265d133d1efdf820d0d806e7c62f64e49f6c6"
+    ],
+    "source_tokens": [
+      8200,
+      8203
+    ]
+  },
+  "qa-dev-04": {
+    "filler_count": 163,
+    "source_sha256": [
+      "bfd7d0fc5425c48f4f29fd7d07fd7752573352a64412e44f9498f7c36fc6598e",
+      "f46c807cbd21e9047a5251b2c6034b9fd549339a3699014a4668a6c04a302196"
+    ],
+    "source_tokens": [
+      8171,
+      8179
+    ]
+  },
+  "qa-dev-05": {
+    "filler_count": 414,
+    "source_sha256": [
+      "92d0da4ebefef376250cfae089488e17d58a5b663bc72d68e91e57e7185687f0",
+      "c1343de88f67da5d7790c17d067d5500f66cbc518986e13d7535e0675e92d21e"
+    ],
+    "source_tokens": [
+      16386,
+      16392
+    ]
+  },
+  "qa-dev-06": {
+    "filler_count": 327,
+    "source_sha256": [
+      "4f870ad5deb57d63e07ee86d6a89955f5f3dc686af49e7c78cb7e2be57f9c1cd",
+      "e438a0f11bce42f495581a81675a91ad03a60eb3465af311dbc773fd1591bff2"
+    ],
+    "source_tokens": [
+      16397,
+      16398
+    ]
+  }
+}
