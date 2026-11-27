@@ -123,6 +123,7 @@ impl Apple {
                     "fm refused the request"
                 } else if error.contains("context window")
                     || error.contains("context size exceeded")
+                    || error.contains("transcript exceeded the model's context size")
                 {
                     "fm could not fit the request in its context window"
                 } else {
@@ -295,6 +296,15 @@ pub fn decode(t: &Value) -> Result<String, String> {
 #[cfg(all(test, unix))]
 mod process_tests {
     use super::*;
+    #[test]
+    fn reports_context_exhaustion_from_the_fm_transcript_diagnostic() {
+        let message = "Error: The session's transcript exceeded the model's context size.";
+        let error = Apple::new(2, None)
+            .call_at(Path::new("/bin/sh"), &["-c", "cat >&2; exit 1"], message)
+            .unwrap_err();
+        assert!(error.starts_with("fm could not fit the request in its context window"));
+    }
+
     #[test]
     fn terminates_and_reaps_a_timed_out_process() {
         let backend = Apple {
