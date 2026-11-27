@@ -37,6 +37,29 @@ fn one_line(s: &str) -> String {
         .join(" ")
 }
 
+fn clean_model_suffix<'a>(text: &'a str, source: &str) -> &'a str {
+    // Guided generation can append a transcript control token or the opening
+    // of another JSON fence *inside* its final string. Remove only this suffix
+    // when the corresponding literal never appeared in source material.
+    static TAIL: std::sync::LazyLock<regex::Regex> = std::sync::LazyLock::new(|| {
+        regex::Regex::new(
+            r#"(?is)(?:[」』”"]\s*[\]}]\s*)?(?:<ctrl[0-9]+>|\x60{3}(?:json)?)[\s{}\[\]"\x60]*$"#,
+        )
+        .unwrap()
+    });
+    let mut text = text.trim();
+    if !source.contains("<ctrl")
+        && !source.contains("\x60\x60\x60")
+        && let Some(m) = TAIL.find(text)
+    {
+        text = text[..m.start()].trim_end();
+    }
+    if !source.contains(r"\n") {
+        text = text.trim_start_matches(r"\n").trim_start();
+    }
+    text
+}
+
 impl<'a> Batch<'a> {
     fn new(input: &'a Translation, ids: bool, protection: bool) -> Self {
         let namespace = protection::namespace(input);
@@ -76,7 +99,7 @@ impl<'a> Batch<'a> {
             task.push_str("Return just the translations, one complete block on each line, in the given order. ");
         }
         if self.protection {
-            task.push_str("Each double-bracketed symbol stands for one protected expression. Keep the exact symbol once in its grammatical position. The meanings are for context. ");
+            task.push_str("Use the provided target terms verbatim. Copy each stated measurement exactly, including its unit symbol. Keep any protected markup symbol intact. ");
         } else {
             task.push_str("Keep each number as written, its unit and each exact proper name. Use the specified glossary translations literally. ");
         }
@@ -87,7 +110,11 @@ impl<'a> Batch<'a> {
             let row = &self.rows[i];
             let mut block = json!({"text":row.text});
             if !row.terms.is_empty() {
-                block["symbol_meanings"] = row.meanings();
+                block["terminology"] = row.requirements();
+            }
+            let meaning = direction::guide(&self.input.sentences[i], self.input);
+            if !meaning.is_empty() {
+                block["meaning_to_preserve"] = json!(meaning);
             }
             if let Some((drafts, checks)) = retry {
                 if let Ok(raw) = &drafts[i] {
@@ -153,12 +180,27 @@ impl<'a> Batch<'a> {
 
     fn verify(&self, i: usize, raw: &RawRow, mode: TranslationMode) -> CheckedRow {
         let raw = raw.as_ref().map_err(|e| vec![e.clone()])?;
+        let protected_syntax = self
+            .input
+            .glossary
+            .values()
+            .chain(&self.input.names)
+            .chain(&self.input.units)
+            .any(|s| s.contains("<ctrl") || s.contains("\x60\x60\x60") || s.contains(r"\n"));
+        let raw = if protected_syntax {
+            raw.trim()
+        } else {
+            clean_model_suffix(raw, &self.input.sentences[i])
+        };
+        if raw.is_empty() {
+            return Err(vec!["missing translation text".into()]);
+        }
         let output = if self.protection {
             self.rows[i]
                 .restore(raw, &self.namespace)
                 .map_err(|e| vec![e])?
         } else {
-            raw.clone()
+            raw.to_owned()
         };
         let source = &self.input.sentences[i];
         let mut issues = Vec::new();

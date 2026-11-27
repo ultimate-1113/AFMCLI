@@ -105,9 +105,10 @@ fn protected_terms_preserve_width_binding_counts_and_local_ownership() {
     let batch = Batch::new(&t, false, true);
     assert_eq!(batch.namespace, "MTREFX");
     let row = &batch.rows[0];
+    assert_eq!(row.text, t.sentences[0]);
     assert_eq!(
-        row.text,
-        "ＭＴＲＥＦ reports [[MTREFX1]] of [[MTREFX2]] for [[MTREFX3]]."
+        row.requirements()["translate_terms_as"]["TEST SAMPLE"],
+        "試料"
     );
     let correct = "[[MTREFX3]]向けの[[MTREFX2]]を[[MTREFX1]]と報告。";
     assert_eq!(
@@ -129,12 +130,130 @@ fn protected_terms_preserve_width_binding_counts_and_local_ownership() {
     let mut overlapping = input(&["Luna Park met Luna Park."]);
     overlapping.names = vec!["Luna".into(), "Luna Park".into()];
     let b = Batch::new(&overlapping, true, true);
-    assert_eq!(b.rows[0].text, "[[MTREF1]] met [[MTREF2]].");
+    assert_eq!(b.rows[0].text, overlapping.sentences[0]);
     assert!(b.rows[0].restore("[[MTREF1]]のみ。", &b.namespace).is_err());
     assert!(
         b.rows[0]
             .restore("[[MTREF1]]とLuna Park。", &b.namespace)
             .is_ok()
+    );
+}
+
+#[test]
+fn equivalent_units_are_bound_to_exact_values_and_local_counts() {
+    let mut t = input(&["Use 2 h, 3 s and 2 s."]);
+    t.units = vec!["h".into(), "s".into()];
+    let b = Batch::new(&t, true, true);
+    let row = &b.rows[0];
+    assert_eq!(
+        row.restore("2 hours、3秒、2 seconds。", &b.namespace)
+            .unwrap(),
+        "2 h、3 s、2 s。"
+    );
+    for invalid in [
+        "2 hours、2 seconds。",
+        "2 h、3 hours、2 seconds。",
+        "2.0 h、3 s、2 s。",
+        "2 hours、3 s、2 s、2 h。",
+        "2 hourly、3 s、2 s。",
+    ] {
+        assert!(row.restore(invalid, &b.namespace).is_err(), "{invalid}");
+    }
+    let mut x = input(&["Use 2h and 2 h."]);
+    x.units = vec!["h".into()];
+    let b = Batch::new(&x, true, true);
+    assert!(
+        b.rows[0]
+            .restore("2 hours plus 2 hours", &b.namespace)
+            .is_err()
+    );
+    let mut marked = input(&["Open the [[archive]] now."]);
+    marked.names = vec!["[[archive]]".into()];
+    let b = Batch::new(&marked, true, true);
+    assert_eq!(b.rows[0].text, "Open the [[MTREF1]] now.");
+    assert_eq!(
+        b.rows[0]
+            .restore("[[MTREF1]]を開く。", &b.namespace)
+            .unwrap(),
+        "[[archive]]を開く。"
+    );
+}
+
+#[test]
+fn guided_protocol_suffix_is_removed_only_when_identifiable() {
+    for raw in ["雨。」}<ctrl91>}", "雨。」}\x60\x60\x60json{"] {
+        assert_eq!(clean_model_suffix(raw, "It rains."), "雨。");
+    }
+    assert_eq!(
+        clean_model_suffix("The label is <ctrl91>", "Read <ctrl91>"),
+        "The label is <ctrl91>"
+    );
+    assert_eq!(
+        clean_model_suffix("本の題は「雨」。", "The book is Rain."),
+        "本の題は「雨」。"
+    );
+}
+
+#[test]
+fn negated_bounds_do_not_consume_an_independent_prohibition() {
+    let t = input(&["x"]);
+    for (en, ja) in [
+        ("Use at least 7 m.", "少なくとも7 mを使用する。"),
+        ("Use less than 4 s.", "4 sに満たない長さとする。"),
+        (
+            "Do not open it. Use less than 4 s.",
+            "開けない。4 sに満たない長さとする。",
+        ),
+        (
+            "Do not exceed 4 s. Do not start it.",
+            "4 s以下にする。開始しない。",
+        ),
+    ] {
+        assert!(
+            direction::issues(en, ja, &t).is_empty(),
+            "{en} / {ja}: {:?}",
+            direction::issues(en, ja, &t)
+        );
+    }
+    assert!(
+        !direction::issues(
+            "Do not open it. Use less than 4 s.",
+            "開ける。4 sに満たない長さとする。",
+            &t
+        )
+        .is_empty()
+    );
+    assert!(!direction::issues("Use less than 4 s.", "4 s以下とする。", &t).is_empty());
+}
+
+#[test]
+fn point_offsets_and_full_intervals_keep_their_reference_event() {
+    let mut t = input(&["x"]);
+    t.glossary.insert("bell".into(), "鐘".into());
+    t.glossary.insert("curtain".into(), "幕".into());
+    let en = "Close the curtain 2 h before the bell.";
+    let ja = "鐘の2 h前に幕を閉じる。";
+    assert!(
+        direction::issues(en, ja, &t).is_empty(),
+        "{:?}",
+        direction::issues(en, ja, &t)
+    );
+    assert!(!direction::issues(en, "幕を閉じる2 h前に鐘を鳴らす。", &t).is_empty());
+    assert!(
+        !direction::issues(
+            "Do not close the curtain during the 2 h after the bell.",
+            "鐘の2 h後に幕を閉じない。",
+            &t
+        )
+        .is_empty()
+    );
+    t.glossary = t.glossary.into_iter().map(|(k, v)| (v, k)).collect();
+    t.source_language = "ja".into();
+    t.target_language = "en".into();
+    assert!(
+        direction::issues(ja, en, &t).is_empty(),
+        "{:?}",
+        direction::issues(ja, en, &t)
     );
 }
 

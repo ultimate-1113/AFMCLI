@@ -11,8 +11,8 @@ struct TimeAnchor {
 
 static TIME_ANCHOR: LazyLock<Pair> = LazyLock::new(|| {
     Pair::new(
-        r"\b(?P<cue>before|prior to|earlier than|no later than|by|after|following|later than|no earlier than|until|till)\s+(?P<when>[0-9]{1,2}:[0-9]{2}(?::[0-9]{2})?|[0-9]+(?:\.[0-9]+)?|monday|tuesday|wednesday|thursday|friday|saturday|sunday|noon|midnight)\b",
-        r"(?P<when>[0-9]{1,2}:[0-9]{2}(?::[0-9]{2})?|[0-9]{1,2}時\s*[0-9]{1,2}分(?:\s*[0-9]{1,2}秒)?|[0-9]+(?:\.[0-9]+)?|[月火水木金土日]曜(?:日)?|正午|真夜中)\s*(?:[a-z°%/]+|時間|日間|週間|[年月日時分秒])?\s*(?:の|より(?:も)?)?(?P<cue>以前|前|までに|以降|以後|後|までは|まで)",
+        r"\b(?P<cue>before|prior to|earlier than|no later than|by|after|following|later than|no earlier than|until|till)\s+(?P<when>[0-9]{1,2}:[0-9]{2}(?::[0-9]{2})?|monday|tuesday|wednesday|thursday|friday|saturday|sunday|noon|midnight)\b",
+        r"(?P<when>[0-9]{1,2}:[0-9]{2}(?::[0-9]{2})?|[0-9]{1,2}時\s*[0-9]{1,2}分(?:\s*[0-9]{1,2}秒)?|[月火水木金土日]曜(?:日)?|正午|真夜中)\s*(?:の|より(?:も)?)?(?P<cue>以前|前|までに|以降|以後|後|までは|まで)",
     )
 });
 

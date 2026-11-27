@@ -4,6 +4,8 @@ use serde_json::{Value, json};
 use std::{collections::BTreeMap, ops::Range, sync::LazyLock};
 use unicode_normalization::UnicodeNormalization;
 
+mod units;
+
 static CLOCK_OR_DATE: LazyLock<Regex> = LazyLock::new(|| {
     Regex::new(r"\b[0-9]{4}-[0-9]{2}-[0-9]{2}|[0-9]{1,2}:[0-9]{2}(?::[0-9]{2})?").unwrap()
 });
@@ -70,6 +72,7 @@ pub(super) struct Term {
     source: String,
     target: String,
     kind: Kind,
+    opaque: bool,
 }
 
 pub(super) struct Row {
@@ -168,16 +171,26 @@ pub(super) fn mask(
         if c.span.start < cursor {
             continue;
         }
+        let original = &source[c.span.clone()];
+        // Names, quantities and ordinary glossary words carry useful lexical and
+        // grammatical context. Only hide actual markup or structural literals.
+        let opaque = [original, c.target.as_str()].iter().any(|s| {
+            s.contains("[[")
+                || s.contains("]]")
+                || s.contains("<ctrl")
+                || s.contains("\x60\x60\x60")
+        });
         let tag = format!("[[{namespace}{}]]", *next_marker);
         *next_marker += 1;
         text.push_str(&source[cursor..c.span.start]);
-        text.push_str(&tag);
+        text.push_str(if opaque { &tag } else { original });
         cursor = c.span.end;
         terms.push(Term {
             tag,
             source: source[c.span].to_owned(),
             target: c.target,
             kind: c.kind,
+            opaque,
         });
     }
     text.push_str(&source[cursor..]);
@@ -185,13 +198,36 @@ pub(super) fn mask(
 }
 
 impl Row {
-    pub fn meanings(&self) -> Value {
-        Value::Object(
-            self.terms
-                .iter()
-                .map(|t| (t.tag.clone(), json!(t.source)))
-                .collect(),
-        )
+    pub fn requirements(&self) -> Value {
+        let mut requirements = serde_json::Map::new();
+        let glossary: serde_json::Map<_, _> = self
+            .terms
+            .iter()
+            .filter(|t| t.kind == Kind::Glossary)
+            .map(|t| (t.source.clone(), json!(t.target)))
+            .collect();
+        let exact: std::collections::BTreeSet<_> = self
+            .terms
+            .iter()
+            .filter(|t| t.kind != Kind::Glossary)
+            .map(|t| t.target.as_str())
+            .collect();
+        let symbols: serde_json::Map<_, _> = self
+            .terms
+            .iter()
+            .filter(|t| t.opaque)
+            .map(|t| (t.tag.clone(), json!(t.source)))
+            .collect();
+        if !glossary.is_empty() {
+            requirements.insert("translate_terms_as".into(), Value::Object(glossary));
+        }
+        if !exact.is_empty() {
+            requirements.insert("copy_as_written".into(), json!(exact));
+        }
+        if !symbols.is_empty() {
+            requirements.insert("protected_symbols".into(), Value::Object(symbols));
+        }
+        Value::Object(requirements)
     }
 
     pub fn restore(&self, raw: &str, namespace: &str) -> Result<String, String> {
@@ -229,6 +265,10 @@ impl Row {
         if normalize(&output).to_uppercase().contains(namespace) || output.contains(line_break) {
             return Err("malformed protected symbol or embedded line break".into());
         }
+        // Canonicalize only complete target measurements with exactly the same
+        // numeric spelling, occurrence count and physical unit as this row.
+        output = units::restore(&self.terms, &output)?;
+        unmarked = units::restore_unmarked(&self.terms, &seen, &unmarked)?;
         // Some models spell out the exact target. Accept it only when the raw,
         // unmarked part pays for every absent occurrence locally. The caller
         // then checks all target counts and number/unit bindings after restoration.
