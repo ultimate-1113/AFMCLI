@@ -1,0 +1,23 @@
+{
+  "before-fraction": {
+    "binary_sha256": {
+      "base": "183499118d637a2b0ea86493898a1b9bb4aac706c8cd7b05b00bd506278912af",
+      "candidate": "a84b1486ebdd7809ed208febb28ebd0676f93b60df523e23f4a9940b011e2d1d"
+    },
+    "n": 16,
+    "raw_sha256": "b0879615ef625206b45b11358f6ced9c343bf0eac702912f99edee3820053abe",
+    "tree": "4adf9226f89a08b11bd11511ff1f1ee70ec769a5"
+  },
+  "before-lexer": {
+    "binary_sha256": {
+      "base": "183499118d637a2b0ea86493898a1b9bb4aac706c8cd7b05b00bd506278912af",
+      "candidate": "72954791755a1ef8ad56a6df076d668ed0d45579c74f8eb2cc5c444794f3887d"
+    },
+    "n": 16,
+    "raw_sha256": "504cfce747e6da16b7686cd84c2b3d00ce0a072a08e2516f015388598bf3f239",
+    "replace_blob": {
+      "src/calc/evidence/ledger.rs": "05d112cb6ea54650fad0a86b5f2277e00a84bed5"
+    },
+    "tree": "4adf9226f89a08b11bd11511ff1f1ee70ec769a5"
+  }
+}

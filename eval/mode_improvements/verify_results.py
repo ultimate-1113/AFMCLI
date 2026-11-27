@@ -34,6 +34,15 @@ def archive(root, lock):
         study.require(len(rows)==panel["n"] and all(
             row["binary_sha256"]==panel["binary"][row["arm"]] for row in rows.values()
         ),"archived development fingerprint differs: "+track)
+    numeric=root/"number-syntax-development"
+    for label,meta in read(numeric/"manifest.json").items():
+        path=numeric/(label+".jsonl")
+        study.require(study.sha(path.read_bytes())==meta["raw_sha256"],"changed numeric development observations")
+        study.replay("calc","dev",list(study.MODES["calc"]),lock,path,["base","candidate"])
+        rows=study.load_rows(path)
+        study.require(len(rows)==meta["n"] and all(
+            r["binary_sha256"]==meta["binary_sha256"][r["arm"]] for r in rows.values()
+        ),"numeric development build differs")
 
 
 def check_defaults(selection, decisions):
