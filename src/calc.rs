@@ -6,6 +6,9 @@ use crate::{
 use serde::{Deserialize, Serialize};
 use serde_json::{Value, json};
 
+#[cfg(feature = "trial-calculation")]
+mod evidence;
+
 type Result<T> = std::result::Result<T, &'static str>;
 const RANGE: &str = "exact intermediate exceeds the symmetric signed 128-bit range";
 const ZERO: &str = "division by zero";
@@ -653,6 +656,10 @@ pub(crate) fn run(
         Ok(v) => return Ok(Output::new("ok", v)),
         Err(e) if looks_like_formula(src) => return Err(Fail::Held(e.into())),
         _ => {}
+    }
+    #[cfg(feature = "trial-calculation")]
+    if !engine.policy.direct {
+        return evidence::run(engine, src, angle);
     }
     let request = request(
         "Translate the arithmetic problem into one calculator expression, without evaluating it. Use the source quantities, explicit operators + - * / ^ !, parentheses, and decimal literals. Available names: pi, e, sqrt, abs, exp, ln, log10, log (base ten), sin, cos, tan, asin, acos, atan, sinh, cosh, tanh, nCr(n,r), nPr(n,r). The stated angle unit applies to circular functions. If the problem has missing quantities, unclear meaning, incompatible units or an unsupported operation, set expression to the empty string. Return only the expression field.",

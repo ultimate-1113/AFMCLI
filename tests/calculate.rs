@@ -194,14 +194,17 @@ fn local_and_interpreted_workflows_are_distinct() {
     }
     let natural =
         json!({"task":"calculate","source":"Three rolls cost four euros each. What is the total?"});
-    let rec = execute(
-        natural.clone(),
-        &mut Reply(vec![json!({"expression":"3*4"})]),
-        false,
-    );
-    assert_eq!((rec.status.as_str(), rec.metrics.calls), ("review", 1));
-    assert_eq!(rec.result["expression"], "3*4");
-    assert_eq!(rec.result["value"], "12");
+    #[cfg(not(feature = "trial-calculation"))]
+    {
+        let rec = execute(
+            natural.clone(),
+            &mut Reply(vec![json!({"expression":"3*4"})]),
+            false,
+        );
+        assert_eq!((rec.status.as_str(), rec.metrics.calls), ("review", 1));
+        assert_eq!(rec.result["expression"], "3*4");
+        assert_eq!(rec.result["value"], "12");
+    }
     let direct = execute(
         natural.clone(),
         &mut Reply(vec![json!({"expression":"3*4"})]),
@@ -212,6 +215,7 @@ fn local_and_interpreted_workflows_are_distinct() {
         ("unverified", 1)
     );
     assert!(direct.result.is_string());
+    #[cfg(not(feature = "trial-calculation"))]
     for expr in ["", "wrong(12)", "1/0"] {
         let rec = execute(
             natural.clone(),
