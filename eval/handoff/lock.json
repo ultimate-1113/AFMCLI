@@ -1,0 +1,21 @@
+{
+  "cases": {
+    "known-qa-18-a-followup": "89278f3ec51336b497892d7ca1f533476673dcf50b44a53b8d4a0210e2cb7300",
+    "notice-l01": "a5c940052394b8a8a312e138d8f97823a1ee147dd16b203e64d12e3cbc4bbc53",
+    "notice-l02": "977c7eae01fafc0f77ee383e01a2e6316ed76ccbbc5f88b94c7bcb3b2007b843",
+    "notice-l03": "ab5858a2eb136784ae1c3610ad6b6f61fba39249300b9b50c795ab6b350b83cd",
+    "notice-l04": "1173be9ba9fe1df6616707c6b9773f04f02e519c2f200a3efa801d41083f06f0",
+    "notice-s01": "bebd0aba707c93672fc667b8413e77c85134f895752b9fe9d8662f174cad5d94",
+    "notice-s02": "2e862b736f84ab2f49b3255ee7380a92d26e6ac59be03c69088c5c3b681dcae5",
+    "notice-s03": "6b003ee3c5afb8926ae64c25c6d7fa7cc6880c58f9214e6a080910a245f73a2c",
+    "notice-s04": "564ca66c3c6d8dc9dc4ec660e3ac6b4265f9aef86cac8a23f357653c1ffb128b"
+  },
+  "files": {
+    "eval/combinations/backend.py": "20c541ad90e29663f92b0dc2c24a807fba1363f8ad3ec9c2d089dec4e4b7815d",
+    "eval/handoff/handoff.py": "a6660fe002ab89258873df050755143495d420e35c85dd956ab91a1f42eac904",
+    "eval/handoff/panel.py": "c65bcb17e5e54cdd916dfe495d65b6d964319cb6b482e1b966155e3e6326dd60",
+    "eval/handoff/protocol.md": "32fdb731796718cccd385d7638dbf9e993a77c0bf5c8709b035858748544c9f7",
+    "eval/handoff/source-tokens.json": "93fb15e023bd5ab626fe91559839ae27660184d8ce0adf7ac114ce9ce126b75a"
+  },
+  "primary_lock": "aa96ba905390be92dd1584696c346041d30b269a15cb7d4bd7f0fda25e9c8a32"
+}

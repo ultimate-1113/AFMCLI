@@ -1,0 +1,86 @@
+{
+  "known-qa-18-a-followup": {
+    "full": 18118,
+    "packets": [
+      2908,
+      3027,
+      3051,
+      3043,
+      3042,
+      3047
+    ],
+    "size": "known"
+  },
+  "notice-l01": {
+    "full": 8465,
+    "packets": [
+      2779,
+      2870,
+      2816
+    ],
+    "size": "long"
+  },
+  "notice-l02": {
+    "full": 8551,
+    "packets": [
+      2833,
+      2909,
+      2809
+    ],
+    "size": "long"
+  },
+  "notice-l03": {
+    "full": 8537,
+    "packets": [
+      2773,
+      2911,
+      2853
+    ],
+    "size": "long"
+  },
+  "notice-l04": {
+    "full": 8471,
+    "packets": [
+      2784,
+      2883,
+      2804
+    ],
+    "size": "long"
+  },
+  "notice-s01": {
+    "full": 3054,
+    "packets": [
+      998,
+      1060,
+      996
+    ],
+    "size": "short"
+  },
+  "notice-s02": {
+    "full": 3230,
+    "packets": [
+      1067,
+      1090,
+      1073
+    ],
+    "size": "short"
+  },
+  "notice-s03": {
+    "full": 3140,
+    "packets": [
+      1033,
+      1078,
+      1029
+    ],
+    "size": "short"
+  },
+  "notice-s04": {
+    "full": 3067,
+    "packets": [
+      981,
+      1079,
+      1007
+    ],
+    "size": "short"
+  }
+}
